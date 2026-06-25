@@ -21,6 +21,7 @@ import {
   formatListingStatus,
   listingStatusColor,
 } from "@/lib/crm/format";
+import { getPendingApprovalListingCount } from "@/lib/crm/listing-queries";
 
 type CrmListingsPageProps = {
   searchParams: Promise<{ created?: string; pin?: string }>;
@@ -52,9 +53,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
     },
   });
 
-  const submittedCount = listings.filter(
-    (listing) => listing.status === ListingStatus.SUBMITTED,
-  ).length;
+  const pendingApprovalCount = await getPendingApprovalListingCount();
 
   const sortedListings = [...listings].sort((a, b) => {
     if (a.status === ListingStatus.SUBMITTED && b.status !== ListingStatus.SUBMITTED) {
@@ -82,10 +81,10 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
         }
       />
 
-      {submittedCount > 0 ? (
+      {pendingApprovalCount > 0 ? (
         <Alert severity="info" sx={{ mb: 3 }}>
-          {submittedCount} consumer submission{submittedCount === 1 ? "" : "s"} awaiting
-          review.
+          {pendingApprovalCount} consumer submission{pendingApprovalCount === 1 ? "" : "s"}{" "}
+          awaiting review.
         </Alert>
       ) : null}
 

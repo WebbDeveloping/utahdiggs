@@ -31,6 +31,8 @@ export default async function middleware(request: NextRequest) {
     const token = await getToken({
       req: request,
       secret: process.env.AUTH_SECRET,
+      // Auth.js uses __Secure-authjs.session-token on HTTPS; default getToken does not.
+      secureCookie: request.nextUrl.protocol === "https:",
     });
     const isLoggedIn = Boolean(token?.sub);
 
