@@ -80,6 +80,9 @@ model Customer {
   phone        String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  listings     Listing[]
+  sellInquiries SellInquiry[]
 }
 
 // ---------------------------------------------------------------------------
@@ -166,6 +169,7 @@ model ClosingTeamMember {
 // ---------------------------------------------------------------------------
 
 enum ListingStatus {
+  SUBMITTED
   ACTIVE
   UNDER_CONTRACT
   PENDING
@@ -216,10 +220,13 @@ model Listing {
 
   escrowOfficerId          String?
   transactionCoordinatorId String?
+  customerId               String?
+  submittedAt              DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  customer               Customer?          @relation(fields: [customerId], references: [id], onDelete: SetNull)
   escrowOfficer          ClosingTeamMember? @relation("ListingEscrowOfficer", fields: [escrowOfficerId], references: [id], onDelete: SetNull)
   transactionCoordinator ClosingTeamMember? @relation("ListingTC", fields: [transactionCoordinatorId], references: [id], onDelete: SetNull)
 
@@ -230,12 +237,14 @@ model Listing {
   offers         Offer[]
   documents      Document[]
   sellerRequests SellerRequest[]
+  sellInquiries  SellInquiry[]
 
   @@index([city])
   @@index([portfolioGroup])
   @@index([status])
   @@index([listPrice])
   @@index([latitude, longitude])
+  @@index([customerId])
 }
 
 // ---------------------------------------------------------------------------
@@ -387,6 +396,42 @@ model MarketData {
 
   @@unique([city, reportDate])
   @@index([city])
+}
+
+// ---------------------------------------------------------------------------
+// Sell inquiries (marketing site lead capture)
+// ---------------------------------------------------------------------------
+
+enum SellInquiryStatus {
+  NEW
+  LISTING_STARTED
+  LISTING_SUBMITTED
+}
+
+model SellInquiry {
+  id            String            @id @default(cuid())
+  customerId    String?
+  firstName     String
+  lastName      String
+  email         String
+  phone         String
+  streetAddress String
+  city          String
+  state         String
+  zip           String
+  timeline      String
+  status        SellInquiryStatus @default(NEW)
+  listingId     String?
+  submittedAt   DateTime          @default(now())
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  listing  Listing?  @relation(fields: [listingId], references: [id], onDelete: SetNull)
+
+  @@index([email])
+  @@index([customerId])
+  @@index([status])
 }
 
 // ---------------------------------------------------------------------------

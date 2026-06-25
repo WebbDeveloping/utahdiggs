@@ -1,10 +1,13 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { ListingStatus } from "@/generated/prisma/client";
 import { auth } from "@/lib/auth/admin-auth";
 import { canManageListings } from "@/lib/auth/roles";
 import { createListing } from "@/lib/crm/create-listing";
+import { geocodeAddress } from "@/lib/geocode";
+import { prisma } from "@/lib/db";
 import { MAX_PHOTO_COUNT } from "@/lib/storage/blob";
 import type {
   CoSellerInput,
@@ -223,7 +226,7 @@ export async function createListingAction(
 
   let result;
   try {
-    result = await createListing(input, session.user.id);
+    result = await createListing(input, { userId: session.user.id });
   } catch (error) {
     console.error("createListingAction failed:", error);
     return { error: "Failed to create listing. Please try again." };
@@ -232,4 +235,62 @@ export async function createListingAction(
   redirect(
     `/crm/listings?created=${encodeURIComponent(result.portalSlug)}&pin=${encodeURIComponent(result.passcode)}`,
   );
+}
+
+export async function approveListingAction(listingId: string): Promise<void> {
+  const session = await auth();
+  if (!session?.user?.id || !canManageListings(session.user.role)) {
+    throw new Error("Unauthorized");
+  }
+
+  const listing = await prisma.listing.findUnique({
+    where: { id: listingId },
+    select: {
+      id: true,
+      status: true,
+      address: true,
+      city: true,
+      state: true,
+      zip: true,
+      latitude: true,
+      longitude: true,
+    },
+  });
+
+  if (!listing) {
+    throw new Error("Listing not found.");
+  }
+
+  if (listing.status !== ListingStatus.SUBMITTED) {
+    throw new Error("Only submitted listings can be approved.");
+  }
+
+  await prisma.listing.update({
+    where: { id: listing.id },
+    data: {
+      status: ListingStatus.ACTIVE,
+      listDate: new Date(),
+    },
+  });
+
+  if (listing.latitude == null || listing.longitude == null) {
+    try {
+      const query = `${listing.address}, ${listing.city}, ${listing.state} ${listing.zip}`;
+      const coords = await geocodeAddress(query);
+      if (coords) {
+        await prisma.listing.update({
+          where: { id: listing.id },
+          data: {
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          },
+        });
+      }
+    } catch {
+      // Geocoding is best-effort.
+    }
+  }
+
+  revalidatePath("/crm/listings");
+  revalidatePath("/search");
 }

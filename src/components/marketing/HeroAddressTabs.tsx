@@ -18,7 +18,11 @@ const tabs: { key: TabKey; label: string }[] = [
   { key: "buy", label: "Buy a home" },
 ];
 
-export default function HeroAddressTabs() {
+type HeroAddressTabsProps = {
+  isLoggedIn?: boolean;
+};
+
+export default function HeroAddressTabs({ isLoggedIn = false }: HeroAddressTabsProps) {
   const router = useRouter();
   const baseId = useId();
   const [activeTab, setActiveTab] = useState<TabKey>("sell");
@@ -39,7 +43,12 @@ export default function HeroAddressTabs() {
       return;
     }
     setSellError(false);
-    router.push(`/sell/inquiry?address=${encodeURIComponent(trimmed)}`);
+    const query = `address=${encodeURIComponent(trimmed)}`;
+    if (isLoggedIn) {
+      router.push(`/account/listings/new?${query}`);
+    } else {
+      router.push(`/sell/inquiry?${query}`);
+    }
   }
 
   function handleBuySubmit(event: FormEvent<HTMLFormElement>) {
@@ -158,7 +167,7 @@ export default function HeroAddressTabs() {
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
           Not sure how much your home is worth?{" "}
-          <Link href="#pricing" underline="hover" color="primary" sx={{ fontWeight: 600 }}>
+          <Link href="/#pricing" underline="hover" color="primary" sx={{ fontWeight: 600 }}>
             See our pricing
           </Link>
         </Typography>
@@ -229,7 +238,7 @@ export default function HeroAddressTabs() {
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
           Talk to your dedicated agent about buying a home.{" "}
-          <Link href="#contact" underline="hover" color="primary" sx={{ fontWeight: 600 }}>
+          <Link href="/#contact" underline="hover" color="primary" sx={{ fontWeight: 600 }}>
             Get in touch
           </Link>
         </Typography>

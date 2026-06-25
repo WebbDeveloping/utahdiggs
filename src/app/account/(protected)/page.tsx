@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { getCustomerListings } from "@/lib/consumer/listings-query";
 import AccountShell from "@/components/account/AccountShell";
 
 export const metadata: Metadata = {
@@ -13,5 +14,7 @@ export default async function AccountPage() {
     return null;
   }
 
-  return <AccountShell user={user} />;
+  const listings = await getCustomerListings(user.id);
+
+  return <AccountShell user={user} listings={listings} />;
 }

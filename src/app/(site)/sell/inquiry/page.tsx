@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import SellInquiryForm from "@/components/marketing/SellInquiryForm";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
+import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { buildListingPrefillPath } from "@/lib/consumer/listing-prefill";
 
 export const metadata: Metadata = {
   title: "List Your Home — Glide RE",
@@ -16,8 +19,24 @@ type SellInquiryPageProps = {
 };
 
 export default async function SellInquiryPage({ searchParams }: SellInquiryPageProps) {
+  const user = await getConsumerSession();
   const { address } = await searchParams;
   const initialAddress = address?.trim() ?? "";
+
+  if (user && initialAddress) {
+    redirect(
+      buildListingPrefillPath({
+        streetAddress: initialAddress,
+        city: "",
+        state: "UT",
+        zip: "",
+      }),
+    );
+  }
+
+  if (user) {
+    redirect("/account/listings/new");
+  }
 
   return (
     <SitePageLayoutWithAuth>
@@ -27,8 +46,8 @@ export default async function SellInquiryPage({ searchParams }: SellInquiryPageP
             List Your Home
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ fontSize: 18, mx: "auto", maxWidth: 480 }}>
-            Enter your information below and we&apos;ll get you in touch with an expert
-            local agent to get started!
+            Enter your information below and create a free account to track your listing
+            with Glide RE.
           </Typography>
         </Stack>
         <SellInquiryForm initialAddress={initialAddress} />

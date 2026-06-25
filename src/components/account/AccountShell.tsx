@@ -8,10 +8,11 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SitePageLayout from "@/components/layout/SitePageLayout";
+import MyListingsSection from "@/components/account/MyListingsSection";
 import { consumerSignOutAction } from "@/lib/consumer/actions";
+import type { CustomerListingSummary } from "@/types/consumer-listing";
 
 type AccountShellProps = {
   user: {
@@ -19,6 +20,7 @@ type AccountShellProps = {
     email: string;
     name?: string | null;
   };
+  listings: CustomerListingSummary[];
 };
 
 const placeholderSections = [
@@ -32,14 +34,9 @@ const placeholderSections = [
     description: "Your saved search filters and listing alerts will live here.",
     icon: SearchOutlinedIcon,
   },
-  {
-    title: "My listings",
-    description: "If you're selling with Glide RE, your listing dashboards will appear here.",
-    icon: HomeWorkOutlinedIcon,
-  },
 ] as const;
 
-export default function AccountShell({ user }: AccountShellProps) {
+export default function AccountShell({ user, listings }: AccountShellProps) {
   const displayName = user.name?.trim() || user.email;
 
   return (
@@ -92,6 +89,9 @@ export default function AccountShell({ user }: AccountShellProps) {
                 </Grid>
               );
             })}
+            <Grid size={{ xs: 12, md: 4 }}>
+              <MyListingsSection listings={listings} />
+            </Grid>
           </Grid>
         </Stack>
       </Container>

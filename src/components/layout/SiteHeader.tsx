@@ -26,9 +26,10 @@ import { consumerSignOutAction } from "@/lib/consumer/actions";
 
 const navLinks = [
   { label: "Search homes", href: "/search" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "How it works", href: "#how" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "How it works", href: "/#how" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 function getInitials(user: SiteUser): string {
@@ -50,6 +51,7 @@ export default function SiteHeader({ user = null }: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(menuAnchor);
+  const listHomeHref = user ? "/account/listings/new" : "/sell/inquiry";
 
   const authControls = user ? (
     <>
@@ -111,45 +113,38 @@ export default function SiteHeader({ user = null }: SiteHeaderProps) {
     </Button>
   );
 
+  const closeMobileMenu = () => setMobileOpen(false);
+
   const navContent = (
     <Stack
       direction={{ xs: "column", md: "row" }}
       spacing={{ xs: 2, md: 3.5 }}
       sx={{ alignItems: { xs: "flex-start", md: "center" } }}
     >
-      {navLinks.map((link) =>
-        link.href.startsWith("/") ? (
-          <Link
-            key={link.href}
-            component={NextLink}
-            href={link.href}
-            underline="none"
-            color="text.secondary"
-            sx={{
-              fontSize: 15,
-              fontWeight: 500,
-              "&:hover": { color: "text.primary" },
-            }}
-          >
-            {link.label}
-          </Link>
-        ) : (
-          <Link
-            key={link.href}
-            href={link.href}
-            underline="none"
-            color="text.secondary"
-            sx={{
-              fontSize: 15,
-              fontWeight: 500,
-              "&:hover": { color: "text.primary" },
-            }}
-          >
-            {link.label}
-          </Link>
-        ),
-      )}
-      <Button component={NextLink} href="/sell/inquiry" variant="contained" color="primary">
+      {navLinks.map((link) => (
+        <Link
+          key={link.href}
+          component={NextLink}
+          href={link.href}
+          underline="none"
+          color="text.secondary"
+          onClick={closeMobileMenu}
+          sx={{
+            fontSize: 15,
+            fontWeight: 500,
+            "&:hover": { color: "text.primary" },
+          }}
+        >
+          {link.label}
+        </Link>
+      ))}
+      <Button
+        component={NextLink}
+        href={listHomeHref}
+        variant="contained"
+        color="primary"
+        onClick={closeMobileMenu}
+      >
         List your home
       </Button>
       {authControls}

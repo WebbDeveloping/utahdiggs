@@ -11,6 +11,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
 import Logo from "@/components/ui/Logo";
+import { appendNextParam, isListingFlowRedirect } from "@/lib/auth/safe-redirect";
 import { consumerLoginAction, type ConsumerAuthState } from "@/lib/consumer/actions";
 
 const inputSx = {
@@ -20,11 +21,18 @@ const inputSx = {
   },
 };
 
-export default function ConsumerLoginForm() {
+type ConsumerLoginFormProps = {
+  next?: string;
+};
+
+export default function ConsumerLoginForm({ next }: ConsumerLoginFormProps) {
   const [state, formAction, pending] = useActionState<ConsumerAuthState, FormData>(
     consumerLoginAction,
     {},
   );
+
+  const signupHref = appendNextParam("/signup", next);
+  const isListingFlow = isListingFlowRedirect(next);
 
   return (
     <Paper
@@ -46,7 +54,9 @@ export default function ConsumerLoginForm() {
             Sign in
           </Typography>
           <Typography color="text.secondary" sx={{ mt: 1 }}>
-            Access your saved homes, searches, and listings.
+            {isListingFlow
+              ? "Sign in to list your home and track your submission."
+              : "Access your saved homes, searches, and listings."}
           </Typography>
         </Box>
 
@@ -54,6 +64,7 @@ export default function ConsumerLoginForm() {
 
         <Box component="form" action={formAction}>
           <Stack spacing={2.5}>
+            {next ? <input type="hidden" name="next" value={next} /> : null}
             <TextField
               name="email"
               label="Email"
@@ -93,7 +104,7 @@ export default function ConsumerLoginForm() {
           Don&apos;t have an account?{" "}
           <Link
             component={NextLink}
-            href="/signup"
+            href={signupHref}
             underline="hover"
             sx={{ fontWeight: 600 }}
           >

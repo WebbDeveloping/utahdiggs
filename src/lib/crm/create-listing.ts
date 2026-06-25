@@ -1,4 +1,4 @@
-import { ContactRole } from "@/generated/prisma/client";
+import { ContactRole, ListingStatus } from "@/generated/prisma/client";
 import { generateListingPasscodeHash } from "@/lib/auth/portal-auth";
 import { prisma } from "@/lib/db";
 import { geocodeAddress } from "@/lib/geocode";
@@ -18,16 +18,23 @@ export type CreateListingResult = {
   passcode: string;
 };
 
+export type CreateListingOptions = {
+  userId?: string;
+  customerId?: string;
+};
+
 export async function createListing(
   input: CreateListingInput,
-  userId: string,
+  options: CreateListingOptions = {},
 ): Promise<CreateListingResult> {
+  const { userId, customerId } = options;
   const sellerEmail = input.sellerEmail.trim().toLowerCase();
   const portalSlug = await generateUniquePortalSlug(input.address, input.city);
   const { passcode, passcodeHash } = await generateListingPasscodeHash(
     input.sellerPhone,
   );
   const offerFormUrl = `${appBaseUrl()}/offer/${portalSlug}`;
+  const isSubmitted = input.status === ListingStatus.SUBMITTED;
 
   const listing = await prisma.$transaction(async (tx) => {
     const primaryContact = await tx.contact.upsert({
@@ -54,7 +61,7 @@ export async function createListing(
         baths: input.baths?.trim() || null,
         sqft: input.sqft?.trim() || null,
         mlsNumber: input.mlsNumber?.trim() || null,
-        listDate: input.listDate ?? new Date(),
+        listDate: isSubmitted ? null : (input.listDate ?? new Date()),
         status: input.status,
         portalSlug,
         passcodeHash,
@@ -70,6 +77,8 @@ export async function createListing(
         escrowOfficerId: input.escrowOfficerId || null,
         transactionCoordinatorId: input.transactionCoordinatorId || null,
         portfolioGroup: input.portfolioGroup?.trim() || null,
+        customerId: customerId ?? null,
+        submittedAt: isSubmitted ? new Date() : null,
       },
     });
 
@@ -118,7 +127,7 @@ export async function createListing(
           listingId: created.id,
           name: photo.name.trim(),
           url: photo.url.trim(),
-          uploadedByUserId: userId,
+          uploadedByUserId: userId ?? null,
         })),
       });
     }

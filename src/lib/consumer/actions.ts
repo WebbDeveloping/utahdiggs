@@ -4,13 +4,17 @@ import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { getSafeRedirectPath } from "@/lib/auth/safe-redirect";
 import { signIn, signOut } from "@/lib/auth/consumer-auth";
 import {
   normalizeEmail,
   validateEmail,
-  validatePassword,
   validateSignupPasswords,
 } from "@/lib/consumer/validation";
+
+function getRedirectTarget(formData: FormData): string {
+  return getSafeRedirectPath(formData.get("next")?.toString());
+}
 
 export type ConsumerAuthState = {
   error?: string;
@@ -38,11 +42,13 @@ export async function consumerLoginAction(
     return { fieldErrors: { password: "Password is required." } };
   }
 
+  const redirectTo = getRedirectTarget(formData);
+
   try {
     await signIn("consumer-credentials", {
       email,
       password,
-      redirectTo: "/account",
+      redirectTo,
     });
   } catch (error) {
     if (error instanceof AuthError) {
@@ -51,7 +57,7 @@ export async function consumerLoginAction(
     throw error;
   }
 
-  redirect("/account");
+  redirect(redirectTo);
 }
 
 export async function consumerSignupAction(
@@ -94,11 +100,13 @@ export async function consumerSignupAction(
     },
   });
 
+  const redirectTo = getRedirectTarget(formData);
+
   try {
     await signIn("consumer-credentials", {
       email,
       password,
-      redirectTo: "/account",
+      redirectTo,
     });
   } catch (error) {
     if (error instanceof AuthError) {
@@ -107,7 +115,7 @@ export async function consumerSignupAction(
     throw error;
   }
 
-  redirect("/account");
+  redirect(redirectTo);
 }
 
 export async function consumerSignOutAction() {

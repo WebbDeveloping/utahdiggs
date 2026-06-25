@@ -17,6 +17,7 @@ export function formatCurrency(value: number | string | null | undefined): strin
 
 export function formatListingStatus(status: ListingStatus): string {
   const labels: Record<ListingStatus, string> = {
+    SUBMITTED: "Submitted",
     ACTIVE: "Active",
     UNDER_CONTRACT: "Under Contract",
     PENDING: "Pending",
@@ -30,6 +31,8 @@ export function listingStatusColor(
   status: ListingStatus,
 ): "success" | "warning" | "info" | "default" | "error" {
   switch (status) {
+    case ListingStatus.SUBMITTED:
+      return "info";
     case ListingStatus.ACTIVE:
       return "success";
     case ListingStatus.UNDER_CONTRACT:

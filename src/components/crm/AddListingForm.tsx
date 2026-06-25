@@ -28,7 +28,7 @@ import {
   MAX_PHOTO_COUNT,
 } from "@/lib/storage/blob";
 import {
-  LISTING_STATUSES,
+  CRM_LISTING_STATUSES,
   DEFAULT_LISTING_STATUS,
   formatListingStatusLabel,
 } from "@/lib/crm/listing-status";
@@ -655,7 +655,7 @@ export default function AddListingForm({ closingTeam }: AddListingFormProps) {
                 label="Status"
                 defaultValue={DEFAULT_LISTING_STATUS}
               >
-                {LISTING_STATUSES.map((status) => (
+                {CRM_LISTING_STATUSES.map((status) => (
                   <MenuItem key={status} value={status}>
                     {formatListingStatusLabel(status)}
                   </MenuItem>

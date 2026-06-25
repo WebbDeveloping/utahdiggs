@@ -12,7 +12,9 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
+import CrmApproveListingButton from "@/components/crm/CrmApproveListingButton";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
+import { ListingStatus } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
 import {
   formatCurrency,
@@ -39,6 +41,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
       portalSlug: true,
       mlsNumber: true,
       listDate: true,
+      customerId: true,
       _count: {
         select: {
           offers: true,
@@ -46,6 +49,20 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
         },
       },
     },
+  });
+
+  const submittedCount = listings.filter(
+    (listing) => listing.status === ListingStatus.SUBMITTED,
+  ).length;
+
+  const sortedListings = [...listings].sort((a, b) => {
+    if (a.status === ListingStatus.SUBMITTED && b.status !== ListingStatus.SUBMITTED) {
+      return -1;
+    }
+    if (b.status === ListingStatus.SUBMITTED && a.status !== ListingStatus.SUBMITTED) {
+      return 1;
+    }
+    return 0;
   });
 
   const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL?.replace(/\/$/, "");
@@ -63,6 +80,13 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
           </Link>
         }
       />
+
+      {submittedCount > 0 ? (
+        <Alert severity="info" sx={{ mb: 3 }}>
+          {submittedCount} consumer submission{submittedCount === 1 ? "" : "s"} awaiting
+          review.
+        </Alert>
+      ) : null}
 
       {created ? (
         <Alert severity="success" sx={{ mb: 3 }}>
@@ -98,15 +122,17 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
               <TableCell>City</TableCell>
               <TableCell align="right">List price</TableCell>
               <TableCell>Status</TableCell>
+              <TableCell>Source</TableCell>
               <TableCell>Portal slug</TableCell>
               <TableCell align="right">Offers</TableCell>
               <TableCell align="right">Requests</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {listings.length === 0 ? (
+            {sortedListings.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7}>
+                <TableCell colSpan={9}>
                   <Typography color="text.secondary" sx={{ py: 3, textAlign: "center" }}>
                     No listings found. Run <code>npm run db:seed</code> to load test data, or
                     add a listing above.
@@ -114,7 +140,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                 </TableCell>
               </TableRow>
             ) : (
-              listings.map((listing) => (
+              sortedListings.map((listing) => (
                 <TableRow key={listing.id} hover>
                   <TableCell>
                     <Typography sx={{ fontWeight: 600 }}>{listing.address}</Typography>
@@ -138,12 +164,26 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                     />
                   </TableCell>
                   <TableCell>
+                    {listing.customerId ? (
+                      <Chip label="Consumer" size="small" variant="outlined" color="info" />
+                    ) : (
+                      <Typography variant="body2" color="text.secondary">
+                        CRM
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell>
                     <Typography variant="body2" color="text.secondary">
                       {listing.portalSlug}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">{listing._count.offers}</TableCell>
                   <TableCell align="right">{listing._count.sellerRequests}</TableCell>
+                  <TableCell align="right">
+                    {listing.status === ListingStatus.SUBMITTED ? (
+                      <CrmApproveListingButton listingId={listing.id} />
+                    ) : null}
+                  </TableCell>
                 </TableRow>
               ))
             )}

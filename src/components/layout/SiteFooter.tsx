@@ -9,13 +9,17 @@ import Logo from "@/components/ui/Logo";
 const footerLinks = {
   Company: [
     { label: "About", href: "#" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Contact", href: "#contact" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "Contact", href: "/#contact" },
   ],
   Resources: [
-    { label: "How it works", href: "#how" },
-    { label: "FAQ", href: "#faq" },
+    { label: "How it works", href: "/#how" },
+    { label: "FAQ", href: "/#faq" },
     { label: "Seller portal", href: "https://portal.utahdigs.com" },
+  ],
+  Legal: [
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms & Conditions", href: "/terms" },
   ],
 };
 
@@ -23,7 +27,6 @@ export default function SiteFooter() {
   return (
     <Box
       component="footer"
-      id="contact"
       sx={{
         backgroundColor: "#13211c",
         color: "#cdd6d1",
@@ -41,7 +44,7 @@ export default function SiteFooter() {
           </Grid>
 
           {Object.entries(footerLinks).map(([heading, links]) => (
-            <Grid key={heading} size={{ xs: 6, md: 4 }}>
+            <Grid key={heading} size={{ xs: 6, sm: 4, md: 2 }}>
               <Typography
                 variant="h4"
                 sx={{
