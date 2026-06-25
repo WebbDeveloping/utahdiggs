@@ -1,0 +1,12 @@
+label: Window Coverings
+options:
+  - Blinds
+  - Draperies
+  - Full
+  - None
+  - Partial
+  - Plantation Shutters
+  - Shades
+  - value: other
+    label: Other
+    allowText: true

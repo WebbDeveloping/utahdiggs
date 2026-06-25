@@ -16,9 +16,17 @@ import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
 import SitePageLayout from "@/components/layout/SitePageLayout";
+import MlsDraftDeleteButton from "@/components/account/MlsDraftDeleteButton";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { getCustomerListings } from "@/lib/consumer/listings-query";
-import { formatCurrency, formatListingStatus, listingStatusColor } from "@/lib/crm/format";
+import {
+  consumerListingStatusColor,
+  formatConsumerListingStatus,
+  formatMlsDraftProgress,
+  getMlsDraftResumePath,
+  isMlsDraft,
+} from "@/lib/consumer/mls-draft";
+import { formatCurrency } from "@/lib/crm/format";
 
 export const metadata: Metadata = {
   title: "My listings — Glide RE",
@@ -82,12 +90,13 @@ export default async function AccountListingsPage({
                   <TableCell align="right">List price</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Submitted</TableCell>
+                  <TableCell align="right">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {listings.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={4}>
+                    <TableCell colSpan={5}>
                       <Stack spacing={2} sx={{ py: 4, alignItems: "center" }}>
                         <Typography color="text.secondary">
                           You haven&apos;t submitted any listings yet.
@@ -135,6 +144,11 @@ export default async function AccountListingsPage({
                             <Typography variant="body2" color="text.secondary">
                               {listing.city}, {listing.state}
                             </Typography>
+                            {isMlsDraft(listing) ? (
+                              <Typography variant="caption" color="text.secondary">
+                                {formatMlsDraftProgress(listing.intakeCurrentStep)}
+                              </Typography>
+                            ) : null}
                           </Box>
                         </Stack>
                       </TableCell>
@@ -143,18 +157,39 @@ export default async function AccountListingsPage({
                       </TableCell>
                       <TableCell>
                         <Chip
-                          label={formatListingStatus(listing.status)}
-                          color={listingStatusColor(listing.status)}
+                          label={formatConsumerListingStatus(listing)}
+                          color={consumerListingStatusColor(listing)}
                           size="small"
                         />
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2" color="text.secondary">
-                          {(listing.submittedAt ?? listing.createdAt).toLocaleDateString(
-                            "en-US",
-                            { month: "short", day: "numeric", year: "numeric" },
-                          )}
+                          {isMlsDraft(listing)
+                            ? listing.intakeUpdatedAt?.toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              }) ?? "—"
+                            : (listing.submittedAt ?? listing.createdAt).toLocaleDateString(
+                                "en-US",
+                                { month: "short", day: "numeric", year: "numeric" },
+                              )}
                         </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        {isMlsDraft(listing) ? (
+                          <Stack direction="row" spacing={1} sx={{ justifyContent: "flex-end" }}>
+                            <Link
+                              href={getMlsDraftResumePath(listing.id)}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <Button size="small" variant="outlined">
+                                Continue form
+                              </Button>
+                            </Link>
+                            <MlsDraftDeleteButton listingId={listing.id} label="Discard" />
+                          </Stack>
+                        ) : null}
                       </TableCell>
                     </TableRow>
                   ))

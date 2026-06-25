@@ -1,0 +1,10 @@
+label: Environmental Certifications
+options:
+  - None
+  - Built Green
+  - Energy Star
+  - Home Energy Rating
+  - LEED
+  - value: other
+    label: Other
+    allowText: true

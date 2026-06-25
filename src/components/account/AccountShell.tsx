@@ -10,8 +10,10 @@ import Typography from "@mui/material/Typography";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SitePageLayout from "@/components/layout/SitePageLayout";
+import MlsDraftBanner from "@/components/account/MlsDraftBanner";
 import MyListingsSection from "@/components/account/MyListingsSection";
 import { consumerSignOutAction } from "@/lib/consumer/actions";
+import { getMlsDrafts } from "@/lib/consumer/mls-draft";
 import type { CustomerListingSummary } from "@/types/consumer-listing";
 
 type AccountShellProps = {
@@ -38,6 +40,7 @@ const placeholderSections = [
 
 export default function AccountShell({ user, listings }: AccountShellProps) {
   const displayName = user.name?.trim() || user.email;
+  const mlsDrafts = getMlsDrafts(listings);
 
   return (
     <SitePageLayout user={user}>
@@ -60,6 +63,8 @@ export default function AccountShell({ user, listings }: AccountShellProps) {
               </Button>
             </Box>
           </Stack>
+
+          {mlsDrafts.length > 0 ? <MlsDraftBanner drafts={mlsDrafts} /> : null}
 
           <Grid container spacing={3}>
             {placeholderSections.map((section) => {

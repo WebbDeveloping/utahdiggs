@@ -1,0 +1,69 @@
+id: interior-systems
+title: Interior Systems
+fields:
+  - id: q33-flooring
+    type: checkbox
+    jotform:
+      id: 33
+      name: "q33_flooring[]"
+    label: Flooring
+    required: true
+    $ref: options/q33-flooring.yaml
+  - id: q34-typea34
+    type: checkbox
+    jotform:
+      id: 34
+      name: "q34_typeA34[]"
+    label: Interior Special Features
+    required: true
+    $ref: options/q34-typea34.yaml
+  - id: q27-typea27
+    type: checkbox
+    jotform:
+      id: 27
+      name: "q27_typeA27[]"
+    label: Accessibility
+    required: true
+    description: Select all that apply, or choose None if not applicable.
+    $ref: options/q27-typea27.yaml
+  - id: q41-window-coverings
+    type: checkbox
+    label: Window Coverings
+    required: true
+    $ref: options/q41-window-coverings.yaml
+    jotform:
+      id: TODO
+      name: "q41_windowCoverings[]"
+  - id: q42-amenities
+    type: checkbox
+    label: Amenities
+    required: true
+    description: Select community or property amenities that apply.
+    $ref: options/q42-amenities.yaml
+    jotform:
+      id: TODO
+      name: "q42_amenities[]"
+  - id: q31-airconditioning
+    type: checkbox
+    jotform:
+      id: 31
+      name: "q31_airConditioning[]"
+    label: Air Conditioning
+    required: true
+    options:
+      - Central Air; Electric
+      - Central Air; Gas
+      - Evaporative Cooler Roof
+      - Evaporative Cooler Window
+      - None
+      - value: other
+        label: Other
+        allowText: true
+  - id: q96-hvac96
+    type: checkbox
+    jotform:
+      id: 96
+      name: "q96_hvac96[]"
+    label: Heating
+    required: true
+    $ref: options/q96-hvac96.yaml

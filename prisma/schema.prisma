@@ -177,6 +177,11 @@ enum ListingStatus {
   CANCELLED
 }
 
+enum IntakeStatus {
+  DRAFT
+  SUBMITTED
+}
+
 model Listing {
   id               String        @id @default(cuid())
   airtableRecordId String?       @unique
@@ -238,6 +243,7 @@ model Listing {
   documents      Document[]
   sellerRequests SellerRequest[]
   sellInquiries  SellInquiry[]
+  listingIntake  ListingIntake?
 
   @@index([city])
   @@index([portfolioGroup])
@@ -245,6 +251,20 @@ model Listing {
   @@index([listPrice])
   @@index([latitude, longitude])
   @@index([customerId])
+}
+
+model ListingIntake {
+  id           String       @id @default(cuid())
+  listingId    String       @unique
+  status       IntakeStatus @default(DRAFT)
+  currentStep  Int          @default(1)
+  data         Json         @default("{}")
+  signatureUrl String?
+  submittedAt  DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }
 
 // ---------------------------------------------------------------------------

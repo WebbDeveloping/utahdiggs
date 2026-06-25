@@ -1,0 +1,25 @@
+id: signature
+title: Signature
+fields:
+  - id: field-217
+    type: content
+    jotform:
+      id: 217
+    content:
+      |
+        The Undersigned represents and acknowledges that Undersigned is the owner of the real property described in this Listing Input Form (“Owner”). Owner acknowledges that Wasatch Front Regional Multiple Listing Service, Inc. (“WFRMLS”) maintains a multiple listing service database for brokers, agents, and the public (“MLS Compilation”) and consents to all of the information included in this Listing Input Form (“Listing Content”) being included in the MLS Compilation.
+        Owner hereby grants WFRMLS a license to the Listing Content for the following purposes, among others: display of the Listing Content in the MLS Compilation, distribution and sublicensing of the Listing Content to third parties for display and use by third parties, display of the Listing Content on UtahRealEstate.com and any other WFRMLS owned websites, and any other lawful use. Owner hereby represents and warrants that Owner has all right, title, and interest in and to any copyright rights and other intellectual property rights associated with the Listing Content and that the Listing Content is correct and accurate. Owner agrees to indemnify and hold harmless WFRMLS against all damages, costs and liabilities, including reasonable attorney fees, arising from any claim that the Listing Content or any portion thereof infringes the rights of any third party.
+  - id: q20-signature
+    type: signature
+    jotform:
+      id: 20
+      name: q20_signature
+    label: Primary Owner Signature
+    required: true
+  - id: q23-signature23
+    type: signature
+    jotform:
+      id: 23
+      name: q23_signature23
+    label: Secondary Owner Signature (If applicable)
+    status: hidden-in-jotform

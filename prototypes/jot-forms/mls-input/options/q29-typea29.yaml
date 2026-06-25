@@ -1,0 +1,17 @@
+label: Exterior Special Features
+options:
+  - Balcony
+  - Barn
+  - Basement Entrance
+  - Bay Box Windows
+  - "Deck: Covered"
+  - Horse Property
+  - Out Buildings
+  - Outdoor Lighting
+  - Patio Covered
+  - Porch
+  - Skylights
+  - Walkout
+  - value: other
+    label: Other
+    allowText: true

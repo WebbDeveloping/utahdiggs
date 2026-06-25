@@ -21,6 +21,7 @@ import {
   type SellInquiryState,
 } from "@/lib/consumer/sell-inquiry-actions";
 import { TIMELINE_OPTIONS } from "@/lib/consumer/sell-inquiry-validation";
+import PhoneTextField from "@/components/ui/PhoneTextField";
 
 type Timeline = (typeof TIMELINE_OPTIONS)[number];
 
@@ -125,49 +126,39 @@ export default function SellInquiryForm({
     }
   }
 
-  function appendInquiryFields(formData: FormData) {
-    formData.set("firstName", values.firstName.trim());
-    formData.set("lastName", values.lastName.trim());
-    formData.set("email", values.email.trim().toLowerCase());
-    formData.set("phone", values.phone.trim());
-    formData.set("streetAddress", values.streetAddress.trim());
-    formData.set("city", values.city.trim());
-    formData.set("state", values.state);
-    formData.set("zip", values.zip.trim());
-    formData.set("timeline", values.timeline);
-  }
-
-  function handleContinue(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function handleStepOneSubmit(event: FormEvent<HTMLFormElement>) {
     const nextErrors = validateStepOne(values);
     if (Object.keys(nextErrors).length > 0) {
+      event.preventDefault();
       setErrors(nextErrors);
       return;
     }
 
     setErrors({});
 
-    if (isLoggedIn) {
-      const formData = new FormData();
-      appendInquiryFields(formData);
-      formAction(formData);
-      return;
+    if (!isLoggedIn) {
+      event.preventDefault();
+      startEmailCheck(async () => {
+        const result = await checkSellInquiryEmailAction(values.email);
+        setEmailExists(result.exists);
+        setStep(2);
+      });
     }
-
-    startEmailCheck(async () => {
-      const result = await checkSellInquiryEmailAction(values.email);
-      setEmailExists(result.exists);
-      setStep(2);
-    });
   }
 
-  function handleAuthSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    appendInquiryFields(formData);
-    formData.set("emailExists", String(emailExists));
-    formAction(formData);
-  }
+  const inquiryHiddenFields = (
+    <>
+      <input type="hidden" name="firstName" value={values.firstName.trim()} />
+      <input type="hidden" name="lastName" value={values.lastName.trim()} />
+      <input type="hidden" name="email" value={values.email.trim().toLowerCase()} />
+      <input type="hidden" name="phone" value={values.phone.trim()} />
+      <input type="hidden" name="streetAddress" value={values.streetAddress.trim()} />
+      <input type="hidden" name="city" value={values.city.trim()} />
+      <input type="hidden" name="state" value={values.state} />
+      <input type="hidden" name="zip" value={values.zip.trim()} />
+      <input type="hidden" name="timeline" value={values.timeline} />
+    </>
+  );
 
   const formShellSx = {
     backgroundColor: "background.paper",
@@ -180,8 +171,11 @@ export default function SellInquiryForm({
 
   if (step === 2 && !isLoggedIn) {
     return (
-      <Box component="form" onSubmit={handleAuthSubmit} noValidate sx={formShellSx}>
+      <Box component="form" action={formAction} noValidate sx={formShellSx}>
         <Stack spacing={3}>
+          {inquiryHiddenFields}
+          <input type="hidden" name="emailExists" value={String(emailExists)} />
+
           <Box>
             <Typography variant="h5" sx={{ mb: 1 }}>
               {emailExists ? "Welcome back!" : "Almost done"}
@@ -261,7 +255,13 @@ export default function SellInquiryForm({
   }
 
   return (
-    <Box component="form" onSubmit={handleContinue} noValidate sx={formShellSx}>
+    <Box
+      component="form"
+      action={isLoggedIn ? formAction : undefined}
+      onSubmit={handleStepOneSubmit}
+      noValidate
+      sx={formShellSx}
+    >
       {state.error ? (
         <Alert severity="error" sx={{ mb: 2 }}>
           {state.error}
@@ -272,6 +272,7 @@ export default function SellInquiryForm({
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             fullWidth
+            name="firstName"
             label="First Name"
             required
             value={values.firstName}
@@ -286,6 +287,7 @@ export default function SellInquiryForm({
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             fullWidth
+            name="lastName"
             label="Last Name"
             required
             value={values.lastName}
@@ -300,6 +302,7 @@ export default function SellInquiryForm({
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             fullWidth
+            name="email"
             label="Email Address"
             required
             type="email"
@@ -313,16 +316,15 @@ export default function SellInquiryForm({
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField
+          <PhoneTextField
             fullWidth
+            name="phone"
             label="Phone"
             required
-            type="tel"
             value={values.phone}
             onChange={(e) => updateField("phone", e.target.value)}
             error={Boolean(mergedErrors.phone)}
             helperText={mergedErrors.phone ?? " "}
-            autoComplete="tel"
             slotProps={{ formHelperText: { sx: { mx: 0, minHeight: 20 } } }}
             sx={inputSx}
           />
@@ -330,6 +332,7 @@ export default function SellInquiryForm({
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             fullWidth
+            name="streetAddress"
             label="Street Address"
             required
             value={values.streetAddress}
@@ -344,6 +347,7 @@ export default function SellInquiryForm({
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             fullWidth
+            name="city"
             label="City"
             required
             value={values.city}
@@ -359,6 +363,7 @@ export default function SellInquiryForm({
           <FormControl fullWidth required error={Boolean(mergedErrors.state)}>
             <InputLabel id="sell-inquiry-state-label">State</InputLabel>
             <Select
+              name="state"
               labelId="sell-inquiry-state-label"
               label="State"
               value={values.state}
@@ -378,6 +383,7 @@ export default function SellInquiryForm({
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField
             fullWidth
+            name="zip"
             label="Zip Code"
             required
             value={values.zip}
@@ -396,6 +402,7 @@ export default function SellInquiryForm({
               How soon do you want to sell?
             </InputLabel>
             <Select
+              name="timeline"
               labelId="sell-inquiry-timeline-label"
               label="How soon do you want to sell?"
               value={values.timeline}

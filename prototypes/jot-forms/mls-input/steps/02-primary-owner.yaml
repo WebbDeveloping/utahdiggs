@@ -1,0 +1,52 @@
+id: primary-owner
+title: Primary Owner
+fields:
+  - id: primaryOwnerName
+    label: Primary Owner Name
+    type: fullname
+    required: true
+    jotform:
+      id: TODO
+      name: q_primaryOwnerName
+  - id: primaryOwnerPhone
+    label: Primary Owner Phone Number
+    type: phone
+    required: true
+    placeholder: (000) 000-0000
+    jotform:
+      id: TODO
+      name: q_primaryOwnerPhone
+  - id: primaryOwnerEmail
+    label: Primary Owner Email
+    type: email
+    required: true
+    placeholder: "example@example.com"
+    jotform:
+      id: TODO
+      name: q_primaryOwnerEmail
+  - id: secondaryOwnerName
+    label: Secondary Owner Name
+    type: fullname
+    required: true
+    status: hidden-in-jotform
+    jotform:
+      id: TODO
+      name: q_secondaryOwnerName
+  - id: secondaryOwnerPhone
+    label: Secondary Owner Phone Number
+    type: phone
+    required: true
+    placeholder: (000) 000-0000
+    status: hidden-in-jotform
+    jotform:
+      id: TODO
+      name: q_secondaryOwnerPhone
+  - id: secondaryOwnerEmail
+    label: Secondary Owner Email
+    type: email
+    required: true
+    placeholder: "example@example.com"
+    status: hidden-in-jotform
+    jotform:
+      id: TODO
+      name: q_secondaryOwnerEmail

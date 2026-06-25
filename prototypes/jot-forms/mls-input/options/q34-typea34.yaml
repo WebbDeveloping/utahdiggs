@@ -1,0 +1,18 @@
+label: Interior Special Features
+options:
+  - Wet Bar
+  - Basement Apartment
+  - Master Bath
+  - "Bath: Separate Tub/Shower"
+  - Great Room
+  - Instant Hot Water
+  - Second Kitchen
+  - Mother In Law Apartment
+  - Double Ovens
+  - Gas Range
+  - Gas Oven
+  - Theater Room
+  - Vaulted Ceilings
+  - value: other
+    label: Other
+    allowText: true

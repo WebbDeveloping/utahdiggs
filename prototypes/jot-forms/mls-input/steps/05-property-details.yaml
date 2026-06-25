@@ -1,0 +1,75 @@
+id: property-details
+title: Property Details
+fields:
+  - id: q11-propertytype
+    label: Property type
+    type: radio
+    required: true
+    jotform:
+      name: q11_propertyType
+      id: 11
+    options:
+      - Single Family
+      - Condominium
+      - Mobile (w/o land)
+      - Recreational
+      - Townhouse
+      - Twin
+      - P.U.D.
+  - id: constructionStatus
+    label: Construction Status
+    type: radio
+    required: true
+    options:
+      - Built/Standing
+      - Under Construction
+      - To Be Built
+    jotform:
+      id: TODO
+      name: q_constructionStatus
+  - id: q51-styleof51
+    type: radio
+    required: true
+    jotform:
+      id: 51
+      name: q51_styleOf51
+    label: Style of property
+    $ref: options/q51-styleof51.yaml
+  - id: yearBuilt
+    label: Year Built
+    type: number
+    required: true
+    placeholder: "e.g., 1998"
+    jotform:
+      id: TODO
+  - id: effectiveYearBuilt
+    label: Effective Year Built
+    type: number
+    placeholder: "e.g., 1998"
+    description: Leave blank if same as year built.
+    jotform:
+      id: TODO
+      name: q_effectiveYearBuilt
+  - id: taxParcelNumber
+    label: Tax Parcel Number (APN)
+    type: text
+    required: true
+    placeholder: "Leave blank if unknown — we will look it up"
+    description: Required by WFRMLS. Enter the parcel number from your property tax statement, or leave blank for us to look up.
+    jotform:
+      id: TODO
+      name: q_taxParcelNumber
+  - id: lotSize
+    label: Lot Size (Acres)
+    type: text
+    required: true
+    placeholder: "e.g., .23"
+    description: "What size is the parcel?"
+    jotform:
+      id: TODO
+  - id: livingSqft
+    label: Approximate Total Living Square Footage
+    type: number
+    required: true
+    jotform:
+      id: TODO

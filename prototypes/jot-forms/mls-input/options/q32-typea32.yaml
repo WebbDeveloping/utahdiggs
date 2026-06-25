@@ -1,0 +1,23 @@
+label: Exterior
+options:
+  - Aluminum
+  - Brick
+  - Cedar
+  - Cement Board
+  - Cinder Block
+  - Clapboard/Masonite
+  - Concrete
+  - Container
+  - Frame
+  - Glass
+  - Insulated Concrete Forms
+  - Log
+  - Metal
+  - Wood
+  - Stone
+  - Stucco
+  - Vinyl
+  - Shingles
+  - value: other
+    label: Other
+    allowText: true

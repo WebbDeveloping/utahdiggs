@@ -1,0 +1,92 @@
+id: mls-input
+title: MLS Input Form
+jotformId: "261498349657980"
+jotformUrl: "https://form.jotform.com/261498349657980"
+estimatedMinutes: 20-25
+saveAndResume: true
+instructions:
+  - Please plan on 20-25 minutes to fill out this information.
+  - We will need all the information completed before we can list your property
+  - You can save and return to this form at any time by clicking save at the bottom and following the instructions.
+steps:
+  - order: "01"
+    id: owners
+    file: steps/01-owners.yaml
+    title: Owners
+  - order: "02"
+    id: primary-owner
+    file: steps/02-primary-owner.yaml
+    title: Primary Owner
+  - order: "03"
+    id: listing-address-schools
+    file: steps/03-listing-address-schools.yaml
+    title: "Listing Address & Schools"
+  - order: "04"
+    id: hoa-solar
+    file: steps/04-hoa-solar.yaml
+    title: "HOA & Solar"
+  - order: "05"
+    id: property-details
+    file: steps/05-property-details.yaml
+    title: Property Details
+  - order: "06"
+    id: level-breakdown
+    file: steps/06-level-breakdown.yaml
+    title: Breakdown By Level
+  - order: "07"
+    id: interior-systems
+    file: steps/07-interior-systems.yaml
+    title: Interior Systems
+  - order: "08"
+    id: exterior-parking
+    file: steps/08-exterior-parking.yaml
+    title: "Exterior & Parking"
+  - order: "09"
+    id: pool-roof-yard
+    file: steps/09-pool-roof-yard.yaml
+    title: "Pool, Roof & Yard"
+  - order: "10"
+    id: utilities-zoning-terms
+    file: steps/10-utilities-zoning-terms.yaml
+    title: "Utilities, Zoning & Terms"
+  - order: "11"
+    id: personal-property
+    file: steps/11-personal-property.yaml
+    title: Personal Property / Conveyances
+  - order: "12"
+    id: buyer-showings
+    file: steps/12-buyer-showings.yaml
+    title: Buyer Showings
+  - order: "13"
+    id: title-company
+    file: steps/13-title-company.yaml
+    title: Title Company
+  - order: "14"
+    id: remarks
+    file: steps/14-remarks.yaml
+    title: Remarks
+  - order: "15"
+    id: photos
+    file: steps/15-photos.yaml
+    title: Photos
+  - order: "16"
+    id: signature
+    file: steps/16-signature.yaml
+    title: Signature
+gaps:
+  - >-
+    Agent-only WFRMLS Matrix fields (listing dates, agent IDs, BAC, listing type, dual/VAR rate)
+    are intentionally omitted — Utah Digs staff enter these when submitting to MLS.
+  - Early steps and newly added WFRMLS fields lack JotForm IDs in the source dump; marked TODO for migration mapping.
+wfrmlsCoverage:
+  addedInSpecUpdate:
+    - Structured listing address, county, quadrant
+    - Short sale status
+    - Construction status, tax parcel number, P.U.D. property type
+    - Basement finished, style now required
+    - Secondary owner contact (conditional)
+    - HOA fee/month and contact (conditional)
+    - Accessibility, interior/exterior special features (surfaced)
+    - Amenities, window coverings, lot facts, animals/pets
+    - Water, telecommunications, environmental certifications
+    - HOA remarks, exclusions remarks, directions for non-standard address

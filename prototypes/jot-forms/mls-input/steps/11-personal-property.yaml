@@ -1,0 +1,11 @@
+id: personal-property
+title: Personal Property / Conveyances
+fields:
+  - id: q19-typea19
+    label: Personal Property / Conveyances
+    type: checkbox
+    jotform:
+      id: 19
+      name: "q19_typeA19[]"
+    $ref: options/q19-typea19.yaml
+    description: Select all items included with the sale.

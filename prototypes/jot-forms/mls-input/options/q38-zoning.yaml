@@ -1,0 +1,12 @@
+label: Zoning
+options:
+  - Residential
+  - Multi Family
+  - Short Term Rental Allowed
+  - Commercial
+  - Agricultural
+  - Horse Property
+  - Industrial
+  - value: other
+    label: Other
+    allowText: true

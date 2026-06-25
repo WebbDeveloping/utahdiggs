@@ -8,7 +8,15 @@ import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import Link from "next/link";
-import { formatCurrency, formatListingStatus, listingStatusColor } from "@/lib/crm/format";
+import MlsDraftDeleteButton from "@/components/account/MlsDraftDeleteButton";
+import { formatCurrency } from "@/lib/crm/format";
+import {
+  consumerListingStatusColor,
+  formatConsumerListingStatus,
+  formatMlsDraftProgress,
+  getMlsDraftResumePath,
+  isMlsDraft,
+} from "@/lib/consumer/mls-draft";
 import type { CustomerListingSummary } from "@/types/consumer-listing";
 
 type MyListingsSectionProps = {
@@ -44,45 +52,64 @@ export default function MyListingsSection({ listings }: MyListingsSectionProps) 
           ) : (
             <Stack spacing={2}>
               {recentListings.map((listing) => (
-                <Stack
-                  key={listing.id}
-                  direction="row"
-                  spacing={2}
-                  sx={{ alignItems: "center" }}
-                >
-                  <Box
-                    sx={{
-                      width: 64,
-                      height: 48,
-                      borderRadius: 1,
-                      overflow: "hidden",
-                      flexShrink: 0,
-                      backgroundColor: "action.hover",
-                    }}
+                <Stack key={listing.id} spacing={0.5}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ alignItems: "center" }}
                   >
-                    {listing.primaryPhotoUrl ? (
-                      <Box
-                        component="img"
-                        src={listing.primaryPhotoUrl}
-                        alt={listing.address}
-                        sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    <Box
+                      sx={{
+                        width: 64,
+                        height: 48,
+                        borderRadius: 1,
+                        overflow: "hidden",
+                        flexShrink: 0,
+                        backgroundColor: "action.hover",
+                      }}
+                    >
+                      {listing.primaryPhotoUrl ? (
+                        <Box
+                          component="img"
+                          src={listing.primaryPhotoUrl}
+                          alt={listing.address}
+                          sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                      ) : null}
+                    </Box>
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                      <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
+                        {listing.address}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" noWrap>
+                        {listing.city}, {listing.state} ·{" "}
+                        {formatCurrency(listing.listPrice)}
+                      </Typography>
+                    </Box>
+                    <Chip
+                      label={formatConsumerListingStatus(listing)}
+                      color={consumerListingStatusColor(listing)}
+                      size="small"
+                    />
+                  </Stack>
+                  {isMlsDraft(listing) ? (
+                    <Stack direction="row" spacing={1} sx={{ pl: "80px", alignItems: "center" }}>
+                      <Typography variant="caption" color="text.secondary">
+                        {formatMlsDraftProgress(listing.intakeCurrentStep)}
+                      </Typography>
+                      <Link href={getMlsDraftResumePath(listing.id)} style={{ textDecoration: "none" }}>
+                        <Button size="small" variant="text" sx={{ minWidth: 0, py: 0 }}>
+                          Continue
+                        </Button>
+                      </Link>
+                      <MlsDraftDeleteButton
+                        listingId={listing.id}
+                        label="Discard"
+                        variant="text"
+                        size="small"
                       />
-                    ) : null}
-                  </Box>
-                  <Box sx={{ flex: 1, minWidth: 0 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
-                      {listing.address}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary" noWrap>
-                      {listing.city}, {listing.state} ·{" "}
-                      {formatCurrency(listing.listPrice)}
-                    </Typography>
-                  </Box>
-                  <Chip
-                    label={formatListingStatus(listing.status)}
-                    color={listingStatusColor(listing.status)}
-                    size="small"
-                  />
+                    </Stack>
+                  ) : null}
                 </Stack>
               ))}
 

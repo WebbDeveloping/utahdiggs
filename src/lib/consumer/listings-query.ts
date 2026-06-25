@@ -22,6 +22,13 @@ export async function getCustomerListings(
         take: 1,
         select: { url: true },
       },
+      listingIntake: {
+        select: {
+          status: true,
+          currentStep: true,
+          updatedAt: true,
+        },
+      },
     },
   });
 
@@ -36,5 +43,8 @@ export async function getCustomerListings(
     primaryPhotoUrl: listing.documents[0]?.url ?? null,
     submittedAt: listing.submittedAt,
     createdAt: listing.createdAt,
+    intakeStatus: listing.listingIntake?.status ?? null,
+    intakeCurrentStep: listing.listingIntake?.currentStep ?? null,
+    intakeUpdatedAt: listing.listingIntake?.updatedAt ?? null,
   }));
 }

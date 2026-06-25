@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import PhoneTextField from "@/components/ui/PhoneTextField";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
@@ -267,7 +268,11 @@ export default function ConsumerListingForm({ user, initialValues }: ConsumerLis
 
         <Alert severity="info">
           Your listing will be reviewed by our team before it appears in search
-          results.
+          results.{" "}
+          <NextLink href="/account/listings/new/mls-input">
+            Complete the full MLS listing form
+          </NextLink>{" "}
+          instead (20–25 min, save &amp; resume).
         </Alert>
 
         <Section title="Property details">
@@ -385,7 +390,7 @@ export default function ConsumerListingForm({ user, initialValues }: ConsumerLis
             error={Boolean(errors?.sellerEmail)}
             helperText={errors?.sellerEmail ?? "From your account"}
           />
-          <TextField
+          <PhoneTextField
             name="sellerPhone"
             label="Phone"
             required

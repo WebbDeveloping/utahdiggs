@@ -14,7 +14,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Link from "next/link";
 import CrmApproveListingButton from "@/components/crm/CrmApproveListingButton";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
-import { ListingStatus } from "@/generated/prisma/client";
+import { ListingStatus, IntakeStatus } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
 import {
   formatCurrency,
@@ -42,6 +42,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
       mlsNumber: true,
       listDate: true,
       customerId: true,
+      listingIntake: { select: { status: true } },
       _count: {
         select: {
           offers: true,
@@ -140,13 +141,26 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                 </TableCell>
               </TableRow>
             ) : (
-              sortedListings.map((listing) => (
+              sortedListings.map((listing) => {
+                const isDraftIntake =
+                  listing.listingIntake?.status === IntakeStatus.DRAFT;
+                const canApprove =
+                  listing.status === ListingStatus.SUBMITTED && !isDraftIntake;
+
+                return (
                 <TableRow key={listing.id} hover>
                   <TableCell>
-                    <Typography sx={{ fontWeight: 600 }}>{listing.address}</Typography>
+                    <Link href={`/crm/listings/${listing.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                      <Typography sx={{ fontWeight: 600 }}>{listing.address}</Typography>
+                    </Link>
                     {listing.mlsNumber ? (
                       <Typography variant="body2" color="text.secondary">
                         MLS {listing.mlsNumber}
+                      </Typography>
+                    ) : null}
+                    {isDraftIntake ? (
+                      <Typography variant="body2" color="text.secondary">
+                        MLS form in progress
                       </Typography>
                     ) : null}
                   </TableCell>
@@ -180,12 +194,17 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                   <TableCell align="right">{listing._count.offers}</TableCell>
                   <TableCell align="right">{listing._count.sellerRequests}</TableCell>
                   <TableCell align="right">
-                    {listing.status === ListingStatus.SUBMITTED ? (
-                      <CrmApproveListingButton listingId={listing.id} />
+                    {canApprove ? (
+                      <CrmApproveListingButton
+                        listingId={listing.id}
+                        address={listing.address}
+                        portalSlug={listing.portalSlug}
+                      />
                     ) : null}
                   </TableCell>
                 </TableRow>
-              ))
+              );
+              })
             )}
           </TableBody>
         </Table>

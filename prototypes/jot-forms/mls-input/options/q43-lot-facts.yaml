@@ -1,0 +1,25 @@
+label: Lot Facts
+options:
+  - Additional Land Available
+  - Adjacent to Golf Course
+  - Corner Lot
+  - Cul-de-sac
+  - Curb & Gutter
+  - Fenced, Full
+  - Fenced, Part
+  - Private
+  - Road, Paved
+  - Road, Unpaved
+  - Secluded Yard
+  - Sidewalks
+  - Terrain, Flat
+  - Terrain, Grad Slope
+  - Terrain, Hilly
+  - Terrain, Mountain
+  - View, Lake
+  - View, Mountain
+  - View, Valley
+  - Wooded
+  - value: other
+    label: Other
+    allowText: true

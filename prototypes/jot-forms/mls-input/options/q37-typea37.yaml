@@ -1,0 +1,18 @@
+label: Roof
+options:
+  - Asphalt Shingles
+  - Wood Shake
+  - Metal
+  - Aluminum
+  - Flat
+  - Fiberglass
+  - Composition
+  - Membrane
+  - PVC
+  - Rubber (EPDM)
+  - Stone
+  - Tar / Gravel
+  - Tile
+  - value: other
+    label: Other
+    allowText: true

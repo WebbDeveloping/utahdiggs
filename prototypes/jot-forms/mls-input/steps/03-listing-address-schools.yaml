@@ -1,0 +1,108 @@
+id: listing-address-schools
+title: "Listing Address & Schools"
+fields:
+  - id: listingAddress
+    label: Listing Address
+    type: address
+    required: true
+    description: Street address of the property being listed.
+    jotform:
+      id: TODO
+      name: q_listingAddress
+  - id: listingCounty
+    label: County
+    type: text
+    required: true
+    placeholder: "e.g., Salt Lake"
+    jotform:
+      id: TODO
+      name: q_listingCounty
+  - id: listingQuadrant
+    label: Quadrant
+    type: radio
+    required: true
+    description: "NW, NE, SW, or SE area of the city (WFRMLS requirement)."
+    options:
+      - NW
+      - NE
+      - SW
+      - SE
+    jotform:
+      id: TODO
+      name: q_listingQuadrant
+  - id: listingCoordinates
+    label: "Approximate North / South & East / West Coordinates"
+    type: text
+    placeholder: "ex: 2100 S 1300 E"
+    description: Optional if the street address above is complete.
+    jotform:
+      id: TODO
+  - id: nonStandardAddress
+    label: "Is this a non-standard address? (See directions)"
+    type: radio
+    required: true
+    options:
+      - "No"
+      - "Yes"
+    jotform:
+      id: TODO
+      name: q_nonStandardAddress
+  - id: directionsRemarks
+    label: Directions / Non-Standard Address
+    type: textarea
+    required: true
+    status: hidden-in-jotform
+    placeholder: "Describe how to find the property if the address alone is not sufficient."
+    jotform:
+      id: TODO
+      name: q_directionsRemarks
+  - id: ownerAddressSameAsListing
+    label: "Is the OWNER address the SAME as the LISTING address?"
+    type: radio
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+  - id: ownerAddress
+    label: Owner Address
+    type: address
+    required: true
+    status: hidden-in-jotform
+    jotform:
+      id: TODO
+  - id: listingPrice
+    label: Listing Price
+    type: currency
+    required: true
+    placeholder: "e.g., $500,000"
+    jotform:
+      id: TODO
+  - id: shortSale
+    label: Short Sale Status
+    type: radio
+    required: true
+    options:
+      - Not Short Sale
+      - Price Subject to 3rd Party Approval
+      - Price Previously Approved by 3rd Party
+      - Offer Under 3rd Party Review
+    jotform:
+      id: TODO
+      name: q_shortSale
+  - id: schools
+    label: Schools
+    type: matrix
+    required: true
+    rows:
+      - School District
+      - Elementary School
+      - Junior High/Middle School
+      - High School
+    columns:
+      - id: name
+        label: NAME
+        type: text
+    jotform:
+      id: TODO

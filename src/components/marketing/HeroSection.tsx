@@ -4,8 +4,8 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import HeroAddressTabs from "@/components/marketing/HeroAddressTabs";
+import SavingsCalculatorCard from "@/components/marketing/SavingsCalculatorCard";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
 
 export default async function HeroSection() {
@@ -55,25 +55,7 @@ export default async function HeroSection() {
             </Stack>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Box
-              sx={{
-                position: "relative",
-                width: "100%",
-                aspectRatio: { xs: "16 / 10", md: "4 / 3" },
-                borderRadius: { xs: 3, md: 4 },
-                overflow: "hidden",
-                boxShadow: "0 24px 48px rgba(0, 0, 0, 0.12)",
-              }}
-            >
-              <Image
-                src="/images/hero-home.jpg"
-                alt="Modern home with landscaped yard"
-                fill
-                priority
-                sizes="(max-width: 900px) 100vw, 50vw"
-                style={{ objectFit: "cover" }}
-              />
-            </Box>
+            <SavingsCalculatorCard />
           </Grid>
         </Grid>
       </Container>

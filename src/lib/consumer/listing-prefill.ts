@@ -48,6 +48,15 @@ export function buildListingPrefillPath(input: ListingPrefillInput): string {
   return `/account/listings/new?${query}`;
 }
 
+export function buildMlsInputPrefillPath(input: ListingPrefillInput): string {
+  const query = buildListingPrefillSearchParams(input);
+  return `/account/listings/new/mls-input?${query}`;
+}
+
+export function buildMlsInputDraftPath(listingId: string): string {
+  return `/account/listings/new/mls-input?draft=${encodeURIComponent(listingId)}`;
+}
+
 export function parseListingPrefillFromSearchParams(
   searchParams: Record<string, string | string[] | undefined>,
 ): ListingPrefillValues | null {

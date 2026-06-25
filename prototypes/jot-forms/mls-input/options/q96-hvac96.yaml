@@ -1,0 +1,15 @@
+label: Heating
+options:
+  - Furnace / Forced Air
+  - Gas
+  - Heat Pump
+  - Baseboard
+  - Radiant
+  - Electric
+  - Propane
+  - Wood Burning
+  - Hot Water / Steam
+  - Solar
+  - value: other
+    label: Other
+    allowText: true

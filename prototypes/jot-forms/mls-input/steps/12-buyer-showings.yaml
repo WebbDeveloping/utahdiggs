@@ -1,0 +1,135 @@
+id: buyer-showings
+title: Buyer Showings
+fields:
+  - id: field-81
+    type: content
+    jotform:
+      id: 81
+    content:
+      |
+        BUYER SHOWINGS
+        Please let us know if the property is owner occupied, tenant occupied or vacant and who is authorized to approve buyer showings with their contact information.
+        Showing approvals can be made via text message & email. 
+        We will deliver a secure electronic lock box and it will be placed on or around the front door area.  This box can ONLY be accessed by licensed agents once they have scheduled an appointment. 
+  - id: q191-propertyoccupancy
+    type: radio
+    jotform:
+      id: 191
+      name: q191_propertyOccupancy
+    label: Property Occupancy
+    required: true
+    options:
+      - Owner Occupied
+      - Tenant Occupied
+      - Vacant / Immediate Appt Approval
+  - id: q192-howmany
+    type: radio
+    jotform:
+      id: 192
+      name: q192_howMany
+    label: "How Many Owners Can Approve Showings?"
+    status: hidden-in-jotform
+    options:
+      - One
+      - Two
+  - id: q193-howmany193
+    type: radio
+    jotform:
+      id: 193
+      name: q193_howMany193
+    label: "How Many Tenants Can Approve Showings?"
+    status: hidden-in-jotform
+    options:
+      - One
+      - Two
+  - id: q194-ownershowing
+    type: fullname
+    jotform:
+      id: 194
+      name: "q194_ownerShowing[first]"
+    label: Owner Showing Contact 1
+    status: hidden-in-jotform
+  - id: q195-phonenumber
+    type: phone
+    jotform:
+      id: 195
+      name: "q195_phoneNumber[full]"
+    label: Owner Showing Phone 1
+    status: hidden-in-jotform
+  - id: q196-email
+    type: email
+    jotform:
+      id: 196
+      name: q196_email
+    label: Owner Showing Email 1
+    status: hidden-in-jotform
+  - id: q197-ownershowing197
+    type: fullname
+    jotform:
+      id: 197
+      name: "q197_ownerShowing197[first]"
+    label: Owner Showing Contact 2
+    status: hidden-in-jotform
+  - id: q198-ownershowing198
+    type: phone
+    jotform:
+      id: 198
+      name: "q198_ownerShowing198[full]"
+    label: Owner Showing Phone 2
+    status: hidden-in-jotform
+  - id: q199-ownershowing199
+    type: email
+    jotform:
+      id: 199
+      name: q199_ownerShowing199
+    label: Owner Showing Email 2
+    status: hidden-in-jotform
+  - id: q200-tenantshowing
+    type: fullname
+    jotform:
+      id: 200
+      name: "q200_tenantShowing[first]"
+    label: Tenant Showing Contact 1
+    status: hidden-in-jotform
+  - id: q201-ownershowing201
+    type: phone
+    jotform:
+      id: 201
+      name: "q201_ownerShowing201[full]"
+    label: Tenant Showing Phone 1
+    status: hidden-in-jotform
+  - id: q202-tenantshowing202
+    type: email
+    jotform:
+      id: 202
+      name: q202_tenantShowing202
+    label: Tenant Showing Email 1
+    status: hidden-in-jotform
+  - id: q203-tenantshowing203
+    type: fullname
+    jotform:
+      id: 203
+      name: "q203_tenantShowing203[first]"
+    label: Tenant Showing Contact 2
+    status: hidden-in-jotform
+  - id: q204-tenantshowing204
+    type: phone
+    jotform:
+      id: 204
+      name: "q204_tenantShowing204[full]"
+    label: Tenant Showing Phone 2
+    status: hidden-in-jotform
+  - id: q205-tenantshowing205
+    type: email
+    jotform:
+      id: 205
+      name: q205_tenantShowing205
+    label: Tenant Showing Email 2
+    status: hidden-in-jotform
+  - id: q100-showinginstructions
+    type: textarea
+    jotform:
+      id: 100
+      name: q100_showingInstructions
+    label: Showing Instructions
+    placeholder: "Please share any important access information and how to handle those items. (Pets, Alarms, Tenants, etc.)  Please be as detailed as possible."

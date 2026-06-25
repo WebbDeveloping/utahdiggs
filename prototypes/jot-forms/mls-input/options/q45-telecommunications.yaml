@@ -1,0 +1,11 @@
+label: Telecommunications
+options:
+  - Broadband Cable
+  - DSL
+  - Ethernet, Wired
+  - Fiber Optics
+  - Multiple Phone Lines
+  - Wireless Broadband
+  - value: other
+    label: Other
+    allowText: true

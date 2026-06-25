@@ -1,0 +1,16 @@
+label: Yard
+options:
+  - Full Landscaping
+  - Mature Trees
+  - Stream
+  - Xeriscaped
+  - Adjacent To Golf Course
+  - Cul-de-sac
+  - Corner Lot
+  - Sprinkler System
+  - Fenced
+  - Waterfront
+  - Wooded
+  - value: other
+    label: Other
+    allowText: true

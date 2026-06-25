@@ -1,0 +1,7 @@
+# MLS Input Form spec has moved
+
+The monolithic field dump was restructured into readable YAML files.
+
+See: prototypes/jot-forms/mls-input/README.md
+
+Original raw dump: prototypes/jot-forms/mls-input/raw/mls-input.txt

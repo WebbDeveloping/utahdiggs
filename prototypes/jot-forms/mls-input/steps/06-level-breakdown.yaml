@@ -1,0 +1,124 @@
+id: level-breakdown
+title: Breakdown By Level
+intro:
+  |
+    We apologize that this section may be difficult via a mobile device.
+    
+    However, this is how the MLS distributes and formats your information. The more accurate this information, the more buyers you will reach.
+    
+    (If you don't have the approximate square feet per level, just leave blank and we can look it up for you. We do need the other information filled out accurately)
+    
+    Ex: Basement + Main Level + Second Story = 3 Levels
+    Ex: Multi Level could be 3 or 4 depending on the basement.
+fields:
+  - id: levelCount
+    label: "How Many Levels In The Property?"
+    type: radio
+    required: true
+    options:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+    jotform:
+      id: TODO
+  - id: q26-typea26
+    label: Basement / Lower Level Type
+    type: checkbox
+    required: true
+    jotform:
+      name: "q26_typeA26[]"
+      id: 26
+    options:
+      - Daylight
+      - Entrance
+      - Full
+      - Walkout
+      - Shelf
+      - Partial
+      - None / Crawlspace / Slab
+  - id: basementFinished
+    label: Basement Finished
+    type: radio
+    required: true
+    options:
+      - "Yes"
+      - "No"
+      - Partial
+      - N/A
+    jotform:
+      id: TODO
+      name: q_basementFinished
+  - id: q117-2level117
+    type: matrix
+    jotform:
+      id: 117
+      name: "q117_2Level117[0][0]"
+    label: Please add the corresponding information for each level. (Scroll right to see all info)
+    columns:
+      - id: square-footage
+        label: Square Footage(+/-)
+        type: number
+      - id: bedrooms
+        label: Bedrooms
+        type: select
+        options:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+      - id: master-y-n
+        label: Master (Y/N)
+        type: checkbox
+      - id: full-baths
+        label: Full Baths
+        type: select
+        options:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+      - id: 3-4-baths
+        label: 3/4 Baths
+        type: select
+        options:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+      - id: 1-2-baths
+        label: 1/2 Baths
+        type: select
+        options:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+      - id: living-fam-rm
+        label: Living/Fam Rm
+        type: checkbox
+      - id: laundry
+        label: Laundry
+        type: checkbox
+      - id: fireplace
+        label: Fireplace
+        type: checkbox
+    dynamic:
+      rowCountFrom: levelCount
+      rowLabels:
+        - Main Level
+        - Basement

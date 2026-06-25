@@ -1,0 +1,53 @@
+id: hoa-solar
+title: "HOA & Solar"
+fields:
+  - id: hoa
+    label: "Is the property in an HOA?"
+    type: radio
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+  - id: hoaFeeMonth
+    label: HOA Fee / Month
+    type: currency
+    required: true
+    status: hidden-in-jotform
+    placeholder: "e.g., $150"
+    jotform:
+      id: TODO
+      name: q_hoaFeeMonth
+  - id: hoaContact
+    label: HOA Contact Name
+    type: text
+    status: hidden-in-jotform
+    jotform:
+      id: TODO
+      name: q_hoaContact
+  - id: hoaContactPhone
+    label: HOA Contact Phone
+    type: phone
+    status: hidden-in-jotform
+    jotform:
+      id: TODO
+      name: q_hoaContactPhone
+  - id: shortTermRentals
+    label: "Are Short Term Rentals Allowed?"
+    type: radio
+    options:
+      - "Yes"
+      - "No"
+      - Unknown
+    jotform:
+      id: TODO
+  - id: solar
+    label: "Does the property have solar?"
+    type: radio
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO

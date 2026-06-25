@@ -1,0 +1,18 @@
+label: Style of property
+options:
+  - 2-Story
+  - Bungalow / Cottage
+  - Rambler / Ranch Style
+  - Mid-Century Modern
+  - Cabin
+  - Manufactured
+  - Mobile
+  - Split Entry / Bi-Level
+  - Tri / Multi-Level
+  - Townhouse
+  - "Townhouse, Row End"
+  - Tudor
+  - Victorian
+  - value: other
+    label: Other
+    allowText: true

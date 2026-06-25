@@ -1,0 +1,20 @@
+id: owners
+title: Owners
+fields:
+  - id: ownersIntro
+    type: content
+    content:
+      |
+        If there are more than 2 owners or you need to sign for an entity (LLC, Partnership etc), Please select 1 owner and reply to the email you receive when this information is submitted.
+        
+        Once this form is complete and we have your email, we can then send the form to the other parties for their signature and/or will collect the operating agreements etc. verifying proof of ownership and/or the right to sign as an officer for the entity prior to placing the property on the MLS.
+  - id: ownerCount
+    label: "How Many Owners Of The Property?"
+    type: radio
+    required: true
+    options:
+      - One
+      - Two
+    jotform:
+      id: TODO
+      name: q_ownerCount

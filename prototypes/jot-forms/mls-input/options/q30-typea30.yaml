@@ -1,0 +1,18 @@
+label: Parking
+options:
+  - Garage
+  - Carport
+  - Attached
+  - Detached
+  - Extra Height
+  - Extra Length
+  - Extra Width
+  - 2 Car Deep (Tandem)
+  - Heated
+  - RV Parking
+  - Workshop
+  - Underground
+  - Assigned Stall
+  - value: other
+    label: Other
+    allowText: true

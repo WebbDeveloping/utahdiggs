@@ -1,0 +1,16 @@
+label: Connected Utilities
+options:
+  - Natural Gas
+  - Power
+  - Sewer
+  - Septic
+  - Culinary Water Only
+  - Irrigantion Water
+  - Secondary Water
+  - Water Rights Owned
+  - Water Shares
+  - Well
+  - Spring
+  - value: other
+    label: Other
+    allowText: true

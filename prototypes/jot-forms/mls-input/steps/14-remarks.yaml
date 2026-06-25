@@ -1,0 +1,32 @@
+id: remarks
+title: Remarks
+fields:
+  - id: q97-publicremarks
+    type: textarea
+    jotform:
+      id: 97
+      name: q97_publicRemarks
+    label: Public Remarks / House Description
+    placeholder: "Please give a description of the home highlighting it's best features.  We may modify it with your approval prior to posting on the MLS."
+  - id: hoaRemarks
+    type: textarea
+    label: HOA Remarks
+    status: hidden-in-jotform
+    placeholder: "Any HOA restrictions, fees, or rules buyers should know."
+    jotform:
+      id: TODO
+      name: q_hoaRemarks
+  - id: exclusionsRemarks
+    type: textarea
+    label: Exclusions Remarks
+    placeholder: "List any items explicitly excluded from the sale."
+    jotform:
+      id: TODO
+      name: q_exclusionsRemarks
+  - id: q98-commentsto
+    type: textarea
+    jotform:
+      id: 98
+      name: q98_commentsTo
+    label: Comments To Utah Digs
+    placeholder: "These comments will only be seen by us.  Any special features, situations, concerns etc."

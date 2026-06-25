@@ -1,0 +1,48 @@
+id: title-company
+title: Title Company
+fields:
+  - id: field-210
+    type: content
+    jotform:
+      id: 210
+    content:
+      |
+        Title Company
+        Would you like us to open your title work with Prime Title Co?
+        (This will expedite the process and they will be notified upon listing)
+  - id: q207-typea207
+    type: radio
+    jotform:
+      id: 207
+      name: q207_typeA207
+    options:
+      - "Yes"
+      - "No, I have someone else"
+  - id: q211-name211
+    type: fullname
+    jotform:
+      id: 211
+      name: "q211_name211[first]"
+    label: Title Co Contact
+    status: hidden-in-jotform
+  - id: q212-typea212
+    type: text
+    jotform:
+      id: 212
+      name: q212_typeA212
+    label: Title Company Name
+    status: hidden-in-jotform
+  - id: q213-email213
+    type: email
+    jotform:
+      id: 213
+      name: q213_email213
+    label: Title Co Email
+    status: hidden-in-jotform
+  - id: q214-phonenumber214
+    type: phone
+    jotform:
+      id: 214
+      name: "q214_phoneNumber214[full]"
+    label: Title Company Phone
+    status: hidden-in-jotform

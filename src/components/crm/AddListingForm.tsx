@@ -16,6 +16,7 @@ import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import PhoneTextField from "@/components/ui/PhoneTextField";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
@@ -422,10 +423,9 @@ export default function AddListingForm({ closingTeam }: AddListingFormProps) {
               error={Boolean(errors?.sellerEmail)}
               helperText={errors?.sellerEmail}
             />
-            <TextField
+            <PhoneTextField
               name="sellerPhone"
               label="Phone"
-              type="tel"
               required
               fullWidth
               sx={inputSx}
@@ -456,10 +456,9 @@ export default function AddListingForm({ closingTeam }: AddListingFormProps) {
                 fullWidth
                 sx={inputSx}
               />
-              <TextField
+              <PhoneTextField
                 name={`coSellerPhone${i}`}
                 label="Phone"
-                type="tel"
                 fullWidth
                 sx={inputSx}
               />

@@ -1,0 +1,18 @@
+label: Flooring
+options:
+  - Bamboo
+  - Carpet
+  - Concrete
+  - Cork
+  - Hardwood
+  - Laminate
+  - Linoleum
+  - Marble
+  - Natural Stone
+  - Slate
+  - Tile
+  - Vinyl
+  - LVP / Vinyl Plank
+  - value: other
+    label: Other
+    allowText: true

@@ -1,0 +1,55 @@
+id: exterior-parking
+title: "Exterior & Parking"
+fields:
+  - id: q32-typea32
+    type: checkbox
+    jotform:
+      id: 32
+      name: "q32_typeA32[]"
+    label: Exterior
+    required: true
+    $ref: options/q32-typea32.yaml
+  - id: q29-typea29
+    type: checkbox
+    jotform:
+      id: 29
+      name: "q29_typeA29[]"
+    label: Exterior Special Features
+    required: true
+    $ref: options/q29-typea29.yaml
+  - id: q30-typea30
+    type: checkbox
+    jotform:
+      id: 30
+      name: "q30_typeA30[]"
+    label: Parking
+    required: true
+    $ref: options/q30-typea30.yaml
+  - id: q208-garagecapacity
+    type: number
+    jotform:
+      id: 208
+      name: q208_garageCapacity
+    label: Garage Capacity
+    status: hidden-in-jotform
+    min: 1
+    max: 10
+    default: 2
+  - id: q209-garagecapacity209
+    type: number
+    jotform:
+      id: 209
+      name: q209_garageCapacity209
+    label: Carport Capacity
+    status: hidden-in-jotform
+    min: 1
+    max: 10
+    default: 1
+  - id: q28-typea28
+    type: checkbox
+    jotform:
+      id: 28
+      name: "q28_typeA28[]"
+    label: Driveway
+    required: true
+    $ref: options/q28-typea28.yaml

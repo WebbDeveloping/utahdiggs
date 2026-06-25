@@ -237,7 +237,10 @@ export async function createListingAction(
   );
 }
 
-export async function approveListingAction(listingId: string): Promise<void> {
+export async function approveListingAction(
+  listingId: string,
+  mlsNumber?: string,
+): Promise<void> {
   const session = await auth();
   if (!session?.user?.id || !canManageListings(session.user.role)) {
     throw new Error("Unauthorized");
@@ -254,6 +257,14 @@ export async function approveListingAction(listingId: string): Promise<void> {
       zip: true,
       latitude: true,
       longitude: true,
+      portalSlug: true,
+      offerFormUrl: true,
+      listingIntake: { select: { status: true } },
+      contacts: {
+        where: { role: "PRIMARY" },
+        select: { contact: { select: { email: true, name: true, phone: true } } },
+        take: 1,
+      },
     },
   });
 
@@ -265,11 +276,19 @@ export async function approveListingAction(listingId: string): Promise<void> {
     throw new Error("Only submitted listings can be approved.");
   }
 
+  if (
+    listing.listingIntake &&
+    listing.listingIntake.status !== "SUBMITTED"
+  ) {
+    throw new Error("MLS intake form is still in progress.");
+  }
+
   await prisma.listing.update({
     where: { id: listing.id },
     data: {
       status: ListingStatus.ACTIVE,
       listDate: new Date(),
+      ...(mlsNumber ? { mlsNumber } : {}),
     },
   });
 
@@ -291,6 +310,26 @@ export async function approveListingAction(listingId: string): Promise<void> {
     }
   }
 
+  const seller = listing.contacts[0]?.contact;
+  if (seller?.email) {
+    try {
+      const { sendListingWelcomeEmail } = await import(
+        "@/lib/email/templates/mls-intake-submitted"
+      );
+      const phoneDigits = seller.phone.replace(/\D/g, "");
+      await sendListingWelcomeEmail({
+        sellerEmail: seller.email,
+        sellerName: seller.name,
+        portalSlug: listing.portalSlug,
+        pinHint: phoneDigits.slice(-4) || "****",
+        offerFormUrl: listing.offerFormUrl ?? undefined,
+      });
+    } catch (emailError) {
+      console.error("Welcome email failed:", emailError);
+    }
+  }
+
   revalidatePath("/crm/listings");
+  revalidatePath(`/crm/listings/${listingId}`);
   revalidatePath("/search");
 }

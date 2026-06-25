@@ -1,0 +1,19 @@
+label: Amenities
+options:
+  - None
+  - Cable TV Available
+  - Cable TV Wired
+  - Clubhouse
+  - Electric Dryer Hookup
+  - Exercise Room
+  - Gas Dryer Hookup
+  - Gated Community
+  - Home Warranty
+  - Park / Playground
+  - Sauna / Steam Room
+  - Swimming Pool
+  - Tennis Court
+  - Workshop
+  - value: other
+    label: Other
+    allowText: true

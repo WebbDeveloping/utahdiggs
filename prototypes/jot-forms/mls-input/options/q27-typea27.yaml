@@ -1,0 +1,19 @@
+label: Accessibility
+options:
+  - None
+  - "32\" Wide Doorways"
+  - "36\" Wide Hallways"
+  - Ceiling Lift System
+  - Elevator
+  - Fully Accessible
+  - Grab Bars
+  - Ground Level
+  - Porch Lift
+  - Ramp
+  - Roll-In Shower
+  - Single Level Living
+  - Stair Lift
+  - Wheelchair Access
+  - value: other
+    label: Other
+    allowText: true

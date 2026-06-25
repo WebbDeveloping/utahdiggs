@@ -1,0 +1,157 @@
+# Conditional visibility and dynamic field rules for the MLS Input form.
+# Inferred from JotForm HTML (always-hidden classes), WFRMLS Form B requirements,
+# and field relationships.
+
+rules:
+  - id: secondary-owner-contact
+    description: Show secondary owner contact fields when two owners are listed.
+    when:
+      field: ownerCount
+      equals: Two
+    show:
+      - secondaryOwnerName
+      - secondaryOwnerPhone
+      - secondaryOwnerEmail
+
+  - id: secondary-owner-signature
+    description: Show secondary owner signature when two owners are listed.
+    when:
+      field: ownerCount
+      equals: Two
+    show:
+      - q23-signature23
+
+  - id: non-standard-address-directions
+    description: Show directions when address is non-standard.
+    when:
+      field: nonStandardAddress
+      equals: "Yes"
+    show:
+      - directionsRemarks
+
+  - id: owner-address-fields
+    description: Show owner mailing address when it differs from the listing address.
+    when:
+      field: ownerAddressSameAsListing
+      equals: "No"
+    show:
+      - ownerAddress
+
+  - id: hoa-fee-and-contact
+    description: Show HOA fee and contact when property is in an HOA.
+    when:
+      field: hoa
+      equals: "Yes"
+    show:
+      - hoaFeeMonth
+      - hoaContact
+      - hoaContactPhone
+      - hoaRemarks
+
+  - id: level-matrix-rows
+    description: Level breakdown matrix row count follows the selected number of levels.
+    dynamic:
+      field: q117-2level117
+      rowCountFrom: levelCount
+      rowLabels:
+        - Main Level
+        - Basement
+        - Second Story
+        - Third Story
+        - Fourth Story
+
+  - id: garage-capacity
+    description: Show garage capacity when Parking includes Garage.
+    when:
+      field: q30-typea30
+      includes: Garage
+    show:
+      - q208-garagecapacity
+
+  - id: carport-capacity
+    description: Show carport capacity when Parking includes Carport.
+    when:
+      field: q30-typea30
+      includes: Carport
+    show:
+      - q209-garagecapacity209
+
+  - id: pool-features
+    description: Show pool type/features when property has a pool.
+    when:
+      field: q184-doesthe
+      equals: "Yes"
+    show:
+      - q63-pooltype
+
+  - id: owner-occupied-showings
+    description: Owner-occupied showing approval flow.
+    when:
+      field: q191-propertyoccupancy
+      equals: Owner Occupied
+    show:
+      - q192-howmany
+      - q194-ownershowing
+      - q195-phonenumber
+      - q196-email
+      - q197-ownershowing197
+      - q198-ownershowing198
+      - q199-ownershowing199
+
+  - id: owner-showing-contact-2
+    description: Second owner showing contact when two owners can approve.
+    when:
+      all:
+        - field: q191-propertyoccupancy
+          equals: Owner Occupied
+        - field: q192-howmany
+          equals: Two
+    show:
+      - q197-ownershowing197
+      - q198-ownershowing198
+      - q199-ownershowing199
+
+  - id: tenant-occupied-showings
+    description: Tenant-occupied showing approval flow.
+    when:
+      field: q191-propertyoccupancy
+      equals: Tenant Occupied
+    show:
+      - q193-howmany193
+      - q200-tenantshowing
+      - q201-ownershowing201
+      - q202-tenantshowing202
+      - q203-tenantshowing203
+      - q204-tenantshowing204
+      - q205-tenantshowing205
+
+  - id: tenant-showing-contact-2
+    description: Second tenant showing contact when two tenants can approve.
+    when:
+      all:
+        - field: q191-propertyoccupancy
+          equals: Tenant Occupied
+        - field: q193-howmany193
+          equals: Two
+    show:
+      - q203-tenantshowing203
+      - q204-tenantshowing204
+      - q205-tenantshowing205
+
+  - id: alternate-title-company
+    description: Alternate title company contact when seller declines Prime Title.
+    when:
+      field: q207-typea207
+      equals: "No, I have someone else"
+    show:
+      - q211-name211
+      - q212-typea212
+      - q213-email213
+      - q214-phonenumber214
+
+knownGaps:
+  - note: >-
+      Agent-only WFRMLS Matrix fields (listing date, expiration date, listing type EAL/ERS,
+      agent/co-agent IDs, BAC compensation, dual/VAR rate, photo instructions) are intentionally
+      omitted — filled by Utah Digs staff when entering the listing.
+  - note: Early steps (1-4) and newly added fields lack JotForm IDs in the source dump; marked TODO for migration mapping.

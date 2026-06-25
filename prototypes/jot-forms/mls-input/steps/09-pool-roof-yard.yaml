@@ -1,0 +1,63 @@
+id: pool-roof-yard
+title: "Pool, Roof & Yard"
+fields:
+  - id: q184-doesthe
+    type: radio
+    jotform:
+      id: 184
+      name: q184_doesThe
+    label: "Does the property (including HOA) have a pool?"
+    required: true
+    options:
+      - "Yes"
+      - "No"
+  - id: q63-pooltype
+    type: checkbox
+    jotform:
+      id: 63
+      name: "q63_poolType[]"
+    label: Pool Type / Features
+    required: true
+    status: hidden-in-jotform
+    $ref: options/q63-pooltype.yaml
+  - id: q37-typea37
+    type: checkbox
+    jotform:
+      id: 37
+      name: "q37_typeA37[]"
+    label: Roof
+    required: true
+    $ref: options/q37-typea37.yaml
+  - id: q36-typea36
+    type: checkbox
+    jotform:
+      id: 36
+      name: "q36_typeA36[]"
+    label: Yard / Landscaping
+    required: true
+    $ref: options/q36-typea36.yaml
+  - id: q43-lot-facts
+    type: checkbox
+    label: Lot Facts
+    required: true
+    $ref: options/q43-lot-facts.yaml
+    jotform:
+      id: TODO
+      name: "q43_lotFacts[]"
+  - id: q47-animals
+    type: radio
+    label: Animals / Pets
+    required: true
+    description: WFRMLS allows one selection.
+    options:
+      - None
+      - "Pets < 20 Lbs."
+      - "Pets 20 - 75 Lbs."
+      - "Pets > 75 Lbs."
+      - Livestock
+      - value: other
+        label: See Remarks
+        allowText: true
+    jotform:
+      id: TODO
+      name: q47_animals

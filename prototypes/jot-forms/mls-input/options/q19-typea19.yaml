@@ -1,0 +1,32 @@
+label: q19-typea19
+options:
+  - Alarm System
+  - Basketball Standard
+  - Washer
+  - Dryer
+  - Dog Run
+  - Fireplace Equipment
+  - Fireplace Insert
+  - Freezer
+  - Gas Grill / BBQ
+  - Gazebo
+  - Hot Tub
+  - Humidifier
+  - Microwave
+  - Gym Equipment
+  - Playset
+  - Projector
+  - Range
+  - Refrigerator
+  - Satellite Equipment
+  - Storage Shed (s)
+  - Swing Set
+  - Trampoline
+  - Video Door Bell(s)
+  - Video / Alarm Cameras
+  - Water Softener
+  - Workbench
+  - Window Coverings
+  - value: other
+    label: Other
+    allowText: true
