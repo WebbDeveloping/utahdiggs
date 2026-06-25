@@ -3,7 +3,7 @@ import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import HeroAddressTabs from "@/components/marketing/HeroAddressTabs";
 
 export default function HeroSection() {
   return (
@@ -24,7 +24,7 @@ export default function HeroSection() {
       }}
     >
       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
-        <Stack spacing={2.75} sx={{ maxWidth: 640 }}>
+        <Stack spacing={2.75} sx={{ maxWidth: 720 }}>
           <Chip label="Discount listing brokerage" variant="filled" sx={{ alignSelf: "flex-start" }} />
           <Typography
             variant="h1"
@@ -49,11 +49,7 @@ export default function HeroSection() {
             the tools, pricing data, and real agent support to sell faster and for top
             dollar.
           </Typography>
-          <Box>
-            <Button href="#pricing" variant="contained" color="primary" size="large">
-              See our pricing
-            </Button>
-          </Box>
+          <HeroAddressTabs />
         </Stack>
       </Container>
     </Box>
