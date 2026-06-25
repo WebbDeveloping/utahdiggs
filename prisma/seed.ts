@@ -10,13 +10,14 @@ import {
   ContactRole,
   ListingStatus,
 } from "../src/generated/prisma/client";
+import { resolvePostgresUrl } from "../src/lib/postgres-url";
 
-const adapter = new PrismaPg({
-  connectionString:
-    process.env.DATABASE_URL ||
-    process.env.PRISMA_DATABASE_URL ||
-    process.env.POSTGRES_URL,
-});
+const connectionString = resolvePostgresUrl();
+if (!connectionString) {
+  throw new Error("DATABASE_URL is not set");
+}
+
+const adapter = new PrismaPg({ connectionString });
 
 const prisma = new PrismaClient({ adapter });
 

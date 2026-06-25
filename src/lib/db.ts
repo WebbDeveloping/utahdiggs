@@ -1,15 +1,13 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
+import { resolvePostgresUrl } from "@/lib/postgres-url";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
 function createPrismaClient() {
-  const connectionString =
-    process.env.DATABASE_URL ||
-    process.env.PRISMA_DATABASE_URL ||
-    process.env.POSTGRES_URL;
+  const connectionString = resolvePostgresUrl();
 
   if (!connectionString) {
     throw new Error(
@@ -21,8 +19,17 @@ function createPrismaClient() {
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+function getPrismaClient(): PrismaClient {
+  const cached = globalForPrisma.prisma;
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+  // Dev HMR can keep a Prisma client from before a schema change (e.g. missing `customer`).
+  if (cached && "customer" in cached) {
+    return cached;
+  }
+
+  const client = createPrismaClient();
+  globalForPrisma.prisma = client;
+  return client;
 }
+
+export const prisma = getPrismaClient();

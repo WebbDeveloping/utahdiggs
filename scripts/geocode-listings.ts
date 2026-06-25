@@ -4,47 +4,18 @@ loadEnv();
 
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { resolvePostgresUrl } from "../src/lib/postgres-url";
 
-const adapter = new PrismaPg({
-  connectionString:
-    process.env.DATABASE_URL ||
-    process.env.PRISMA_DATABASE_URL ||
-    process.env.POSTGRES_URL,
-});
+const connectionString = resolvePostgresUrl();
+if (!connectionString) {
+  throw new Error("DATABASE_URL is not set");
+}
+
+const adapter = new PrismaPg({ connectionString });
 
 const prisma = new PrismaClient({ adapter });
 
-const UTAH_VIEWBOX = "-114.05,36.99,-109.04,42.01";
-
-async function geocodeAddress(query: string) {
-  const url = new URL("https://nominatim.openstreetmap.org/search");
-  url.searchParams.set("q", query);
-  url.searchParams.set("format", "json");
-  url.searchParams.set("limit", "1");
-  url.searchParams.set("countrycodes", "us");
-  url.searchParams.set("viewbox", UTAH_VIEWBOX);
-
-  const response = await fetch(url.toString(), {
-    headers: {
-      "User-Agent": "GlideRE-GeocodeScript/1.0 (contact@glidere.com)",
-      Accept: "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Geocoding failed with status ${response.status}`);
-  }
-
-  const data = (await response.json()) as Array<{ lat: string; lon: string }>;
-  if (!data.length) {
-    return null;
-  }
-
-  return {
-    latitude: parseFloat(data[0].lat),
-    longitude: parseFloat(data[0].lon),
-  };
-}
+import { geocodeAddress } from "../src/lib/geocode";
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));

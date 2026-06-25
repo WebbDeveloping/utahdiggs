@@ -3,12 +3,10 @@ loadEnv({ path: ".env.local", override: true });
 
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { resolvePostgresUrl } from "../src/lib/postgres-url";
 
 async function main() {
-  const connectionString =
-    process.env.DATABASE_URL ||
-    process.env.PRISMA_DATABASE_URL ||
-    process.env.POSTGRES_URL;
+  const connectionString = resolvePostgresUrl();
 
   if (!connectionString) {
     console.error("No DATABASE_URL configured");

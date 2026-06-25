@@ -1,38 +1,33 @@
 import bcrypt from "bcryptjs";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/db";
-import type { UserRole } from "@/generated/prisma/client";
-import { authConfig } from "@/lib/auth/auth.config";
+import { consumerAuthConfig } from "@/lib/auth/consumer-auth.config";
 
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-      email: string;
-      name?: string | null;
-      role: UserRole;
-    };
-  }
-
-  interface User {
-    role?: UserRole;
-  }
-}
-
-declare module "@auth/core/jwt" {
-  interface JWT {
-    role?: UserRole;
-  }
-}
+export type ConsumerSessionUser = {
+  id: string;
+  email: string;
+  name?: string | null;
+};
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  ...authConfig,
-  adapter: PrismaAdapter(prisma),
+  ...consumerAuthConfig,
+  basePath: "/api/account-auth",
   session: { strategy: "jwt" },
+  cookies: {
+    sessionToken: {
+      name: "utahdigs.consumer.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   providers: [
     Credentials({
+      id: "consumer-credentials",
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
@@ -46,39 +41,40 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
-        const user = await prisma.user.findUnique({ where: { email } });
+        const customer = await prisma.customer.findUnique({ where: { email } });
 
-        if (!user?.passwordHash) {
+        if (!customer?.passwordHash) {
           return null;
         }
 
-        const valid = await bcrypt.compare(password, user.passwordHash);
+        const valid = await bcrypt.compare(password, customer.passwordHash);
 
         if (!valid) {
           return null;
         }
 
         return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
+          id: customer.id,
+          email: customer.email,
+          name: customer.name,
         };
       },
     }),
   ],
   callbacks: {
-    ...authConfig.callbacks,
+    ...consumerAuthConfig.callbacks,
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
+        token.name = user.name;
+        token.email = user.email;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub ?? "";
-        session.user.role = token.role as UserRole;
+        session.user.email = token.email ?? "";
+        session.user.name = token.name as string | null | undefined;
       }
       return session;
     },

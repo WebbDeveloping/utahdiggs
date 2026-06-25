@@ -1,16 +1,23 @@
 import Box from "@mui/material/Box";
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteHeader from "@/components/layout/SiteHeader";
-import HeroSection from "@/components/marketing/HeroSection";
-import TrustStrip from "@/components/marketing/TrustStrip";
 
-export default function Home() {
+export type SiteUser = {
+  name?: string | null;
+  email: string;
+};
+
+type SitePageLayoutProps = {
+  children: React.ReactNode;
+  user?: SiteUser | null;
+};
+
+export default function SitePageLayout({ children, user = null }: SitePageLayoutProps) {
   return (
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <SiteHeader />
+      <SiteHeader user={user} />
       <Box component="main" sx={{ flex: 1 }}>
-        <HeroSection />
-        <TrustStrip />
+        {children}
       </Box>
       <SiteFooter />
     </Box>

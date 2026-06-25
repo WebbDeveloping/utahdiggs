@@ -11,6 +11,7 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { normalizePostgresUrl } from "../src/lib/postgres-url";
 import {
   PrismaClient,
   ContactRole,
@@ -148,7 +149,9 @@ function mapClosingTeamRole(value: unknown): ClosingTeamRole {
 }
 
 async function main() {
-  const connectionString = requireEnv("DATABASE_URL", process.env.DATABASE_URL);
+  const connectionString = normalizePostgresUrl(
+    requireEnv("DATABASE_URL", process.env.DATABASE_URL),
+  );
   const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
 
   const listingIdMap = new Map<string, string>();
