@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Utah Digs — Full Stack Flow</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e2e8f0; padding: 32px; min-height: 100vh; }
+  h1 { text-align: center; font-size: 22px; font-weight: 700; letter-spacing: 0.05em; color: #fff; margin-bottom: 8px; }
+  .subtitle { text-align: center; font-size: 13px; color: #64748b; margin-bottom: 36px; }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; max-width: 1400px; margin: 0 auto; }
+  .lane { background: #1a1f2e; border: 1px solid #2a3040; border-radius: 12px; padding: 16px; }
+  .lane-header { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #2a3040; }
+  .lane-1 .lane-header { color: #60a5fa; }
+  .lane-2 .lane-header { color: #34d399; }
+  .lane-3 .lane-header { color: #f59e0b; }
+  .lane-4 .lane-header { color: #a78bfa; }
+  .lane-5 .lane-header { color: #f87171; }
+  .step { background: #242936; border: 1px solid #333; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; font-size: 12px; line-height: 1.4; position: relative; }
+  .step .label { font-weight: 600; color: #e2e8f0; margin-bottom: 3px; }
+  .step .detail { color: #94a3b8; font-size: 11px; }
+  .arrow { text-align: center; color: #475569; font-size: 16px; margin: 4px 0; }
+  .badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-bottom: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badge-blue { background: #1e3a5f; color: #60a5fa; }
+  .badge-green { background: #064e3b; color: #34d399; }
+  .badge-amber { background: #451a03; color: #f59e0b; }
+  .badge-purple { background: #2e1065; color: #a78bfa; }
+  .badge-red { background: #450a0a; color: #f87171; }
+  .badge-gray { background: #1e293b; color: #94a3b8; }
+  .divider { border: none; border-top: 1px solid #2a3040; margin: 10px 0; }
+  .legend { max-width: 1400px; margin: 24px auto 0; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #64748b; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .pending { border-color: #f59e0b50; }
+  .pending .label { color: #f59e0b; }
+</style>
+</head>
+<body>
+<h1>Utah Digs — Full Stack Flow</h1>
+<p class="subtitle">portal.utahdigs.com · Last updated June 22, 2026 — Your Market tab live ✅ · Market Data table seeded ✅</p>
+
+<div class="grid">
+
+  <!-- LANE 1: NEW LISTING -->
+  <div class="lane lane-1">
+    <div class="lane-header">① New Listing</div>
+    <div class="step">
+      <div class="badge badge-blue">Lofty CRM</div>
+      <div class="label">Transaction Created</div>
+      <div class="detail">Seller Name, Email, Phone, Contact ID</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-gray">Zapier</div>
+      <div class="label">New/Updated Transaction</div>
+      <div class="detail">Maps seller name, email, phone, contact ID + property data → Anna base</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-blue">Airtable</div>
+      <div class="label">Anna Base ✅ (appNh6k6ZP0c2OtbQ)</div>
+      <div class="detail">Listings record created — ACTIVE BASE (old bases archived)</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-blue">Airtable Automation</div>
+      <div class="label">Generate Portal URL + Send Welcome Email ✅</div>
+      <div class="detail">CONFIRMED WORKING June 21, 2026 — passcode=last 4 digits of phone, slug=address+4-char hash</div>
+    </div>
+    <div class="arrow">↓ ↓</div>
+    <div class="step">
+      <div class="badge badge-green">Resend → Seller</div>
+      <div class="label">"Your Portal is Ready"</div>
+      <div class="detail">PIN + portal link + co-seller form link</div>
+    </div>
+    <div class="step">
+      <div class="badge badge-green">Resend → Blair</div>
+      <div class="label">"New Listing Active" ✅</div>
+      <div class="detail">Offer Form URL for MLS agent remarks</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-blue">Anna Base</div>
+      <div class="label">Listings Record</div>
+      <div class="detail">Auto-generates Offer Form URL per listing</div>
+    </div>
+  </div>
+
+  <!-- LANE 2: ONGOING ACTIVITY -->
+  <div class="lane lane-2">
+    <div class="lane-header">② Ongoing Activity</div>
+    <div class="step">
+      <div class="badge badge-green">Aligned Showings</div>
+      <div class="label">Showing Email → Anna</div>
+      <div class="detail">3 types: Confirmation / Daily Report / Feedback</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-blue">Airtable Showings Table</div>
+      <div class="label">Create or Update Record</div>
+      <div class="detail">Feedback matched by Agent Name + Address</div>
+    </div>
+    <hr class="divider">
+    <div class="step">
+      <div class="badge badge-green">Listtrac</div>
+      <div class="label">Weekly Traffic Email → Anna</div>
+      <div class="detail">Views, saves, inquiries per listing</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-blue">Airtable Weekly Stats</div>
+      <div class="label">One record per listing per week</div>
+      <div class="detail">Traffic data stored for portal display</div>
+    </div>
+    <hr class="divider">
+    <div class="step">
+      <div class="badge badge-amber">Boldtrail</div>
+      <div class="label">Weekly Market Report → Anna</div>
+      <div class="detail">blair@utahdigs.com → blairjallen+boldtrailreports@gmail.com · 8 cities · Gmail label: Automation/Anna/Boldtrail</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-blue">boldtrail_market_parser.py</div>
+      <div class="label">Parses 9 stats per city</div>
+      <div class="detail">Homes for sale, new to market, DOM, avg price, absorption rate, price reductions, sold count, sold:listed ratio, $/sqft</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-blue">Airtable Market Data</div>
+      <div class="label">One record per city per week ✅</div>
+      <div class="detail">Sandy UT seeded Jun 22. Sunday automation runner pending.</div>
+    </div>
+    <hr class="divider">
+    <div class="step">
+      <div class="badge badge-green">Airtable Automation</div>
+      <div class="label">Every Monday</div>
+      <div class="detail">Anna → Resend → Seller weekly update email</div>
+    </div>
+  </div>
+
+  <!-- LANE 3: OFFER INTAKE -->
+  <div class="lane lane-3">
+    <div class="lane-header">③ Offer Intake</div>
+    <div class="step">
+      <div class="badge badge-amber">Buyer's Agent</div>
+      <div class="label">Clicks Offer Form URL</div>
+      <div class="detail">From MLS agent remarks or direct link</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-amber">JotForm #261706179400050</div>
+      <div class="label">Offer Submission</div>
+      <div class="detail">Pre-filled: Address + Seller Email<br>16 fields incl. 2 PDF uploads</div>
+    </div>
+    <div class="arrow">↓ ↓ ↓</div>
+    <div class="step">
+      <div class="badge badge-green">Email → Blair</div>
+      <div class="label">Full Offer Details + PDFs</div>
+      <div class="detail">All 16 fields</div>
+    </div>
+    <div class="step">
+      <div class="badge badge-green">Email → Seller</div>
+      <div class="label">"Offer Received"</div>
+      <div class="detail">High-level notification only</div>
+    </div>
+    <div class="step pending">
+      <div class="badge badge-blue">Airtable Offers Table</div>
+      <div class="label">Record Created Immediately</div>
+      <div class="detail">⏳ JotForm native integration — manual setup needed in JotForm UI</div>
+    </div>
+    <hr class="divider">
+    <div class="step pending">
+      <div class="badge badge-amber">Status → ACCEPTED</div>
+      <div class="label">Confirm Final Terms</div>
+      <div class="detail">⏳ Email Blair → confirm/adjust price, concessions, dates → update Offers → portal: Under Contract</div>
+    </div>
+  </div>
+
+  <!-- LANE 4: CO-SELLER ACCESS -->
+  <div class="lane lane-4">
+    <div class="lane-header">④ Co-Seller Access</div>
+    <div class="step">
+      <div class="badge badge-purple">Portal Ready Email</div>
+      <div class="label">Includes co-seller link</div>
+      <div class="detail">"Add co-owners / spouses to the portal"</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-purple">JotForm #261705955416058</div>
+      <div class="label">Co-Seller Access Form</div>
+      <div class="detail">Pre-filled: Address · 1–6 co-sellers (conditional show/hide) · Name, Email, Phone, Relationship per seller</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-green">JotForm → Blair Email</div>
+      <div class="label">"Co-Seller Access Request"</div>
+      <div class="detail">JotForm sends Blair notification with co-seller data. Airtable wiring pending (add Co-Seller columns to Listings)</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step pending">
+      <div class="badge badge-green">Resend → Co-Seller</div>
+      <div class="label">Portal Welcome Email</div>
+      <div class="detail">⏳ To build: add Co-Seller columns to Anna Listings → Airtable automation sends Resend welcome per co-seller</div>
+    </div>
+  </div>
+
+  <!-- LANE 5: SELLER VIEW -->
+  <div class="lane lane-5">
+    <div class="lane-header">⑤ Seller View (Portal)</div>
+    <div class="step">
+      <div class="badge badge-red">portal.utahdigs.com</div>
+      <div class="label">Seller Logs In</div>
+      <div class="detail">Email + PIN (no password to forget)</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-blue">Anna → Listings</div>
+      <div class="label">Listing Card</div>
+      <div class="detail">Address, status, list price, days on market</div>
+    </div>
+    <div class="step">
+      <div class="badge badge-blue">Anna → Showings</div>
+      <div class="label">Showing Activity</div>
+      <div class="detail">Date, agent, feedback, ratings per showing</div>
+    </div>
+    <div class="step">
+      <div class="badge badge-blue">Anna → Weekly Stats</div>
+      <div class="label">Traffic Data</div>
+      <div class="detail">Views, saves, inquiries (Listtrac)</div>
+    </div>
+    <div class="step">
+      <div class="badge badge-blue">Anna → Offers</div>
+      <div class="label">Offer Summary</div>
+      <div class="detail">Price, terms, status per offer</div>
+    </div>
+    <div class="step">
+      <div class="badge badge-blue">Anna → Market Data ✅</div>
+      <div class="label">Your Market Tab</div>
+      <div class="detail">Blair's Take (top), absorption rate zone pills, price reductions, DOM, avg prices — filtered by seller's city</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      <div class="badge badge-green">Weekly Email</div>
+      <div class="label">Every Monday via Resend</div>
+      <div class="detail">Automated market update to seller</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Airtable / Zapier</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Email (Resend)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> JotForm</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div> Co-Seller Flow</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f87171"></div> Seller Portal</div>
+  <div class="legend-item" style="color:#f59e0b"><span>⏳ = Pending setup &nbsp; ⚠ = Needs fix</span></div>
+</div>
+
+</body>
+</html>

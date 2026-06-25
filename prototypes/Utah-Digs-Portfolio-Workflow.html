@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Utah Digs — Portfolio Routing Workflow</title>
+<style>body{margin:0;background:#f9fafb;display:flex;flex-direction:column;align-items:center;padding:32px 16px;font-family:system-ui,-apple-system,sans-serif;}h1{font-size:18px;font-weight:700;color:#111827;margin-bottom:24px;}svg{max-width:780px;width:100%;}</style>
+</head>
+<body>
+<h1>Utah Digs — Portal Routing Workflow</h1>
+<svg viewBox="0 0 780 620" xmlns="http://www.w3.org/2000/svg">
+  <rect width="780" height="620" fill="#f9fafb" rx="12"/>
+  <text x="390" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="#111827" font-family="system-ui">Utah Digs Portal — Automated Routing Workflow</text>
+  <rect x="300" y="56" width="180" height="48" rx="8" fill="#1F2937"/>
+  <text x="390" y="76" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="system-ui">Listing Goes Active</text>
+  <text x="390" y="93" text-anchor="middle" font-size="11" fill="#9CA3AF" font-family="system-ui">in Lofty CRM</text>
+  <line x1="390" y1="104" x2="390" y2="130" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="300" y="130" width="180" height="48" rx="8" fill="#FF4A00"/>
+  <text x="390" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="system-ui">Zapier Fires</text>
+  <text x="390" y="167" text-anchor="middle" font-size="11" fill="#ffe0d6" font-family="system-ui">Creates Airtable record + slug</text>
+  <line x1="390" y1="178" x2="390" y2="204" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <polygon points="390,204 510,252 390,300 270,252" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="390" y="247" text-anchor="middle" font-size="11" font-weight="700" fill="#1D4ED8" font-family="system-ui">Does this seller have</text>
+  <text x="390" y="263" text-anchor="middle" font-size="11" font-weight="700" fill="#1D4ED8" font-family="system-ui">other active listings?</text>
+  <line x1="270" y1="252" x2="130" y2="252" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="195" y="244" text-anchor="middle" font-size="10" font-weight="600" fill="#6B7280" font-family="system-ui">NO</text>
+  <line x1="510" y1="252" x2="650" y2="252" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="575" y="244" text-anchor="middle" font-size="10" font-weight="600" fill="#6B7280" font-family="system-ui">YES</text>
+  <rect x="30" y="220" width="200" height="64" rx="8" fill="#fff" stroke="#E5E7EB" stroke-width="1.5"/>
+  <text x="130" y="242" text-anchor="middle" font-size="11" font-weight="700" fill="#111827" font-family="system-ui">Individual Portal</text>
+  <text x="130" y="258" text-anchor="middle" font-size="10" fill="#6B7280" font-family="system-ui">portal.utahdigs.com/[slug]</text>
+  <text x="130" y="273" text-anchor="middle" font-size="10" fill="#6B7280" font-family="system-ui">Send "Portal is Ready" email</text>
+  <line x1="130" y1="284" x2="130" y2="314" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="30" y="314" width="200" height="80" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+  <text x="130" y="334" text-anchor="middle" font-size="11" font-weight="700" fill="#14532D" font-family="system-ui">Every Monday</text>
+  <text x="130" y="351" text-anchor="middle" font-size="10" fill="#166534" font-family="system-ui">Individual weekly email</text>
+  <text x="130" y="368" text-anchor="middle" font-size="10" fill="#166534" font-family="system-ui">Zillow · Showings</text>
+  <text x="130" y="385" text-anchor="middle" font-size="10" fill="#166534" font-family="system-ui">Market data · Blair note</text>
+  <rect x="550" y="216" width="200" height="72" rx="8" fill="#FFF7ED" stroke="#FCD34D" stroke-width="1.5"/>
+  <text x="650" y="237" text-anchor="middle" font-size="11" font-weight="700" fill="#92400E" font-family="system-ui">Auto-flip to Portfolio</text>
+  <text x="650" y="253" text-anchor="middle" font-size="10" fill="#78350F" font-family="system-ui">Set Portfolio Group on ALL</text>
+  <text x="650" y="268" text-anchor="middle" font-size="10" fill="#78350F" font-family="system-ui">seller's listings in Airtable</text>
+  <text x="650" y="282" text-anchor="middle" font-size="10" fill="#78350F" font-family="system-ui">Send "Portfolio is Ready" email</text>
+  <line x1="650" y1="288" x2="650" y2="314" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="550" y="314" width="200" height="48" rx="8" fill="#fff" stroke="#E5E7EB" stroke-width="1.5"/>
+  <text x="650" y="334" text-anchor="middle" font-size="11" font-weight="700" fill="#111827" font-family="system-ui">Portfolio Page</text>
+  <text x="650" y="350" text-anchor="middle" font-size="10" fill="#6B7280" font-family="system-ui">portal.utahdigs.com/portfolio?client=X</text>
+  <line x1="650" y1="362" x2="650" y2="388" stroke="#9CA3AF" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="550" y="388" width="200" height="80" rx="8" fill="#F0FDF4" stroke="#86EFAC" stroke-width="1.5"/>
+  <text x="650" y="408" text-anchor="middle" font-size="11" font-weight="700" fill="#14532D" font-family="system-ui">Every Monday</text>
+  <text x="650" y="425" text-anchor="middle" font-size="10" fill="#166534" font-family="system-ui">ONE combined portfolio email</text>
+  <text x="650" y="442" text-anchor="middle" font-size="10" fill="#166534" font-family="system-ui">All listings · Zillow · Showings</text>
+  <text x="650" y="459" text-anchor="middle" font-size="10" fill="#166534" font-family="system-ui">Click-through → individual portals</text>
+  <line x1="550" y1="338" x2="260" y2="338" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-blue)"/>
+  <text x="405" y="328" text-anchor="middle" font-size="9" fill="#3B82F6" font-family="system-ui">links to individual portals</text>
+  <text x="405" y="340" text-anchor="middle" font-size="9" fill="#3B82F6" font-family="system-ui">?from=portfolio (bypass login)</text>
+  <rect x="170" y="490" width="440" height="56" rx="8" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+  <text x="390" y="514" text-anchor="middle" font-size="12" font-weight="700" fill="#1D4ED8" font-family="system-ui">Update Master V5 Portal.html → deploy once</text>
+  <text x="390" y="532" text-anchor="middle" font-size="11" fill="#1E40AF" font-family="system-ui">All individual portals update instantly · Portfolio clients see changes automatically</text>
+  <text x="390" y="547" text-anchor="middle" font-size="10" fill="#3B82F6" font-family="system-ui">No second build. Ever.</text>
+  <line x1="130" y1="394" x2="130" y2="480" stroke="#D1FAE5" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="650" y1="468" x2="650" y2="480" stroke="#D1FAE5" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="130" y1="480" x2="280" y2="490" stroke="#D1FAE5" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="650" y1="480" x2="500" y2="490" stroke="#D1FAE5" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="30" y="568" width="12" height="12" rx="2" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="48" y="579" font-size="10" fill="#6B7280" font-family="system-ui">Links to individual portals (bypass login)</text>
+  <rect x="230" y="568" width="12" height="12" rx="2" fill="#FFF7ED" stroke="#FCD34D" stroke-width="1.5"/>
+  <text x="248" y="579" font-size="10" fill="#6B7280" font-family="system-ui">Auto-triggered by Airtable</text>
+  <rect x="420" y="568" width="12" height="12" rx="2" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1.5"/>
+  <text x="438" y="579" font-size="10" fill="#6B7280" font-family="system-ui">One deploy covers all</text>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#9CA3AF"/></marker>
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#3B82F6"/></marker>
+  </defs>
+</svg>
+</body>
+</html>

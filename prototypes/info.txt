@@ -1,0 +1,30 @@
+I have included the following:
+
+HTML mock-up of the Discount site (Rough Draft)  File: glide-re_6.html
+HTML mock-up of the Discount Client Portal (not functional really) Design Lab - Glide V2.html
+
+The login I gave you is for a builder I am working with; multiple listings that show when you log in.  When you click on any of those individual listings, (I recommend 350 E 7635 S) it will show you what most sellers see with a single property portal:
+Dashboard with the quick glance stats for the week, coaching tips, the good/bad performance metrics (good/bad) versus the market and last week's numbers.
+Tab1: Weekly performance update with some quick AI notes compiled from all the data (how I compile the data is a long story)
+Tab 2: Offers.  Buyers submit offers via a specific link on the mls and those offers route to the correct listing.  The basics of the offer go into this tab and they get a copy of the PDF via email.  Once the offer is accepted the Hero section shows the contract information (Price, dates, etc) 
+Tab 3:  Showings.   This tab shows all of the recent and past showings for the property along with feedback from agents who showed it.
+Tab 4: Web Traffic. This tab shows all relevant internet traffic for their specific listing, including favorites, saves, and originating sites.
+Tab 5:  Your Market.  This tab shows how their listing stacks up against other homes in the same city and displays the city's overall statistics.
+Tab 6: Seller Guide. • This is just an explanation tab. This tab is static and not dynamic. It explains how to use the portal, how to prepare their home for sale, and what the portal's information means.
+Tab 7: Documents. This tab is where we store all relevant documents for the transaction.
+Tab 8:  Seller Requests. This tab is where the home seller can request to lower their price or make other changes to their listing contact us and get the contact information for the title company and transaction coordinated.  The price reduction links calculate and prefill information.  
+
+The basic flow looks like this:
+Listing goes live on the MLS >
+Seller portal is created from my CRM (Zapier) via Airtable and an email with login information is sent.
+Every Sunday evening, the portal updates with the new stats, AI notes based on those stats and market information (Offers are instantly updated in the portal)
+Seller sees their dashboard weekly and sees where their listing is keeping up or falling behind based on its stats performance and market data
+Seller is consistently coached to use the data to decide if adjusting their price is the best alternative, but they have access to all the same information we have.  Transparency.
+Instead of "wondering" how the market is, we tell them. And we tell them specifically about their property and how it relates to their micro market.
+This offloads a lot of wasted time for both sellers and agents because they can see the full picture in a simple snapshot from their dashboard, allowing both to make faster and more informed decisions.
+Ultimately this allows the seller to have more control, stay more updated and involved, and manage their listing in one spot that isn't their email inbox or SMS threads.
+There is a lot of coaching, automation etc built in. In a nutshell it keeps sellers automatically updated in one central place regularly and allows them to take action (price reductions, message us etc) without the agent needing to initiate those moves.
+
+This capability would allow a discount real estate company to scale.  This is why Homie failed even while generating $1M/mo in revenue.   They didn't create easy access to this level of insight.  They were great marketers, but poor operators.   
+
+Let me know what could be automated in this portal and marketing.  Or we can discuss it, and I can show you.   Also attached is a flow chart.  

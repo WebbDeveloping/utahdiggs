@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glide RE — Sell smarter. Keep more.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#13211c;
+    --paper:#f6f4ee;
+    --card:#ffffff;
+    --accent:#0e7a5f;      /* single accent */
+    --accent-soft:#dff0e9;
+    --accent-deep:#0a5c47;
+    --muted:#5d6b64;
+    --line:#e3e0d6;
+    --warn:#b4452f;
+    --shadow:0 1px 2px rgba(19,33,28,.06),0 12px 30px rgba(19,33,28,.07);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.1;letter-spacing:-.01em;margin:0}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .accent{color:var(--accent)}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ---- nav ---- */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(246,244,238,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Fraunces';font-weight:600;font-size:22px;letter-spacing:-.02em}
+  .logo svg{display:block}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{text-decoration:none;font-size:15px;color:var(--muted);font-weight:500;transition:color .2s}
+  .nav-links a:hover{color:var(--ink)}
+  .btn{border:none;border-radius:999px;padding:11px 22px;font-weight:600;font-size:15px;transition:transform .15s ease,box-shadow .2s,background .2s}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-deep);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .nav-toggle{display:none;background:none;border:none;font-size:24px}
+
+  /* ---- hero ---- */
+  .hero{padding:84px 0 64px;position:relative;overflow:hidden}
+  .hero:before{content:"";position:absolute;inset:0;background:
+     radial-gradient(900px 380px at 78% -8%,var(--accent-soft),transparent 60%);
+     z-index:0}
+  .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+  .hero h1{font-size:clamp(40px,6vw,68px)}
+  .hero p.sub{font-size:19px;color:var(--muted);max-width:30em;margin:20px 0 30px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .savings-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:30px;border:1px solid var(--line)}
+  .savings-card h3{font-size:20px;margin-bottom:4px}
+  .savings-card .lede{color:var(--muted);font-size:14px;margin-bottom:20px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+  .field input,.field select,.field textarea{
+    width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:inherit;font-size:15px;background:#fff;color:var(--ink);transition:border .15s,box-shadow .15s}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .field .err{color:var(--warn);font-size:12.5px;margin-top:5px;display:none}
+  .field.invalid input,.field.invalid select{border-color:var(--warn)}
+  .field.invalid .err{display:block}
+  .calc-out{margin-top:6px;padding:18px;border-radius:12px;background:var(--accent-soft);text-align:center}
+  .calc-out .big{font-family:'Fraunces';font-size:34px;font-weight:600;color:var(--accent-deep)}
+  .calc-out small{color:var(--muted);display:block;font-size:12.5px}
+
+  .slider-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+  .slider-val{font-family:'Fraunces';font-size:22px;font-weight:600;color:var(--accent-deep)}
+  .slider-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;background:var(--accent-soft);outline:none;margin:4px 0;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s}
+  input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.1)}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:var(--shadow);cursor:pointer}
+
+  /* ---- trust strip ---- */
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+  .trust-in{display:flex;gap:46px;justify-content:center;flex-wrap:wrap;padding:22px 0;font-size:13px;color:var(--muted);font-weight:500;letter-spacing:.03em}
+  .trust-in span{display:flex;align-items:center;gap:8px}
+
+  /* ---- sections ---- */
+  section{padding:74px 0}
+  .sec-head{text-align:center;max-width:36em;margin:0 auto 50px}
+  .sec-head h2{font-size:clamp(30px,4vw,44px)}
+  .sec-head p{color:var(--muted);font-size:17px;margin-top:14px}
+
+  /* ---- pricing ---- */
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:stretch}
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:34px;display:flex;flex-direction:column;position:relative;transition:transform .2s,box-shadow .2s}
+  .plan:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .plan.feat{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow)}
+  .tag{position:absolute;top:-13px;right:26px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;letter-spacing:.05em;padding:5px 13px;border-radius:999px;text-transform:uppercase}
+  .plan h3{font-size:24px}
+  .price{font-family:'Fraunces';font-size:52px;font-weight:600;line-height:1;margin:14px 0 2px}
+  .price small{font-size:17px;color:var(--muted);font-weight:500;font-family:'Archivo'}
+  .plan .pitch{color:var(--muted);font-size:14.5px;min-height:42px;margin-bottom:18px}
+  .feats{list-style:none;padding:0;margin:0 0 26px;flex:1}
+  .feats li{padding:9px 0 9px 30px;position:relative;font-size:15px;border-top:1px solid var(--line)}
+  .feats li:first-child{border-top:none}
+  .feats li:before{content:"";position:absolute;left:0;top:14px;width:16px;height:16px;border-radius:50%;background:var(--accent-soft);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230e7a5f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:center}
+  .plan-fine{font-size:12px;color:var(--muted);margin:14px 0 0;line-height:1.5}
+
+  .plan-radios{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .plan-radio{position:relative;display:block;cursor:pointer}
+  .plan-radio input{position:absolute;opacity:0;pointer-events:none}
+  .plan-radio .pr-body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:14px 10px;border:1.5px solid var(--line);border-radius:12px;background:#fff;transition:border .15s,box-shadow .15s,background .15s}
+  .plan-radio .pr-name{font-size:14px;font-weight:600}
+  .plan-radio .pr-rate{font-family:'Fraunces';font-size:22px;font-weight:600;color:var(--muted);line-height:1;transition:color .15s}
+  .plan-radio input:checked + .pr-body{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}
+  .plan-radio input:checked + .pr-body .pr-rate{color:var(--accent-deep)}
+  .plan-radio input:focus-visible + .pr-body{box-shadow:0 0 0 3px var(--accent-soft)}
+  .plan-radio:hover .pr-body{border-color:var(--accent)}
+
+  /* ---- how it works ---- */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .step .n{font-family:'Fraunces';font-size:15px;font-weight:700;color:var(--accent);background:var(--accent-soft);width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%;margin-bottom:14px}
+  .step h3{font-size:18px;margin-bottom:6px}
+  .step p{font-size:14px;color:var(--muted);margin:0}
+
+  /* ---- dashboard / app ---- */
+  .app{background:#fff}
+  .app-bar{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:30px}
+  .app-bar h2{font-size:clamp(28px,4vw,40px)}
+  .app-bar p{color:var(--muted);margin:8px 0 0}
+  .grid-app{display:grid;grid-template-columns:340px 1fr;gap:30px;align-items:start}
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .panel h3{font-size:18px;margin-bottom:4px}
+  .panel .hint{font-size:13px;color:var(--muted);margin-bottom:18px}
+  .full{width:100%}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .empty{border:2px dashed var(--line);border-radius:var(--radius);padding:54px 24px;text-align:center;color:var(--muted)}
+  .empty svg{opacity:.5;margin-bottom:14px}
+  .empty h3{font-size:20px;color:var(--ink);margin-bottom:6px}
+
+  .listings{display:grid;gap:16px}
+  .listings[hidden]{display:none}
+  .lcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);animation:pop .3s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .lcard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .lcard h4{font-family:'Fraunces';font-size:20px;font-weight:600;margin:0}
+  .lcard .addr{color:var(--muted);font-size:13.5px;margin-top:2px}
+  .pill{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:999px;white-space:nowrap}
+  .pill.virtual{background:var(--accent-soft);color:var(--accent-deep)}
+  .pill.premium{background:#13211c;color:#fff}
+  .lcard-meta{display:flex;gap:22px;flex-wrap:wrap;margin:16px 0 14px}
+  .lcard-meta .m b{font-family:'Fraunces';font-size:21px;font-weight:600;display:block;line-height:1.1}
+  .lcard-meta .m span{font-size:12px;color:var(--muted)}
+  .progress{margin:6px 0 16px}
+  .progress .ptrack{height:8px;background:var(--accent-soft);border-radius:99px;overflow:hidden}
+  .progress .pfill{height:100%;background:var(--accent);border-radius:99px;transition:width .5s ease}
+  .progress .plabel{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:7px}
+  .checks{list-style:none;padding:0;margin:0}
+  .checks li{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px;border-top:1px dashed var(--line)}
+  .checks li:first-child{border-top:none}
+  .checks input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+  .checks li.done label{color:var(--muted);text-decoration:line-through}
+  .lcard-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .mini{font-size:13px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:600}
+  .mini:hover{border-color:var(--accent);color:var(--accent)}
+  .mini.danger:hover{border-color:var(--warn);color:var(--warn)}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:999px;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:.3s;z-index:100;box-shadow:var(--shadow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---- onboarding modal ---- */
+  .ob-overlay{position:fixed;inset:0;z-index:200;background:rgba(19,33,28,.5);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:32px 18px;overflow-y:auto;animation:fade .2s ease}
+  .ob-overlay[hidden]{display:none}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .ob-modal{position:relative;background:var(--paper);border-radius:22px;max-width:520px;width:100%;padding:34px;box-shadow:0 24px 70px rgba(19,33,28,.3);animation:rise .25s ease;margin:auto}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .ob-close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:30px;line-height:1;color:var(--muted);transition:color .15s}
+  .ob-close:hover{color:var(--ink)}
+  .ob-modal h2{font-size:30px;margin:6px 0 0}
+  .ob-lede{color:var(--muted);font-size:15.5px;margin:8px 0 22px}
+  .ob-field{margin-bottom:18px}
+  .ob-field label{display:block;font-size:13px;font-weight:600;margin-bottom:8px}
+  .ob-field input{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:inherit;font-size:15px;background:#fff;color:var(--ink);transition:border .15s,box-shadow .15s}
+  .ob-field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .ob-field .err{color:var(--warn);font-size:12.5px;margin-top:5px;display:none}
+  .ob-field.invalid input{border-color:var(--warn)}
+  .ob-field.invalid .err{display:block}
+  .ob-next{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:22px}
+  .ob-next h4{margin:0 0 14px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-family:'Archivo';font-weight:700}
+  .ob-track{list-style:none;margin:0;padding:0}
+  .ob-track li{display:flex;gap:14px;padding:9px 0;align-items:flex-start}
+  .ob-dot{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent-deep);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces'}
+  .ob-track li.done .ob-dot{background:var(--accent);color:#fff}
+  .ob-track li b{display:block;font-size:14.5px}
+  .ob-track li span{font-size:13.5px;color:var(--muted)}
+  .ob-track li a{color:var(--accent);font-weight:600}
+  .ob-fine{font-size:12px;color:var(--muted);text-align:center;margin:12px 0 0}
+  .ob-check{width:60px;height:60px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+  .ob-summary{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:14.5px}
+  .ob-summary b{font-family:'Fraunces';font-weight:600}
+  .pending-note{background:var(--accent-soft);border-radius:11px;padding:13px 16px;margin:4px 0 14px;font-size:13.5px;color:var(--accent-deep);line-height:1.5}
+  .pending-note b{font-weight:700}
+
+  /* ---- faq ---- */
+  .faq{max-width:760px;margin:0 auto}
+  .q{border-bottom:1px solid var(--line)}
+  .q summary{cursor:pointer;list-style:none;padding:20px 0;font-weight:600;font-size:17px;display:flex;justify-content:space-between;align-items:center}
+  .q summary::-webkit-details-marker{display:none}
+  .q summary:after{content:"+";font-size:24px;color:var(--accent);font-weight:400;transition:transform .2s}
+  .q[open] summary:after{transform:rotate(45deg)}
+  .q p{margin:0 0 20px;color:var(--muted)}
+
+  /* ---- footer ---- */
+  footer{background:var(--ink);color:#cdd6d1;padding:54px 0 30px}
+  .foot-in{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px}
+  footer .logo{color:#fff}
+  footer h4{color:#fff;font-size:14px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 14px}
+  footer a{display:block;color:#aab8b1;text-decoration:none;font-size:14.5px;padding:5px 0}
+  footer a:hover{color:#fff}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:38px;padding-top:22px;font-size:12.5px;color:#8a9893;line-height:1.7}
+
+  @media(max-width:900px){
+    .hero-in,.grid-app,.foot-in{grid-template-columns:1fr}
+    .plans{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+    .nav-toggle{display:block}
+    .nav-links.open{display:flex;position:absolute;top:68px;left:0;right:0;flex-direction:column;background:var(--paper);padding:18px 24px;border-bottom:1px solid var(--line);gap:14px}
+  }
+  @media(max-width:520px){
+    .steps,.row2{grid-template-columns:1fr}
+    .lcard-meta{gap:16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top" aria-label="Glide RE home">
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none"><path d="M4 18L16 6l12 12" stroke="#0e7a5f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v10h16V16" stroke="#13211c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Glide<span class="accent">&nbsp;RE</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">☰</button>
+    <nav class="nav-links" id="navlinks">
+      <a href="#pricing">Pricing</a>
+      <a href="#how">How it works</a>
+      <a href="#dashboard">My listings</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-primary" href="#" onclick="openOnboard();return false">List your home</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow">Discount listing brokerage</span>
+      <h1>Sell your home.<br>Keep your <span class="accent">equity</span>.</h1>
+      <p class="sub">Glide RE lists your home for a flat low rate instead of the usual 3% — with the tools, pricing data, and real agent support to sell faster and for top dollar.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#pricing">See our pricing</a>
+        <a class="btn btn-ghost" href="#" onclick="openOnboard();return false">Start a listing</a>
+      </div>
+    </div>
+
+    <!-- Savings calculator -->
+    <div class="savings-card" id="calc">
+      <h3>What could you save?</h3>
+      <p class="lede">Estimate your savings vs. a traditional 3% listing fee.</p>
+      <div class="field" id="f-price">
+        <div class="slider-head">
+          <label for="homeval">Estimated home value</label>
+          <span class="slider-val" id="homeval-out">$525,000</span>
+        </div>
+        <input id="homeval" type="range" min="350000" max="2000000" step="25000" value="525000">
+        <div class="slider-ends"><span>$350K</span><span>$2M+</span></div>
+      </div>
+      <div class="field">
+        <label>Glide plan</label>
+        <div class="plan-radios" id="plan-pick">
+          <label class="plan-radio">
+            <input type="radio" name="calc-plan" value="0.01" checked>
+            <span class="pr-body"><span class="pr-name">Virtual</span><span class="pr-rate">1%</span></span>
+          </label>
+          <label class="plan-radio">
+            <input type="radio" name="calc-plan" value="0.015">
+            <span class="pr-body"><span class="pr-name">Full Service</span><span class="pr-rate">1.5%</span></span>
+          </label>
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="big" id="savings">$—</div>
+        <small id="savings-note">Enter your home value to estimate savings</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="wrap trust-in">
+    <span>★★★★★ &nbsp;Loved by local sellers</span>
+    <span>● &nbsp;Listed on the MLS, Zillow, Redfin &amp; more</span>
+    <span>● &nbsp;Real licensed agents</span>
+    <span>● &nbsp;No hidden fees</span>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Two ways to list. Both save you thousands.</h2>
+      <p>Pick the level of support that fits you. Same syndication, same MLS reach — you choose how hands-on you want us to be.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Virtual</h3>
+        <div class="price">1%<small> listing fee</small></div>
+        <p class="pitch">Everything you need to list and sell yourself, guided by our team the whole way.</p>
+        <ul class="feats">
+          <li>Listed on the MLS for maximum exposure</li>
+          <li>Syndicated to Zillow, Redfin, Realtor.com &amp; more</li>
+          <li>Professional yard sign &amp; listing photos coordination</li>
+          <li>Pricing &amp; comparable-sales report</li>
+          <li>Offer management &amp; e-sign paperwork</li>
+          <li>Phone &amp; chat support from licensed agents</li>
+          <li>Contractor key box for showings</li>
+        </ul>
+        <a class="btn btn-ghost full" href="#" onclick="openOnboard('virtual');return false">Choose Virtual</a>
+        <p class="plan-fine">Listing fee is 1% of the final sale price or $4,500, whichever is greater.</p>
+      </div>
+      <div class="plan feat">
+        <span class="tag">Most popular</span>
+        <h3>Full Service</h3>
+        <div class="price">1.5%<small> listing fee</small></div>
+        <p class="pitch">Everything in Virtual, plus in-person help to get your home market-ready and showing-ready.</p>
+        <ul class="feats">
+          <li><b>Everything in Virtual</b>, plus:</li>
+          <li>Staging consultation to maximize appeal</li>
+          <li>On-site visit from one of our agents</li>
+          <li>Secure MLS lock box (not a contractor key box)</li>
+          <li>Priority offer review &amp; negotiation support</li>
+        </ul>
+        <a class="btn btn-primary full" href="#" onclick="openOnboard('premium');return false">Choose Full Service</a>
+        <p class="plan-fine">Listing fee is 1.5% of the final sale price or $4,500, whichever is greater.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>From listed to sold, the easy way</h2>
+      <p>No pressure, no 3% bill at closing. Just a clear path and people who pick up the phone.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Tell us about your home</h3><p>Add your property and pick a plan. Takes about three minutes.</p></div>
+      <div class="step"><div class="n">2</div><h3>Get market-ready</h3><p>We help with pricing, photos, and (on Full Service) staging and an on-site visit.</p></div>
+      <div class="step"><div class="n">3</div><h3>Go live everywhere</h3><p>Your home hits the MLS and every major site buyers actually search.</p></div>
+      <div class="step"><div class="n">4</div><h3>Review offers &amp; close</h3><p>We manage paperwork and negotiation so you keep more at the closing table.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD / APP -->
+<section class="app" id="dashboard">
+  <div class="wrap">
+    <div class="app-bar">
+      <div>
+        <h2>My listings</h2>
+        <p>Create a listing, track your sale progress, and tick off prep tasks. Everything saves to this browser automatically.</p>
+      </div>
+    </div>
+
+    <div class="grid-app">
+      <!-- form -->
+      <div class="panel">
+        <h3 id="form-title">Add a listing</h3>
+        <p class="hint" id="form-hint">Fill in your home’s details to start tracking your sale.</p>
+        <form id="listing-form" novalidate>
+          <input type="hidden" id="edit-id" value="">
+          <div class="field" id="ff-addr">
+            <label for="in-addr">Street address</label>
+            <input id="in-addr" type="text" placeholder="123 Maple Street" autocomplete="off">
+            <div class="err">Please enter the property address.</div>
+          </div>
+          <div class="row2">
+            <div class="field" id="ff-city">
+              <label for="in-city">City</label>
+              <input id="in-city" type="text" placeholder="Salt Lake City" autocomplete="off">
+              <div class="err">Required.</div>
+            </div>
+            <div class="field" id="ff-state">
+              <label for="in-state">State</label>
+              <input id="in-state" type="text" placeholder="UT" maxlength="2" autocomplete="off" style="text-transform:uppercase">
+              <div class="err">2-letter code.</div>
+            </div>
+          </div>
+          <div class="field" id="ff-price">
+            <label for="in-price">List price</label>
+            <input id="in-price" type="text" inputmode="numeric" placeholder="525,000" autocomplete="off">
+            <div class="err">Enter a price between $25,000 and $25,000,000.</div>
+          </div>
+          <div class="field">
+            <label>Plan</label>
+            <div class="plan-radios">
+              <label class="plan-radio">
+                <input type="radio" name="in-plan" value="virtual" checked>
+                <span class="pr-body"><span class="pr-name">Virtual</span><span class="pr-rate">1%</span></span>
+              </label>
+              <label class="plan-radio">
+                <input type="radio" name="in-plan" value="premium">
+                <span class="pr-body"><span class="pr-name">Full Service</span><span class="pr-rate">1.5%</span></span>
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary full" id="form-submit">Add listing</button>
+          <button type="button" class="btn btn-ghost full" id="form-cancel" style="display:none;margin-top:10px">Cancel edit</button>
+        </form>
+      </div>
+
+      <!-- list -->
+      <div>
+        <div id="empty" class="empty">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#0e7a5f" stroke-width="1.6"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+          <h3>No listings yet</h3>
+          <p>Add your first home using the form. It’ll show up here with a sale checklist and a savings estimate.</p>
+        </div>
+        <div id="listings" class="listings" hidden></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:#fff;border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head"><h2>Questions, answered</h2></div>
+    <div class="faq">
+      <details class="q"><summary>How is Glide RE cheaper than a normal agent?</summary><p>Traditional listing agents typically charge around 3% of your sale price. We charge a flat 1% (Virtual) or 1.5% (Full Service) and use efficient tools to do the rest — so the savings stay in your pocket.</p></details>
+      <details class="q"><summary>Will my home still go on the MLS and Zillow?</summary><p>Yes. Both plans list your home on the local MLS and syndicate to Zillow, Redfin, Realtor.com, and the other major sites buyers actually use.</p></details>
+      <details class="q"><summary>What’s the difference between the two plans?</summary><p>Virtual (1%) gives you the full listing toolkit and agent support with a contractor key box. Full Service (1.5%) adds a staging consultation, an on-site visit from one of our agents, and a secure MLS lock box.</p></details>
+      <details class="q"><summary>Are your agents licensed?</summary><p>Every Glide RE agent is a licensed real estate professional. You get real human help — we just skip the bloated commission.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot-in">
+    <div>
+      <div class="logo">Glide<span class="accent">&nbsp;RE</span></div>
+      <p style="max-width:26em;margin-top:14px;font-size:14.5px;color:#aab8b1">A discount listing brokerage built so sellers keep more of what their home is worth.</p>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <a href="#pricing">Pricing</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div>
+      <h4>Get started</h4>
+      <a href="#" onclick="openOnboard();return false">List your home</a>
+      <a href="#calc">Savings calculator</a>
+      <a href="#top">Back to top</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    © 2026 Glide RE. Equal Housing Opportunity. Savings estimates compare our listing fee to a 3% traditional listing commission; actual commissions are negotiable and vary by transaction. This page stores your listings only in your own browser.
+  </div>
+</footer>
+
+<!-- ONBOARDING MODAL -->
+<div class="ob-overlay" id="ob-overlay" hidden>
+  <div class="ob-modal" role="dialog" aria-modal="true" aria-labelledby="ob-title">
+    <button class="ob-close" id="ob-close" aria-label="Close">&times;</button>
+
+    <!-- STEP 1: plan + address + what happens next -->
+    <div class="ob-step" id="ob-step1">
+      <span class="eyebrow">List your home</span>
+      <h2 id="ob-title">Let’s get you listed</h2>
+      <p class="ob-lede">Pick your plan and confirm your address. Next you’ll complete the official MLS listing form — set aside about 15–20 minutes, and you can save and finish it later.</p>
+
+      <div class="ob-field">
+        <label>Choose your plan</label>
+        <div class="plan-radios">
+          <label class="plan-radio">
+            <input type="radio" name="ob-plan" value="virtual">
+            <span class="pr-body"><span class="pr-name">Virtual</span><span class="pr-rate">1%</span></span>
+          </label>
+          <label class="plan-radio">
+            <input type="radio" name="ob-plan" value="premium">
+            <span class="pr-body"><span class="pr-name">Full Service</span><span class="pr-rate">1.5%</span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="ob-field" id="ob-ff-addr">
+        <label for="ob-addr">Property address</label>
+        <input id="ob-addr" type="text" placeholder="123 Maple Street, Salt Lake City, UT" autocomplete="off">
+        <div class="err">Please enter your property address.</div>
+      </div>
+
+      <div class="ob-next">
+        <h4>What happens next</h4>
+        <ol class="ob-track">
+          <li><span class="ob-dot">1</span><div><b>Complete the MLS listing form</b><span>The official input form — property details, rooms by level, photos. Save and return anytime.</span></div></li>
+          <li><span class="ob-dot">2</span><div><b>We review &amp; reach out</b><span>A licensed Glide RE agent confirms pricing and next steps, usually within one business day.</span></div></li>
+          <li><span class="ob-dot">3</span><div><b>Go live everywhere</b><span>Your home hits the MLS, Zillow, Redfin and more.</span></div></li>
+        </ol>
+      </div>
+
+      <button class="btn btn-primary full" id="ob-continue">Continue to MLS listing form</button>
+      <p class="ob-fine">Opens the official MLS listing form in a new tab. We’ll also add this home to your tracker below.</p>
+    </div>
+
+    <!-- STEP 2: confirmation -->
+    <div class="ob-step" id="ob-step2" hidden>
+      <div class="ob-check">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0e7a5f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>You’re on your way!</h2>
+      <p class="ob-lede" id="ob-confirm-msg">We’ve opened the MLS listing form in a new tab and added your home to your tracker.</p>
+      <div class="ob-summary" id="ob-summary"></div>
+      <ol class="ob-track" style="margin-top:6px">
+        <li class="done"><span class="ob-dot">✓</span><div><b>Plan selected &amp; home added to tracker</b><span>Scroll down to “My listings” to see it.</span></div></li>
+        <li><span class="ob-dot">2</span><div><b>Finish the MLS listing form</b><span>Didn’t see the new tab? <a href="#" id="ob-reopen">Reopen it here</a>.</span></div></li>
+        <li><span class="ob-dot">3</span><div><b>We’ll be in touch</b><span>An agent reviews your submission and reaches out shortly.</span></div></li>
+      </ol>
+      <button class="btn btn-primary full" id="ob-done">View my listing</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  const KEY = "glide_re_listings_v1";
+  const $ = s => document.querySelector(s);
+  const TRAD_RATE = 0.03;
+  const PLAN = {
+    virtual:{label:"Virtual",rate:0.01,pill:"virtual",pillText:"1% Virtual"},
+    premium:{label:"Full Service",rate:0.015,pill:"premium",pillText:"1.5% Full Service"}
+  };
+  // Sale checklist differs slightly by plan
+  const STEPS = {
+    virtual:["Confirm list price","Upload listing photos","Publish to MLS & sites","Schedule showings","Review offers","Close & celebrate"],
+    premium:["Staging consultation","Agent on-site visit","Install MLS lock box","Publish to MLS & sites","Schedule showings","Review offers","Close & celebrate"]
+  };
+
+  let data = load();
+
+  /* ---------- storage ---------- */
+  function load(){
+    try{ const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : []; }
+    catch(e){ return []; }
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }
+    catch(e){ toast("Couldn’t save — browser storage is blocked."); }
+  }
+
+  /* ---------- helpers ---------- */
+  function money(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+  function parseMoney(v){ const n = parseFloat(String(v).replace(/[^0-9.]/g,"")); return isNaN(n)?null:n; }
+  function fmtThousands(v){ const d = String(v).replace(/[^0-9]/g,""); return d ? Number(d).toLocaleString("en-US") : ""; }
+  function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+  function valid(n){ return n!==null && n>=25000 && n<=25000000; }
+
+  let toastT;
+  function toast(msg){
+    const t = $("#toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove("show"),2600);
+  }
+
+  /* ---------- savings calculator (hero) ---------- */
+  const MIN_FEE = 4500;
+  const homeval = $("#homeval");
+  const calcRadios = document.querySelectorAll('input[name="calc-plan"]');
+  homeval.addEventListener("input", calc);
+  calcRadios.forEach(r=>r.addEventListener("change", calc));
+  function calc(){
+    const n = parseInt(homeval.value,10);
+    $("#homeval-out").textContent = (n>=2000000?"$2,000,000+":money(n));
+    const rate = parseFloat(document.querySelector('input[name="calc-plan"]:checked').value);
+    const fee = Math.max(n*rate, MIN_FEE);
+    const saved = n*TRAD_RATE - fee;
+    $("#savings").textContent = money(saved);
+    $("#savings-note").textContent = "You’d pay " + money(fee) + " vs. " + money(n*TRAD_RATE) + " at 3%";
+  }
+  calc();
+
+  /* ---------- listing form ---------- */
+  const form = $("#listing-form"), inAddr=$("#in-addr"), inCity=$("#in-city"),
+        inState=$("#in-state"), inPrice=$("#in-price"),
+        editId=$("#edit-id");
+  const getPlan = ()=> document.querySelector('input[name="in-plan"]:checked').value;
+  const setPlan = v=>{ const el=document.querySelector('input[name="in-plan"][value="'+v+'"]'); if(el) el.checked=true; };
+  inPrice.addEventListener("input", e=>{ e.target.value = fmtThousands(e.target.value); });
+
+  function setInvalid(id,bad){ $(id).classList.toggle("invalid", bad); }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    const addr=inAddr.value.trim(), city=inCity.value.trim(),
+          st=inState.value.trim().toUpperCase(), price=parseMoney(inPrice.value), plan=getPlan();
+    let ok=true;
+    setInvalid("#ff-addr", !addr); if(!addr) ok=false;
+    setInvalid("#ff-city", !city); if(!city) ok=false;
+    setInvalid("#ff-state", st.length!==2); if(st.length!==2) ok=false;
+    setInvalid("#ff-price", !valid(price)); if(!valid(price)) ok=false;
+    if(!ok){ toast("Please fix the highlighted fields."); return; }
+
+    if(editId.value){
+      const item = data.find(d=>d.id===editId.value);
+      if(item){
+        // if plan changed, remap checklist preserving overlap
+        if(item.plan!==plan){ item.checks = STEPS[plan].map(()=>false); }
+        Object.assign(item,{addr,city,st,price,plan});
+        toast("Listing updated.");
+      }
+      resetForm();
+    } else {
+      data.unshift({ id:uid(), addr, city, st, price, plan, created:Date.now(), checks: STEPS[plan].map(()=>false) });
+      toast("Listing added.");
+    }
+    save(); render();
+    form.reset(); inState.value=""; 
+  });
+
+  $("#form-cancel").addEventListener("click", resetForm);
+  function resetForm(){
+    editId.value=""; form.reset(); inState.value="";
+    ["#ff-addr","#ff-city","#ff-state","#ff-price"].forEach(s=>$(s).classList.remove("invalid"));
+    $("#form-title").textContent="Add a listing";
+    $("#form-hint").textContent="Fill in your home’s details to start tracking your sale.";
+    $("#form-submit").textContent="Add listing";
+    $("#form-cancel").style.display="none";
+  }
+
+  /* ---------- actions ---------- */
+  window.editListing = function(id){
+    const d = data.find(x=>x.id===id); if(!d) return;
+    editId.value=d.id; inAddr.value=d.addr; inCity.value=d.city; inState.value=d.st;
+    inPrice.value=d.price.toLocaleString("en-US"); setPlan(d.plan);
+    $("#form-title").textContent="Edit listing";
+    $("#form-hint").textContent="Update the details below and save your changes.";
+    $("#form-submit").textContent="Save changes";
+    $("#form-cancel").style.display="block";
+    document.getElementById("dashboard").scrollIntoView({behavior:"smooth"});
+  };
+  window.deleteListing = function(id){
+    const d = data.find(x=>x.id===id); if(!d) return;
+    if(!confirm("Remove the listing at "+d.addr+"? This can’t be undone.")) return;
+    data = data.filter(x=>x.id!==id); save(); render(); toast("Listing removed.");
+    if(editId.value===id) resetForm();
+  };
+  window.toggleCheck = function(id,i){
+    const d = data.find(x=>x.id===id); if(!d) return;
+    d.checks[i] = !d.checks[i]; save(); render();
+  };
+
+  /* ---------- render ---------- */
+  function render(){
+    const list = $("#listings"), empty = $("#empty");
+    if(!data.length){ empty.style.display="block"; list.hidden=true; list.innerHTML=""; return; }
+    empty.style.display="none"; list.hidden=false;
+
+    list.innerHTML = data.map(d=>{
+      const p = PLAN[d.plan]; const steps = STEPS[d.plan];
+      const done = d.checks.filter(Boolean).length;
+      const pct = Math.round(done/steps.length*100);
+      const fee = Math.max(d.price*p.rate, MIN_FEE);
+      const saved = d.price*TRAD_RATE - fee;
+      const isPending = !d.price;
+      const checks = steps.map((s,i)=>`
+        <li class="${d.checks[i]?'done':''}">
+          <input type="checkbox" id="c-${d.id}-${i}" ${d.checks[i]?'checked':''} onchange="toggleCheck('${d.id}',${i})">
+          <label for="c-${d.id}-${i}">${esc(s)}</label>
+        </li>`).join("");
+      const locLine = [d.city, d.st].filter(Boolean).join(", ");
+      const metaBlock = isPending
+        ? `<div class="pending-note">
+             <b>Application started.</b> Add your list price to see your fee and savings — finish the intake form or hit Edit.
+           </div>`
+        : `<div class="lcard-meta">
+          <div class="m"><b>${money(d.price)}</b><span>List price</span></div>
+          <div class="m"><b>${money(fee)}</b><span>Your fee (${ d.price*p.rate < MIN_FEE ? '$4,500 min' : (p.rate*100)+'%' })</span></div>
+          <div class="m"><b style="color:var(--accent-deep)">${money(saved)}</b><span>Saved vs. 3%</span></div>
+        </div>`;
+      return `
+      <article class="lcard">
+        <div class="lcard-top">
+          <div>
+            <h4>${esc(d.addr)}</h4>
+            ${locLine ? `<div class="addr">${esc(locLine)}</div>`:``}
+          </div>
+          <span class="pill ${p.pill}">${p.pillText}</span>
+        </div>
+        ${metaBlock}
+        <div class="progress">
+          <div class="ptrack"><div class="pfill" style="width:${pct}%"></div></div>
+          <div class="plabel"><span>Sale progress</span><span>${done}/${steps.length} · ${pct}%</span></div>
+        </div>
+        <ul class="checks">${checks}</ul>
+        <div class="lcard-actions">
+          <button class="mini" onclick="editListing('${d.id}')">Edit</button>
+          <button class="mini danger" onclick="deleteListing('${d.id}')">Remove</button>
+        </div>
+      </article>`;
+    }).join("");
+  }
+  function esc(s){ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+  /* ---------- onboarding modal ---------- */
+  // Glide RE Single Family MLS Input form
+  const JOTFORM_URL = "https://form.jotform.com/261498349657980";
+  const overlay = $("#ob-overlay");
+  let obLastFormUrl = "";
+
+  function jotformUrl(plan, addr){
+    // Plan is captured on-site (and shown in the tracker); the MLS form has no plan field.
+    // Prefill the listing address into the MLS form's "Property Listing Address" field.
+    if(!addr) return JOTFORM_URL;
+    const p = new URLSearchParams();
+    p.set("propertyListingAddress", addr);
+    return JOTFORM_URL + "?" + p.toString();
+  }
+
+  window.openOnboard = function(plan){
+    // default plan selection
+    const want = (plan==="premium") ? "premium" : "virtual";
+    const el = document.querySelector('input[name="ob-plan"][value="'+want+'"]');
+    if(el) el.checked = true;
+    $("#ob-addr").value = "";
+    $("#ob-ff-addr").classList.remove("invalid");
+    $("#ob-step1").hidden = false;
+    $("#ob-step2").hidden = true;
+    overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    setTimeout(()=>$("#ob-addr").focus(), 80);
+  };
+  function closeOnboard(){
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+  }
+  $("#ob-close").addEventListener("click", closeOnboard);
+  overlay.addEventListener("click", e=>{ if(e.target===overlay) closeOnboard(); });
+  document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !overlay.hidden) closeOnboard(); });
+
+  $("#ob-continue").addEventListener("click", function(){
+    const addrEl = $("#ob-addr"), addr = addrEl.value.trim();
+    if(!addr){ $("#ob-ff-addr").classList.add("invalid"); addrEl.focus(); return; }
+    $("#ob-ff-addr").classList.remove("invalid");
+    const plan = document.querySelector('input[name="ob-plan"]:checked').value;
+
+    // 1) split address best-effort into addr/city/state for the tracker
+    let street=addr, city="", st="";
+    const parts = addr.split(",").map(s=>s.trim()).filter(Boolean);
+    if(parts.length>=3){
+      street=parts[0]; city=parts[1];
+      st=(parts[2].match(/[A-Za-z]{2}/)||[""])[0].toUpperCase();
+    } else if(parts.length===2){ street=parts[0]; city=parts[1]; }
+
+    // 2) create local listing
+    data.unshift({ id:uid(), addr:street, city, st, price:0, plan,
+                   created:Date.now(), checks:STEPS[plan].map(()=>false), pending:true });
+    save(); render();
+
+    // 3) open Jotform prefilled, in a new tab
+    obLastFormUrl = jotformUrl(plan, addr);
+    window.open(obLastFormUrl, "_blank", "noopener");
+
+    // 4) confirmation state
+    const planName = plan==="premium" ? "Full Service (1.5%)" : "Virtual (1%)";
+    $("#ob-summary").innerHTML = "<b>"+esc(addr)+"</b><br>"+planName+" plan";
+    $("#ob-step1").hidden = true;
+    $("#ob-step2").hidden = false;
+    toast("Home added to your tracker.");
+  });
+
+  $("#ob-reopen").addEventListener("click", function(e){
+    e.preventDefault();
+    if(obLastFormUrl) window.open(obLastFormUrl, "_blank", "noopener");
+  });
+  $("#ob-done").addEventListener("click", function(){
+    closeOnboard();
+    document.getElementById("dashboard").scrollIntoView({behavior:"smooth"});
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
