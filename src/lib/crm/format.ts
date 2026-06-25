@@ -1,8 +1,8 @@
-import {
-  ListingStatus,
-  OfferStatus,
-  SellerRequestStatus,
-} from "@/generated/prisma/client";
+import type {
+  ListingStatusValue,
+  OfferStatusValue,
+  SellerRequestStatusValue,
+} from "@/lib/crm/listing-status";
 
 export function formatCurrency(value: number | string | null | undefined): string {
   if (value == null || value === "") return "—";
@@ -15,8 +15,8 @@ export function formatCurrency(value: number | string | null | undefined): strin
   }).format(num);
 }
 
-export function formatListingStatus(status: ListingStatus): string {
-  const labels: Record<ListingStatus, string> = {
+export function formatListingStatus(status: ListingStatusValue): string {
+  const labels: Record<ListingStatusValue, string> = {
     SUBMITTED: "Submitted",
     ACTIVE: "Active",
     UNDER_CONTRACT: "Under Contract",
@@ -28,27 +28,27 @@ export function formatListingStatus(status: ListingStatus): string {
 }
 
 export function listingStatusColor(
-  status: ListingStatus,
+  status: ListingStatusValue,
 ): "success" | "warning" | "info" | "default" | "error" {
   switch (status) {
-    case ListingStatus.SUBMITTED:
+    case "SUBMITTED":
       return "info";
-    case ListingStatus.ACTIVE:
+    case "ACTIVE":
       return "success";
-    case ListingStatus.UNDER_CONTRACT:
-    case ListingStatus.PENDING:
+    case "UNDER_CONTRACT":
+    case "PENDING":
       return "warning";
-    case ListingStatus.CLOSED:
+    case "CLOSED":
       return "info";
-    case ListingStatus.CANCELLED:
+    case "CANCELLED":
       return "default";
     default:
       return "default";
   }
 }
 
-export function formatOfferStatus(status: OfferStatus): string {
-  const labels: Record<OfferStatus, string> = {
+export function formatOfferStatus(status: OfferStatusValue): string {
+  const labels: Record<OfferStatusValue, string> = {
     PENDING_REVIEW: "Pending Review",
     ACCEPTED: "Accepted",
     DECLINED: "Declined",
@@ -58,8 +58,25 @@ export function formatOfferStatus(status: OfferStatus): string {
   return labels[status];
 }
 
-export function formatSellerRequestStatus(status: SellerRequestStatus): string {
-  const labels: Record<SellerRequestStatus, string> = {
+export function offerStatusColor(
+  status: OfferStatusValue,
+): "success" | "warning" | "info" | "default" | "error" {
+  switch (status) {
+    case "PENDING_REVIEW":
+      return "warning";
+    case "ACCEPTED":
+      return "success";
+    case "DECLINED":
+    case "EXPIRED":
+    case "CANCELLED":
+      return "default";
+    default:
+      return "default";
+  }
+}
+
+export function formatSellerRequestStatus(status: SellerRequestStatusValue): string {
+  const labels: Record<SellerRequestStatusValue, string> = {
     NEW: "New",
     IN_PROGRESS: "In Progress",
     COMPLETED: "Completed",

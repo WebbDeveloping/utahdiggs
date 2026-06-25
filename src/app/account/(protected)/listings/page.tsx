@@ -61,7 +61,7 @@ export default async function AccountListingsPage({
                 My listings
               </Typography>
               <Typography color="text.secondary">
-                Track your property submissions and their review status.
+                Track submissions, view your listing dashboard, and manage documents.
               </Typography>
             </Box>
             <Link href="/account/listings/new" style={{ textDecoration: "none" }}>
@@ -138,17 +138,31 @@ export default async function AccountListingsPage({
                             ) : null}
                           </Box>
                           <Box>
-                            <Typography sx={{ fontWeight: 600 }}>
-                              {listing.address}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {listing.city}, {listing.state}
-                            </Typography>
                             {isMlsDraft(listing) ? (
-                              <Typography variant="caption" color="text.secondary">
-                                {formatMlsDraftProgress(listing.intakeCurrentStep)}
-                              </Typography>
-                            ) : null}
+                              <>
+                                <Typography sx={{ fontWeight: 600 }}>
+                                  {listing.address}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  {listing.city}, {listing.state}
+                                </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                  {formatMlsDraftProgress(listing.intakeCurrentStep)}
+                                </Typography>
+                              </>
+                            ) : (
+                              <Link
+                                href={`/account/listings/${listing.id}`}
+                                style={{ textDecoration: "none", color: "inherit" }}
+                              >
+                                <Typography sx={{ fontWeight: 600 }}>
+                                  {listing.address}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  {listing.city}, {listing.state}
+                                </Typography>
+                              </Link>
+                            )}
                           </Box>
                         </Stack>
                       </TableCell>
@@ -189,7 +203,16 @@ export default async function AccountListingsPage({
                             </Link>
                             <MlsDraftDeleteButton listingId={listing.id} label="Discard" />
                           </Stack>
-                        ) : null}
+                        ) : (
+                          <Link
+                            href={`/account/listings/${listing.id}`}
+                            style={{ textDecoration: "none" }}
+                          >
+                            <Button size="small" variant="outlined">
+                              View
+                            </Button>
+                          </Link>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))

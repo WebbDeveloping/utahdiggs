@@ -9,6 +9,16 @@ export const ALLOWED_PHOTO_TYPES = [
 export const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
 export const MAX_PHOTO_COUNT = 40;
 export const PHOTO_PATH_PREFIX = "photos/";
+export const DOCUMENT_PATH_PREFIX = "documents/";
+
+export const ALLOWED_DOCUMENT_TYPES = [
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+] as const;
+
+export const MAX_DOCUMENT_BYTES = 25 * 1024 * 1024;
 
 export type BlobStoreConfig = {
   token: string;
@@ -30,8 +40,21 @@ export function buildPhotoPathname(filename: string): string {
   return `${PHOTO_PATH_PREFIX}${suffix}/${sanitizeFilename(filename)}`;
 }
 
+export function buildDocumentPathname(listingId: string, filename: string): string {
+  const suffix = crypto.randomUUID();
+  return `${DOCUMENT_PATH_PREFIX}${listingId}/${suffix}/${sanitizeFilename(filename)}`;
+}
+
 export function isValidPhotoPathname(pathname: string): boolean {
   return pathname.startsWith(PHOTO_PATH_PREFIX);
+}
+
+export function isValidDocumentPathname(pathname: string, listingId: string): boolean {
+  return pathname.startsWith(`${DOCUMENT_PATH_PREFIX}${listingId}/`);
+}
+
+export function isAllowedDocumentType(contentType: string): boolean {
+  return (ALLOWED_DOCUMENT_TYPES as readonly string[]).includes(contentType);
 }
 
 export function getPublicBlobConfig(): BlobStoreConfig {

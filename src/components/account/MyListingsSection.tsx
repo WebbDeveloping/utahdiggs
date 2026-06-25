@@ -78,13 +78,30 @@ export default function MyListingsSection({ listings }: MyListingsSectionProps) 
                       ) : null}
                     </Box>
                     <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
-                        {listing.address}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary" noWrap>
-                        {listing.city}, {listing.state} ·{" "}
-                        {formatCurrency(listing.listPrice)}
-                      </Typography>
+                      {isMlsDraft(listing) ? (
+                        <>
+                          <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
+                            {listing.address}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" noWrap>
+                            {listing.city}, {listing.state} ·{" "}
+                            {formatCurrency(listing.listPrice)}
+                          </Typography>
+                        </>
+                      ) : (
+                        <Link
+                          href={`/account/listings/${listing.id}`}
+                          style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                          <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
+                            {listing.address}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" noWrap>
+                            {listing.city}, {listing.state} ·{" "}
+                            {formatCurrency(listing.listPrice)}
+                          </Typography>
+                        </Link>
+                      )}
                     </Box>
                     <Chip
                       label={formatConsumerListingStatus(listing)}

@@ -9,6 +9,20 @@ export const LISTING_STATUSES = [
 
 export type ListingStatusValue = (typeof LISTING_STATUSES)[number];
 
+export const OFFER_STATUSES = [
+  "PENDING_REVIEW",
+  "ACCEPTED",
+  "DECLINED",
+  "EXPIRED",
+  "CANCELLED",
+] as const;
+
+export type OfferStatusValue = (typeof OFFER_STATUSES)[number];
+
+export const SELLER_REQUEST_STATUSES = ["NEW", "IN_PROGRESS", "COMPLETED"] as const;
+
+export type SellerRequestStatusValue = (typeof SELLER_REQUEST_STATUSES)[number];
+
 export const CRM_LISTING_STATUSES = LISTING_STATUSES.filter(
   (status) => status !== "SUBMITTED",
 ) as Exclude<ListingStatusValue, "SUBMITTED">[];
