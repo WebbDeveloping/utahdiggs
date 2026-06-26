@@ -1,5 +1,6 @@
 label: Exterior Special Features
 options:
+  - None
   - Balcony
   - Barn
   - Basement Entrance

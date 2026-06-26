@@ -65,9 +65,12 @@ export async function saveMlsDraftAction(
     return { error: "Invalid form data." };
   }
 
-  const stepValidation = validateMlsInputStep(currentStep, values);
-  if (!stepValidation.success) {
-    return { fieldErrors: stepValidation.fieldErrors };
+  const isAdvancingStep = nextStep > currentStep;
+  if (isAdvancingStep) {
+    const stepValidation = validateMlsInputStep(currentStep, values);
+    if (!stepValidation.success) {
+      return { fieldErrors: stepValidation.fieldErrors };
+    }
   }
 
   const address = extractAddress(values);

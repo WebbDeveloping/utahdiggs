@@ -1,4 +1,5 @@
 import type { ListingStatus } from "@/generated/prisma/client";
+import type { PropertyDetailSection } from "@/lib/search/map-intake-to-property-details";
 
 export type PublicListingStatus = ListingStatus;
 
@@ -38,6 +39,7 @@ export type PublicListingAgent = {
 export type PublicListingDetail = PublicListing & {
   photos: { id: string; name: string; url: string }[];
   assignedAgent: PublicListingAgent | null;
+  propertyDetails: PropertyDetailSection[];
 };
 
 export type SearchSort =

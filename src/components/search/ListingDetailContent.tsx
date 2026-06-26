@@ -12,6 +12,7 @@ import ListingHero from "@/components/search/ListingHero";
 import ListingMapSection from "@/components/search/ListingMapSection";
 import ListingMlsCompliance from "@/components/search/ListingMlsCompliance";
 import ListingPhotoGallery from "@/components/search/ListingPhotoGallery";
+import ListingPropertyDetails from "@/components/search/ListingPropertyDetails";
 
 type ListingDetailContentProps = {
   listing: PublicListingDetail;
@@ -42,6 +43,10 @@ export default function ListingDetailContent({ listing }: ListingDetailContentPr
                 {listing.description}
               </Typography>
             ) : null}
+            <ListingPropertyDetails
+              sections={listing.propertyDetails}
+              sx={{ mt: listing.description ? 3 : 0 }}
+            />
           </Grid>
 
           <Grid size={{ xs: 12, md: 5 }}>

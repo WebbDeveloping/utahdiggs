@@ -159,8 +159,9 @@ export default function FieldRenderer({
       <PhoneTextField
         label={label}
         required={field.required}
+        fullWidth
         value={(value as string) ?? ""}
-        onChange={(v) => onChange(field.id, v)}
+        onChange={(e) => onChange(field.id, e.target.value)}
         error={!!error}
         helperText={error ?? helper}
         placeholder={field.placeholder}

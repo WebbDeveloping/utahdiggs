@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -8,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
-import { buildMlsInputDraftPath } from "@/lib/consumer/listing-prefill";
 import { saveMlsDraftAction } from "@/lib/mls-input/save-draft-action";
 import { submitMlsIntakeAction } from "@/lib/mls-input/submit-action";
 import {
@@ -67,6 +67,7 @@ export default function MlsInputWizard({
   initialStep = 1,
   initialData,
 }: MlsInputWizardProps) {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [listingId, setListingId] = useState<string | undefined>(draftListingId);
   const [values, setValues] = useState<Record<string, unknown>>(() =>
@@ -74,19 +75,20 @@ export default function MlsInputWizard({
   );
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
-  const [savedDraftId, setSavedDraftId] = useState<string | null>(null);
   const [draftPending, startDraftTransition] = useTransition();
   const [submitPending, startSubmitTransition] = useTransition();
+  const skipStepScrollRef = useRef(true);
 
   const step = MLS_INPUT_STEPS[currentStep - 1];
   const isLastStep = currentStep === MLS_INPUT_STEP_COUNT;
 
   useEffect(() => {
-    if (savedDraftId) {
-      const t = setTimeout(() => setSavedDraftId(null), 8000);
-      return () => clearTimeout(t);
+    if (skipStepScrollRef.current) {
+      skipStepScrollRef.current = false;
+      return;
     }
-  }, [savedDraftId]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentStep]);
 
   const handleChange = useCallback((fieldId: string, value: unknown) => {
     setValues((prev) => ({ ...prev, [fieldId]: value }));
@@ -136,8 +138,8 @@ export default function MlsInputWizard({
   };
 
   const handleSaveLater = () => {
-    runSave(currentStep, (savedListingId) => {
-      if (savedListingId) setSavedDraftId(savedListingId);
+    runSave(currentStep, () => {
+      router.push("/account?draftSaved=1");
     });
   };
 
@@ -180,8 +182,6 @@ export default function MlsInputWizard({
     });
   };
 
-  const resumeListingId = savedDraftId ?? listingId;
-
   if (!step) return null;
 
   return (
@@ -201,22 +201,6 @@ export default function MlsInputWizard({
       </Paper>
 
       {error ? <Alert severity="error">{error}</Alert> : null}
-      {savedDraftId ? (
-        <Alert severity="success">
-          Progress saved. You can continue anytime from{" "}
-          <NextLink href="/account">My account</NextLink>
-          {resumeListingId ? (
-            <>
-              {" "}
-              or{" "}
-              <NextLink href={buildMlsInputDraftPath(resumeListingId)}>
-                continue this form
-              </NextLink>
-            </>
-          ) : null}
-          .
-        </Alert>
-      ) : null}
 
       <Box
         sx={{

@@ -1,3 +1,4 @@
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -23,6 +24,7 @@ type AccountShellProps = {
     name?: string | null;
   };
   listings: CustomerListingSummary[];
+  draftSaved?: boolean;
 };
 
 const placeholderSections = [
@@ -38,7 +40,7 @@ const placeholderSections = [
   },
 ] as const;
 
-export default function AccountShell({ user, listings }: AccountShellProps) {
+export default function AccountShell({ user, listings, draftSaved = false }: AccountShellProps) {
   const displayName = user.name?.trim() || user.email;
   const mlsDrafts = getMlsDrafts(listings);
 
@@ -63,6 +65,12 @@ export default function AccountShell({ user, listings }: AccountShellProps) {
               </Button>
             </Box>
           </Stack>
+
+          {draftSaved ? (
+            <Alert severity="success">
+              Your MLS listing progress was saved. Use the section below to continue anytime.
+            </Alert>
+          ) : null}
 
           {mlsDrafts.length > 0 ? <MlsDraftBanner drafts={mlsDrafts} /> : null}
 

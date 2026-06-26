@@ -482,9 +482,9 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "taxParcelNumber",
         "label": "Tax Parcel Number (APN)",
         "type": "text",
-        "required": true,
+        "required": false,
         "placeholder": "Leave blank if unknown — we will look it up",
-        "description": "Required by WFRMLS. Enter the parcel number from your property tax statement, or leave blank for us to look up."
+        "description": "Enter the parcel number from your property tax statement if known. Leave blank if the seller doesn't have it — we can look it up."
       },
       {
         "id": "lotSize",
@@ -660,7 +660,9 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "type": "checkbox",
         "label": "Flooring",
         "required": true,
+        "description": "Select all that apply, or choose None if unknown.",
         "options": [
+          "None",
           "Bamboo",
           "Carpet",
           "Concrete",
@@ -682,8 +684,10 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "q34-typea34",
         "type": "checkbox",
         "label": "Interior Special Features",
-        "required": true,
+        "required": false,
+        "description": "Select any that apply, or leave blank if none.",
         "options": [
+          "None",
           "Wet Bar",
           "Basement Apartment",
           "Master Bath",
@@ -731,6 +735,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "type": "checkbox",
         "label": "Window Coverings",
         "required": true,
+        "description": "Select all that apply, or choose None if not applicable.",
         "options": [
           "Blinds",
           "Draperies",
@@ -747,8 +752,8 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "q42-amenities",
         "type": "checkbox",
         "label": "Amenities",
-        "required": true,
-        "description": "Select community or property amenities that apply.",
+        "required": false,
+        "description": "Select community or property amenities that apply, or leave blank if none.",
         "options": [
           "None",
           "Cable TV Available",
@@ -773,6 +778,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "type": "checkbox",
         "label": "Air Conditioning",
         "required": true,
+        "description": "Select all that apply, or choose None if not applicable.",
         "options": [
           "Central Air; Electric",
           "Central Air; Gas",
@@ -788,7 +794,9 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "type": "checkbox",
         "label": "Heating",
         "required": true,
+        "description": "Select all that apply, or choose None if unknown.",
         "options": [
+          "None",
           "Furnace / Forced Air",
           "Gas",
           "Heat Pump",
@@ -843,8 +851,10 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "q29-typea29",
         "type": "checkbox",
         "label": "Exterior Special Features",
-        "required": true,
+        "required": false,
+        "description": "Select any that apply, or leave blank if none.",
         "options": [
+          "None",
           "Balcony",
           "Barn",
           "Basement Entrance",

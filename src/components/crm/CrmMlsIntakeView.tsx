@@ -7,45 +7,14 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import type { MlsInputStep, MlsInputField } from "@/lib/mls-input/schema";
+import { formatFieldValue } from "@/lib/mls-input/format-field-value";
+import type { MlsInputStep } from "@/lib/mls-input/schema";
 import { isFieldVisible } from "@/lib/mls-input/conditions";
 
 type CrmMlsIntakeViewProps = {
   steps: MlsInputStep[];
   data: Record<string, unknown>;
 };
-
-function formatValue(field: MlsInputField, value: unknown): string {
-  if (value === undefined || value === null || value === "") return "—";
-
-  if (field.type === "fullname" && typeof value === "object") {
-    const v = value as { first?: string; last?: string };
-    return [v.first, v.last].filter(Boolean).join(" ") || "—";
-  }
-
-  if (field.type === "address" && typeof value === "object") {
-    const v = value as { street?: string; city?: string; state?: string; zip?: string };
-    return [v.street, v.city, v.state, v.zip].filter(Boolean).join(", ") || "—";
-  }
-
-  if (field.type === "checkbox" && Array.isArray(value)) {
-    return value.join(", ") || "—";
-  }
-
-  if (field.type === "matrix" && typeof value === "object") {
-    return JSON.stringify(value, null, 2);
-  }
-
-  if (field.type === "file" && Array.isArray(value)) {
-    return value.map((f: { name?: string; url?: string }) => f.name || f.url).join(", ");
-  }
-
-  if (field.type === "signature" && typeof value === "string") {
-    return value ? "Signed (see document)" : "—";
-  }
-
-  return String(value);
-}
 
 export default function CrmMlsIntakeView({ steps, data }: CrmMlsIntakeViewProps) {
   const copyText = useCallback((text: string) => {
@@ -97,7 +66,7 @@ export default function CrmMlsIntakeView({ steps, data }: CrmMlsIntakeViewProps)
                     variant="body2"
                     sx={{ whiteSpace: "pre-wrap", fontFamily: field.type === "matrix" ? "monospace" : undefined }}
                   >
-                    {formatValue(field, data[field.id])}
+                    {formatFieldValue(field, data[field.id])}
                   </Typography>
                 </Box>
               ))}

@@ -15,7 +15,8 @@ fields:
       id: 29
       name: "q29_typeA29[]"
     label: Exterior Special Features
-    required: true
+    required: false
+    description: Select any that apply, or leave blank if none.
     $ref: options/q29-typea29.yaml
   - id: q30-typea30
     type: checkbox

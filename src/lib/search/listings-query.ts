@@ -1,5 +1,7 @@
 import type { Prisma } from "@/generated/prisma/client";
+import { IntakeStatus } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
+import { mapIntakeToPropertyDetails } from "@/lib/search/map-intake-to-property-details";
 import { normalizeCoordinate } from "@/lib/search/format";
 import { PUBLIC_LISTING_STATUSES } from "@/lib/search/search-params";
 import type {
@@ -17,6 +19,7 @@ type ListingWithAllDocuments = Prisma.ListingGetPayload<{
   include: {
     documents: { orderBy: { uploadedAt: "asc" } };
     assignedAgent: { select: { name: true; email: true; image: true; active: true } };
+    listingIntake: { select: { data: true; status: true } };
   };
 }>;
 
@@ -280,6 +283,9 @@ export async function getPublicListingBySlug(
       assignedAgent: {
         select: { name: true, email: true, image: true, active: true },
       },
+      listingIntake: {
+        select: { data: true, status: true },
+      },
     },
   });
 
@@ -287,6 +293,17 @@ export async function getPublicListingBySlug(
 
   const base = toPublicListing(listing as ListingWithAllDocuments);
   const agent = listing.assignedAgent;
+  const intake = listing.listingIntake;
+  const intakeData =
+    intake?.status === IntakeStatus.SUBMITTED && intake.data && typeof intake.data === "object"
+      ? (intake.data as Record<string, unknown>)
+      : null;
+  const propertyDetails = intakeData
+    ? mapIntakeToPropertyDetails(intakeData, {
+        yearBuilt: base.yearBuilt,
+        listingOffice: base.listingOffice,
+      })
+    : [];
 
   return {
     ...base,
@@ -303,5 +320,6 @@ export async function getPublicListingBySlug(
             image: agent.image,
           }
         : null,
+    propertyDetails,
   };
 }

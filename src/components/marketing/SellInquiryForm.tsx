@@ -102,6 +102,7 @@ export default function SellInquiryForm({
   const [values, setValues] = useState<FormValues>(() => emptyForm(initialAddress));
   const [errors, setErrors] = useState<FormErrors>({});
   const [emailExists, setEmailExists] = useState(false);
+  const [authMode, setAuthMode] = useState<"signup" | "signin">("signup");
   const [checkingEmail, startEmailCheck] = useTransition();
 
   const authAction = isLoggedIn ? completeLoggedInSellInquiryAction : completeSellInquiryAction;
@@ -141,6 +142,7 @@ export default function SellInquiryForm({
       startEmailCheck(async () => {
         const result = await checkSellInquiryEmailAction(values.email);
         setEmailExists(result.exists);
+        setAuthMode(result.exists ? "signin" : "signup");
         setStep(2);
       });
     }
@@ -150,7 +152,6 @@ export default function SellInquiryForm({
     <>
       <input type="hidden" name="firstName" value={values.firstName.trim()} />
       <input type="hidden" name="lastName" value={values.lastName.trim()} />
-      <input type="hidden" name="email" value={values.email.trim().toLowerCase()} />
       <input type="hidden" name="phone" value={values.phone.trim()} />
       <input type="hidden" name="streetAddress" value={values.streetAddress.trim()} />
       <input type="hidden" name="city" value={values.city.trim()} />
@@ -170,46 +171,70 @@ export default function SellInquiryForm({
   };
 
   if (step === 2 && !isLoggedIn) {
+    const isSignIn = authMode === "signin";
+    const emailLocked = isSignIn && emailExists;
+
     return (
       <Box component="form" action={formAction} noValidate sx={formShellSx}>
         <Stack spacing={3}>
           {inquiryHiddenFields}
-          <input type="hidden" name="emailExists" value={String(emailExists)} />
+          <input type="hidden" name="emailExists" value={String(isSignIn)} />
+          {!isSignIn || emailLocked ? (
+            <input type="hidden" name="email" value={values.email.trim().toLowerCase()} />
+          ) : null}
 
           <Box>
             <Typography variant="h5" sx={{ mb: 1 }}>
-              {emailExists ? "Welcome back!" : "Almost done"}
+              {emailLocked ? "Welcome back!" : isSignIn ? "Sign in to continue" : "Almost done"}
             </Typography>
             <Typography color="text.secondary">
-              {emailExists
+              {emailLocked
                 ? `Sign in to continue listing ${values.streetAddress}.`
-                : `Create a free account to track your listing at ${values.streetAddress}.`}
+                : isSignIn
+                  ? `Use your existing account to continue listing ${values.streetAddress}.`
+                  : `Create a free account to track your listing at ${values.streetAddress}.`}
             </Typography>
           </Box>
 
           {state.error ? <Alert severity="error">{state.error}</Alert> : null}
 
-          <TextField
-            label="Email"
-            value={values.email}
-            fullWidth
-            slotProps={{ input: { readOnly: true } }}
-            sx={inputSx}
-          />
+          {isSignIn && !emailLocked ? (
+            <TextField
+              name="email"
+              label="Email"
+              type="email"
+              autoComplete="email"
+              required
+              fullWidth
+              value={values.email}
+              onChange={(e) => updateField("email", e.target.value)}
+              error={Boolean(mergedErrors.email)}
+              helperText={mergedErrors.email}
+              sx={inputSx}
+            />
+          ) : (
+            <TextField
+              label="Email"
+              value={values.email}
+              fullWidth
+              slotProps={{ input: { readOnly: true } }}
+              sx={inputSx}
+            />
+          )}
 
           <TextField
             name="password"
             label="Password"
             type="password"
-            autoComplete={emailExists ? "current-password" : "new-password"}
+            autoComplete={isSignIn ? "current-password" : "new-password"}
             required
             fullWidth
             error={Boolean(mergedErrors.password)}
-            helperText={mergedErrors.password ?? (emailExists ? undefined : "At least 8 characters")}
+            helperText={mergedErrors.password ?? (isSignIn ? undefined : "At least 8 characters")}
             sx={inputSx}
           />
 
-          {!emailExists ? (
+          {!isSignIn ? (
             <TextField
               name="confirmPassword"
               label="Confirm password"
@@ -234,7 +259,7 @@ export default function SellInquiryForm({
             >
               {pending
                 ? "Continuing…"
-                : emailExists
+                : isSignIn
                   ? "Sign in & continue"
                   : "Create account & continue"}
             </Button>
@@ -243,12 +268,53 @@ export default function SellInquiryForm({
               variant="text"
               onClick={() => {
                 setStep(1);
+                setAuthMode("signup");
                 setErrors({});
               }}
             >
               Use a different email
             </Button>
           </Stack>
+
+          {!emailLocked ? (
+            <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
+              {isSignIn ? (
+                <>
+                  Need a new account?{" "}
+                  <Link
+                    component="button"
+                    type="button"
+                    underline="hover"
+                    color="primary"
+                    sx={{ fontWeight: 600, verticalAlign: "baseline" }}
+                    onClick={() => {
+                      setAuthMode("signup");
+                      setErrors({});
+                    }}
+                  >
+                    Create one instead
+                  </Link>
+                </>
+              ) : (
+                <>
+                  Already have an account?{" "}
+                  <Link
+                    component="button"
+                    type="button"
+                    underline="hover"
+                    color="primary"
+                    sx={{ fontWeight: 600, verticalAlign: "baseline" }}
+                    onClick={() => {
+                      setAuthMode("signin");
+                      setErrors({});
+                    }}
+                  >
+                    Sign in
+                  </Link>
+                </>
+              )}
+            </Typography>
+          ) : null}
         </Stack>
       </Box>
     );

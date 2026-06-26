@@ -1,5 +1,6 @@
 label: Heating
 options:
+  - None
   - Furnace / Forced Air
   - Gas
   - Heat Pump

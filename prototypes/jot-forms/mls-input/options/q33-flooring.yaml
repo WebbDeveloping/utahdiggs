@@ -1,5 +1,6 @@
 label: Flooring
 options:
+  - None
   - Bamboo
   - Carpet
   - Concrete
