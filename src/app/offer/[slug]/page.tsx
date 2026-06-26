@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import OfferSubmissionForm from "@/components/offer/OfferSubmissionForm";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
 import { getOfferFormListing } from "@/lib/offer/listing-query";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
 type OfferPageProps = {
   params: Promise<{ slug: string }>;
@@ -26,13 +27,22 @@ export async function generateMetadata({ params }: OfferPageProps): Promise<Meta
   const result = await getOfferFormListing(slug);
 
   if (result.kind === "not_found") {
-    return { title: "Offer Not Found — Glide RE" };
+    return createPageMetadata({
+      title: "Offer Not Found",
+      description: "This offer form could not be found.",
+      path: `/offer/${slug}`,
+      noIndex: true,
+    });
   }
 
-  return {
-    title: `Submit Offer — ${formatAddress(result.listing)} — Glide RE`,
-    description: `Submit an offer for ${formatAddress(result.listing)}.`,
-  };
+  const address = formatAddress(result.listing);
+
+  return createPageMetadata({
+    title: `Submit Offer — ${address}`,
+    description: `Submit an offer for ${address}.`,
+    path: `/offer/${slug}`,
+    noIndex: true,
+  });
 }
 
 export default async function OfferPage({ params }: OfferPageProps) {

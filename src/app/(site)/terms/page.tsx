@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { LegalPageContent } from "@/components/marketing/LegalPageContent";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Terms & Conditions — Glide RE",
+export const metadata = createPageMetadata({
+  title: "Terms & Conditions",
   description: "Terms and conditions for using Glide RE listing services and website.",
-};
+  path: "/terms",
+});
 
 const sections = [
   {

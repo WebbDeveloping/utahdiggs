@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import Box from "@mui/material/Box";
 import { getSafeRedirectPath } from "@/lib/auth/safe-redirect";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
 import ConsumerSignupForm from "@/components/account/ConsumerSignupForm";
+import AuthSplitLayout from "@/components/layout/AuthSplitLayout";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Create account — Glide RE",
-};
+export const metadata = createPageMetadata({
+  title: "Create Account",
+  description: "Create a Glide RE seller account to list your home and manage your listing online.",
+  path: "/signup",
+});
 
 type SignupPageProps = {
   searchParams: Promise<{ next?: string }>;
@@ -25,17 +27,9 @@ export default async function SignupPage({ searchParams }: SignupPageProps) {
 
   return (
     <SitePageLayoutWithAuth>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          px: 2,
-          py: { xs: 6, md: 8 },
-        }}
-      >
-        <ConsumerSignupForm next={next} />
-      </Box>
+      <AuthSplitLayout>
+        <ConsumerSignupForm next={next} variant="plain" />
+      </AuthSplitLayout>
     </SitePageLayoutWithAuth>
   );
 }

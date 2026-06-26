@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { LegalPageContent } from "@/components/marketing/LegalPageContent";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy — Glide RE",
+export const metadata = createPageMetadata({
+  title: "Privacy Policy",
   description: "How Glide RE collects, uses, and protects your personal information.",
-};
+  path: "/privacy",
+});
 
 const sections = [
   {

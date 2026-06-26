@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
@@ -7,12 +6,16 @@ import SellInquiryForm from "@/components/marketing/SellInquiryForm";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { buildListingPrefillPath, LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
+import { createPageMetadata } from "@/lib/seo/metadata";
+import { OG_IMAGES } from "@/lib/seo/site";
 
-export const metadata: Metadata = {
-  title: "List Your Home — Glide RE",
+export const metadata = createPageMetadata({
+  title: "List Your Home",
   description:
     "Enter your information and get in touch with an expert local agent to list your home with Glide RE.",
-};
+  path: "/sell/inquiry",
+  ogImage: OG_IMAGES.sell,
+});
 
 type SellInquiryPageProps = {
   searchParams: Promise<{ address?: string }>;

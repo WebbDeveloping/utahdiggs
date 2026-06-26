@@ -109,8 +109,8 @@ export default function SiteHeader({ user = null }: SiteHeaderProps) {
       </Menu>
     </>
   ) : (
-    <Button component={NextLink} href="/login" variant="outlined" color="inherit">
-      Sign in
+    <Button component={NextLink} href="/signup" variant="outlined" color="inherit">
+      Sign Up
     </Button>
   );
 

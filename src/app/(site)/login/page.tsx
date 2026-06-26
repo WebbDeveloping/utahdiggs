@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import Box from "@mui/material/Box";
 import { getSafeRedirectPath } from "@/lib/auth/safe-redirect";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
 import ConsumerLoginForm from "@/components/account/ConsumerLoginForm";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Sign in — Glide RE",
-};
+export const metadata = createPageMetadata({
+  title: "Sign In",
+  description: "Sign in to your Glide RE seller account to manage listings and track your home sale.",
+  path: "/login",
+});
 
 type LoginPageProps = {
   searchParams: Promise<{ next?: string }>;

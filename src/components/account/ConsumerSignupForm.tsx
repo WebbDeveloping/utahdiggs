@@ -23,9 +23,10 @@ const inputSx = {
 
 type ConsumerSignupFormProps = {
   next?: string;
+  variant?: "card" | "plain";
 };
 
-export default function ConsumerSignupForm({ next }: ConsumerSignupFormProps) {
+export default function ConsumerSignupForm({ next, variant = "card" }: ConsumerSignupFormProps) {
   const [state, formAction, pending] = useActionState<ConsumerAuthState, FormData>(
     consumerSignupAction,
     {},
@@ -34,17 +35,7 @@ export default function ConsumerSignupForm({ next }: ConsumerSignupFormProps) {
   const loginHref = appendNextParam("/login", next);
   const isListingFlow = isListingFlowRedirect(next);
 
-  return (
-    <Paper
-      elevation={0}
-      sx={{
-        width: "100%",
-        maxWidth: 420,
-        p: { xs: 3, sm: 4 },
-        border: "1px solid",
-        borderColor: "divider",
-      }}
-    >
+  const content = (
       <Stack spacing={3}>
         <Box sx={{ textAlign: "center" }}>
           <Box sx={{ display: "inline-flex", mb: 2 }}>
@@ -132,6 +123,24 @@ export default function ConsumerSignupForm({ next }: ConsumerSignupFormProps) {
           </Link>
         </Typography>
       </Stack>
+  );
+
+  if (variant === "plain") {
+    return content;
+  }
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        width: "100%",
+        maxWidth: 420,
+        p: { xs: 3, sm: 4 },
+        border: "1px solid",
+        borderColor: "divider",
+      }}
+    >
+      {content}
     </Paper>
   );
 }
