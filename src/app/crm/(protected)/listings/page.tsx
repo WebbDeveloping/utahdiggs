@@ -15,13 +15,15 @@ import Link from "next/link";
 import CrmApproveListingButton from "@/components/crm/CrmApproveListingButton";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
 import { ListingStatus, IntakeStatus } from "@/generated/prisma/client";
-import { prisma } from "@/lib/db";
+import { auth } from "@/lib/auth/admin-auth";
+import { isAdmin } from "@/lib/auth/roles";
+import { canApproveListing, requireCrmUser } from "@/lib/crm/access";
 import {
   formatCurrency,
   formatListingStatus,
   listingStatusColor,
 } from "@/lib/crm/format";
-import { getPendingApprovalListingCount } from "@/lib/crm/listing-queries";
+import { getCrmListings, getPendingApprovalListingCount } from "@/lib/crm/listing-queries";
 
 type CrmListingsPageProps = {
   searchParams: Promise<{ created?: string; pin?: string }>;
@@ -29,31 +31,12 @@ type CrmListingsPageProps = {
 
 export default async function CrmListingsPage({ searchParams }: CrmListingsPageProps) {
   const { created, pin } = await searchParams;
+  const session = await auth();
+  const user = requireCrmUser(session);
 
-  const listings = await prisma.listing.findMany({
-    orderBy: [{ status: "asc" }, { updatedAt: "desc" }],
-    select: {
-      id: true,
-      address: true,
-      city: true,
-      state: true,
-      listPrice: true,
-      status: true,
-      portalSlug: true,
-      mlsNumber: true,
-      listDate: true,
-      customerId: true,
-      listingIntake: { select: { status: true } },
-      _count: {
-        select: {
-          offers: true,
-          sellerRequests: true,
-        },
-      },
-    },
-  });
-
-  const pendingApprovalCount = await getPendingApprovalListingCount();
+  const listings = await getCrmListings(user);
+  const pendingApprovalCount = await getPendingApprovalListingCount(user);
+  const showAssignedColumn = isAdmin(user.role);
 
   const sortedListings = [...listings].sort((a, b) => {
     if (a.status === ListingStatus.SUBMITTED && b.status !== ListingStatus.SUBMITTED) {
@@ -123,6 +106,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
               <TableCell align="right">List price</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Source</TableCell>
+              {showAssignedColumn ? <TableCell>Assigned agent</TableCell> : null}
               <TableCell>Portal slug</TableCell>
               <TableCell align="right">Offers</TableCell>
               <TableCell align="right">Requests</TableCell>
@@ -132,7 +116,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
           <TableBody>
             {sortedListings.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={9}>
+                <TableCell colSpan={showAssignedColumn ? 10 : 9}>
                   <Typography color="text.secondary" sx={{ py: 3, textAlign: "center" }}>
                     No listings found. Run <code>npm run db:seed</code> to load test data, or
                     add a listing above.
@@ -143,8 +127,8 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
               sortedListings.map((listing) => {
                 const isDraftIntake =
                   listing.listingIntake?.status === IntakeStatus.DRAFT;
-                const canApprove =
-                  listing.status === ListingStatus.SUBMITTED && !isDraftIntake;
+                const showApprove =
+                  canApproveListing(user, listing) && !isDraftIntake;
 
                 return (
                 <TableRow key={listing.id} hover>
@@ -185,6 +169,15 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                       </Typography>
                     )}
                   </TableCell>
+                  {showAssignedColumn ? (
+                    <TableCell>
+                      <Typography variant="body2" color="text.secondary">
+                        {listing.assignedAgent?.name ??
+                          listing.assignedAgent?.email ??
+                          "Unassigned"}
+                      </Typography>
+                    </TableCell>
+                  ) : null}
                   <TableCell>
                     <Typography variant="body2" color="text.secondary">
                       {listing.portalSlug}
@@ -193,7 +186,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                   <TableCell align="right">{listing._count.offers}</TableCell>
                   <TableCell align="right">{listing._count.sellerRequests}</TableCell>
                   <TableCell align="right">
-                    {canApprove ? (
+                    {showApprove ? (
                       <CrmApproveListingButton
                         listingId={listing.id}
                         address={listing.address}

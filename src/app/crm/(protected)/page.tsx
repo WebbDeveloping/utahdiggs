@@ -6,10 +6,14 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
 import CrmStatCard from "@/components/crm/CrmStatCard";
+import { auth } from "@/lib/auth/admin-auth";
+import { requireCrmUser } from "@/lib/crm/access";
 import { getPendingApprovalListingCount } from "@/lib/crm/listing-queries";
 
 export default async function CrmDashboardPage() {
-  const pendingApprovalCount = await getPendingApprovalListingCount();
+  const session = await auth();
+  const user = requireCrmUser(session);
+  const pendingApprovalCount = await getPendingApprovalListingCount(user);
 
   return (
     <>

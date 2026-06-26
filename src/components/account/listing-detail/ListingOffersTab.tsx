@@ -42,7 +42,7 @@ export default function ListingOffersTab({ offers, listPrice }: ListingOffersTab
     return (
       <Paper variant="outlined" sx={{ p: 4, borderRadius: 2, textAlign: "center" }}>
         <Typography color="text.secondary">
-          No offers yet — your agent will add offers here as they arrive.
+          No offers yet — when buyer&apos;s agents submit offers, they&apos;ll appear here.
         </Typography>
       </Paper>
     );

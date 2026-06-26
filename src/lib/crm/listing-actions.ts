@@ -2,9 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { ListingStatus } from "@/generated/prisma/client";
+import { ListingStatus, UserRole } from "@/generated/prisma/client";
 import { auth } from "@/lib/auth/admin-auth";
-import { canManageListings } from "@/lib/auth/roles";
+import { canManageListings, isAdmin } from "@/lib/auth/roles";
+import {
+  canApproveListing,
+  canAssignAgent,
+  getSessionUser,
+  requireCrmUser,
+} from "@/lib/crm/access";
 import { createListing } from "@/lib/crm/create-listing";
 import { geocodeAddress } from "@/lib/geocode";
 import { prisma } from "@/lib/db";
@@ -215,7 +221,8 @@ export async function createListingAction(
   formData: FormData,
 ): Promise<CreateListingState> {
   const session = await auth();
-  if (!session?.user?.id || !canManageListings(session.user.role)) {
+  const user = getSessionUser(session);
+  if (!user || !canManageListings(user.role)) {
     return { error: "You are not authorized to create listings." };
   }
 
@@ -224,9 +231,28 @@ export async function createListingAction(
     return { fieldErrors };
   }
 
+  let assignedAgentId: string | null = null;
+  if (user.role === UserRole.AGENT) {
+    assignedAgentId = user.id;
+  } else if (isAdmin(user.role)) {
+    const raw = asString(formData.get("assignedAgentId"));
+    assignedAgentId = raw || null;
+    if (assignedAgentId) {
+      const agent = await prisma.user.findFirst({
+        where: { id: assignedAgentId, role: UserRole.AGENT, active: true },
+      });
+      if (!agent) {
+        return { error: "Selected agent is not valid." };
+      }
+    }
+  }
+
   let result;
   try {
-    result = await createListing(input, { userId: session.user.id });
+    result = await createListing(input, {
+      userId: user.id,
+      assignedAgentId,
+    });
   } catch (error) {
     console.error("createListingAction failed:", error);
     return { error: "Failed to create listing. Please try again." };
@@ -242,15 +268,14 @@ export async function approveListingAction(
   mlsNumber?: string,
 ): Promise<void> {
   const session = await auth();
-  if (!session?.user?.id || !canManageListings(session.user.role)) {
-    throw new Error("Unauthorized");
-  }
+  const user = requireCrmUser(session);
 
   const listing = await prisma.listing.findUnique({
     where: { id: listingId },
     select: {
       id: true,
       status: true,
+      assignedAgentId: true,
       address: true,
       city: true,
       state: true,
@@ -272,8 +297,8 @@ export async function approveListingAction(
     throw new Error("Listing not found.");
   }
 
-  if (listing.status !== ListingStatus.SUBMITTED) {
-    throw new Error("Only submitted listings can be approved.");
+  if (!canApproveListing(user, listing)) {
+    throw new Error("Unauthorized");
   }
 
   if (
@@ -332,4 +357,78 @@ export async function approveListingAction(
   revalidatePath("/crm/listings");
   revalidatePath(`/crm/listings/${listingId}`);
   revalidatePath("/search");
+}
+
+export async function assignListingAgentAction(
+  listingId: string,
+  agentId: string | null,
+): Promise<{ error?: string }> {
+  const session = await auth();
+  const user = requireCrmUser(session);
+
+  if (!canAssignAgent(user)) {
+    return { error: "You are not authorized to assign agents." };
+  }
+
+  if (agentId) {
+    const agent = await prisma.user.findFirst({
+      where: { id: agentId, role: UserRole.AGENT, active: true },
+    });
+    if (!agent) {
+      return { error: "Selected agent is not valid." };
+    }
+  }
+
+  const listing = await prisma.listing.findUnique({
+    where: { id: listingId },
+    select: {
+      id: true,
+      address: true,
+      city: true,
+      state: true,
+    },
+  });
+
+  if (!listing) {
+    return { error: "Listing not found." };
+  }
+
+  const previous = await prisma.listing.findUnique({
+    where: { id: listingId },
+    select: { assignedAgentId: true },
+  });
+
+  await prisma.listing.update({
+    where: { id: listingId },
+    data: { assignedAgentId: agentId },
+  });
+
+  if (agentId && agentId !== previous?.assignedAgentId) {
+    const agent = await prisma.user.findUnique({
+      where: { id: agentId },
+      select: { email: true, name: true, active: true },
+    });
+    if (agent?.active && agent.email) {
+      try {
+        const { sendListingAssignedEmail } = await import(
+          "@/lib/email/templates/crm-notifications"
+        );
+        await sendListingAssignedEmail({
+          agentEmail: agent.email,
+          agentName: agent.name,
+          address: listing.address,
+          city: listing.city,
+          state: listing.state,
+          listingId: listing.id,
+        });
+      } catch (emailError) {
+        console.error("Listing assignment email failed:", emailError);
+      }
+    }
+  }
+
+  revalidatePath("/crm/listings");
+  revalidatePath(`/crm/listings/${listingId}`);
+
+  return {};
 }

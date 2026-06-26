@@ -2,6 +2,8 @@ import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth/admin-auth";
 import { canManageListings } from "@/lib/auth/roles";
+import { canAccessListing, getSessionUser } from "@/lib/crm/access";
+import { prisma } from "@/lib/db";
 import {
   ALLOWED_PHOTO_TYPES,
   getPublicBlobConfig,
@@ -11,8 +13,24 @@ import {
 
 export async function POST(request: Request): Promise<NextResponse> {
   const session = await auth();
-  if (!session?.user?.id || !canManageListings(session.user.role)) {
+  const user = getSessionUser(session);
+  if (!user || !canManageListings(user.role)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = (await request.json()) as HandleUploadBody & {
+    payload?: { listingId?: string };
+  };
+  const listingId = body.payload?.listingId ?? null;
+
+  if (listingId) {
+    const listing = await prisma.listing.findUnique({
+      where: { id: listingId },
+      select: { assignedAgentId: true },
+    });
+    if (!listing || !canAccessListing(user, listing)) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
   }
 
   let publicConfig;
@@ -25,8 +43,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       { status: 503 },
     );
   }
-
-  const body = (await request.json()) as HandleUploadBody;
 
   try {
     const jsonResponse = await handleUpload({
@@ -42,7 +58,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           allowedContentTypes: [...ALLOWED_PHOTO_TYPES],
           maximumSizeInBytes: MAX_PHOTO_BYTES,
           addRandomSuffix: true,
-          tokenPayload: JSON.stringify({ userId: session.user.id }),
+          tokenPayload: JSON.stringify({ userId: user.id, listingId }),
         };
       },
       onUploadCompleted: async ({ blob, tokenPayload }) => {

@@ -76,6 +76,8 @@ function photoNameFromFile(filename: string): string {
 
 type AddListingFormProps = {
   closingTeam: ClosingTeamOptions;
+  agents?: { id: string; name: string | null; email: string }[];
+  showAgentAssignment?: boolean;
 };
 
 function Section({
@@ -114,7 +116,11 @@ function fieldError(
   return fieldErrors?.[key as keyof CreateListingFieldErrors];
 }
 
-export default function AddListingForm({ closingTeam }: AddListingFormProps) {
+export default function AddListingForm({
+  closingTeam,
+  agents = [],
+  showAgentAssignment = false,
+}: AddListingFormProps) {
   const [state, formAction, pending] = useActionState(createListingAction, {});
   const [photos, setPhotos] = useState<PhotoRow[]>([createEmptyPhotoRow()]);
   const previewUrlsRef = useRef<Set<string>>(new Set());
@@ -467,7 +473,28 @@ export default function AddListingForm({ closingTeam }: AddListingFormProps) {
         </Section>
 
         <Section title="Closing team">
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <Stack spacing={2}>
+            {showAgentAssignment ? (
+              <FormControl fullWidth sx={inputSx}>
+                <InputLabel id="assigned-agent-label">Assigned agent</InputLabel>
+                <Select
+                  labelId="assigned-agent-label"
+                  name="assignedAgentId"
+                  label="Assigned agent"
+                  defaultValue=""
+                >
+                  <MenuItem value="">
+                    <em>Unassigned</em>
+                  </MenuItem>
+                  {agents.map((agent) => (
+                    <MenuItem key={agent.id} value={agent.id}>
+                      {agent.name ?? agent.email}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : null}
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
             <FormControl fullWidth sx={inputSx}>
               <InputLabel id="escrow-officer-label">Escrow officer</InputLabel>
               <Select
@@ -506,6 +533,7 @@ export default function AddListingForm({ closingTeam }: AddListingFormProps) {
                 ))}
               </Select>
             </FormControl>
+          </Stack>
           </Stack>
         </Section>
 

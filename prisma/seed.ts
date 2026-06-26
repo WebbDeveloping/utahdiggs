@@ -30,8 +30,8 @@ async function upsertUser(
   const passwordHash = await bcrypt.hash(password, 10);
   await prisma.user.upsert({
     where: { email: email.toLowerCase() },
-    update: { name, passwordHash, role },
-    create: { email: email.toLowerCase(), name, passwordHash, role },
+    update: { name, passwordHash, role, active: true },
+    create: { email: email.toLowerCase(), name, passwordHash, role, active: true },
   });
 }
 
@@ -109,6 +109,10 @@ async function main() {
     where: { role: ClosingTeamRole.TRANSACTION_COORDINATOR },
   });
 
+  const testAgent = await prisma.user.findUnique({
+    where: { email: "agent@utahdigs.com" },
+  });
+
   const listingSearchFields = {
     latitude: 40.7608,
     longitude: -111.891,
@@ -156,6 +160,7 @@ async function main() {
       portfolioGroup: "test-portfolio",
       escrowOfficerId: escrow?.id,
       transactionCoordinatorId: tc?.id,
+      assignedAgentId: testAgent?.id ?? null,
       ...listingSearchFields,
     },
     create: {
@@ -175,6 +180,7 @@ async function main() {
       portfolioGroup: "test-portfolio",
       escrowOfficerId: escrow?.id,
       transactionCoordinatorId: tc?.id,
+      assignedAgentId: testAgent?.id ?? null,
       ...listingSearchFields,
     },
   });
@@ -196,6 +202,7 @@ async function main() {
       portfolioGroup: "test-portfolio",
       escrowOfficerId: escrow?.id,
       transactionCoordinatorId: tc?.id,
+      assignedAgentId: testAgent?.id ?? null,
       ...listing2SearchFields,
     },
     create: {
@@ -214,6 +221,7 @@ async function main() {
       portfolioGroup: "test-portfolio",
       escrowOfficerId: escrow?.id,
       transactionCoordinatorId: tc?.id,
+      assignedAgentId: testAgent?.id ?? null,
       ...listing2SearchFields,
     },
   });

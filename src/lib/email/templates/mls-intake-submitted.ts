@@ -1,8 +1,5 @@
 import { crmListingUrl, sendEmail } from "@/lib/email/send";
-
-function agentEmail(): string {
-  return process.env.AGENT_NOTIFICATION_EMAIL ?? "blair@utahdigs.com";
-}
+import { resolveAgentNotificationEmail } from "@/lib/email/agent-notification";
 
 export async function sendMlsIntakeSubmittedEmail(input: {
   listingId: string;
@@ -18,7 +15,7 @@ export async function sendMlsIntakeSubmittedEmail(input: {
     : "";
 
   await sendEmail({
-    to: agentEmail(),
+    to: await resolveAgentNotificationEmail(input.listingId),
     subject: `New MLS intake: ${input.address}, ${input.city}`,
     html: `
       <h2>New MLS listing intake submitted</h2>

@@ -12,10 +12,12 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
+import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import NextLink from "next/link";
@@ -31,13 +33,16 @@ type NavItem = {
   href: string;
   icon: React.ReactNode;
   soon?: boolean;
+  adminOnly?: boolean;
 };
 
 const navItems: NavItem[] = [
   { label: "Dashboard", href: "/crm", icon: <DashboardOutlinedIcon /> },
   { label: "Listings", href: "/crm/listings", icon: <HomeWorkOutlinedIcon /> },
+  { label: "Contacts", href: "/crm/contacts", icon: <ContactsOutlinedIcon /> },
   { label: "Offers", href: "/crm/offers", icon: <LocalOfferOutlinedIcon />, soon: true },
   { label: "Seller requests", href: "/crm/requests", icon: <InboxOutlinedIcon />, soon: true },
+  { label: "Team", href: "/crm/users", icon: <PeopleOutlinedIcon />, adminOnly: true },
 ];
 
 type CrmShellProps = {
@@ -49,12 +54,14 @@ type CrmShellProps = {
   children: React.ReactNode;
 };
 
-function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
+function SidebarNav({ onNavigate, userRole }: { onNavigate?: () => void; userRole: CrmUserRole }) {
   const pathname = usePathname();
 
   return (
     <List sx={{ px: 1.5, py: 1 }}>
-      {navItems.map((item) => {
+      {navItems
+        .filter((item) => !item.adminOnly || userRole === "ADMIN")
+        .map((item) => {
         const active =
           item.href === "/crm"
             ? pathname === "/crm"
@@ -118,7 +125,7 @@ function SidebarContent({
         </Typography>
       </Box>
 
-      <SidebarNav onNavigate={onNavigate} />
+      <SidebarNav onNavigate={onNavigate} userRole={user.role} />
 
       <Box sx={{ mt: "auto", p: 2 }}>
         <Divider sx={{ mb: 2 }} />

@@ -1,15 +1,16 @@
 import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import CrmApproveListingButton from "@/components/crm/CrmApproveListingButton";
+import CrmAssignAgentSelect from "@/components/crm/CrmAssignAgentSelect";
 import CrmListingDetailTabs from "@/components/crm/CrmListingDetailTabs";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
 import {
   IntakeStatus,
-  ListingStatus,
 } from "@/generated/prisma/client";
 import {
   formatCurrency,
@@ -17,7 +18,10 @@ import {
   listingStatusColor,
 } from "@/lib/crm/format";
 import { MLS_INPUT_STEPS } from "@/lib/mls-input/schema";
-import { prisma } from "@/lib/db";
+import { auth } from "@/lib/auth/admin-auth";
+import { isAdmin } from "@/lib/auth/roles";
+import { canApproveListing, requireCrmUser } from "@/lib/crm/access";
+import { getActiveAgents, getCrmListingById } from "@/lib/crm/listing-queries";
 import { notFound } from "next/navigation";
 
 type CrmListingDetailPageProps = {
@@ -28,16 +32,10 @@ export default async function CrmListingDetailPage({
   params,
 }: CrmListingDetailPageProps) {
   const { id } = await params;
+  const session = await auth();
+  const user = requireCrmUser(session);
 
-  const listing = await prisma.listing.findUnique({
-    where: { id },
-    include: {
-      listingIntake: true,
-      contacts: { include: { contact: true } },
-      documents: { orderBy: { uploadedAt: "asc" } },
-      customer: { select: { name: true, email: true, phone: true } },
-    },
-  });
+  const listing = await getCrmListingById(user, id);
 
   if (!listing) {
     notFound();
@@ -45,9 +43,11 @@ export default async function CrmListingDetailPage({
 
   const intakeData = (listing.listingIntake?.data as Record<string, unknown>) ?? {};
   const isDraftIntake = listing.listingIntake?.status === IntakeStatus.DRAFT;
-  const canApprove =
-    listing.status === ListingStatus.SUBMITTED &&
+  const showApprove =
+    canApproveListing(user, listing) &&
     (!listing.listingIntake || listing.listingIntake.status === IntakeStatus.SUBMITTED);
+
+  const agents = isAdmin(user.role) ? await getActiveAgents() : [];
 
   const primarySeller = listing.contacts.find((c) => c.role === "PRIMARY")?.contact;
 
@@ -99,6 +99,26 @@ export default async function CrmListingDetailPage({
               </Typography>
               <Typography>{listing.mlsNumber ?? "—"}</Typography>
             </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <Typography variant="caption" color="text.secondary">
+                Assigned agent
+              </Typography>
+              {isAdmin(user.role) ? (
+                <Box sx={{ mt: 0.5 }}>
+                  <CrmAssignAgentSelect
+                    listingId={listing.id}
+                    currentAgentId={listing.assignedAgentId}
+                    agents={agents}
+                  />
+                </Box>
+              ) : (
+                <Typography>
+                  {listing.assignedAgent?.name ??
+                    listing.assignedAgent?.email ??
+                    "—"}
+                </Typography>
+              )}
+            </Grid>
             {primarySeller ? (
               <Grid size={{ xs: 12 }}>
                 <Typography variant="caption" color="text.secondary">
@@ -119,7 +139,7 @@ export default async function CrmListingDetailPage({
             ) : null}
           </Grid>
 
-          {canApprove ? (
+          {showApprove ? (
             <Stack direction="row" spacing={1}>
               <CrmApproveListingButton
                 listingId={listing.id}

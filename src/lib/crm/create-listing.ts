@@ -21,13 +21,14 @@ export type CreateListingResult = {
 export type CreateListingOptions = {
   userId?: string;
   customerId?: string;
+  assignedAgentId?: string | null;
 };
 
 export async function createListing(
   input: CreateListingInput,
   options: CreateListingOptions = {},
 ): Promise<CreateListingResult> {
-  const { userId, customerId } = options;
+  const { userId, customerId, assignedAgentId } = options;
   const sellerEmail = input.sellerEmail.trim().toLowerCase();
   const portalSlug = await generateUniquePortalSlug(input.address, input.city);
   const { passcode, passcodeHash } = await generateListingPasscodeHash(
@@ -78,6 +79,7 @@ export async function createListing(
         transactionCoordinatorId: input.transactionCoordinatorId || null,
         portfolioGroup: input.portfolioGroup?.trim() || null,
         customerId: customerId ?? null,
+        assignedAgentId: assignedAgentId ?? null,
         submittedAt: isSubmitted ? new Date() : null,
       },
     });

@@ -10,6 +10,9 @@ export const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
 export const MAX_PHOTO_COUNT = 40;
 export const PHOTO_PATH_PREFIX = "photos/";
 export const DOCUMENT_PATH_PREFIX = "documents/";
+export const OFFER_DOCUMENT_PATH_PREFIX = "offers/";
+
+export const ALLOWED_OFFER_DOCUMENT_TYPES = ["application/pdf"] as const;
 
 export const ALLOWED_DOCUMENT_TYPES = [
   "application/pdf",
@@ -45,12 +48,56 @@ export function buildDocumentPathname(listingId: string, filename: string): stri
   return `${DOCUMENT_PATH_PREFIX}${listingId}/${suffix}/${sanitizeFilename(filename)}`;
 }
 
+export function buildOfferDocumentPathname(
+  listingId: string,
+  filename: string,
+): string {
+  const suffix = crypto.randomUUID();
+  return `${OFFER_DOCUMENT_PATH_PREFIX}${listingId}/${suffix}/${sanitizeFilename(filename)}`;
+}
+
 export function isValidPhotoPathname(pathname: string): boolean {
   return pathname.startsWith(PHOTO_PATH_PREFIX);
 }
 
 export function isValidDocumentPathname(pathname: string, listingId: string): boolean {
   return pathname.startsWith(`${DOCUMENT_PATH_PREFIX}${listingId}/`);
+}
+
+export function isValidOfferDocumentPathname(
+  pathname: string,
+  listingId: string,
+): boolean {
+  return pathname.startsWith(`${OFFER_DOCUMENT_PATH_PREFIX}${listingId}/`);
+}
+
+function blobUrlPathname(url: string): string | null {
+  try {
+    return new URL(url).pathname.replace(/^\//, "");
+  } catch {
+    return null;
+  }
+}
+
+export function isAllowedOfferBlobUrl(url: string, listingId: string): boolean {
+  const pathname = blobUrlPathname(url);
+  if (!pathname || !isValidOfferDocumentPathname(pathname, listingId)) {
+    return false;
+  }
+
+  try {
+    const { hostname } = new URL(url);
+    if (hostname.endsWith(".public.blob.vercel-storage.com")) {
+      return true;
+    }
+    if (hostname.endsWith(".blob.vercel-storage.com")) {
+      return getPrivateBlobConfig() != null;
+    }
+  } catch {
+    return false;
+  }
+
+  return false;
 }
 
 export function isAllowedDocumentType(contentType: string): boolean {

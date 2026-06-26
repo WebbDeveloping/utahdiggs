@@ -15,7 +15,11 @@ const footerLinks = {
   Resources: [
     { label: "How it works", href: "/#how" },
     { label: "FAQ", href: "/#faq" },
-    { label: "Seller portal", href: "https://portal.utahdigs.com" },
+    { label: "List your home", href: "/account/listings/new" },
+  ],
+  "Sign in": [
+    { label: "Seller sign in", href: "/login" },
+    { label: "Team sign in", href: "/crm/login" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "/privacy" },

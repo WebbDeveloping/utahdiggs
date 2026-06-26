@@ -1,6 +1,10 @@
 import { ClosingTeamRole } from "@/generated/prisma/client";
 import AddListingForm from "@/components/crm/AddListingForm";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
+import { auth } from "@/lib/auth/admin-auth";
+import { isAdmin } from "@/lib/auth/roles";
+import { getSessionUser } from "@/lib/crm/access";
+import { getActiveAgents } from "@/lib/crm/listing-queries";
 import { prisma } from "@/lib/db";
 import type { ClosingTeamOptions } from "@/types/crm-listing";
 
@@ -21,7 +25,10 @@ async function loadClosingTeamOptions(): Promise<ClosingTeamOptions> {
 }
 
 export default async function NewListingPage() {
+  const session = await auth();
+  const user = getSessionUser(session);
   const closingTeam = await loadClosingTeamOptions();
+  const agents = user && isAdmin(user.role) ? await getActiveAgents() : [];
 
   return (
     <>
@@ -29,7 +36,11 @@ export default async function NewListingPage() {
         title="Add listing"
         description="Create a new property listing. Portal slug, seller PIN, and offer form URL are generated automatically."
       />
-      <AddListingForm closingTeam={closingTeam} />
+      <AddListingForm
+        closingTeam={closingTeam}
+        agents={agents}
+        showAgentAssignment={Boolean(user && isAdmin(user.role))}
+      />
     </>
   );
 }
