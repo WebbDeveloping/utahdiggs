@@ -6,6 +6,8 @@ export type ListingPrefillInput = {
   inquiryId?: string;
 };
 
+export const LISTING_INTAKE_PATH = "/account/listings/new/mls-input";
+
 export type ListingPrefillValues = {
   address: string;
   city: string;
@@ -45,16 +47,15 @@ export function buildListingPrefillSearchParams(
 
 export function buildListingPrefillPath(input: ListingPrefillInput): string {
   const query = buildListingPrefillSearchParams(input);
-  return `/account/listings/new?${query}`;
+  return `${LISTING_INTAKE_PATH}?${query}`;
 }
 
 export function buildMlsInputPrefillPath(input: ListingPrefillInput): string {
-  const query = buildListingPrefillSearchParams(input);
-  return `/account/listings/new/mls-input?${query}`;
+  return buildListingPrefillPath(input);
 }
 
 export function buildMlsInputDraftPath(listingId: string): string {
-  return `/account/listings/new/mls-input?draft=${encodeURIComponent(listingId)}`;
+  return `${LISTING_INTAKE_PATH}?draft=${encodeURIComponent(listingId)}`;
 }
 
 export function parseListingPrefillFromSearchParams(

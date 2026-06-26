@@ -1,7 +1,7 @@
 import { ContactRole, ListingStatus } from "@/generated/prisma/client";
 import { generateListingPasscodeHash } from "@/lib/auth/portal-auth";
 import { prisma } from "@/lib/db";
-import { geocodeAddress } from "@/lib/geocode";
+import { geocodeListingAddress } from "@/lib/geocode";
 import { generateUniquePortalSlug } from "@/lib/crm/slug";
 import type { CreateListingInput } from "@/types/crm-listing";
 
@@ -138,8 +138,12 @@ export async function createListing(
   });
 
   try {
-    const query = `${input.address.trim()}, ${input.city.trim()}, ${input.state.trim()} ${input.zip.trim()}`;
-    const coords = await geocodeAddress(query);
+    const coords = await geocodeListingAddress({
+      address: input.address,
+      city: input.city,
+      state: input.state,
+      zip: input.zip,
+    });
     if (coords) {
       await prisma.listing.update({
         where: { id: listing.id },

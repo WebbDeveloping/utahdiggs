@@ -5,15 +5,21 @@ export type GeocodeCoords = {
   longitude: number;
 };
 
-export async function geocodeAddress(
-  query: string,
-): Promise<GeocodeCoords | null> {
+type GeocodeListingInput = {
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+};
+
+async function nominatimSearch(query: string): Promise<GeocodeCoords | null> {
   const url = new URL("https://nominatim.openstreetmap.org/search");
   url.searchParams.set("q", query);
   url.searchParams.set("format", "json");
   url.searchParams.set("limit", "1");
   url.searchParams.set("countrycodes", "us");
   url.searchParams.set("viewbox", UTAH_VIEWBOX);
+  url.searchParams.set("bounded", "0");
 
   const response = await fetch(url.toString(), {
     headers: {
@@ -35,4 +41,34 @@ export async function geocodeAddress(
     latitude: parseFloat(data[0].lat),
     longitude: parseFloat(data[0].lon),
   };
+}
+
+export async function geocodeAddress(
+  query: string,
+): Promise<GeocodeCoords | null> {
+  return nominatimSearch(query);
+}
+
+export async function geocodeListingAddress(
+  input: GeocodeListingInput,
+): Promise<GeocodeCoords | null> {
+  const address = input.address.trim();
+  const city = input.city.trim();
+  const state = input.state.trim().toUpperCase();
+  const zip = input.zip.trim();
+
+  const queries = [
+    `${address}, ${city}, ${state} ${zip}`,
+    `${city}, ${state} ${zip}`,
+    zip,
+  ];
+
+  for (const query of queries) {
+    const coords = await nominatimSearch(query);
+    if (coords) {
+      return coords;
+    }
+  }
+
+  return null;
 }

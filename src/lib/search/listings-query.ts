@@ -14,7 +14,10 @@ type ListingWithDocuments = Prisma.ListingGetPayload<{
 }>;
 
 type ListingWithAllDocuments = Prisma.ListingGetPayload<{
-  include: { documents: { orderBy: { uploadedAt: "asc" } } };
+  include: {
+    documents: { orderBy: { uploadedAt: "asc" } };
+    assignedAgent: { select: { name: true; email: true; image: true; active: true } };
+  };
 }>;
 
 function parseNumber(value: string | undefined): number | undefined {
@@ -127,9 +130,17 @@ function buildWhere(filters: SearchFilters): Prisma.ListingWhereInput {
 
   const bounds = filters.bbox ? parseBbox(filters.bbox) : null;
   if (bounds) {
+    // Keep listings without coordinates visible in results; only filter geocoded
+    // listings that fall outside the current map viewport.
     andConditions.push({
-      latitude: { not: null, gte: bounds.south, lte: bounds.north },
-      longitude: { not: null, gte: bounds.west, lte: bounds.east },
+      OR: [
+        { latitude: null },
+        { longitude: null },
+        {
+          latitude: { gte: bounds.south, lte: bounds.north },
+          longitude: { gte: bounds.west, lte: bounds.east },
+        },
+      ],
     });
   }
 
@@ -266,12 +277,16 @@ export async function getPublicListingBySlug(
       documents: {
         orderBy: { uploadedAt: "asc" },
       },
+      assignedAgent: {
+        select: { name: true, email: true, image: true, active: true },
+      },
     },
   });
 
   if (!listing) return null;
 
   const base = toPublicListing(listing as ListingWithAllDocuments);
+  const agent = listing.assignedAgent;
 
   return {
     ...base,
@@ -280,5 +295,13 @@ export async function getPublicListingBySlug(
       name: doc.name,
       url: doc.url,
     })),
+    assignedAgent:
+      agent?.active && agent.email
+        ? {
+            name: agent.name,
+            email: agent.email,
+            image: agent.image,
+          }
+        : null,
   };
 }

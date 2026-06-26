@@ -9,6 +9,7 @@ import MarketingLinkButton from "@/components/marketing/MarketingLinkButton";
 import SectionHeading from "@/components/marketing/SectionHeading";
 import { sectionAnchorSx } from "@/components/marketing/marketing-section";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 const plans = [
   {
@@ -48,7 +49,7 @@ const plans = [
 
 export default async function PricingSection() {
   const user = await getConsumerSession();
-  const listHomeHref = user ? "/account/listings/new" : "/sell/inquiry";
+  const listHomeHref = user ? LISTING_INTAKE_PATH : "/sell/inquiry";
 
   return (
     <Box

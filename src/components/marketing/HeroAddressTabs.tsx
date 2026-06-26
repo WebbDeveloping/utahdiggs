@@ -10,6 +10,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 type TabKey = "sell" | "buy";
 
@@ -45,7 +46,7 @@ export default function HeroAddressTabs({ isLoggedIn = false }: HeroAddressTabsP
     setSellError(false);
     const query = `address=${encodeURIComponent(trimmed)}`;
     if (isLoggedIn) {
-      router.push(`/account/listings/new?${query}`);
+      router.push(`${LISTING_INTAKE_PATH}?${query}`);
     } else {
       router.push(`/sell/inquiry?${query}`);
     }

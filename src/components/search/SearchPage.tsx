@@ -61,7 +61,6 @@ export default function SearchPage() {
 
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const boundsTimeoutRef = useRef<number | null>(null);
-  const skipInitialBoundsRef = useRef(true);
   const lastFiltersKey = useRef(filtersKey(filters));
 
   const updateFilters = useCallback(
@@ -177,11 +176,6 @@ export default function SearchPage() {
   }, [listings, shouldFitListings, filters.bbox]);
 
   function handleBoundsChange(bbox: string) {
-    if (skipInitialBoundsRef.current) {
-      skipInitialBoundsRef.current = false;
-      return;
-    }
-
     if (boundsTimeoutRef.current) {
       window.clearTimeout(boundsTimeoutRef.current);
     }

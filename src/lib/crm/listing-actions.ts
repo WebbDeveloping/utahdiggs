@@ -12,7 +12,7 @@ import {
   requireCrmUser,
 } from "@/lib/crm/access";
 import { createListing } from "@/lib/crm/create-listing";
-import { geocodeAddress } from "@/lib/geocode";
+import { geocodeListingAddress } from "@/lib/geocode";
 import { prisma } from "@/lib/db";
 import { MAX_PHOTO_COUNT } from "@/lib/storage/blob";
 import type {
@@ -319,8 +319,12 @@ export async function approveListingAction(
 
   if (listing.latitude == null || listing.longitude == null) {
     try {
-      const query = `${listing.address}, ${listing.city}, ${listing.state} ${listing.zip}`;
-      const coords = await geocodeAddress(query);
+      const coords = await geocodeListingAddress({
+        address: listing.address,
+        city: listing.city,
+        state: listing.state,
+        zip: listing.zip,
+      });
       if (coords) {
         await prisma.listing.update({
           where: { id: listing.id },

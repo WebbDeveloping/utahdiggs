@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: ListingPageProps): Promise<Me
   }
 
   return {
-    title: `${formatPrice(listing.listPrice)} — ${listing.address} — Glide RE`,
+    title: `${listing.address} — ${formatPrice(listing.listPrice)} — Glide RE`,
     description: `View details for ${formatAddress(listing)}.`,
   };
 }

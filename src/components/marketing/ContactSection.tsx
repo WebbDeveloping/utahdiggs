@@ -8,12 +8,13 @@ import Typography from "@mui/material/Typography";
 import MarketingLinkButton from "@/components/marketing/MarketingLinkButton";
 import { sectionAnchorSx } from "@/components/marketing/marketing-section";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 const CONTACT_EMAIL = "Blair@UtahDigs.com";
 
 export default async function ContactSection() {
   const user = await getConsumerSession();
-  const listHomeHref = user ? "/account/listings/new" : "/sell/inquiry";
+  const listHomeHref = user ? LISTING_INTAKE_PATH : "/sell/inquiry";
 
   return (
     <Box

@@ -18,6 +18,7 @@ import {
   isMlsDraft,
 } from "@/lib/consumer/mls-draft";
 import type { CustomerListingSummary } from "@/types/consumer-listing";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 type MyListingsSectionProps = {
   listings: CustomerListingSummary[];
@@ -43,7 +44,7 @@ export default function MyListingsSection({ listings }: MyListingsSectionProps) 
               <Typography variant="body2" color="text.secondary">
                 List your home with Glide RE and track submissions here.
               </Typography>
-              <Link href="/account/listings/new" style={{ textDecoration: "none", alignSelf: "flex-start" }}>
+              <Link href={LISTING_INTAKE_PATH} style={{ textDecoration: "none", alignSelf: "flex-start" }}>
                 <Button variant="contained" startIcon={<AddIcon />}>
                   List your home
                 </Button>
@@ -134,7 +135,7 @@ export default function MyListingsSection({ listings }: MyListingsSectionProps) 
                 <Link href="/account/listings" style={{ textDecoration: "none" }}>
                   <Button size="small">View all</Button>
                 </Link>
-                <Link href="/account/listings/new" style={{ textDecoration: "none" }}>
+                <Link href={LISTING_INTAKE_PATH} style={{ textDecoration: "none" }}>
                   <Button size="small" startIcon={<AddIcon />}>
                     Add listing
                   </Button>

@@ -33,11 +33,11 @@ export function formatAddress(listing: {
 
 export function getStatusLabel(status: ListingStatus): string | null {
   switch (status) {
+    case "ACTIVE":
+      return "Active";
     case "UNDER_CONTRACT":
     case "PENDING":
       return "Contingent";
-    case "ACTIVE":
-      return null;
     default:
       return null;
   }

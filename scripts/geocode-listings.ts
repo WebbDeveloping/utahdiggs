@@ -15,7 +15,7 @@ const adapter = new PrismaPg({ connectionString });
 
 const prisma = new PrismaClient({ adapter });
 
-import { geocodeAddress } from "../src/lib/geocode";
+import { geocodeListingAddress } from "../src/lib/geocode";
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -43,11 +43,17 @@ async function main() {
   console.log(`Geocoding ${listings.length} listing(s)...`);
 
   for (const listing of listings) {
-    const query = `${listing.address}, ${listing.city}, ${listing.state} ${listing.zip}`;
-    const coords = await geocodeAddress(query);
+    const coords = await geocodeListingAddress({
+      address: listing.address,
+      city: listing.city,
+      state: listing.state,
+      zip: listing.zip,
+    });
 
     if (!coords) {
-      console.warn(`No coordinates found for: ${query}`);
+      console.warn(
+        `No coordinates found for: ${listing.address}, ${listing.city}, ${listing.state} ${listing.zip}`,
+      );
       await sleep(1100);
       continue;
     }
@@ -57,7 +63,9 @@ async function main() {
       data: coords,
     });
 
-    console.log(`Updated ${query} → ${coords.latitude}, ${coords.longitude}`);
+    console.log(
+      `Updated ${listing.address}, ${listing.city} → ${coords.latitude}, ${coords.longitude}`,
+    );
     await sleep(1100);
   }
 

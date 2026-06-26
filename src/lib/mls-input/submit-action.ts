@@ -8,7 +8,7 @@ import {
   SellInquiryStatus,
 } from "@/generated/prisma/client";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
-import { geocodeAddress } from "@/lib/geocode";
+import { geocodeListingAddress } from "@/lib/geocode";
 import { prisma } from "@/lib/db";
 import type { Prisma } from "@/generated/prisma/client";
 import { sendMlsIntakeSubmittedEmail } from "@/lib/email/templates/mls-intake-submitted";
@@ -174,8 +174,12 @@ export async function submitMlsIntakeAction(
     });
 
     try {
-      const query = `${input.address}, ${input.city}, ${input.state} ${input.zip}`;
-      const coords = await geocodeAddress(query);
+      const coords = await geocodeListingAddress({
+        address: input.address,
+        city: input.city,
+        state: input.state,
+        zip: input.zip,
+      });
       if (coords) {
         await prisma.listing.update({
           where: { id: listingId },

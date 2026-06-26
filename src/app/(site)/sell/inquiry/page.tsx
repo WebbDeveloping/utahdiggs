@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import SellInquiryForm from "@/components/marketing/SellInquiryForm";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
-import { buildListingPrefillPath } from "@/lib/consumer/listing-prefill";
+import { buildListingPrefillPath, LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 export const metadata: Metadata = {
   title: "List Your Home — Glide RE",
@@ -35,7 +35,7 @@ export default async function SellInquiryPage({ searchParams }: SellInquiryPageP
   }
 
   if (user) {
-    redirect("/account/listings/new");
+    redirect(LISTING_INTAKE_PATH);
   }
 
   return (

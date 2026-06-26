@@ -29,8 +29,15 @@ export type PublicListing = {
   description: string | null;
 };
 
+export type PublicListingAgent = {
+  name: string | null;
+  email: string;
+  image: string | null;
+};
+
 export type PublicListingDetail = PublicListing & {
   photos: { id: string; name: string; url: string }[];
+  assignedAgent: PublicListingAgent | null;
 };
 
 export type SearchSort =

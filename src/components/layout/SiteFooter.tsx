@@ -5,6 +5,7 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Logo from "@/components/ui/Logo";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 const footerLinks = {
   Company: [
@@ -15,7 +16,7 @@ const footerLinks = {
   Resources: [
     { label: "How it works", href: "/#how" },
     { label: "FAQ", href: "/#faq" },
-    { label: "List your home", href: "/account/listings/new" },
+    { label: "List your home", href: LISTING_INTAKE_PATH },
   ],
   "Sign in": [
     { label: "Seller sign in", href: "/login" },

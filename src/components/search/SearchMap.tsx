@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
-import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import { useEffect, useMemo, useRef } from "react";
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { hasValidMapCoordinates } from "@/lib/search/format";
 import { createPriceIcon } from "@/lib/search/map-icons";
+import MapListingPopup from "@/components/search/MapListingPopup";
 import type { PublicListing } from "@/types/public-listing";
 
 type SearchMapProps = {
@@ -18,8 +19,20 @@ type SearchMapProps = {
 };
 
 function MapEvents({ onBoundsChange }: { onBoundsChange: (bbox: string) => void }) {
+  const userInteractedRef = useRef(false);
+
   useMapEvents({
+    dragstart: () => {
+      userInteractedRef.current = true;
+    },
+    zoomstart: (event) => {
+      if ("originalEvent" in event && event.originalEvent) {
+        userInteractedRef.current = true;
+      }
+    },
     moveend: (event) => {
+      if (!userInteractedRef.current) return;
+
       const bounds = event.target.getBounds();
       const west = bounds.getWest();
       const south = bounds.getSouth();
@@ -84,7 +97,11 @@ export default function SearchMap({
             mouseover: () => onMarkerHover(listing.id),
             mouseout: () => onMarkerHover(null),
           }}
-        />
+        >
+          <Popup className="map-listing-popup" minWidth={260} maxWidth={260}>
+            <MapListingPopup listing={listing} />
+          </Popup>
+        </Marker>
       ))}
     </MapContainer>
   );

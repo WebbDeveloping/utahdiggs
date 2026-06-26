@@ -23,6 +23,7 @@ import NextLink from "next/link";
 import Logo from "@/components/ui/Logo";
 import type { SiteUser } from "@/components/layout/SitePageLayout";
 import { consumerSignOutAction } from "@/lib/consumer/actions";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 const navLinks = [
   { label: "Search homes", href: "/search" },
@@ -51,7 +52,7 @@ export default function SiteHeader({ user = null }: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(menuAnchor);
-  const listHomeHref = user ? "/account/listings/new" : "/sell/inquiry";
+  const listHomeHref = user ? LISTING_INTAKE_PATH : "/sell/inquiry";
 
   const authControls = user ? (
     <>

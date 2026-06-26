@@ -1,3 +1,19 @@
 html {
   scroll-behavior: smooth;
 }
+
+.map-listing-popup .leaflet-popup-content-wrapper {
+  padding: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(19, 33, 28, 0.18);
+}
+
+.map-listing-popup .leaflet-popup-content {
+  margin: 0;
+  width: 260px;
+}
+
+.map-listing-popup .leaflet-popup-tip {
+  box-shadow: 0 8px 24px rgba(19, 33, 28, 0.12);
+}

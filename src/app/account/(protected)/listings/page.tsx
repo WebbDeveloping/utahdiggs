@@ -27,6 +27,7 @@ import {
   isMlsDraft,
 } from "@/lib/consumer/mls-draft";
 import { formatCurrency } from "@/lib/crm/format";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 export const metadata: Metadata = {
   title: "My listings — Glide RE",
@@ -64,7 +65,7 @@ export default async function AccountListingsPage({
                 Track submissions, view your listing dashboard, and manage documents.
               </Typography>
             </Box>
-            <Link href="/account/listings/new" style={{ textDecoration: "none" }}>
+            <Link href={LISTING_INTAKE_PATH} style={{ textDecoration: "none" }}>
               <Button variant="contained" startIcon={<AddIcon />}>
                 Add listing
               </Button>
@@ -101,7 +102,7 @@ export default async function AccountListingsPage({
                         <Typography color="text.secondary">
                           You haven&apos;t submitted any listings yet.
                         </Typography>
-                        <Link href="/account/listings/new" style={{ textDecoration: "none" }}>
+                        <Link href={LISTING_INTAKE_PATH} style={{ textDecoration: "none" }}>
                           <Button variant="contained" startIcon={<AddIcon />}>
                             List your home
                           </Button>
