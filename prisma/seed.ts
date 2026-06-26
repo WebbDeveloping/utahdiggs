@@ -3,14 +3,29 @@ loadEnv({ path: ".env.local", override: true });
 loadEnv();
 import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
+import type { Prisma } from "../src/generated/prisma/client";
 import {
   PrismaClient,
   UserRole,
   ClosingTeamRole,
   ContactRole,
+  IntakeStatus,
   ListingStatus,
 } from "../src/generated/prisma/client";
+import { mapMlsIntakeToListingInput } from "../src/lib/mls-input/map-to-listing";
+import type { FullMlsInputValues } from "../src/lib/mls-input/validation";
 import { resolvePostgresUrl } from "../src/lib/postgres-url";
+import {
+  copySeedPhotos,
+  copySignaturePhoto,
+  getAppBaseUrl,
+} from "./seed-data/copy-seed-photos";
+import {
+  MLS_TEST_LISTING_CONFIGS,
+  buildMlsTestListingValues,
+  validateMlsTestListings,
+  type MlsTestListingConfig,
+} from "./seed-data/mls-test-listings";
 
 const connectionString = resolvePostgresUrl();
 if (!connectionString) {
@@ -33,6 +48,135 @@ async function upsertUser(
     update: { name, passwordHash, role, active: true },
     create: { email: email.toLowerCase(), name, passwordHash, role, active: true },
   });
+}
+
+type SeedDeps = {
+  passcodeHash: string;
+  escrow: { id: string } | null;
+  tc: { id: string } | null;
+  testAgent: { id: string } | null;
+  seller: { id: string };
+  coSeller: { id: string };
+  appBaseUrl: string;
+};
+
+async function seedMlsTestListing(
+  config: MlsTestListingConfig,
+  values: FullMlsInputValues,
+  signatureUrl: string,
+  deps: SeedDeps,
+) {
+  const input = mapMlsIntakeToListingInput(values);
+  const submittedAt = new Date();
+  const offerFormUrl = `${deps.appBaseUrl}/offer/${config.portalSlug}`;
+
+  const listingData = {
+    address: input.address,
+    city: input.city,
+    state: input.state,
+    zip: input.zip,
+    listPrice: input.listPrice ?? null,
+    beds: input.beds ?? null,
+    baths: input.baths ?? null,
+    sqft: input.sqft ?? null,
+    yearBuilt: input.yearBuilt ?? null,
+    lotSizeAcres: input.lotSizeAcres ?? null,
+    hasPool: input.hasPool ?? null,
+    description: input.description ?? null,
+    mlsNumber: config.mlsNumber,
+    status: ListingStatus.SUBMITTED,
+    passcodeHash: deps.passcodeHash,
+    offerFormUrl,
+    portfolioGroup: config.portfolioGroup,
+    escrowOfficerId: deps.escrow?.id ?? null,
+    transactionCoordinatorId: deps.tc?.id ?? null,
+    assignedAgentId: deps.testAgent?.id ?? null,
+    latitude: config.latitude,
+    longitude: config.longitude,
+    neighborhood: config.neighborhood,
+    subdivision: config.subdivision,
+    listingOffice: config.listingOffice,
+    listDate: config.listDate,
+    submittedAt,
+  };
+
+  const listing = await prisma.listing.upsert({
+    where: { portalSlug: config.portalSlug },
+    update: listingData,
+    create: {
+      ...listingData,
+      portalSlug: config.portalSlug,
+    },
+  });
+
+  await prisma.listingIntake.upsert({
+    where: { listingId: listing.id },
+    update: {
+      status: IntakeStatus.SUBMITTED,
+      currentStep: 16,
+      data: values as Prisma.InputJsonValue,
+      signatureUrl,
+      submittedAt,
+    },
+    create: {
+      listingId: listing.id,
+      status: IntakeStatus.SUBMITTED,
+      currentStep: 16,
+      data: values as Prisma.InputJsonValue,
+      signatureUrl,
+      submittedAt,
+    },
+  });
+
+  await prisma.document.deleteMany({ where: { listingId: listing.id } });
+
+  const documents = [
+    ...input.photos.map((photo) => ({
+      listingId: listing.id,
+      name: photo.name.trim(),
+      url: photo.url.trim(),
+    })),
+    {
+      listingId: listing.id,
+      name: "MLS Input Signature",
+      url: signatureUrl,
+    },
+  ];
+
+  if (documents.length > 0) {
+    await prisma.document.createMany({ data: documents });
+  }
+
+  await prisma.listingContact.upsert({
+    where: {
+      listingId_contactId: { listingId: listing.id, contactId: deps.seller.id },
+    },
+    update: { role: ContactRole.PRIMARY },
+    create: {
+      listingId: listing.id,
+      contactId: deps.seller.id,
+      role: ContactRole.PRIMARY,
+    },
+  });
+
+  if (values.ownerCount === "Two") {
+    await prisma.listingContact.upsert({
+      where: {
+        listingId_contactId: {
+          listingId: listing.id,
+          contactId: deps.coSeller.id,
+        },
+      },
+      update: { role: ContactRole.CO_SELLER },
+      create: {
+        listingId: listing.id,
+        contactId: deps.coSeller.id,
+        role: ContactRole.CO_SELLER,
+      },
+    });
+  }
+
+  return listing;
 }
 
 async function main() {
@@ -289,6 +433,43 @@ async function main() {
     });
   }
 
+  const appBaseUrl = getAppBaseUrl();
+  const signature = copySignaturePhoto();
+  const mlsSeedInputs = MLS_TEST_LISTING_CONFIGS.map((config) => {
+    const { photos, copied, missing } = copySeedPhotos(
+      config.portalSlug,
+      config.imageNumbers,
+    );
+    const values = buildMlsTestListingValues(config, photos, signature.url);
+    return { config, values, copied, missing };
+  });
+  const validatedMlsListings = validateMlsTestListings(
+    mlsSeedInputs.map(({ config, values }) => ({
+      portalSlug: config.portalSlug,
+      values,
+    })),
+  );
+
+  const mlsTestListingIds: string[] = [];
+  for (let i = 0; i < MLS_TEST_LISTING_CONFIGS.length; i += 1) {
+    const config = MLS_TEST_LISTING_CONFIGS[i];
+    const values = validatedMlsListings[i];
+    const { copied, missing } = mlsSeedInputs[i];
+    const listing = await seedMlsTestListing(config, values, signature.url, {
+      passcodeHash,
+      escrow,
+      tc,
+      testAgent,
+      seller,
+      coSeller,
+      appBaseUrl,
+    });
+    mlsTestListingIds.push(listing.id);
+    console.log(
+      `MLS test listing seeded: ${config.portalSlug} (${copied} demo photos copied, ${missing} fallback)`,
+    );
+  }
+
   console.log("Seed complete.\n");
   console.log("CRM test accounts:");
   console.log("  Admin (main):  Admin@admin.com / admin123");
@@ -301,7 +482,16 @@ async function main() {
   console.log("\nPortal test accounts (passcode = last 4 of phone, or 1234):");
   console.log("  Primary:   seller@test.com / passcode 1234 → /portal/test-home");
   console.log("  Co-seller: coseller@test.com / passcode 1234 → /portal/test-home");
-  console.log("  Portfolio: seller@test.com / passcode 1234 → listings test-home + test-home-2");
+  console.log(
+    "  Portfolio: seller@test.com / passcode 1234 → test-home through test-home-5",
+  );
+  console.log("\nMLS-complete test listings (CRM → listing → MLS tab):");
+  for (let i = 0; i < MLS_TEST_LISTING_CONFIGS.length; i += 1) {
+    const config = MLS_TEST_LISTING_CONFIGS[i];
+    console.log(
+      `  ${config.portalSlug}: /crm/listings/${mlsTestListingIds[i]} (${config.mlsNumber})`,
+    );
+  }
 }
 
 main()

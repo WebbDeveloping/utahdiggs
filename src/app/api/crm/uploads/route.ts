@@ -18,10 +18,20 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = (await request.json()) as HandleUploadBody & {
-    payload?: { listingId?: string };
-  };
-  const listingId = body.payload?.listingId ?? null;
+  const body = (await request.json()) as HandleUploadBody;
+
+  let listingId: string | null = null;
+  if (body.type === "blob.generate-client-token") {
+    const clientPayload = body.payload.clientPayload;
+    if (clientPayload) {
+      try {
+        const parsed = JSON.parse(clientPayload) as { listingId?: string };
+        listingId = parsed.listingId ?? null;
+      } catch {
+        listingId = null;
+      }
+    }
+  }
 
   if (listingId) {
     const listing = await prisma.listing.findUnique({

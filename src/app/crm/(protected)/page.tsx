@@ -1,10 +1,9 @@
 import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
+import LinkButton from "@/components/ui/LinkButton";
 import CrmStatCard from "@/components/crm/CrmStatCard";
 import { auth } from "@/lib/auth/admin-auth";
 import { requireCrmUser } from "@/lib/crm/access";
@@ -27,9 +26,9 @@ export default async function CrmDashboardPage() {
           severity="info"
           sx={{ mb: 3 }}
           action={
-            <Button color="inherit" size="small" component={Link} href="/crm/listings">
+            <LinkButton color="inherit" size="small" href="/crm/listings">
               Review
-            </Button>
+            </LinkButton>
           }
         >
           {pendingApprovalCount} listing{pendingApprovalCount === 1 ? "" : "s"} awaiting
@@ -53,9 +52,9 @@ export default async function CrmDashboardPage() {
 
       {pendingApprovalCount > 0 ? (
         <Stack direction="row" sx={{ mt: 2 }}>
-          <Button component={Link} href="/crm/listings" variant="outlined" size="small">
+          <LinkButton href="/crm/listings" variant="outlined" size="small">
             View listings
-          </Button>
+          </LinkButton>
         </Stack>
       ) : (
         <Typography color="text.secondary" sx={{ mt: 3 }}>

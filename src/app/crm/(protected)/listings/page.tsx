@@ -1,4 +1,5 @@
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -101,6 +102,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
         <Table size="medium">
           <TableHead>
             <TableRow>
+              <TableCell sx={{ width: 80, pl: 2 }} />
               <TableCell>Address</TableCell>
               <TableCell>City</TableCell>
               <TableCell align="right">List price</TableCell>
@@ -116,7 +118,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
           <TableBody>
             {sortedListings.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={showAssignedColumn ? 10 : 9}>
+                <TableCell colSpan={showAssignedColumn ? 11 : 10}>
                   <Typography color="text.secondary" sx={{ py: 3, textAlign: "center" }}>
                     No listings found. Run <code>npm run db:seed</code> to load test data, or
                     add a listing above.
@@ -132,6 +134,32 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
 
                 return (
                 <TableRow key={listing.id} hover>
+                  <TableCell sx={{ pl: 2 }}>
+                    <Box
+                      sx={{
+                        width: 72,
+                        height: 54,
+                        borderRadius: 1,
+                        overflow: "hidden",
+                        flexShrink: 0,
+                        backgroundColor: "action.hover",
+                      }}
+                    >
+                      {listing.primaryPhotoUrl ? (
+                        <Box
+                          component="img"
+                          src={listing.primaryPhotoUrl}
+                          alt={listing.address}
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            display: "block",
+                          }}
+                        />
+                      ) : null}
+                    </Box>
+                  </TableCell>
                   <TableCell>
                     <Link href={`/crm/listings/${listing.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                       <Typography sx={{ fontWeight: 600 }}>{listing.address}</Typography>

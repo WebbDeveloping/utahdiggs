@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
@@ -10,8 +11,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
+import LinkButton from "@/components/ui/LinkButton";
 import { auth } from "@/lib/auth/admin-auth";
 import { requireCrmUser } from "@/lib/crm/access";
 import { getCrmContacts } from "@/lib/crm/contact-queries";
@@ -147,9 +148,9 @@ export default async function CrmContactsPage({ searchParams }: CrmContactsPageP
             Search
           </Button>
           {searchQuery ? (
-            <Button component={Link} href="/crm/contacts" variant="outlined" sx={{ flexShrink: 0 }}>
+            <LinkButton href="/crm/contacts" variant="outlined" sx={{ flexShrink: 0 }}>
               Clear
-            </Button>
+            </LinkButton>
           ) : null}
         </Stack>
       </Paper>

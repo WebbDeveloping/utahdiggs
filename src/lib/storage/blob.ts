@@ -139,6 +139,22 @@ export function isPublicBlobUrl(url: string): boolean {
   }
 }
 
+export function isVercelBlobUrl(url: string): boolean {
+  try {
+    const { hostname } = new URL(url);
+    if (hostname.endsWith(".public.blob.vercel-storage.com")) {
+      return true;
+    }
+    if (hostname.endsWith(".blob.vercel-storage.com")) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+
+  return false;
+}
+
 export async function servePrivateBlob(pathname: string) {
   const config = getPrivateBlobConfig();
   if (!config) {

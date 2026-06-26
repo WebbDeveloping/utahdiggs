@@ -32,9 +32,9 @@ export default function CrmListingDetailTabs({
   return (
     <Box>
       <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 3 }}>
-        <Tab label="Summary" />
-        {hasIntake ? <Tab label="MLS Intake" /> : null}
-        {hasIntake ? <Tab label="Print / Export" /> : null}
+        <Tab key="summary" label="Summary" />
+        {hasIntake ? <Tab key="intake" label="MLS Intake" /> : null}
+        {hasIntake ? <Tab key="print" label="Print / Export" /> : null}
       </Tabs>
 
       {tab === 0 ? summary : null}

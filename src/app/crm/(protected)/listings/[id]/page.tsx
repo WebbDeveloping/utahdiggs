@@ -8,6 +8,7 @@ import Link from "next/link";
 import CrmApproveListingButton from "@/components/crm/CrmApproveListingButton";
 import CrmAssignAgentSelect from "@/components/crm/CrmAssignAgentSelect";
 import CrmListingDetailTabs from "@/components/crm/CrmListingDetailTabs";
+import CrmListingMediaSection from "@/components/crm/CrmListingMediaSection";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
 import {
   IntakeStatus,
@@ -57,23 +58,24 @@ export default async function CrmListingDetailPage({
         <Stack spacing={2}>
           <Stack direction="row" spacing={1} sx={{ alignItems: "center", flexWrap: "wrap" }}>
             <Chip
+              key="status"
               label={formatListingStatus(listing.status)}
               color={listingStatusColor(listing.status)}
               size="small"
             />
             {listing.customerId ? (
-              <Chip label="Consumer" size="small" variant="outlined" color="info" />
+              <Chip key="consumer" label="Consumer" size="small" variant="outlined" color="info" />
             ) : null}
             {isDraftIntake ? (
-              <Chip label="MLS form in progress" size="small" variant="outlined" />
+              <Chip key="draft-intake" label="MLS form in progress" size="small" variant="outlined" />
             ) : null}
             {listing.listingIntake?.status === IntakeStatus.SUBMITTED ? (
-              <Chip label="Full MLS intake" size="small" variant="outlined" color="primary" />
+              <Chip key="submitted-intake" label="Full MLS intake" size="small" variant="outlined" color="primary" />
             ) : null}
           </Stack>
 
           <Grid container spacing={2}>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid key="address" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
                 Address
               </Typography>
@@ -81,25 +83,25 @@ export default async function CrmListingDetailPage({
                 {listing.address}, {listing.city}, {listing.state} {listing.zip}
               </Typography>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid key="list-price" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
                 List price
               </Typography>
               <Typography>{formatCurrency(listing.listPrice?.toString())}</Typography>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid key="portal-slug" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
                 Portal slug
               </Typography>
               <Typography>{listing.portalSlug}</Typography>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid key="mls-number" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
                 MLS number
               </Typography>
               <Typography>{listing.mlsNumber ?? "—"}</Typography>
             </Grid>
-            <Grid size={{ xs: 12, sm: 6 }}>
+            <Grid key="assigned-agent" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
                 Assigned agent
               </Typography>
@@ -120,7 +122,7 @@ export default async function CrmListingDetailPage({
               )}
             </Grid>
             {primarySeller ? (
-              <Grid size={{ xs: 12 }}>
+              <Grid key="primary-seller" size={{ xs: 12 }}>
                 <Typography variant="caption" color="text.secondary">
                   Primary seller
                 </Typography>
@@ -130,7 +132,7 @@ export default async function CrmListingDetailPage({
               </Grid>
             ) : null}
             {listing.description ? (
-              <Grid size={{ xs: 12 }}>
+              <Grid key="description" size={{ xs: 12 }}>
                 <Typography variant="caption" color="text.secondary">
                   Description / remarks
                 </Typography>
@@ -151,22 +153,7 @@ export default async function CrmListingDetailPage({
         </Stack>
       </Paper>
 
-      {listing.documents.length > 0 ? (
-        <Paper elevation={0} sx={{ p: 2.5, border: "1px solid", borderColor: "divider" }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>
-            Photos & documents
-          </Typography>
-          <Stack spacing={1}>
-            {listing.documents.map((doc) => (
-              <Typography key={doc.id} variant="body2">
-                <Link href={doc.url} target="_blank" rel="noopener noreferrer">
-                  {doc.name}
-                </Link>
-              </Typography>
-            ))}
-          </Stack>
-        </Paper>
-      ) : null}
+      <CrmListingMediaSection listingId={listing.id} documents={listing.documents} />
     </Stack>
   );
 

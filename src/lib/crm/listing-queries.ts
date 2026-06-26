@@ -4,6 +4,7 @@ import {
   getListingWhereForUser,
   type CrmSessionUser,
 } from "@/lib/crm/access";
+import { getPrimaryListingPhotoUrl } from "@/lib/storage/document-classify";
 
 const pendingApprovalWhere = {
   status: ListingStatus.SUBMITTED,
@@ -43,14 +44,23 @@ const crmListingSelect = {
       sellerRequests: true,
     },
   },
+  documents: {
+    select: { url: true, name: true },
+    orderBy: { uploadedAt: "asc" },
+  },
 } as const;
 
 export async function getCrmListings(user: CrmSessionUser) {
-  return prisma.listing.findMany({
+  const listings = await prisma.listing.findMany({
     where: getListingWhereForUser(user),
     orderBy: [{ status: "asc" }, { updatedAt: "desc" }],
     select: crmListingSelect,
   });
+
+  return listings.map(({ documents, ...listing }) => ({
+    ...listing,
+    primaryPhotoUrl: getPrimaryListingPhotoUrl(documents),
+  }));
 }
 
 export async function getCrmListingById(user: CrmSessionUser, id: string) {
