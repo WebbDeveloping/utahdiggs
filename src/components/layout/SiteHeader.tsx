@@ -16,6 +16,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -166,11 +167,12 @@ export default function SiteHeader({ user = null }: SiteHeaderProps) {
             </Box>
 
             <IconButton
-              aria-label="Open menu"
-              onClick={() => setMobileOpen(true)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((open) => !open)}
               sx={{ display: { xs: "flex", md: "none" } }}
             >
-              <MenuIcon />
+              {mobileOpen ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
           </Toolbar>
         </Container>
@@ -179,7 +181,7 @@ export default function SiteHeader({ user = null }: SiteHeaderProps) {
       <Drawer
         anchor="right"
         open={mobileOpen}
-        onClose={() => setMobileOpen(false)}
+        onClose={closeMobileMenu}
         slotProps={{
           paper: {
             sx: {
@@ -190,6 +192,11 @@ export default function SiteHeader({ user = null }: SiteHeaderProps) {
           },
         }}
       >
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
+          <IconButton aria-label="Close menu" onClick={closeMobileMenu} edge="end">
+            <CloseIcon />
+          </IconButton>
+        </Box>
         {navContent}
       </Drawer>
     </>
