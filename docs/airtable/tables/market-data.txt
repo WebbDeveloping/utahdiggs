@@ -1,0 +1,528 @@
+Market Data Table
+The id for Market Data is tblY3CYT2e6mkOjey. Table ids and table names can be used interchangeably in API requests. Using table ids means table name changes do not require modifications to your API request.
+
+Fields
+Each record in the Market Data table contains the following fields:
+
+Field names and field ids can be used interchangeably. Using field ids means field name changes do not require modifications to your API request. We recommend using field ids over field names where possible, to reduce modifications to your API request if the user changes the field name later.
+
+Field NameField IDTypeDescription
+Market Week LabelfldSnA1fxxRXKePV3Text
+string
+A single line of text.
+ 
+Example values
+"Sandy — Jun 22"
+
+Week Endingfld4aB6B0UD0g9Zb3
+Date
+string (ISO 8601 formatted date)
+UTC date, e.g. "2014-09-05".
+ 
+Example values
+"2026-06-22"
+
+Avg DOMfld2vGTRGqP5WiCbDNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+45
+
+Median List PricefldbT4OqohjHuEQg9Currency
+number
+Currency value. This field only allows positive numbers.
+ 
+Example value
+42.21
+
+List-to-Sale RatiofldBzWwURgd8hIl7MPercent
+number
+Decimal number representing a percentage value. For example, the underlying cell value for 12.3% is 0.123. This field only allows positive numbers.
+ 
+Example value
+
+Price Reductions PctfldeVBZ8tM6nBHKZxPercent
+number
+Decimal number representing a percentage value. For example, the underlying cell value for 12.3% is 0.123. This field only allows positive numbers.
+ 
+Example value
+
+New ListingsfldPO2f4OMLrlcpoeNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example value
+42
+
+Sold CountfldrNy1HmgM00q50oNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example value
+42
+
+Listingfld5EZhn7F1GDKkhP
+Link to another record
+array of record IDs (strings)
+Array of linked records IDs from the Listings table.
+ 
+Example value
+["rec8116cdd76088af", "rec245db9343f55e8", "rec4f3bade67ff565"]
+
+Cityfldtx7dFprwIwY4CmText
+string
+A single line of text.
+ 
+Example values
+"Sandy"
+
+Report DatefldBrmw8iAsH9VYqH
+Date
+string (ISO 8601 formatted date)
+UTC date, e.g. "2014-09-05".
+ 
+Example values
+"2026-06-22"
+
+Homes For SalefldwSdD5H9nB4JEhfNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+485
+
+Homes For Sale Change PctfldSYa3GdVWyR5Cy5Number
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+10.6
+
+New To MarketfldnDPFOpjkZasbbfNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+103
+
+New To Market Change PctfldZqpMJymVobRsHQNumber
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+-12.9
+
+DOM Change PctfldEci3wrN1JYlH42Number
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+11.6
+
+Avg Home PricefldSK56mHnYESqryUCurrency
+number
+Currency value. This field only allows positive numbers.
+ 
+Example values
+1004981
+
+Avg Home Price Change PctfldxP9lUf0Fp33CtTNumber
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+1.5
+
+Price Reductions CountfldBC6MAJ3OZmiQ8bNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+109
+
+Price Reductions Change PctfldcqmZWt7Se8CNrqNumber
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+75.8
+
+Price Per Sq FtfldDbe2uNexehyOHZCurrency
+number
+Currency value. This field only allows positive numbers.
+ 
+Example values
+308
+
+Price Per Sq Ft Change Pctfld5ZGyaaBDnZaWGaNumber
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+1.0
+
+Avg Sold PricefldkE6ZtfQzyUHhr0Currency
+number
+Currency value. This field only allows positive numbers.
+ 
+Example values
+909772
+
+Avg Sold Price Change PctfldggAOnbWKA0Pa3uNumber
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+28.6
+
+Homes Sold CountfldoxpICnpqeitN6NNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+61
+
+Homes Sold Change PctfldW3kw1PeDNExpouNumber
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+-34.4
+
+Sold To Listed RatiofldalyPjUaztt0NhQText
+string
+A single line of text.
+ 
+Example values
+"61:103"
+
+Sold To Listed Change PctfldJQmVOUF5dnlHADNumber
+number
+A decimal number showing 1 decimal digit. This field only allows positive numbers.
+ 
+Example values
+-29.9
+
+List Market Data records
+To list records in Market Data, use the select method.
+
+select returns a query object. To fetch the records matching that query, use the eachPage or firstPage method of the query object.
+
+Returned records do not include any fields with "empty" values, e.g. "", [], or false.
+
+Note: Airtable's API only accepts request with a URL shorter than 16,000 characters. Encoded formulas may cause your requests to exceed this limit. To fix this issue you can instead make a POST request to /v0/{baseId}/{tableIdOrName}/listRecords while passing the parameters within the body of the request instead of the query parameters. See our support article on this for more information.
+
+You can use the following parameters to filter, sort, and format the results:
+
+fields
+array of strings
+optional
+Only data for fields whose names are in this list will be included in the result. If you don't need every field, you can use this parameter to reduce the amount of data transferred.
+
+For example, to only return data from Market Week Label and Week Ending, pass in:
+
+fields: ["Market Week Label", "Week Ending"]
+You can also perform the same action with field ids (they can be found in the fields section):
+
+fields: ["fldSnA1fxxRXKePV3", "fld4aB6B0UD0g9Zb3"]
+filterByFormula
+string
+optional
+A formula used to filter records. The formula will be evaluated for each record, and if the result is not 0, false, "", NaN, [], or #Error! the record will be included in the response. We recommend testing your formula in the Formula field UI before using it in your API request.
+
+If combined with the view parameter, only records in that view which satisfy the formula will be returned.
+
+The formula must be encoded first before passing it as a value. You can use this tool to not only encode the formula but also create the entire url you need. For example, to only include records where Market Week Label isn't empty, pass in NOT({Market Week Label} = '') as a parameter like this:
+
+filterByFormula: "NOT({Market Week Label} = '')"
+
+Note: Airtable's API only accepts request with a URL shorter than 16,000 characters. Encoded formulas may cause your requests to exceed this limit. To fix this issue you can instead make a POST request to /v0/{baseId}/{tableIdOrName}/listRecords while passing the parameters within the body of the request instead of the query parameters. See our support article on this for more information.
+
+maxRecords
+number
+optional
+The maximum total number of records that will be returned in your requests. If this value is larger than pageSize (which is 100 by default), you may have to load multiple pages to reach this total. See the Pagination section below for more.pageSize
+number
+optional
+The number of records returned in each request. Must be less than or equal to 100. Default is 100. See the Pagination section below for more.sort
+array of objects
+optional
+A list of sort objects that specifies how the records will be ordered. Each sort object must have a field key specifying the name of the field to sort on, and an optional direction key that is either "asc" or "desc". The default direction is "asc".
+
+The sort parameter overrides the sorting of the view specified in the view parameter. If neither the sort nor the view parameter is included, the order of records is arbitrary.
+
+For example, to sort records by Market Week Label in descending order, send these two query parameters:
+
+sort%5B0%5D%5Bfield%5D=Market%20Week%20Label
+sort%5B0%5D%5Bdirection%5D=desc
+For example, to sort records by Market Week Label in descending order, pass in:
+
+[{field: "Market Week Label", direction: "desc"}]
+view
+string
+optional
+The name or ID of a view in the Market Data table. If set, only the records in that view will be returned. The records will be sorted according to the order of the view unless the sort parameter is included, which overrides that order. Fields hidden in this view will be returned in the results. To only return a subset of fields, use the fields parameter.cellFormat
+string
+optional
+The format that should be used for cell values. Supported values are:
+
+json: cells will be formatted as JSON, depending on the field type.
+
+string: cells will be formatted as user-facing strings, regardless of the field type. The timeZone and userLocale parameters are required when using string as the cellFormat.
+
+Note: You should not rely on the format of these strings, as it is subject to change.
+The default is json.
+
+timeZone
+string
+optional
+The time zone that should be used to format dates when using string as the cellFormat. This parameter is required when using string as the cellFormat.
+
+userLocale
+string
+optional
+The user locale that should be used to format dates when using string as the cellFormat. This parameter is required when using string as the cellFormat.
+
+returnFieldsByFieldId
+boolean
+optional
+An optional boolean value that lets you return field objects where the key is the field id.
+
+This defaults to false, which returns field objects where the key is the field name.
+
+recordMetadata
+array of strings
+optional
+An optional field that, if includes commentCount, adds a commentCount read only property on each record returned.
+
+Pagination
+The server returns one page of records at a time. Each page will contain pageSize records, which is 100 by default.
+
+To fetch the next page of records, call fetchNextPage.
+
+Pagination will stop when you've reached the end of your table. If the maxRecords parameter is passed, pagination will stop once you've reached this maximum.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Market Data').select({
+    // Selecting the first 3 records in Grid view:
+    maxRecords: 3,
+    view: "Grid view"
+}).eachPage(function page(records, fetchNextPage) {
+    // This function (`page`) will get called for each page of records.
+
+    records.forEach(function(record) {
+        console.log('Retrieved', record.get('Market Week Label'));
+    });
+
+    // To fetch the next page of records, call `fetchNextPage`.
+    // If there are more records, `page` will get called again.
+    // If there are no more records, `done` will get called.
+    fetchNextPage();
+
+}, function done(err) {
+    if (err) { console.error(err); return; }
+});
+Output
+Retrieved Sandy — Jun 22
+Fetch first page
+// If you only want the first page of records, you can
+// use `firstPage` instead of `eachPage`.
+base('Market Data').select({
+    view: 'Grid view'
+}).firstPage(function(err, records) {
+    if (err) { console.error(err); return; }
+    records.forEach(function(record) {
+        console.log('Retrieved', record.get('Market Week Label'));
+    });
+});
+Fetch additional record metadata
+// If you want to fetch the number of comments for each record,
+// include the `recordMetadata` param.
+base('Market Data').select({
+    recordMetadata: ['commentCount']
+}).firstPage(function(err, records) {
+    if (err) { console.error(err); return; }
+    records.forEach(function(record) {
+        console.log('Retrieved a record with', record.commentCount, 'comments');
+    });
+});
+ 
+Iteration may timeout due to client inactivity or server restarts. In that case, the client will receive a 422 response with error message LIST_RECORDS_ITERATOR_NOT_AVAILABLE. It may then restart iteration from the beginning.
+
+ 
+Retrieve a Market Data record
+To retrieve an existing record in Market Data table, use the find method.
+
+Any "empty" fields (e.g. "", [], or false) in the record will not be returned.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Market Data').find('rec8XmItFdqx49JgP', function(err, record) {
+    if (err) { console.error(err); return; }
+    console.log('Retrieved', record.id);
+});
+Output
+Retrieved rec8XmItFdqx49JgP
+Create Market Data records
+To create new records, use the create method. Note that table names and table ids can be used interchangeably. Using table ids means table name changes do not require modifications to your API request.
+
+The first argument should be an array of up to 10 record objects. Each of these objects should have one key whose value is an inner object containing your record's cell values, keyed by either field name or field id.
+
+Returns an array of record objects created if the call succeeded, including record IDs which will uniquely identify the records within Anna — Seller Portal System.
+
+The Airtable API will perform best-effort automatic data conversion from string values if the typecast parameter is passed in (click to show example). Automatic conversion is disabled by default to ensure data integrity, but it may be helpful for integrating with 3rd party data sources.
+
+You can also include a single record object at the top level. Click here to show an example.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Market Data').create([
+  {
+    "fields": {
+      "Market Week Label": "Sandy — Jun 22",
+      "Week Ending": "2026-06-22",
+      "Avg DOM": 45,
+      "City": "Sandy",
+      "Report Date": "2026-06-22",
+      "Homes For Sale": 485,
+      "Homes For Sale Change Pct": 10.6,
+      "New To Market": 103,
+      "New To Market Change Pct": -12.9,
+      "DOM Change Pct": 11.6,
+      "Avg Home Price": 1004981,
+      "Avg Home Price Change Pct": 1.5,
+      "Price Reductions Count": 109,
+      "Price Reductions Change Pct": 75.8,
+      "Price Per Sq Ft": 308,
+      "Price Per Sq Ft Change Pct": 1,
+      "Avg Sold Price": 909772,
+      "Avg Sold Price Change Pct": 28.6,
+      "Homes Sold Count": 61,
+      "Homes Sold Change Pct": -34.4,
+      "Sold To Listed Ratio": "61:103",
+      "Sold To Listed Change Pct": -29.9
+    }
+  },
+  {
+    "fields": {
+      "Market Week Label": "Sandy — Jun 22",
+      "Week Ending": "2026-06-22",
+      "Avg DOM": 45,
+      "City": "Sandy",
+      "Report Date": "2026-06-22",
+      "Homes For Sale": 485,
+      "Homes For Sale Change Pct": 10.6,
+      "New To Market": 103,
+      "New To Market Change Pct": -12.9,
+      "DOM Change Pct": 11.6,
+      "Avg Home Price": 1004981,
+      "Avg Home Price Change Pct": 1.5,
+      "Price Reductions Count": 109,
+      "Price Reductions Change Pct": 75.8,
+      "Price Per Sq Ft": 308,
+      "Price Per Sq Ft Change Pct": 1,
+      "Avg Sold Price": 909772,
+      "Avg Sold Price Change Pct": 28.6,
+      "Homes Sold Count": 61,
+      "Homes Sold Change Pct": -34.4,
+      "Sold To Listed Ratio": "61:103",
+      "Sold To Listed Change Pct": -29.9
+    }
+  }
+], function(err, records) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  records.forEach(function (record) {
+    console.log(record.getId());
+  });
+});
+Output
+rec8XmItFdqx49JgP
+rec8XmItFdqx49JgP
+Update Market Data records
+To update Market Data records, use the update or replace method. An update will only update the fields you include. Fields not included will be unchanged. A replace will perform a destructive update and clear all unincluded cell values. A replace call on Market Data records will always fail. The example at the right uses the non-destructive update method. Click here to show a destructive replace call.
+The first argument should be an array of up to 10 record objects. Each of these objects should have an id property representing the record ID and a fields property which contains all of your record's cell values by field name or field id for all of your record's cell values by field name.
+To link to new records in Listing, add new linked record IDs to the existing array. Be sure to include all existing linked record IDs that you wish to retain. To unlink records, include the existing array of record IDs, excluding any that you wish to unlink.
+
+Automatic data conversion for update actions can be enabled via typecast parameter. See create record for details.
+
+You can also include a single record object at the top level. Click here to show an example.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Market Data').update([
+  {
+    "id": "rec8XmItFdqx49JgP",
+    "fields": {
+      "Market Week Label": "Sandy — Jun 22",
+      "Week Ending": "2026-06-22",
+      "Avg DOM": 45,
+      "City": "Sandy",
+      "Report Date": "2026-06-22",
+      "Homes For Sale": 485,
+      "Homes For Sale Change Pct": 10.6,
+      "New To Market": 103,
+      "New To Market Change Pct": -12.9,
+      "DOM Change Pct": 11.6,
+      "Avg Home Price": 1004981,
+      "Avg Home Price Change Pct": 1.5,
+      "Price Reductions Count": 109,
+      "Price Reductions Change Pct": 75.8,
+      "Price Per Sq Ft": 308,
+      "Price Per Sq Ft Change Pct": 1,
+      "Avg Sold Price": 909772,
+      "Avg Sold Price Change Pct": 28.6,
+      "Homes Sold Count": 61,
+      "Homes Sold Change Pct": -34.4,
+      "Sold To Listed Ratio": "61:103",
+      "Sold To Listed Change Pct": -29.9
+    }
+  }
+], function(err, records) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  records.forEach(function(record) {
+    console.log(record.get('Avg DOM'));
+  });
+});
+Output
+45
+Delete Market Data records
+To delete Market Data records, use the destroy method. Note that table names and table ids can be used interchangeably. Using table ids means table name changes do not require modifications to your API request.
+
+The first parameter to destroy is an array of up to 10 record IDs to delete.
+
+You can also set the first parameter to a record ID to delete a single record. Click here to show an example.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Market Data').destroy(['rec8XmItFdqx49JgP'], function(err, deletedRecords) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log('Deleted', deletedRecords.length, 'records');
+});
+Output
+Deleted 1 records

@@ -4,6 +4,7 @@ import {
   ContactRole,
   IntakeStatus,
   ListingStatus,
+  OnboardingStatus,
   SellInquiryStatus,
 } from "@/generated/prisma/client";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
@@ -84,8 +85,20 @@ export async function saveMlsDraftAction(
         include: { listingIntake: true },
       });
 
-      if (!existing?.listingIntake) {
+      if (!existing) {
         return { error: "Draft not found." };
+      }
+
+      if (!existing.listingIntake) {
+        await prisma.listingIntake.create({
+          data: {
+            listingId,
+            status: IntakeStatus.DRAFT,
+            currentStep: nextStep,
+            data: values as Prisma.InputJsonValue,
+          },
+        });
+        return { listingId, saved: true };
       }
 
       await prisma.$transaction(async (tx) => {
@@ -126,6 +139,7 @@ export async function saveMlsDraftAction(
           offerFormUrl,
           customerId: session.id,
           submittedAt: null,
+          onboardingStatus: OnboardingStatus.PLAN_PENDING,
         },
       });
 

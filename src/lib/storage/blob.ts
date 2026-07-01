@@ -130,6 +130,12 @@ export function getPrivateBlobConfig(): BlobStoreConfig | null {
   };
 }
 
+export type BlobAccess = "public" | "private";
+
+export function getServerDocumentBlobAccess(): BlobAccess {
+  return getPrivateBlobConfig() != null ? "private" : "public";
+}
+
 export function isPublicBlobUrl(url: string): boolean {
   try {
     const { hostname } = new URL(url);

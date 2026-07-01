@@ -6,7 +6,8 @@ export type ListingPrefillInput = {
   inquiryId?: string;
 };
 
-export const LISTING_INTAKE_PATH = "/account/listings/new/mls-input";
+/** Default entry for logged-in sellers starting a new listing */
+export const LISTING_INTAKE_PATH = "/account/listings/new";
 
 export type ListingPrefillValues = {
   address: string;
@@ -29,6 +30,10 @@ export function normalizeInquiryState(state: string): string {
   return STATE_NAME_TO_CODE[trimmed.toLowerCase()] ?? trimmed.toUpperCase();
 }
 
+export function buildOnboardingPathForListing(listingId: string): string {
+  return `/account/onboarding/${listingId}`;
+}
+
 export function buildListingPrefillSearchParams(
   input: ListingPrefillInput,
 ): string {
@@ -45,6 +50,7 @@ export function buildListingPrefillSearchParams(
   return params.toString();
 }
 
+/** @deprecated Use buildOnboardingPathForListing after early listing creation */
 export function buildListingPrefillPath(input: ListingPrefillInput): string {
   const query = buildListingPrefillSearchParams(input);
   return `${LISTING_INTAKE_PATH}?${query}`;
@@ -55,7 +61,7 @@ export function buildMlsInputPrefillPath(input: ListingPrefillInput): string {
 }
 
 export function buildMlsInputDraftPath(listingId: string): string {
-  return `${LISTING_INTAKE_PATH}?draft=${encodeURIComponent(listingId)}`;
+  return `/account/listings/new/mls-input?draft=${encodeURIComponent(listingId)}`;
 }
 
 export function parseListingPrefillFromSearchParams(

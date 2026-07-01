@@ -1,4 +1,4 @@
-import type { IntakeStatus } from "@/generated/prisma/client";
+import type { IntakeStatus, OnboardingStatus } from "@/generated/prisma/client";
 import type {
   ListingStatusValue,
   OfferStatusValue,
@@ -56,6 +56,8 @@ export type ConsumerListingDetail = {
   priceReductionCount: number;
   marketAvgDom: number | null;
   intakeStatus: IntakeStatus | null;
+  submittedAt: Date | null;
+  onboardingStatus: OnboardingStatus;
   documents: ConsumerListingDocument[];
   offers: ConsumerListingOffer[];
   escrowOfficer: ConsumerClosingTeamMember | null;

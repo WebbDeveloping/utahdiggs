@@ -195,12 +195,20 @@ export default function FieldRenderer({
   }
 
   if (field.type === "signature") {
+    const ownerName = allValues.primaryOwnerName as
+      | { first?: string; last?: string }
+      | undefined;
+    const signerName = ownerName
+      ? [ownerName.first, ownerName.last].filter(Boolean).join(" ").trim() || undefined
+      : undefined;
+
     return (
       <SignatureField
         label={label}
         value={(value as string) ?? ""}
         required={field.required}
         error={error}
+        signerName={signerName}
         onChange={(url) => onChange(field.id, url)}
       />
     );

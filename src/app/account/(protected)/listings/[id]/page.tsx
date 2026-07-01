@@ -7,8 +7,10 @@ import SitePageLayout from "@/components/layout/SitePageLayout";
 import ListingDashboardTabs from "@/components/account/listing-detail/ListingDashboardTabs";
 import ListingPropertyHeader from "@/components/account/listing-detail/ListingPropertyHeader";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { isOnboardingInProgress } from "@/lib/consumer/onboarding";
+import { buildOnboardingPathForListing } from "@/lib/consumer/listing-prefill";
 import { getCustomerListingDetail } from "@/lib/consumer/listing-detail-query";
-import { getMlsDraftResumePath, isMlsDraft } from "@/lib/consumer/mls-draft";
+import { getMlsDraftResumePath } from "@/lib/consumer/mls-draft";
 import { notFound, redirect } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -38,16 +40,21 @@ export default async function AccountListingDetailPage({
     redirect(getMlsDraftResumePath(listing.id));
   }
 
+  if (isOnboardingInProgress(listing)) {
+    redirect(buildOnboardingPathForListing(listing.id));
+  }
+
   return (
     <SitePageLayout user={user}>
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
         <Stack spacing={4}>
           <ListingPropertyHeader listing={listing} customerName={user.name} />
 
-          {listing.status === ListingStatus.SUBMITTED ? (
+          {listing.status === ListingStatus.SUBMITTED && listing.submittedAt ? (
             <Alert severity="info">
               Your listing is under review. Once approved and active on the MLS, you&apos;ll see
-              offers, weekly updates, and seller requests here.
+              offers, weekly updates, and seller requests here.{" "}
+              <a href={buildOnboardingPathForListing(listing.id)}>View onboarding status</a>
             </Alert>
           ) : null}
 

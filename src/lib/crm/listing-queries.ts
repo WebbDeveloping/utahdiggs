@@ -1,4 +1,4 @@
-import { IntakeStatus, ListingStatus } from "@/generated/prisma/client";
+import { ListingStatus } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
 import {
   getListingWhereForUser,
@@ -8,11 +8,7 @@ import { getPrimaryListingPhotoUrl } from "@/lib/storage/document-classify";
 
 const pendingApprovalWhere = {
   status: ListingStatus.SUBMITTED,
-  NOT: {
-    listingIntake: {
-      status: IntakeStatus.DRAFT,
-    },
-  },
+  submittedAt: { not: null },
 } as const;
 
 export async function getPendingApprovalListingCount(user: CrmSessionUser) {
@@ -34,8 +30,13 @@ const crmListingSelect = {
   portalSlug: true,
   mlsNumber: true,
   listDate: true,
+  submittedAt: true,
   customerId: true,
   assignedAgentId: true,
+  onboardingStatus: true,
+  servicePlan: true,
+  scheduledCallAt: true,
+  agreementSignedAt: true,
   listingIntake: { select: { status: true } },
   assignedAgent: { select: { id: true, name: true, email: true } },
   _count: {

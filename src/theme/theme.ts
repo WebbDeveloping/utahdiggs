@@ -1,6 +1,7 @@
 "use client";
 
 import { createTheme } from "@mui/material/styles";
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 
 const theme = createTheme({
   palette: {
@@ -116,6 +117,30 @@ const theme = createTheme({
         filled: {
           backgroundColor: "#dff0e9",
           color: "#0e7a5f",
+        },
+      },
+    },
+    MuiDateCalendar: {
+      styleOverrides: {
+        root: {
+          width: 320,
+          maxWidth: "100%",
+        },
+      },
+    },
+    MuiPickerDay: {
+      styleOverrides: {
+        root: {
+          borderRadius: 10,
+          "&.Mui-selected": {
+            backgroundColor: "#0e7a5f",
+            "&:hover, &:focus": {
+              backgroundColor: "#0a5c47",
+            },
+          },
+          "&.MuiPickersDay-today": {
+            borderColor: "#0e7a5f",
+          },
         },
       },
     },

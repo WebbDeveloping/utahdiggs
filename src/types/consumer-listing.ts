@@ -1,4 +1,4 @@
-import type { IntakeStatus, ListingStatus } from "@/generated/prisma/client";
+import type { IntakeStatus, ListingStatus, OnboardingStatus, ServicePlan } from "@/generated/prisma/client";
 import type { PhotoInput } from "@/types/crm-listing";
 
 export type ConsumerCreateListingInput = {
@@ -46,4 +46,8 @@ export type CustomerListingSummary = {
   intakeStatus: IntakeStatus | null;
   intakeCurrentStep: number | null;
   intakeUpdatedAt: Date | null;
+  onboardingStatus: OnboardingStatus;
+  servicePlan: ServicePlan | null;
+  agreementSignedAt: Date | null;
+  scheduledCallAt: Date | null;
 };

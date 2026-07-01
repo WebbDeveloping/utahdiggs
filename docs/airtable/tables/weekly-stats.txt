@@ -1,0 +1,596 @@
+Weekly Stats Table
+The id for Weekly Stats is tbl7xNeeU3QOj88ds. Table ids and table names can be used interchangeably in API requests. Using table ids means table name changes do not require modifications to your API request.
+
+Fields
+Each record in the Weekly Stats table contains the following fields:
+
+Field names and field ids can be used interchangeably. Using field ids means field name changes do not require modifications to your API request. We recommend using field ids over field names where possible, to reduce modifications to your API request if the user changes the field name later.
+
+Field NameField IDTypeDescription
+Week LabelfldvnM5r82x5aoE8hText
+string
+A single line of text.
+ 
+Example values
+"2138751 — Jun 19, 2026"
+
+"2125501 — Jun 19, 2026"
+
+"2152174 — Jun 19, 2026"
+
+"2154039 — Jun 19, 2026"
+
+"2154223 — Jun 19, 2026"
+
+Week EndingfldSjkLUx57hH62sQ
+Date
+string (ISO 8601 formatted date)
+UTC date, e.g. "2014-09-05".
+ 
+Example values
+"2026-06-19"
+
+"2026-06-19"
+
+"2026-06-19"
+
+"2026-06-19"
+
+"2026-06-19"
+
+Zillow ViewsfldyX3KKlmerOSKU6Number
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+0
+
+0
+
+0
+
+0
+
+0
+
+Realtor.com ViewsfldY9wVbwKXv6fMnTNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+0
+
+0
+
+0
+
+0
+
+0
+
+Redfin ViewsfldiF3uZWUnogDSTmNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+0
+
+0
+
+0
+
+0
+
+0
+
+Saves / Favoritesfldtlpzke1PFvZ5xMNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+0
+
+0
+
+0
+
+0
+
+0
+
+SharesfldRB06niwmxw77RzNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+0
+
+0
+
+0
+
+0
+
+0
+
+Source Email Datefld7qRwdWT4ZNPhie
+Date
+string (ISO 8601 formatted date)
+UTC date, e.g. "2014-09-05".
+ 
+Example values
+"2026-06-21"
+
+"2026-06-21"
+
+Listingflde3xLwKgfRrHwvn
+Link to another record
+array of record IDs (strings)
+Array of linked records IDs from the Listings table.
+ 
+Example value
+["rec8116cdd76088af", "rec245db9343f55e8", "rec4f3bade67ff565"]
+
+Total ViewsfldnKBJcTl4kTcFKjFormula
+number, string, array of numbers or strings
+Computed value: {Zillow Views} + {Realtor.com Views} + {Redfin Views}.
+ 
+Example values
+0
+
+0
+
+0
+
+0
+
+0
+
+utahrealestate.com ViewsfldGj3IbskyQ7t4d5Number
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+482
+
+Inquiriesfldx8V1C253Z37cOQNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+1
+
+Lifetime ViewsfldrduoP3ZdXmKwJ8Number
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+4311
+
+Zillow New Saves This WeekfldOVK6ePzXQuSvshNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example value
+42
+
+URE Views (30d)fldzMdKbT91kSZLrWNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+482
+
+482
+
+290
+
+255
+
+208
+
+Zillow Views (30d)fldu194IWw2kI1NMaNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+369
+
+369
+
+324
+
+276
+
+114
+
+Realtor.com Views (30d)fld8COkHDGCBB234jNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+154
+
+154
+
+48
+
+30
+
+9
+
+Homes.com Views (30d)fld6cJOeNNEdJLjN9Number
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+28
+
+28
+
+30
+
+5
+
+11
+
+Trulia Views (30d)fldANWghAEanYzv5iNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+12
+
+12
+
+15
+
+16
+
+2
+
+Listtrac Total (30d)fldzoCByJtkYEgmbYNumber
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+1062
+
+1062
+
+721
+
+591
+
+346
+
+URE Favorites (cumulative)fldKRQg9U6PR6ZHe8Number
+number
+An integer (whole number, e.g. 1, 32, 99). This field only allows positive numbers.
+ 
+Example values
+10
+
+1
+
+1
+
+3
+
+2
+
+List Weekly Stats records
+To list records in Weekly Stats, use the select method.
+
+select returns a query object. To fetch the records matching that query, use the eachPage or firstPage method of the query object.
+
+Returned records do not include any fields with "empty" values, e.g. "", [], or false.
+
+Note: Airtable's API only accepts request with a URL shorter than 16,000 characters. Encoded formulas may cause your requests to exceed this limit. To fix this issue you can instead make a POST request to /v0/{baseId}/{tableIdOrName}/listRecords while passing the parameters within the body of the request instead of the query parameters. See our support article on this for more information.
+
+You can use the following parameters to filter, sort, and format the results:
+
+fields
+array of strings
+optional
+Only data for fields whose names are in this list will be included in the result. If you don't need every field, you can use this parameter to reduce the amount of data transferred.
+
+For example, to only return data from Week Label and Week Ending, pass in:
+
+fields: ["Week Label", "Week Ending"]
+You can also perform the same action with field ids (they can be found in the fields section):
+
+fields: ["fldvnM5r82x5aoE8h", "fldSjkLUx57hH62sQ"]
+filterByFormula
+string
+optional
+A formula used to filter records. The formula will be evaluated for each record, and if the result is not 0, false, "", NaN, [], or #Error! the record will be included in the response. We recommend testing your formula in the Formula field UI before using it in your API request.
+
+If combined with the view parameter, only records in that view which satisfy the formula will be returned.
+
+The formula must be encoded first before passing it as a value. You can use this tool to not only encode the formula but also create the entire url you need. For example, to only include records where Week Label isn't empty, pass in NOT({Week Label} = '') as a parameter like this:
+
+filterByFormula: "NOT({Week Label} = '')"
+
+Note: Airtable's API only accepts request with a URL shorter than 16,000 characters. Encoded formulas may cause your requests to exceed this limit. To fix this issue you can instead make a POST request to /v0/{baseId}/{tableIdOrName}/listRecords while passing the parameters within the body of the request instead of the query parameters. See our support article on this for more information.
+
+maxRecords
+number
+optional
+The maximum total number of records that will be returned in your requests. If this value is larger than pageSize (which is 100 by default), you may have to load multiple pages to reach this total. See the Pagination section below for more.pageSize
+number
+optional
+The number of records returned in each request. Must be less than or equal to 100. Default is 100. See the Pagination section below for more.sort
+array of objects
+optional
+A list of sort objects that specifies how the records will be ordered. Each sort object must have a field key specifying the name of the field to sort on, and an optional direction key that is either "asc" or "desc". The default direction is "asc".
+
+The sort parameter overrides the sorting of the view specified in the view parameter. If neither the sort nor the view parameter is included, the order of records is arbitrary.
+
+For example, to sort records by Week Label in descending order, send these two query parameters:
+
+sort%5B0%5D%5Bfield%5D=Week%20Label
+sort%5B0%5D%5Bdirection%5D=desc
+For example, to sort records by Week Label in descending order, pass in:
+
+[{field: "Week Label", direction: "desc"}]
+view
+string
+optional
+The name or ID of a view in the Weekly Stats table. If set, only the records in that view will be returned. The records will be sorted according to the order of the view unless the sort parameter is included, which overrides that order. Fields hidden in this view will be returned in the results. To only return a subset of fields, use the fields parameter.cellFormat
+string
+optional
+The format that should be used for cell values. Supported values are:
+
+json: cells will be formatted as JSON, depending on the field type.
+
+string: cells will be formatted as user-facing strings, regardless of the field type. The timeZone and userLocale parameters are required when using string as the cellFormat.
+
+Note: You should not rely on the format of these strings, as it is subject to change.
+The default is json.
+
+timeZone
+string
+optional
+The time zone that should be used to format dates when using string as the cellFormat. This parameter is required when using string as the cellFormat.
+
+userLocale
+string
+optional
+The user locale that should be used to format dates when using string as the cellFormat. This parameter is required when using string as the cellFormat.
+
+returnFieldsByFieldId
+boolean
+optional
+An optional boolean value that lets you return field objects where the key is the field id.
+
+This defaults to false, which returns field objects where the key is the field name.
+
+recordMetadata
+array of strings
+optional
+An optional field that, if includes commentCount, adds a commentCount read only property on each record returned.
+
+Pagination
+The server returns one page of records at a time. Each page will contain pageSize records, which is 100 by default.
+
+To fetch the next page of records, call fetchNextPage.
+
+Pagination will stop when you've reached the end of your table. If the maxRecords parameter is passed, pagination will stop once you've reached this maximum.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Weekly Stats').select({
+    // Selecting the first 3 records in Grid view:
+    maxRecords: 3,
+    view: "Grid view"
+}).eachPage(function page(records, fetchNextPage) {
+    // This function (`page`) will get called for each page of records.
+
+    records.forEach(function(record) {
+        console.log('Retrieved', record.get('Week Label'));
+    });
+
+    // To fetch the next page of records, call `fetchNextPage`.
+    // If there are more records, `page` will get called again.
+    // If there are no more records, `done` will get called.
+    fetchNextPage();
+
+}, function done(err) {
+    if (err) { console.error(err); return; }
+});
+Output
+Retrieved 2138751 — Jun 19, 2026
+Retrieved 2125501 — Jun 19, 2026
+Retrieved 2152174 — Jun 19, 2026
+Fetch first page
+// If you only want the first page of records, you can
+// use `firstPage` instead of `eachPage`.
+base('Weekly Stats').select({
+    view: 'Grid view'
+}).firstPage(function(err, records) {
+    if (err) { console.error(err); return; }
+    records.forEach(function(record) {
+        console.log('Retrieved', record.get('Week Label'));
+    });
+});
+Fetch additional record metadata
+// If you want to fetch the number of comments for each record,
+// include the `recordMetadata` param.
+base('Weekly Stats').select({
+    recordMetadata: ['commentCount']
+}).firstPage(function(err, records) {
+    if (err) { console.error(err); return; }
+    records.forEach(function(record) {
+        console.log('Retrieved a record with', record.commentCount, 'comments');
+    });
+});
+ 
+Iteration may timeout due to client inactivity or server restarts. In that case, the client will receive a 422 response with error message LIST_RECORDS_ITERATOR_NOT_AVAILABLE. It may then restart iteration from the beginning.
+
+ 
+Retrieve a Weekly Stats record
+To retrieve an existing record in Weekly Stats table, use the find method.
+
+Any "empty" fields (e.g. "", [], or false) in the record will not be returned.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Weekly Stats').find('rec0csrajaNvKYmcd', function(err, record) {
+    if (err) { console.error(err); return; }
+    console.log('Retrieved', record.id);
+});
+Output
+Retrieved rec0csrajaNvKYmcd
+Create Weekly Stats records
+To create new records, use the create method. Note that table names and table ids can be used interchangeably. Using table ids means table name changes do not require modifications to your API request.
+
+The first argument should be an array of up to 10 record objects. Each of these objects should have one key whose value is an inner object containing your record's cell values, keyed by either field name or field id.
+
+Returns an array of record objects created if the call succeeded, including record IDs which will uniquely identify the records within Anna — Seller Portal System.
+
+Values for Total Views are automatically computed by Airtable and cannot be directly created.
+
+The Airtable API will perform best-effort automatic data conversion from string values if the typecast parameter is passed in (click to show example). Automatic conversion is disabled by default to ensure data integrity, but it may be helpful for integrating with 3rd party data sources.
+
+You can also include a single record object at the top level. Click here to show an example.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Weekly Stats').create([
+  {
+    "fields": {
+      "Week Label": "2138751 — Jun 19, 2026",
+      "Week Ending": "2026-06-19",
+      "Zillow Views": 0,
+      "Realtor.com Views": 0,
+      "Redfin Views": 0,
+      "Saves / Favorites": 0,
+      "Shares": 0,
+      "Listing": [
+        "reckLQ0OlLD3B8sxl"
+      ]
+    }
+  },
+  {
+    "fields": {
+      "Week Label": "2125501 — Jun 19, 2026",
+      "Week Ending": "2026-06-19",
+      "Zillow Views": 0,
+      "Realtor.com Views": 0,
+      "Redfin Views": 0,
+      "Saves / Favorites": 0,
+      "Shares": 0
+    }
+  }
+], function(err, records) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  records.forEach(function (record) {
+    console.log(record.getId());
+  });
+});
+Output
+rec0csrajaNvKYmcd
+recp7FgAV2GdhHxrG
+Update Weekly Stats records
+To update Weekly Stats records, use the update or replace method. An update will only update the fields you include. Fields not included will be unchanged. A replace will perform a destructive update and clear all unincluded cell values. A replace call on Weekly Stats records will always fail. The example at the right uses the non-destructive update method. Click here to show a destructive replace call.
+The first argument should be an array of up to 10 record objects. Each of these objects should have an id property representing the record ID and a fields property which contains all of your record's cell values by field name or field id for all of your record's cell values by field name.
+To link to new records in Listing, add new linked record IDs to the existing array. Be sure to include all existing linked record IDs that you wish to retain. To unlink records, include the existing array of record IDs, excluding any that you wish to unlink.
+
+Values for Total Views are automatically computed by Airtable and cannot be directly updated. You cannot clear these, even with a replace call.
+
+Automatic data conversion for update actions can be enabled via typecast parameter. See create record for details.
+
+You can also include a single record object at the top level. Click here to show an example.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Weekly Stats').update([
+  {
+    "id": "rec0csrajaNvKYmcd",
+    "fields": {
+      "Week Label": "2138751 — Jun 19, 2026",
+      "Week Ending": "2026-06-19",
+      "Zillow Views": 0,
+      "Realtor.com Views": 0,
+      "Redfin Views": 0,
+      "Saves / Favorites": 0,
+      "Shares": 0,
+      "Listing": [
+        "reckLQ0OlLD3B8sxl"
+      ]
+    }
+  },
+  {
+    "id": "recp7FgAV2GdhHxrG",
+    "fields": {
+      "Week Label": "2125501 — Jun 19, 2026",
+      "Week Ending": "2026-06-19",
+      "Zillow Views": 0,
+      "Realtor.com Views": 0,
+      "Redfin Views": 0,
+      "Saves / Favorites": 0,
+      "Shares": 0
+    }
+  },
+  {
+    "id": "rec5IXNsmvpzlNblf",
+    "fields": {
+      "Week Label": "2152174 — Jun 19, 2026",
+      "Week Ending": "2026-06-19",
+      "Zillow Views": 0,
+      "Realtor.com Views": 0,
+      "Redfin Views": 0,
+      "Saves / Favorites": 0,
+      "Shares": 0
+    }
+  }
+], function(err, records) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  records.forEach(function(record) {
+    console.log(record.get('Shares'));
+  });
+});
+Output
+0
+0
+0
+Delete Weekly Stats records
+To delete Weekly Stats records, use the destroy method. Note that table names and table ids can be used interchangeably. Using table ids means table name changes do not require modifications to your API request.
+
+The first parameter to destroy is an array of up to 10 record IDs to delete.
+
+You can also set the first parameter to a record ID to delete a single record. Click here to show an example.
+
+ 
+Code
+var Airtable = require('airtable');
+var base = new Airtable({apiKey: 'YOUR_SECRET_API_TOKEN'}).base('appNh6k6ZP0c2OtbQ');
+
+base('Weekly Stats').destroy(['rec0csrajaNvKYmcd', 'recp7FgAV2GdhHxrG'], function(err, deletedRecords) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log('Deleted', deletedRecords.length, 'records');
+});
+Output
+Deleted 2 records

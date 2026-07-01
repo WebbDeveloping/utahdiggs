@@ -17,6 +17,10 @@ export async function getCustomerListings(
       portalSlug: true,
       submittedAt: true,
       createdAt: true,
+      onboardingStatus: true,
+      servicePlan: true,
+      agreementSignedAt: true,
+      scheduledCallAt: true,
       documents: {
         orderBy: { uploadedAt: "asc" },
         take: 1,
@@ -46,5 +50,9 @@ export async function getCustomerListings(
     intakeStatus: listing.listingIntake?.status ?? null,
     intakeCurrentStep: listing.listingIntake?.currentStep ?? null,
     intakeUpdatedAt: listing.listingIntake?.updatedAt ?? null,
+    onboardingStatus: listing.onboardingStatus,
+    servicePlan: listing.servicePlan,
+    agreementSignedAt: listing.agreementSignedAt,
+    scheduledCallAt: listing.scheduledCallAt,
   }));
 }

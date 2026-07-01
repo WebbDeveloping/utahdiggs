@@ -36,8 +36,7 @@ export async function POST(
 
   const privateConfig = getPrivateBlobConfig();
   const publicConfig = getPublicBlobConfig();
-  const usePrivate = privateConfig != null;
-  const blobConfig = usePrivate ? privateConfig : publicConfig;
+  const blobConfig = privateConfig ?? publicConfig;
 
   const body = (await request.json()) as HandleUploadBody;
 
@@ -60,9 +59,6 @@ export async function POST(
             listingId,
           }),
         };
-      },
-      onUploadCompleted: async ({ blob, tokenPayload }) => {
-        console.log("Consumer document upload completed", blob.pathname, tokenPayload);
       },
     });
 

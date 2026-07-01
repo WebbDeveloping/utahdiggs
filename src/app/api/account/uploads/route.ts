@@ -44,9 +44,6 @@ export async function POST(request: Request): Promise<NextResponse> {
           tokenPayload: JSON.stringify({ customerId: session.id }),
         };
       },
-      onUploadCompleted: async ({ blob, tokenPayload }) => {
-        console.log("Consumer photo upload completed", blob.pathname, tokenPayload);
-      },
     });
 
     return NextResponse.json(jsonResponse);

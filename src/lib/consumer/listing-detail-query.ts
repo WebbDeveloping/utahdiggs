@@ -49,6 +49,8 @@ export async function getCustomerListingDetail(
       priceReductionDate: true,
       priceReductionCount: true,
       marketAvgDom: true,
+      submittedAt: true,
+      onboardingStatus: true,
       listingIntake: { select: { status: true } },
       documents: {
         orderBy: { uploadedAt: "desc" },
@@ -123,6 +125,8 @@ export async function getCustomerListingDetail(
     priceReductionCount: listing.priceReductionCount,
     marketAvgDom: listing.marketAvgDom,
     intakeStatus: listing.listingIntake?.status ?? null,
+    submittedAt: listing.submittedAt,
+    onboardingStatus: listing.onboardingStatus,
     documents: listing.documents,
     offers: listing.offers.map((offer) => ({
       ...offer,

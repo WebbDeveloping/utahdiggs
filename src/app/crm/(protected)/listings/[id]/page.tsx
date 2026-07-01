@@ -18,6 +18,7 @@ import {
   formatListingStatus,
   listingStatusColor,
 } from "@/lib/crm/format";
+import { formatOnboardingStatus, formatServicePlan } from "@/lib/consumer/onboarding";
 import { MLS_INPUT_STEPS } from "@/lib/mls-input/schema";
 import { auth } from "@/lib/auth/admin-auth";
 import { isAdmin } from "@/lib/auth/roles";
@@ -72,6 +73,23 @@ export default async function CrmListingDetailPage({
             {listing.listingIntake?.status === IntakeStatus.SUBMITTED ? (
               <Chip key="submitted-intake" label="Full MLS intake" size="small" variant="outlined" color="primary" />
             ) : null}
+            {listing.onboardingStatus !== "ONBOARDING_COMPLETE" && !listing.submittedAt ? (
+              <Chip
+                key="onboarding"
+                label={formatOnboardingStatus(listing.onboardingStatus)}
+                size="small"
+                variant="outlined"
+                color="warning"
+              />
+            ) : null}
+            {listing.servicePlan ? (
+              <Chip
+                key="plan"
+                label={formatServicePlan(listing.servicePlan)}
+                size="small"
+                variant="outlined"
+              />
+            ) : null}
           </Stack>
 
           <Grid container spacing={2}>
@@ -101,6 +119,35 @@ export default async function CrmListingDetailPage({
               </Typography>
               <Typography>{listing.mlsNumber ?? "—"}</Typography>
             </Grid>
+            {listing.scheduledCallAt ? (
+              <Grid key="scheduled-call" size={{ xs: 12, sm: 6 }}>
+                <Typography variant="caption" color="text.secondary">
+                  Onboarding call requested
+                </Typography>
+                <Typography>
+                  {listing.scheduledCallAt.toLocaleString("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
+                </Typography>
+                {listing.callNotes ? (
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                    {listing.callNotes}
+                  </Typography>
+                ) : null}
+              </Grid>
+            ) : null}
+            {listing.proPhotoTourRequested ? (
+              <Grid key="photo-tour" size={{ xs: 12, sm: 6 }}>
+                <Typography variant="caption" color="text.secondary">
+                  Photo tour
+                </Typography>
+                <Typography>Professional tour requested</Typography>
+              </Grid>
+            ) : null}
             <Grid key="assigned-agent" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
                 Assigned agent

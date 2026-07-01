@@ -3,10 +3,12 @@
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
+import { SellInquiryStatus } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
 import { signIn } from "@/lib/auth/consumer-auth";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
-import { buildListingPrefillPath, normalizeInquiryState } from "@/lib/consumer/listing-prefill";
+import { buildOnboardingPathForListing, normalizeInquiryState } from "@/lib/consumer/listing-prefill";
+import { createOnboardingListing } from "@/lib/consumer/onboarding-listing";
 import {
   normalizeEmail,
   validateEmail,
@@ -158,18 +160,23 @@ export async function completeSellInquiryAction(
       state: normalizedState,
       zip: input.zip,
       timeline: input.timeline,
+      status: SellInquiryStatus.LISTING_STARTED,
     },
   });
 
-  redirect(
-    buildListingPrefillPath({
-      streetAddress: input.streetAddress,
-      city: input.city,
-      state: normalizedState,
-      zip: input.zip,
-      inquiryId: inquiry.id,
-    }),
-  );
+  const { listingId } = await createOnboardingListing({
+    customerId,
+    address: input.streetAddress,
+    city: input.city,
+    state: normalizedState,
+    zip: input.zip,
+    sellerName: fullName,
+    sellerEmail: input.email,
+    sellerPhone: input.phone,
+    inquiryId: inquiry.id,
+  });
+
+  redirect(buildOnboardingPathForListing(listingId));
 }
 
 export async function completeLoggedInSellInquiryAction(
@@ -209,16 +216,21 @@ export async function completeLoggedInSellInquiryAction(
       state: normalizedState,
       zip: input.zip,
       timeline: input.timeline,
+      status: SellInquiryStatus.LISTING_STARTED,
     },
   });
 
-  redirect(
-    buildListingPrefillPath({
-      streetAddress: input.streetAddress,
-      city: input.city,
-      state: normalizedState,
-      zip: input.zip,
-      inquiryId: inquiry.id,
-    }),
-  );
+  const { listingId } = await createOnboardingListing({
+    customerId: session.id,
+    address: input.streetAddress,
+    city: input.city,
+    state: normalizedState,
+    zip: input.zip,
+    sellerName: fullName,
+    sellerEmail: input.email,
+    sellerPhone: input.phone,
+    inquiryId: inquiry.id,
+  });
+
+  redirect(buildOnboardingPathForListing(listingId));
 }

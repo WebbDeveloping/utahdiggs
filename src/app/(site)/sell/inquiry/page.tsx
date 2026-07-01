@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import SellInquiryForm from "@/components/marketing/SellInquiryForm";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
-import { buildListingPrefillPath, LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { OG_IMAGES } from "@/lib/seo/site";
 
@@ -26,21 +25,6 @@ export default async function SellInquiryPage({ searchParams }: SellInquiryPageP
   const { address } = await searchParams;
   const initialAddress = address?.trim() ?? "";
 
-  if (user && initialAddress) {
-    redirect(
-      buildListingPrefillPath({
-        streetAddress: initialAddress,
-        city: "",
-        state: "UT",
-        zip: "",
-      }),
-    );
-  }
-
-  if (user) {
-    redirect(LISTING_INTAKE_PATH);
-  }
-
   return (
     <SitePageLayoutWithAuth>
       <Container maxWidth="sm" sx={{ py: { xs: 6, md: 8 } }}>
@@ -49,11 +33,11 @@ export default async function SellInquiryPage({ searchParams }: SellInquiryPageP
             List Your Home
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ fontSize: 18, mx: "auto", maxWidth: 480 }}>
-            Enter your information below and create a free account to track your listing
-            with Glide RE.
+            Enter your information below{user ? "" : " and create a free account"} to start
+            listing with Glide RE.
           </Typography>
         </Stack>
-        <SellInquiryForm initialAddress={initialAddress} />
+        <SellInquiryForm initialAddress={initialAddress} isLoggedIn={Boolean(user)} />
       </Container>
     </SitePageLayoutWithAuth>
   );

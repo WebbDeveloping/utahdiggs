@@ -5,6 +5,7 @@ import {
   ContactRole,
   IntakeStatus,
   ListingStatus,
+  OnboardingStatus,
   SellInquiryStatus,
 } from "@/generated/prisma/client";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
@@ -78,6 +79,7 @@ export async function submitMlsIntakeAction(
           description: input.description ?? null,
           status: ListingStatus.SUBMITTED,
           submittedAt: new Date(),
+          onboardingStatus: OnboardingStatus.ONBOARDING_COMPLETE,
         },
       });
 
@@ -217,9 +219,7 @@ export async function submitMlsIntakeAction(
       console.error("MLS intake notification email failed:", emailError);
     }
 
-    redirect(
-      `/account/listings?submitted=${encodeURIComponent(listing.portalSlug)}`,
-    );
+    redirect(`/account/onboarding/${listingId}?submitted=1`);
   } catch (error) {
     if (error && typeof error === "object" && "digest" in error) {
       throw error;

@@ -184,6 +184,20 @@ enum IntakeStatus {
   SUBMITTED
 }
 
+enum ServicePlan {
+  VIRTUAL
+  FULL_SERVICE
+}
+
+enum OnboardingStatus {
+  PLAN_PENDING
+  AGREEMENT_PENDING
+  PHOTOS_PENDING
+  CALL_PENDING
+  MLS_INTAKE_PENDING
+  ONBOARDING_COMPLETE
+}
+
 model Listing {
   id               String        @id @default(cuid())
   airtableRecordId String?       @unique
@@ -231,6 +245,14 @@ model Listing {
   assignedAgentId          String?
   submittedAt              DateTime?
 
+  servicePlan             ServicePlan?
+  onboardingStatus        OnboardingStatus @default(PLAN_PENDING)
+  agreementSignedAt       DateTime?
+  agreementSignatureUrl   String?
+  proPhotoTourRequested   Boolean          @default(false)
+  scheduledCallAt         DateTime?
+  callNotes               String?          @db.Text
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -256,6 +278,7 @@ model Listing {
   @@index([latitude, longitude])
   @@index([customerId])
   @@index([assignedAgentId])
+  @@index([onboardingStatus])
 }
 
 model ListingIntake {

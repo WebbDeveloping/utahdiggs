@@ -24,6 +24,7 @@ import {
   formatListingStatus,
   listingStatusColor,
 } from "@/lib/crm/format";
+import { formatOnboardingStatus } from "@/lib/consumer/onboarding";
 import { getCrmListings, getPendingApprovalListingCount } from "@/lib/crm/listing-queries";
 
 type CrmListingsPageProps = {
@@ -107,6 +108,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
               <TableCell>City</TableCell>
               <TableCell align="right">List price</TableCell>
               <TableCell>Status</TableCell>
+              <TableCell>Onboarding</TableCell>
               <TableCell>Source</TableCell>
               {showAssignedColumn ? <TableCell>Assigned agent</TableCell> : null}
               <TableCell>Portal slug</TableCell>
@@ -118,7 +120,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
           <TableBody>
             {sortedListings.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={showAssignedColumn ? 11 : 10}>
+                <TableCell colSpan={showAssignedColumn ? 12 : 11}>
                   <Typography color="text.secondary" sx={{ py: 3, textAlign: "center" }}>
                     No listings found. Run <code>npm run db:seed</code> to load test data, or
                     add a listing above.
@@ -187,6 +189,17 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                       color={listingStatusColor(listing.status)}
                       size="small"
                     />
+                  </TableCell>
+                  <TableCell>
+                    {listing.submittedAt ? (
+                      <Typography variant="body2" color="text.secondary">
+                        Complete
+                      </Typography>
+                    ) : (
+                      <Typography variant="body2" color="text.secondary">
+                        {formatOnboardingStatus(listing.onboardingStatus)}
+                      </Typography>
+                    )}
                   </TableCell>
                   <TableCell>
                     {listing.customerId ? (
