@@ -83,8 +83,9 @@ model Customer {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  listings     Listing[]
-  sellInquiries SellInquiry[]
+  listings            Listing[]
+  sellInquiries       SellInquiry[]
+  agreementSignatures AgreementSignature[]
 }
 
 // ---------------------------------------------------------------------------
@@ -266,10 +267,11 @@ model Listing {
   showings       Showing[]
   weeklyStats    WeeklyStat[]
   offers         Offer[]
-  documents      Document[]
-  sellerRequests SellerRequest[]
-  sellInquiries  SellInquiry[]
-  listingIntake  ListingIntake?
+  documents           Document[]
+  sellerRequests      SellerRequest[]
+  sellInquiries       SellInquiry[]
+  listingIntake       ListingIntake?
+  agreementSignature  AgreementSignature?
 
   @@index([city])
   @@index([portfolioGroup])
@@ -515,6 +517,37 @@ model SellerRequest {
 
   @@index([listingId])
   @@index([status])
+}
+
+// ---------------------------------------------------------------------------
+// Listing agreement e-sign audit
+// ---------------------------------------------------------------------------
+
+enum SignatureMethod {
+  DRAW
+  TYPE
+}
+
+model AgreementSignature {
+  id                String          @id @default(cuid())
+  listingId         String          @unique
+  customerId        String
+  signerName        String
+  signerEmail       String
+  signatureMethod   SignatureMethod
+  signatureImageUrl String
+  signedDocumentUrl String?
+  agreementVersion  String
+  agreementHash     String
+  esignConsentAt    DateTime
+  signedAt          DateTime
+  ipAddress         String?
+  userAgent         String?         @db.Text
+
+  listing  Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
 }
 
 // ---------------------------------------------------------------------------

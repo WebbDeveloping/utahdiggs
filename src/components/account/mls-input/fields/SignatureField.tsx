@@ -28,6 +28,8 @@ type SignatureFieldProps = {
   signerName?: string;
   documentBlobAccess?: "public" | "private";
   onChange: (url: string) => void;
+  onModeChange?: (mode: SignatureMode) => void;
+  onSignerNameChange?: (name: string) => void;
 };
 
 const TYPE_DEBOUNCE_MS = 600;
@@ -41,6 +43,8 @@ export default function SignatureField({
   signerName,
   documentBlobAccess = "public",
   onChange,
+  onModeChange,
+  onSignerNameChange,
 }: SignatureFieldProps) {
   const sigRef = useRef<SignatureCanvas | null>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -177,19 +181,24 @@ export default function SignatureField({
     if (nextMode === mode) return;
     resetSignature();
     setMode(nextMode);
+    onModeChange?.(nextMode);
 
     if (nextMode === "type") {
       const name = signerName?.trim() ?? "";
+      onSignerNameChange?.(name);
       if (name.length >= 2) {
         void drawTypedPreview(name);
         scheduleTypedUpload(name);
       }
+    } else {
+      onSignerNameChange?.(signerName?.trim() ?? "");
     }
   };
 
   const handleTypedNameChange = (text: string) => {
     setTypedName(text);
     onChange("");
+    onSignerNameChange?.(text);
     setUploadError(null);
     cancelPendingWork();
     scheduleTypedUpload(text);
@@ -198,6 +207,11 @@ export default function SignatureField({
   const handleClear = () => {
     resetSignature();
   };
+
+  useEffect(() => {
+    if (mode !== "draw") return;
+    onSignerNameChange?.(signerName?.trim() ?? "");
+  }, [mode, onSignerNameChange, signerName]);
 
   useEffect(() => {
     if (mode !== "type" || typedName.trim().length < 2) return;

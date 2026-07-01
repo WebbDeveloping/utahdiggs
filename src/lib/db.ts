@@ -22,8 +22,8 @@ function createPrismaClient() {
 function getPrismaClient(): PrismaClient {
   const cached = globalForPrisma.prisma;
 
-  // Dev HMR can keep a Prisma client from before a schema change (e.g. missing `customer`).
-  if (cached && "customer" in cached) {
+  // Dev HMR can keep a Prisma client from before a schema change (e.g. missing delegates).
+  if (cached && "customer" in cached && "agreementSignature" in cached) {
     return cached;
   }
 
