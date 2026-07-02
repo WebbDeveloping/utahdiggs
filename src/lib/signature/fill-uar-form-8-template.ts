@@ -264,10 +264,12 @@ function fillTemplateFields(
   drawOptionalCheckbox(page2, "sqFtBuildingPlans", sqFtSet.has("Building Plans"));
   const hasOtherSqFt = sqFtSet.has("Other") || values.sqFtOther.trim().length > 0;
   drawOptionalCheckbox(page2, "sqFtOther", hasOtherSqFt);
-  if (values.sqFtOther.trim() && fieldMap.textFields.sqFtOther) {
+  const sqFtOtherExplanationField =
+    fieldMap.textFields.sqFtOtherExplanation ?? fieldMap.textFields.sqFtOther;
+  if (values.sqFtOther.trim() && sqFtOtherExplanationField) {
     drawTextField(
-      getPage(doc, fieldMap.textFields.sqFtOther.page),
-      fieldMap.textFields.sqFtOther,
+      getPage(doc, sqFtOtherExplanationField.page),
+      sqFtOtherExplanationField,
       values.sqFtOther,
       font,
     );

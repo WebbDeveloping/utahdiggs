@@ -17,7 +17,7 @@
     "buyerAgentDollar": { "page": 0, "x": 130, "y": 502, "size": 9, "maxWidth": 80 },
     "protectionPeriodMonths": { "page": 0, "x": 108, "y": 442, "size": 9, "maxWidth": 24 },
     "page1InitialsDate": { "page": 0, "x": 480, "y": 68, "size": 8, "maxWidth": 80 },
-    "sqFtOther": { "page": 2, "x": 430, "y": 518, "size": 8, "maxWidth": 120 },
+    "sqFtOtherExplanation": { "page": 2, "x": 378, "y": 518, "size": 8, "maxWidth": 150 },
     "seller1SignedDate": { "page": 3, "x": 400, "y": 198, "size": 9, "maxWidth": 100 },
     "seller1AddressPhone": { "page": 3, "x": 260, "y": 185, "size": 9, "maxWidth": 200 },
     "seller2SignedDate": { "page": 3, "x": 400, "y": 128, "size": 9, "maxWidth": 100 },

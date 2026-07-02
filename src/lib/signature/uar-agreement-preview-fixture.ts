@@ -35,6 +35,8 @@ export function buildUarAgreementPreviewInput(): UarAgreementPdfInput {
   formValues.seller2LastName = "Seller";
   formValues.seller2Email = "seller2@example.com";
   formValues.seller2Phone = "(801) 555-5678";
+  formValues.sqFtSources = ["County Records"];
+  formValues.sqFtOther = "Measured by listing agent";
 
   const prefill = buildUarAgreementPrefill({
     address: formValues.propertyAddress,

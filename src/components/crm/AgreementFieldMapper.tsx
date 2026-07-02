@@ -12,6 +12,10 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -27,6 +31,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
@@ -39,6 +44,8 @@ import {
   browserClickToPdfCoords,
   createEmptyFieldMap,
   exportFieldMapJson,
+  hasFieldMapEntry,
+  mergeBundledFieldMapDefaults,
   listFieldMapEntries,
   pdfCoordsToBrowserOverlay,
   removeFieldMapEntry,
@@ -92,6 +99,7 @@ export default function AgreementFieldMapper({
     initialTemplate ? templateKey(initialTemplate) : "",
   );
   const [fieldMap, setFieldMap] = useState<AgreementFieldMap | null>(null);
+  const [bundledFieldMap, setBundledFieldMap] = useState<AgreementFieldMap | null>(null);
   const [mapSource, setMapSource] = useState<"bundled" | "blob" | "none" | null>(null);
   const [pdfData, setPdfData] = useState<ArrayBuffer | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -102,6 +110,9 @@ export default function AgreementFieldMapper({
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [addFieldName, setAddFieldName] = useState("");
+  const [addFieldType, setAddFieldType] = useState<AgreementFieldType>("text");
   const pageContainerRef = useRef<HTMLDivElement>(null);
   const isMountedRef = useRef(false);
   const loadRequestIdRef = useRef(0);
@@ -176,6 +187,7 @@ export default function AgreementFieldMapper({
       const mapPayload = (await mapResponse.json()) as {
         fieldMap: AgreementFieldMap;
         source: "bundled" | "blob" | "none";
+        bundledFieldMap: AgreementFieldMap | null;
       };
 
       if (!isMountedRef.current || requestId !== loadRequestIdRef.current) {
@@ -184,6 +196,7 @@ export default function AgreementFieldMapper({
 
       setPdfData(pdfBuffer);
       setFieldMap(mapPayload.fieldMap);
+      setBundledFieldMap(mapPayload.bundledFieldMap);
       setMapSource(mapPayload.source);
       setPageNumber(1);
       setSelectedField(null);
@@ -198,6 +211,7 @@ export default function AgreementFieldMapper({
       }
 
       setFieldMap(createEmptyFieldMap(nextTemplate.slug, nextTemplate.version));
+      setBundledFieldMap(null);
       setMapSource("none");
       setError(loadError instanceof Error ? loadError.message : "Failed to load template.");
     } finally {
@@ -283,8 +297,8 @@ export default function AgreementFieldMapper({
     );
   };
 
-  const handleSave = async () => {
-    if (!fieldMap) return;
+  const handleSave = useCallback(async () => {
+    if (!fieldMap) return false;
     setLoading(true);
     setError(null);
 
@@ -292,9 +306,9 @@ export default function AgreementFieldMapper({
       const response = await fetch(
         `/api/crm/agreement-templates/${slug}/field-map${versionQuery}`,
         {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(fieldMap),
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(fieldMap),
         },
       );
       const payload = (await response.json()) as { error?: string };
@@ -303,11 +317,88 @@ export default function AgreementFieldMapper({
       }
       setMapSource("blob");
       setStatus("Field map saved to Vercel Blob.");
+      return true;
     } catch (saveError) {
       setError(saveError instanceof Error ? saveError.message : "Failed to save.");
+      return false;
     } finally {
       setLoading(false);
     }
+  }, [fieldMap, slug, versionQuery]);
+
+  const buildFieldEntryAtDefaultPosition = (
+    name: string,
+    type: AgreementFieldType,
+  ): AgreementFieldMapEntry => ({
+    name,
+    type,
+    page: pageNumber - 1,
+    x: 72,
+    y: Math.round(pageHeight / 2),
+    size: type === "text" ? 9 : type === "checkbox" ? 10 : undefined,
+    maxWidth: type === "text" ? 200 : undefined,
+    width: type === "image" ? DEFAULT_IMAGE_SIZE.width : undefined,
+    height: type === "image" ? DEFAULT_IMAGE_SIZE.height : undefined,
+  });
+
+  const handleAddField = async (saveAfter: boolean) => {
+    if (!fieldMap) return;
+
+    const name = addFieldName.trim();
+    if (!name) {
+      setError("Enter a field name.");
+      return;
+    }
+
+    const entry = buildFieldEntryAtDefaultPosition(name, addFieldType);
+    if (hasFieldMapEntry(fieldMap, entry)) {
+      setError(`A ${addFieldType} field named "${name}" already exists.`);
+      return;
+    }
+
+    const nextMap = upsertFieldMapEntry(fieldMap, entry);
+    setFieldMap(nextMap);
+    selectFieldEntry(entry);
+    setNewFieldName(name);
+    setNewFieldType(addFieldType);
+    setAddDialogOpen(false);
+    setAddFieldName("");
+    setError(null);
+    setStatus(
+      saveAfter
+        ? `Added ${name} on page ${pageNumber} and saving to Blob…`
+        : `Added ${name} on page ${pageNumber} at (${entry.x}, ${entry.y}). Adjust coordinates below, then Save.`,
+    );
+
+    if (saveAfter) {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `/api/crm/agreement-templates/${slug}/field-map${versionQuery}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(nextMap),
+          },
+        );
+        const payload = (await response.json()) as { error?: string };
+        if (!response.ok) {
+          throw new Error(payload.error ?? "Failed to save field map.");
+        }
+        setMapSource("blob");
+        setStatus(`Added ${name} and saved field map to Vercel Blob.`);
+      } catch (saveError) {
+        setError(saveError instanceof Error ? saveError.message : "Failed to save.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  const openAddFieldDialog = () => {
+    setAddFieldName(newFieldName);
+    setAddFieldType(newFieldType);
+    setAddDialogOpen(true);
   };
 
   const handlePreview = async (mode: "debug" | "fill") => {
@@ -345,9 +436,25 @@ export default function AgreementFieldMapper({
     setStatus("Field map JSON copied to clipboard.");
   };
 
-  const handleDelete = (key: string, name: string) => {
+  const handleMergeBundledDefaults = () => {
+    if (!fieldMap || !bundledFieldMap) {
+      setError("No bundled field map is available for this template.");
+      return;
+    }
+
+    const { fieldMap: merged, added } = mergeBundledFieldMapDefaults(fieldMap, bundledFieldMap);
+    setFieldMap(merged);
+    setError(null);
+    setStatus(
+      added.length > 0
+        ? `Added ${added.length} bundled field(s): ${added.map((entry) => `${entry.name} (${entry.type})`).join(", ")}. Save to persist to Blob.`
+        : "No missing bundled fields — your map already includes everything from the repo.",
+    );
+  };
+
+  const handleDelete = (key: string, entry: AgreementFieldMapEntry) => {
     if (!fieldMap) return;
-    setFieldMap(removeFieldMapEntry(fieldMap, name));
+    setFieldMap(removeFieldMapEntry(fieldMap, entry));
     if (selectedField === key) {
       setSelectedField(null);
     }
@@ -394,6 +501,13 @@ export default function AgreementFieldMapper({
               disabled={loading || !template}
             >
               Reload
+            </Button>
+            <Button
+              size="small"
+              onClick={handleMergeBundledDefaults}
+              disabled={loading || !fieldMap || !bundledFieldMap}
+            >
+              Add missing bundled fields
             </Button>
             <Button
               size="small"
@@ -674,8 +788,25 @@ export default function AgreementFieldMapper({
           ) : null}
 
           <Paper sx={{ p: 2 }}>
-            <Typography variant="subtitle1" sx={{ mb: 1.5, fontWeight: 600 }}>
-              Fields ({entries.length})
+            <Stack
+              direction="row"
+              sx={{ mb: 1.5, alignItems: "center", justifyContent: "space-between", gap: 1 }}
+            >
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                Fields ({entries.length})
+              </Typography>
+              <Button
+                size="small"
+                startIcon={<AddOutlinedIcon />}
+                onClick={openAddFieldDialog}
+                disabled={loading || !fieldMap}
+              >
+                Add field
+              </Button>
+            </Stack>
+            <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 1 }}>
+              New fields are placed on the current PDF page. Use Save (or Add & save) to persist
+              to Blob.
             </Typography>
             <Stack spacing={0.5} divider={<Divider flexItem />}>
               {entries.length === 0 ? (
@@ -716,7 +847,7 @@ export default function AgreementFieldMapper({
                       aria-label={`Delete ${entry.name}`}
                       onClick={(event) => {
                         event.stopPropagation();
-                        handleDelete(key, entry.name);
+                        handleDelete(key, entry);
                       }}
                     >
                       <DeleteOutlinedIcon fontSize="small" />
@@ -729,6 +860,53 @@ export default function AgreementFieldMapper({
           </Paper>
         </Stack>
       </Box>
+
+      <Dialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)} fullWidth maxWidth="xs">
+        <DialogTitle>Add field</DialogTitle>
+        <DialogContent>
+          <Stack spacing={1.5} sx={{ pt: 0.5 }}>
+            <FormControl size="small" fullWidth>
+              <InputLabel id="add-field-type-label">Type</InputLabel>
+              <Select
+                labelId="add-field-type-label"
+                label="Type"
+                value={addFieldType}
+                onChange={(event) => setAddFieldType(event.target.value as AgreementFieldType)}
+              >
+                <MenuItem value="text">Text</MenuItem>
+                <MenuItem value="checkbox">Checkbox</MenuItem>
+                <MenuItem value="image">Image (signature / initials)</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              size="small"
+              label="Field name"
+              value={addFieldName}
+              onChange={(event) => setAddFieldName(event.target.value)}
+              placeholder="e.g. sqFtOtherExplanation"
+              fullWidth
+              autoFocus
+            />
+            <Typography variant="caption" color="text.secondary">
+              Places on page {pageNumber} at a default position. Fine-tune X/Y in the editor, or
+              click the PDF using Place field.
+            </Typography>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setAddDialogOpen(false)}>Cancel</Button>
+          <Button onClick={() => void handleAddField(false)} disabled={!addFieldName.trim()}>
+            Add
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => void handleAddField(true)}
+            disabled={loading || !addFieldName.trim()}
+          >
+            Add & save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Stack>
   );
 }

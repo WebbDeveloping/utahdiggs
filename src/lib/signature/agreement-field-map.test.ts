@@ -6,6 +6,8 @@ import {
   exportFieldMapJson,
   parseAgreementFieldMap,
   pdfCoordsToBrowserOverlay,
+  mergeBundledFieldMapDefaults,
+  removeFieldMapEntry,
   upsertFieldMapEntry,
 } from "@/lib/signature/agreement-field-map";
 import uarExclusiveRightToSellFieldMap from "@/lib/signature/field-maps/uar-exclusive-right-to-sell-2024-11-05.json";
@@ -16,6 +18,8 @@ describe("agreement-field-map", () => {
     assert.equal(fieldMap.slug, "uar-exclusive-right-to-sell");
     assert.equal(fieldMap.version, "2024-11-05");
     assert.ok(fieldMap.textFields.company);
+    assert.ok(fieldMap.textFields.sqFtOtherExplanation);
+    assert.ok(fieldMap.checkboxFields.sqFtOther);
     assert.ok(fieldMap.textFields.seller1AddressPhone);
     assert.ok(fieldMap.textFields.seller2AddressPhone);
     assert.ok(fieldMap.imageFields.seller1Signature);
@@ -54,6 +58,52 @@ describe("agreement-field-map", () => {
 
     assert.equal(next.textFields.company?.x, 80);
     assert.equal(next.textFields.company?.y, 700);
+  });
+
+  it("keeps same-named fields in different type buckets", () => {
+    const fieldMap = parseAgreementFieldMap(uarExclusiveRightToSellFieldMap);
+    const checkboxX = fieldMap.checkboxFields.sqFtOther?.x;
+
+    const next = upsertFieldMapEntry(fieldMap, {
+      name: "sqFtOther",
+      type: "checkbox",
+      page: 2,
+      x: 360,
+      y: 518,
+      size: 10,
+    });
+
+    assert.equal(next.checkboxFields.sqFtOther?.x, 360);
+    assert.ok(next.textFields.sqFtOtherExplanation);
+    assert.notEqual(checkboxX, next.checkboxFields.sqFtOther?.x);
+  });
+
+  it("removes only the targeted field type", () => {
+    const fieldMap = parseAgreementFieldMap(uarExclusiveRightToSellFieldMap);
+
+    const next = removeFieldMapEntry(fieldMap, { name: "sqFtOther", type: "checkbox" });
+
+    assert.equal(next.checkboxFields.sqFtOther, undefined);
+    assert.ok(next.textFields.sqFtOtherExplanation);
+  });
+
+  it("merges missing bundled fields without overwriting existing ones", () => {
+    const bundled = parseAgreementFieldMap(uarExclusiveRightToSellFieldMap);
+    const active = parseAgreementFieldMap({
+      ...uarExclusiveRightToSellFieldMap,
+      textFields: Object.fromEntries(
+        Object.entries(uarExclusiveRightToSellFieldMap.textFields).filter(
+          ([name]) => name !== "sqFtOtherExplanation",
+        ),
+      ),
+    });
+
+    const { fieldMap: merged, added } = mergeBundledFieldMapDefaults(active, bundled);
+
+    assert.ok(merged.textFields.sqFtOtherExplanation);
+    assert.equal(added.length, 1);
+    assert.equal(added[0]?.name, "sqFtOtherExplanation");
+    assert.equal(merged.checkboxFields.sqFtOther?.x, active.checkboxFields.sqFtOther?.x);
   });
 
   it("exports stable JSON", () => {

@@ -160,11 +160,8 @@ export function upsertFieldMapEntry(
     imageFields: { ...fieldMap.imageFields },
   };
 
-  delete next.textFields[entry.name];
-  delete next.checkboxFields[entry.name];
-  delete next.imageFields[entry.name];
-
   if (entry.type === "text") {
+    delete next.textFields[entry.name];
     next.textFields[entry.name] = {
       page: entry.page,
       x: entry.x,
@@ -173,6 +170,7 @@ export function upsertFieldMapEntry(
       maxWidth: entry.maxWidth,
     };
   } else if (entry.type === "checkbox") {
+    delete next.checkboxFields[entry.name];
     next.checkboxFields[entry.name] = {
       page: entry.page,
       x: entry.x,
@@ -180,6 +178,7 @@ export function upsertFieldMapEntry(
       size: entry.size,
     };
   } else {
+    delete next.imageFields[entry.name];
     next.imageFields[entry.name] = {
       page: entry.page,
       x: entry.x,
@@ -192,7 +191,10 @@ export function upsertFieldMapEntry(
   return next;
 }
 
-export function removeFieldMapEntry(fieldMap: AgreementFieldMap, name: string): AgreementFieldMap {
+export function removeFieldMapEntry(
+  fieldMap: AgreementFieldMap,
+  entry: Pick<AgreementFieldMapEntry, "name" | "type">,
+): AgreementFieldMap {
   const next: AgreementFieldMap = {
     ...fieldMap,
     textFields: { ...fieldMap.textFields },
@@ -200,11 +202,51 @@ export function removeFieldMapEntry(fieldMap: AgreementFieldMap, name: string): 
     imageFields: { ...fieldMap.imageFields },
   };
 
-  delete next.textFields[name];
-  delete next.checkboxFields[name];
-  delete next.imageFields[name];
+  if (entry.type === "text") {
+    delete next.textFields[entry.name];
+  } else if (entry.type === "checkbox") {
+    delete next.checkboxFields[entry.name];
+  } else {
+    delete next.imageFields[entry.name];
+  }
 
   return next;
+}
+
+export function hasFieldMapEntry(
+  fieldMap: AgreementFieldMap,
+  entry: Pick<AgreementFieldMapEntry, "name" | "type">,
+): boolean {
+  if (entry.type === "text") return entry.name in fieldMap.textFields;
+  if (entry.type === "checkbox") return entry.name in fieldMap.checkboxFields;
+  return entry.name in fieldMap.imageFields;
+}
+
+/** Add bundled fields that are missing from the active map (by name + type). */
+export function mergeBundledFieldMapDefaults(
+  fieldMap: AgreementFieldMap,
+  bundled: AgreementFieldMap,
+): { fieldMap: AgreementFieldMap; added: AgreementFieldMapEntry[] } {
+  let next = fieldMap;
+  const added: AgreementFieldMapEntry[] = [];
+
+  for (const entry of listFieldMapEntries(bundled)) {
+    if (!hasFieldMapEntry(next, entry)) {
+      next = upsertFieldMapEntry(next, entry);
+      added.push(entry);
+    }
+  }
+
+  const valueKeys = new Set(next.valueKeys ?? []);
+  for (const key of bundled.valueKeys ?? []) {
+    valueKeys.add(key);
+  }
+
+  if (valueKeys.size !== (next.valueKeys ?? []).length) {
+    next = { ...next, valueKeys: [...valueKeys] };
+  }
+
+  return { fieldMap: next, added };
 }
 
 export function exportFieldMapJson(fieldMap: AgreementFieldMap): string {

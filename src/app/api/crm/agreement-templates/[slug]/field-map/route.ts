@@ -5,6 +5,7 @@ import {
 } from "@/lib/signature/agreement-field-map";
 import {
   fetchAgreementFieldMap,
+  readBundledAgreementFieldMap,
   saveAgreementFieldMap,
 } from "@/lib/signature/agreement-field-map-storage";
 import { resolveAgreementTemplateFromRequest } from "@/lib/crm/agreement-template-api";
@@ -26,13 +27,15 @@ export async function GET(request: Request, context: RouteContext) {
   );
   if (templateResponse) return templateResponse;
 
+  const bundledFieldMap = await readBundledAgreementFieldMap(template.slug);
+
   try {
     const fieldMap = await fetchAgreementFieldMap(template.slug, template.version);
     const source = await resolveFieldMapSource(template.slug, template.version, fieldMap);
-    return NextResponse.json({ fieldMap, source, template });
+    return NextResponse.json({ fieldMap, source, template, bundledFieldMap });
   } catch {
     const fieldMap = createEmptyFieldMap(template.slug, template.version);
-    return NextResponse.json({ fieldMap, source: "none", template });
+    return NextResponse.json({ fieldMap, source: "none", template, bundledFieldMap });
   }
 }
 
