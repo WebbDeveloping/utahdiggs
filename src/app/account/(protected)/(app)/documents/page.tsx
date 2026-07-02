@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
+import AccountDocumentsList from "@/components/account/AccountDocumentsList";
 import AccountPageHeader from "@/components/account/AccountPageHeader";
-import AccountPlaceholderPanel from "@/components/account/AccountPlaceholderPanel";
+import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { getCustomerDocumentsByListing } from "@/lib/consumer/listing-documents-query";
 
 export const metadata: Metadata = {
   title: "Documents — Glide RE",
 };
 
-export default function AccountDocumentsPage() {
+export default async function AccountDocumentsPage() {
+  const user = await getConsumerSession();
+  if (!user) return null;
+
+  const listings = await getCustomerDocumentsByListing(user.id);
+
   return (
     <>
       <AccountPageHeader
         title="Documents"
-        description="Access your listing agreements, disclosures, and transaction paperwork."
+        description="View and download your listing agreements, disclosures, and transaction paperwork across all properties."
       />
-      <AccountPlaceholderPanel
-        title="Documents coming soon"
-        description="This page will centralize all your listing and transaction documents in one place for easy viewing and download."
-      />
+      <AccountDocumentsList listings={listings} />
     </>
   );
 }

@@ -16,6 +16,7 @@ import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import DoorFrontOutlinedIcon from "@mui/icons-material/DoorFrontOutlined";
+import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -39,6 +40,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: "Overview", href: "/account", icon: <DashboardOutlinedIcon /> },
+  { label: "My listings", href: "/account/listings", icon: <HomeWorkOutlinedIcon /> },
   {
     label: "This week's report",
     href: "/account/this-weeks-report",
