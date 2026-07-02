@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { getCustomerListings } from "@/lib/consumer/listings-query";
-import AccountShell from "@/components/account/AccountShell";
+import AccountDashboard from "@/components/account/AccountDashboard";
 
 export const metadata: Metadata = {
   title: "My account — Glide RE",
@@ -27,7 +27,7 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
   const listings = await getCustomerListings(user.id);
 
   return (
-    <AccountShell
+    <AccountDashboard
       user={user}
       listings={listings}
       draftSaved={getParam(params.draftSaved) === "1"}

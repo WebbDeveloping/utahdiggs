@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import SitePageLayout from "@/components/layout/SitePageLayout";
 import ListingDocumentsPanel from "@/components/account/listing-detail/ListingDocumentsPanel";
 import LinkButton from "@/components/ui/LinkButton";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
@@ -33,34 +31,30 @@ export default async function ListingDocumentsPage({ params }: ListingDocumentsP
   const backHref = summary ? getListingResumePath(summary) : buildOnboardingPathForListing(id);
 
   return (
-    <SitePageLayout user={user}>
-      <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
-        <Stack spacing={4}>
-          <Stack spacing={1}>
-            <Typography variant="h1" sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}>
-              Listing documents
-            </Typography>
-            <Typography color="text.secondary">
-              {listing.address}, {listing.city}, {listing.state} {listing.zip}
-            </Typography>
-          </Stack>
+    <Stack spacing={4} sx={{ maxWidth: 720 }}>
+      <Stack spacing={1}>
+        <Typography variant="h1" sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}>
+          Listing documents
+        </Typography>
+        <Typography color="text.secondary">
+          {listing.address}, {listing.city}, {listing.state} {listing.zip}
+        </Typography>
+      </Stack>
 
-          <ListingDocumentsPanel
-            listingId={listing.id}
-            documents={listing.documents}
-            description="View your signed listing agreement, MLS paperwork, and other transaction documents."
-          />
+      <ListingDocumentsPanel
+        listingId={listing.id}
+        documents={listing.documents}
+        description="View your signed listing agreement, MLS paperwork, and other transaction documents."
+      />
 
-          <Stack direction="row" spacing={2}>
-            <LinkButton href="/account/listings" color="inherit">
-              My listings
-            </LinkButton>
-            <LinkButton href={backHref} variant="outlined">
-              Back to listing
-            </LinkButton>
-          </Stack>
-        </Stack>
-      </Container>
-    </SitePageLayout>
+      <Stack direction="row" spacing={2}>
+        <LinkButton href="/account/listings" color="inherit">
+          My listings
+        </LinkButton>
+        <LinkButton href={backHref} variant="outlined">
+          Back to listing
+        </LinkButton>
+      </Stack>
+    </Stack>
   );
 }

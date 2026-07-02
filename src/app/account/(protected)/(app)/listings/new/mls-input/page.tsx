@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import Alert from "@mui/material/Alert";
-import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import SitePageLayout from "@/components/layout/SitePageLayout";
 import LinkButton from "@/components/ui/LinkButton";
 import MlsDraftChooser from "@/components/account/mls-input/MlsDraftChooser";
 import MlsInputWizard from "@/components/account/mls-input/MlsInputWizard";
@@ -46,12 +44,15 @@ function buildInitialDataFromListing(listing: {
   };
 }
 
-async function ensureListingIntake(listingId: string, listing: {
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-}) {
+async function ensureListingIntake(
+  listingId: string,
+  listing: {
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+  },
+) {
   const existing = await prisma.listingIntake.findUnique({
     where: { listingId },
   });
@@ -99,25 +100,18 @@ export default async function MlsInputPage({ searchParams }: MlsInputPageProps) 
 
   if (!mlsReady) {
     return (
-      <SitePageLayout user={user}>
-        <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
-          <Stack spacing={3}>
-            <Typography variant="h1" sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}>
-              MLS listing intake
-            </Typography>
-            <Alert severity="warning">
-              Complete the onboarding steps (plan, agreement, photos, and call scheduling)
-              before starting the MLS intake form.
-            </Alert>
-            <LinkButton
-              href={buildOnboardingPathForListing(listing.id)}
-              variant="contained"
-            >
-              Back to onboarding
-            </LinkButton>
-          </Stack>
-        </Container>
-      </SitePageLayout>
+      <Stack spacing={3} sx={{ maxWidth: 720 }}>
+        <Typography variant="h1" sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}>
+          MLS listing intake
+        </Typography>
+        <Alert severity="warning">
+          Complete the onboarding steps (plan, agreement, photos, and call scheduling) before
+          starting the MLS intake form.
+        </Alert>
+        <LinkButton href={buildOnboardingPathForListing(listing.id)} variant="contained">
+          Back to onboarding
+        </LinkButton>
+      </Stack>
     );
   }
 
@@ -126,38 +120,33 @@ export default async function MlsInputPage({ searchParams }: MlsInputPageProps) 
   }
 
   const intake =
-    listing.listingIntake ??
-    (await ensureListingIntake(listing.id, listing));
+    listing.listingIntake ?? (await ensureListingIntake(listing.id, listing));
 
   const data = (intake.data as Record<string, unknown>) ?? buildInitialDataFromListing(listing);
 
   return (
-    <SitePageLayout user={user}>
-      <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
-        <Stack spacing={4}>
-          <Stack spacing={1}>
-            <Typography variant="h1" sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}>
-              MLS listing intake
-            </Typography>
-            <Typography color="text.secondary">
-              Complete the full MLS listing form for WFRMLS submission. Plan on 20–25
-              minutes. You can save and return at any time.
-            </Typography>
-          </Stack>
-          <MlsInputWizard
-            user={customer}
-            draftListingId={listing.id}
-            initialStep={intake.currentStep}
-            initialData={data}
-            initialValues={{
-              address: listing.address,
-              city: listing.city,
-              state: listing.state,
-              zip: listing.zip,
-            }}
-          />
-        </Stack>
-      </Container>
-    </SitePageLayout>
+    <Stack spacing={4} sx={{ maxWidth: 720 }}>
+      <Stack spacing={1}>
+        <Typography variant="h1" sx={{ fontSize: { xs: "2rem", md: "2.5rem" } }}>
+          MLS listing intake
+        </Typography>
+        <Typography color="text.secondary">
+          Complete the full MLS listing form for WFRMLS submission. Plan on 20–25 minutes. You
+          can save and return at any time.
+        </Typography>
+      </Stack>
+      <MlsInputWizard
+        user={customer}
+        draftListingId={listing.id}
+        initialStep={intake.currentStep}
+        initialData={data}
+        initialValues={{
+          address: listing.address,
+          city: listing.city,
+          state: listing.state,
+          zip: listing.zip,
+        }}
+      />
+    </Stack>
   );
 }

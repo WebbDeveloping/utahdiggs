@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { getPrimaryListingPhotoUrl } from "@/lib/storage/document-classify";
 import type { CustomerListingSummary } from "@/types/consumer-listing";
 
 export async function getCustomerListings(
@@ -23,8 +24,7 @@ export async function getCustomerListings(
       scheduledCallAt: true,
       documents: {
         orderBy: { uploadedAt: "asc" },
-        take: 1,
-        select: { url: true },
+        select: { name: true, url: true },
       },
       listingIntake: {
         select: {
@@ -44,7 +44,7 @@ export async function getCustomerListings(
     listPrice: listing.listPrice?.toString() ?? null,
     status: listing.status,
     portalSlug: listing.portalSlug,
-    primaryPhotoUrl: listing.documents[0]?.url ?? null,
+    primaryPhotoUrl: getPrimaryListingPhotoUrl(listing.documents),
     submittedAt: listing.submittedAt,
     createdAt: listing.createdAt,
     intakeStatus: listing.listingIntake?.status ?? null,

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import Alert from "@mui/material/Alert";
-import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import { IntakeStatus, ListingStatus } from "@/generated/prisma/client";
-import SitePageLayout from "@/components/layout/SitePageLayout";
 import ListingDashboardTabs from "@/components/account/listing-detail/ListingDashboardTabs";
 import ListingPropertyHeader from "@/components/account/listing-detail/ListingPropertyHeader";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
@@ -45,22 +43,18 @@ export default async function AccountListingDetailPage({
   }
 
   return (
-    <SitePageLayout user={user}>
-      <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
-        <Stack spacing={4}>
-          <ListingPropertyHeader listing={listing} customerName={user.name} />
+    <Stack spacing={4}>
+      <ListingPropertyHeader listing={listing} customerName={user.name} />
 
-          {listing.status === ListingStatus.SUBMITTED && listing.submittedAt ? (
-            <Alert severity="info">
-              Your listing is under review. Once approved and active on the MLS, you&apos;ll see
-              offers, weekly updates, and seller requests here.{" "}
-              <a href={buildOnboardingPathForListing(listing.id)}>View onboarding status</a>
-            </Alert>
-          ) : null}
+      {listing.status === ListingStatus.SUBMITTED && listing.submittedAt ? (
+        <Alert severity="info">
+          Your listing is under review. Once approved and active on the MLS, you&apos;ll see
+          offers, weekly updates, and seller requests here.{" "}
+          <a href={buildOnboardingPathForListing(listing.id)}>View onboarding status</a>
+        </Alert>
+      ) : null}
 
-          <ListingDashboardTabs listing={listing} />
-        </Stack>
-      </Container>
-    </SitePageLayout>
+      <ListingDashboardTabs listing={listing} />
+    </Stack>
   );
 }

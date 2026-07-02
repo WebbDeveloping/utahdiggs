@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -12,22 +11,23 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+import AnalyticsOutlinedIcon from "@mui/icons-material/AnalyticsOutlined";
+import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
+import DoorFrontOutlinedIcon from "@mui/icons-material/DoorFrontOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
+import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import NextLink from "next/link";
-import { signOut } from "next-auth/react";
 import { useState } from "react";
 import Logo from "@/components/ui/Logo";
 import AppShellNavPills from "@/components/layout/AppShellNavPills";
-import { formatUserRole, type CrmUserRole } from "@/lib/crm/roles";
+import { consumerSignOutAction } from "@/lib/consumer/actions";
 
 const DRAWER_WIDTH = 260;
 
@@ -35,45 +35,46 @@ type NavItem = {
   label: string;
   href: string;
   icon: React.ReactNode;
-  soon?: boolean;
-  adminOnly?: boolean;
 };
 
 const navItems: NavItem[] = [
-  { label: "Dashboard", href: "/crm", icon: <DashboardOutlinedIcon /> },
-  { label: "Listings", href: "/crm/listings", icon: <HomeWorkOutlinedIcon /> },
-  { label: "Contacts", href: "/crm/contacts", icon: <ContactsOutlinedIcon /> },
-  { label: "Offers", href: "/crm/offers", icon: <LocalOfferOutlinedIcon />, soon: true },
-  { label: "Seller requests", href: "/crm/requests", icon: <InboxOutlinedIcon />, soon: true },
+  { label: "Overview", href: "/account", icon: <DashboardOutlinedIcon /> },
   {
-    label: "Agreement templates",
-    href: "/crm/agreement-templates",
-    icon: <DescriptionOutlinedIcon />,
-    adminOnly: true,
+    label: "This week's report",
+    href: "/account/this-weeks-report",
+    icon: <AssessmentOutlinedIcon />,
   },
-  { label: "Team", href: "/crm/users", icon: <PeopleOutlinedIcon />, adminOnly: true },
+  { label: "Offers", href: "/account/offers", icon: <LocalOfferOutlinedIcon /> },
+  { label: "Showings", href: "/account/showings", icon: <DoorFrontOutlinedIcon /> },
+  { label: "Web traffic", href: "/account/web-traffic", icon: <AnalyticsOutlinedIcon /> },
+  { label: "Your market", href: "/account/your-market", icon: <TrendingUpOutlinedIcon /> },
+  { label: "Seller guide", href: "/account/seller-guide", icon: <MenuBookOutlinedIcon /> },
+  { label: "Documents", href: "/account/documents", icon: <DescriptionOutlinedIcon /> },
+  {
+    label: "Seller requests",
+    href: "/account/seller-requests",
+    icon: <InboxOutlinedIcon />,
+  },
 ];
 
-type CrmShellProps = {
+type AccountAppShellProps = {
   user: {
-    name?: string | null;
+    id: string;
     email: string;
-    role: CrmUserRole;
+    name?: string | null;
   };
   children: React.ReactNode;
 };
 
-function SidebarNav({ onNavigate, userRole }: { onNavigate?: () => void; userRole: CrmUserRole }) {
+function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
     <List sx={{ px: 1.5, py: 1 }}>
-      {navItems
-        .filter((item) => !item.adminOnly || userRole === "ADMIN")
-        .map((item) => {
+      {navItems.map((item) => {
         const active =
-          item.href === "/crm"
-            ? pathname === "/crm"
+          item.href === "/account"
+            ? pathname === "/account"
             : pathname.startsWith(item.href);
 
         return (
@@ -105,9 +106,6 @@ function SidebarNav({ onNavigate, userRole }: { onNavigate?: () => void; userRol
                 },
               }}
             />
-            {item.soon ? (
-              <Chip label="Soon" size="small" variant="outlined" sx={{ height: 22, fontSize: 11 }} />
-            ) : null}
           </ListItemButton>
         );
       })}
@@ -120,10 +118,12 @@ function SidebarContent({
   onNavigate,
   onClose,
 }: {
-  user: CrmShellProps["user"];
+  user: AccountAppShellProps["user"];
   onNavigate?: () => void;
   onClose?: () => void;
 }) {
+  const displayName = user.name?.trim() || user.email;
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Toolbar sx={{ px: 2.5, minHeight: 72, justifyContent: "space-between" }}>
@@ -137,61 +137,51 @@ function SidebarContent({
 
       <Box sx={{ px: 2.5, pb: 2 }}>
         <Typography variant="overline" color="text.secondary" sx={{ letterSpacing: "0.12em" }}>
-          CRM
+          Account
         </Typography>
       </Box>
 
-      <SidebarNav onNavigate={onNavigate} userRole={user.role} />
+      <SidebarNav onNavigate={onNavigate} />
 
       <Box sx={{ mt: "auto", p: 2 }}>
         <Divider sx={{ mb: 2 }} />
         <Box sx={{ px: 1, mb: 2 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            {user.name ?? user.email}
+            {displayName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {formatUserRole(user.role)}
+            {user.email}
           </Typography>
         </Box>
-        <ListItemButton
-          type="button"
-          onClick={() => signOut({ callbackUrl: "/" })}
-          sx={{
-            borderRadius: 2,
-            color: "text.secondary",
-            "&:hover": { color: "error.main", backgroundColor: "error.light" },
-          }}
-        >
-          <ListItemIcon sx={{ minWidth: 40, color: "inherit" }}>
-            <LogoutOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText primary="Sign out" />
-        </ListItemButton>
+        <Box component="form" action={consumerSignOutAction}>
+          <ListItemButton
+            type="submit"
+            sx={{
+              borderRadius: 2,
+              color: "text.secondary",
+              "&:hover": { color: "error.main", backgroundColor: "error.light" },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 40, color: "inherit" }}>
+              <LogoutOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Sign out" />
+          </ListItemButton>
+        </Box>
       </Box>
     </Box>
   );
 }
 
-export default function CrmShell({ user, children }: CrmShellProps) {
+export default function AccountAppShell({ user, children }: AccountAppShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const pillItems = navItems
-    .filter((item) => !item.adminOnly || user.role === "ADMIN")
-    .map(({ label, href, icon, soon }) => ({
-      label,
-      href,
-      icon,
-      badge: soon ? (
-        <Chip label="Soon" size="small" variant="outlined" sx={{ height: 20, fontSize: 10 }} />
-      ) : undefined,
-    }));
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "background.default" }}>
       <Box
         component="nav"
         sx={{ width: { md: DRAWER_WIDTH }, flexShrink: { md: 0 } }}
-        aria-label="CRM navigation"
+        aria-label="Account navigation"
       >
         <Drawer
           variant="temporary"
@@ -261,7 +251,10 @@ export default function CrmShell({ user, children }: CrmShellProps) {
           <Logo />
         </Toolbar>
 
-        <AppShellNavPills items={pillItems} basePath="/crm" />
+        <AppShellNavPills
+          items={navItems.map(({ label, href, icon }) => ({ label, href, icon }))}
+          basePath="/account"
+        />
 
         <Box sx={{ p: { xs: 2.5, sm: 3, md: 4 } }}>{children}</Box>
       </Box>

@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import Link from "next/link";
+import ListingThumbnail from "@/components/account/ListingThumbnail";
 import MlsDraftDeleteButton from "@/components/account/MlsDraftDeleteButton";
 import { formatCurrency } from "@/lib/crm/format";
 import {
@@ -59,25 +60,10 @@ export default function MyListingsSection({ listings }: MyListingsSectionProps) 
                     spacing={2}
                     sx={{ alignItems: "center" }}
                   >
-                    <Box
-                      sx={{
-                        width: 64,
-                        height: 48,
-                        borderRadius: 1,
-                        overflow: "hidden",
-                        flexShrink: 0,
-                        backgroundColor: "action.hover",
-                      }}
-                    >
-                      {listing.primaryPhotoUrl ? (
-                        <Box
-                          component="img"
-                          src={listing.primaryPhotoUrl}
-                          alt={listing.address}
-                          sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        />
-                      ) : null}
-                    </Box>
+                    <ListingThumbnail
+                      photoUrl={listing.primaryPhotoUrl}
+                      alt={listing.address}
+                    />
                     <Box sx={{ flex: 1, minWidth: 0 }}>
                       {isMlsDraft(listing) ? (
                         <>
