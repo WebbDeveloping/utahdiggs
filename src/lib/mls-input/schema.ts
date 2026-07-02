@@ -1446,7 +1446,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "field-218",
         "type": "content",
-        "content": "Photos\nIf you have your own photos you can upload now. We recommend uploading later in your seller app/portal under \"manage your listing\" to avoid resetting this form if files are too large. We will need 2 exterior and 3 interior photos minimum to list on the MLS.\n** A professional photo tour is included with the Full Service Listing and will be scheduled upon receipt of your listing agreement and this form**\n"
+        "content": "Photos\nIf you have your own photos you can upload now. We recommend uploading later in your seller account under \"manage your listing\" to avoid resetting this form if files are too large. We will need 2 exterior and 3 interior photos minimum to list on the MLS.\n** A professional photo tour is included with the Full Service Listing and will be scheduled upon receipt of your listing agreement and this form**\n"
       },
       {
         "id": "field-44",

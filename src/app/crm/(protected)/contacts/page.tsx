@@ -87,7 +87,7 @@ function ContactRoleCell({ contact }: { contact: CrmContactRow }) {
   );
 }
 
-function ContactPortalCell({ contact }: { contact: CrmContactRow }) {
+function ContactAccountCell({ contact }: { contact: CrmContactRow }) {
   const listingSlug = contact.listings[0]?.listing.listingSlug;
 
   if (!listingSlug) {
@@ -116,7 +116,7 @@ export default async function CrmContactsPage({ searchParams }: CrmContactsPageP
     <>
       <CrmPageHeader
         title="Contacts"
-        description="Portal sellers linked to listings — primary sellers and co-sellers."
+        description="Account sellers linked to listings — primary sellers and co-sellers."
       />
 
       <Paper
@@ -168,7 +168,7 @@ export default async function CrmContactsPage({ searchParams }: CrmContactsPageP
               <TableCell>Phone</TableCell>
               <TableCell>Listings</TableCell>
               <TableCell>Role</TableCell>
-              <TableCell>Portal</TableCell>
+              <TableCell>Account</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -201,7 +201,7 @@ export default async function CrmContactsPage({ searchParams }: CrmContactsPageP
                     <ContactRoleCell contact={contact} />
                   </TableCell>
                   <TableCell>
-                    <ContactPortalCell contact={contact} />
+                    <ContactAccountCell contact={contact} />
                   </TableCell>
                 </TableRow>
               ))

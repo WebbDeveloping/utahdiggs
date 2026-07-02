@@ -9,6 +9,8 @@ import CrmApproveListingButton from "@/components/crm/CrmApproveListingButton";
 import CrmAssignAgentSelect from "@/components/crm/CrmAssignAgentSelect";
 import CrmListingDetailTabs from "@/components/crm/CrmListingDetailTabs";
 import CrmListingMediaSection from "@/components/crm/CrmListingMediaSection";
+import CrmShowingsSection from "@/components/crm/CrmShowingsSection";
+import CrmWeeklyStatsSection from "@/components/crm/CrmWeeklyStatsSection";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
 import {
   IntakeStatus,
@@ -24,6 +26,8 @@ import { auth } from "@/lib/auth/admin-auth";
 import { isAdmin } from "@/lib/auth/roles";
 import { canApproveListing, requireCrmUser } from "@/lib/crm/access";
 import { getActiveAgents, getCrmListingById } from "@/lib/crm/listing-queries";
+import { getCrmShowings } from "@/lib/crm/showing-queries";
+import { getCrmWeeklyStats } from "@/lib/crm/weekly-stat-queries";
 import { notFound } from "next/navigation";
 
 type CrmListingDetailPageProps = {
@@ -50,6 +54,11 @@ export default async function CrmListingDetailPage({
     (!listing.listingIntake || listing.listingIntake.status === IntakeStatus.SUBMITTED);
 
   const agents = isAdmin(user.role) ? await getActiveAgents() : [];
+
+  const [showings, weeklyStats] = await Promise.all([
+    getCrmShowings(listing.id),
+    getCrmWeeklyStats(listing.id),
+  ]);
 
   const primarySeller = listing.contacts.find((c) => c.role === "PRIMARY")?.contact;
 
@@ -107,7 +116,7 @@ export default async function CrmListingDetailPage({
               </Typography>
               <Typography>{formatCurrency(listing.listPrice?.toString())}</Typography>
             </Grid>
-            <Grid key="portal-slug" size={{ xs: 12, sm: 6 }}>
+            <Grid key="listing-slug" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
                 Listing slug
               </Typography>
@@ -201,6 +210,18 @@ export default async function CrmListingDetailPage({
       </Paper>
 
       <CrmListingMediaSection listingId={listing.id} documents={listing.documents} />
+
+      <CrmShowingsSection
+        listingId={listing.id}
+        listingAddress={`${listing.address}, ${listing.city}`}
+        showings={showings}
+      />
+
+      <CrmWeeklyStatsSection
+        listingId={listing.id}
+        listingAddress={`${listing.address}, ${listing.city}`}
+        stats={weeklyStats}
+      />
     </Stack>
   );
 

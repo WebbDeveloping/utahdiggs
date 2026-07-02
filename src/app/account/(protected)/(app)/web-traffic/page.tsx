@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
 import AccountPageHeader from "@/components/account/AccountPageHeader";
-import AccountPlaceholderPanel from "@/components/account/AccountPlaceholderPanel";
+import AccountWebTrafficList from "@/components/account/AccountWebTrafficList";
+import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { getSellerLatestWeeklyStats } from "@/lib/consumer/weekly-stats-query";
 
 export const metadata: Metadata = {
   title: "Web traffic — Glide RE",
 };
 
-export default function AccountWebTrafficPage() {
+export default async function AccountWebTrafficPage() {
+  const user = await getConsumerSession();
+  if (!user) return null;
+
+  const stats = await getSellerLatestWeeklyStats(user.id, user.email);
+
   return (
     <>
       <AccountPageHeader
         title="Web traffic"
-        description="Track how buyers are finding and viewing your listing online."
+        description="Weekly listing views across UtahRealEstate.com, Zillow, Realtor.com, and other portals."
       />
-      <AccountPlaceholderPanel
-        title="Web traffic coming soon"
-        description="This page will show listing views, search impressions, photo gallery engagement, and traffic sources."
-      />
+      <AccountWebTrafficList stats={stats} />
     </>
   );
 }

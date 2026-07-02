@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { getAccountDashboardStats } from "@/lib/consumer/account-dashboard-query";
 import { getCustomerListings } from "@/lib/consumer/listings-query";
 import AccountDashboard from "@/components/account/AccountDashboard";
 
@@ -24,12 +25,16 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
   }
 
   const params = await searchParams;
-  const listings = await getCustomerListings(user.id);
+  const [listings, stats] = await Promise.all([
+    getCustomerListings(user.id),
+    getAccountDashboardStats(user.id, user.email),
+  ]);
 
   return (
     <AccountDashboard
       user={user}
       listings={listings}
+      stats={stats}
       draftSaved={getParam(params.draftSaved) === "1"}
     />
   );

@@ -443,7 +443,7 @@ export default function AddListingForm({
 
         <Section
           title="Co-sellers"
-          description="Up to three co-sellers can access the seller portal with their email."
+          description="Up to three co-sellers can access the seller account with their email."
         >
           {[0, 1, 2].map((i) => (
             <Stack key={i} direction={{ xs: "column", sm: "row" }} spacing={2}>

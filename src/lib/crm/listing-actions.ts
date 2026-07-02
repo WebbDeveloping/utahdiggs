@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { ListingStatus, UserRole } from "@/generated/prisma/client";
+import { ContactRole, ListingStatus, UserRole } from "@/generated/prisma/client";
 import { auth } from "@/lib/auth/admin-auth";
 import { canManageListings, isAdmin } from "@/lib/auth/roles";
 import {
@@ -271,6 +271,7 @@ export async function approveListingAction(
       id: true,
       status: true,
       assignedAgentId: true,
+      customerId: true,
       address: true,
       city: true,
       state: true,
@@ -281,9 +282,13 @@ export async function approveListingAction(
       offerFormUrl: true,
       listingIntake: { select: { status: true } },
       contacts: {
-        where: { role: "PRIMARY" },
-        select: { contact: { select: { email: true, name: true, phone: true } } },
-        take: 1,
+        where: {
+          role: { in: [ContactRole.PRIMARY, ContactRole.CO_SELLER] },
+        },
+        select: {
+          role: true,
+          contact: { select: { email: true, name: true, phone: true } },
+        },
       },
     },
   });
@@ -303,12 +308,29 @@ export async function approveListingAction(
     throw new Error("MLS intake form is still in progress.");
   }
 
+  const primarySeller = listing.contacts.find(
+    (link) => link.role === ContactRole.PRIMARY,
+  )?.contact;
+  const primarySellerEmail = primarySeller?.email?.trim().toLowerCase();
+
+  let customerId = listing.customerId;
+  if (!customerId && primarySellerEmail) {
+    const customer = await prisma.customer.findUnique({
+      where: { email: primarySellerEmail },
+      select: { id: true },
+    });
+    if (customer) {
+      customerId = customer.id;
+    }
+  }
+
   await prisma.listing.update({
     where: { id: listing.id },
     data: {
       status: ListingStatus.ACTIVE,
       listDate: new Date(),
       ...(mlsNumber ? { mlsNumber } : {}),
+      ...(customerId && !listing.customerId ? { customerId } : {}),
     },
   });
 
@@ -334,17 +356,25 @@ export async function approveListingAction(
     }
   }
 
-  const seller = listing.contacts[0]?.contact;
-  if (seller?.email) {
+  const sellerContacts = listing.contacts
+    .map((link) => link.contact)
+    .filter((contact) => contact.email?.trim());
+
+  if (sellerContacts.length > 0) {
     try {
       const { sendListingWelcomeEmail } = await import(
-        "@/lib/email/templates/mls-intake-submitted"
+        "@/lib/email/templates/listing-welcome"
       );
-      await sendListingWelcomeEmail({
-        sellerEmail: seller.email,
-        sellerName: seller.name,
-        offerFormUrl: listing.offerFormUrl ?? undefined,
-      });
+      for (const contact of sellerContacts) {
+        await sendListingWelcomeEmail({
+          sellerEmail: contact.email,
+          sellerName: contact.name,
+          address: listing.address,
+          city: listing.city,
+          state: listing.state,
+          offerFormUrl: listing.offerFormUrl ?? undefined,
+        });
+      }
     } catch (emailError) {
       console.error("Welcome email failed:", emailError);
     }

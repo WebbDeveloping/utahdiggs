@@ -12,7 +12,7 @@ export type SellerGuideSection = {
 
 export const sellerGuideIntro = {
   label: "From Blair · Your Seller Success Playbook",
-  text: "This page breaks down exactly what the numbers in your portal mean — and the proven principles behind selling your home for the most money, in the least time, with the least stress. I've sold hundreds of homes. Here's what I know works.",
+  text: "This page breaks down exactly what the numbers in your account mean — and the proven principles behind selling your home for the most money, in the least time, with the least stress. I've sold hundreds of homes. Here's what I know works.",
 };
 
 export const sellerGuideSections: SellerGuideSection[] = [
@@ -40,7 +40,7 @@ export const sellerGuideSections: SellerGuideSection[] = [
   {
     title: "The Formula: Views → Showings → Offers → SOLD",
     intro:
-      "Every sale follows a predictable funnel. Your portal tracks every stage in real time. When one stage underperforms, we know exactly where to look — and what to do about it.",
+      "Every sale follows a predictable funnel. Your account tracks every stage in real time. When one stage underperforms, we know exactly where to look — and what to do about it.",
     callout: {
       title: "The real talk",
       text: "Buyers don't just make offers. They research deeply, compare multiple homes, and when they walk through yours, they already like it. When a showing doesn't convert to an offer, we can usually fix it.",
@@ -138,14 +138,14 @@ export const sellerGuideSections: SellerGuideSection[] = [
   {
     title: "How We're Marketing Your Home",
     intro:
-      "This isn't a list-it-and-pray strategy. We run a full-stack marketing machine behind your property — and you can see the results in your portal every week.",
+      "This isn't a list-it-and-pray strategy. We run a full-stack marketing machine behind your property — and you can see the results in your account every week.",
     cards: [
       {
         title: "Social Media",
         body: "Instagram, Facebook, and TikTok campaigns targeting active buyers in your price range, location, and property type.",
       },
       {
-        title: "Portal Dominance",
+        title: "Major Listing Sites",
         body: "Syndicated to Zillow, Realtor.com, Homes.com, UtahRealEstate.com, Redfin, and dozens of additional sites with professional photos and optimized copy.",
       },
       {

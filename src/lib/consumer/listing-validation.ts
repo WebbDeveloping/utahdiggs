@@ -63,9 +63,8 @@ export function parseConsumerListingFormData(formData: FormData): {
     fieldErrors.sellerEmail = "Enter a valid email address.";
   }
   if (!sellerPhone) fieldErrors.sellerPhone = "Phone is required.";
-  else if (sellerPhone.replace(/\D/g, "").length < 4) {
-    fieldErrors.sellerPhone =
-      "Phone must have at least 4 digits for seller portal access.";
+  else if (sellerPhone.replace(/\D/g, "").length < 10) {
+    fieldErrors.sellerPhone = "Phone must have at least 10 digits.";
   }
 
   const listPrice = parseOptionalNumber(

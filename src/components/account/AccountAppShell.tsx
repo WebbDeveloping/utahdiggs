@@ -157,8 +157,10 @@ function SidebarContent({
         </Box>
         <Box component="form" action={consumerSignOutAction}>
           <ListItemButton
+            component="button"
             type="submit"
             sx={{
+              width: "100%",
               borderRadius: 2,
               color: "text.secondary",
               "&:hover": { color: "error.main", backgroundColor: "error.light" },

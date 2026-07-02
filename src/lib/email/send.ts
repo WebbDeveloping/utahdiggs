@@ -55,3 +55,7 @@ export function crmListingUrl(listingId: string): string {
 export function accountLoginUrl(): string {
   return `${appBaseUrl()}/login`;
 }
+
+export function accountSignupUrl(): string {
+  return `${appBaseUrl()}/signup`;
+}

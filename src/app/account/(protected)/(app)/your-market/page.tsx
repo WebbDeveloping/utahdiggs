@@ -1,22 +1,26 @@
 import type { Metadata } from "next";
 import AccountPageHeader from "@/components/account/AccountPageHeader";
-import AccountPlaceholderPanel from "@/components/account/AccountPlaceholderPanel";
+import AccountYourMarketCards from "@/components/account/AccountYourMarketCards";
+import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { getSellerMarketData } from "@/lib/consumer/market-data-query";
 
 export const metadata: Metadata = {
   title: "Your market — Glide RE",
 };
 
-export default function AccountYourMarketPage() {
+export default async function AccountYourMarketPage() {
+  const user = await getConsumerSession();
+  if (!user) return null;
+
+  const markets = await getSellerMarketData(user.id, user.email);
+
   return (
     <>
       <AccountPageHeader
         title="Your market"
-        description="Local market trends, comparable sales, and pricing insights for your area."
+        description="City-level market trends for the areas where your listings are located."
       />
-      <AccountPlaceholderPanel
-        title="Market insights coming soon"
-        description="This page will provide neighborhood trends, recent comparable sales, and pricing recommendations for your listing."
-      />
+      <AccountYourMarketCards markets={markets} />
     </>
   );
 }
