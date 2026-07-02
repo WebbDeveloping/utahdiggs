@@ -520,6 +520,29 @@ model SellerRequest {
 }
 
 // ---------------------------------------------------------------------------
+// Agreement PDF templates (admin-managed)
+// ---------------------------------------------------------------------------
+
+model AgreementTemplate {
+  id            String   @id @default(cuid())
+  slug          String
+  version       String
+  displayName   String
+  revisionLabel String?
+  blobPathname  String
+  localFilename String?
+  contentHash   String?
+  byteSize      Int?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([slug, version])
+  @@index([slug])
+  @@index([isActive])
+}
+
+// ---------------------------------------------------------------------------
 // Listing agreement e-sign audit
 // ---------------------------------------------------------------------------
 
@@ -539,6 +562,7 @@ model AgreementSignature {
   signedDocumentUrl String?
   agreementVersion  String
   agreementHash     String
+  formData          Json?
   esignConsentAt    DateTime
   signedAt          DateTime
   ipAddress         String?

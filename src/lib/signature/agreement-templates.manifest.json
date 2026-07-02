@@ -1,0 +1,27 @@
+{
+  "uploadedAt": "2026-07-02T02:54:11.851Z",
+  "templates": [
+    {
+      "slug": "uar-exclusive-right-to-sell",
+      "version": "2024-11-05",
+      "revisionLabel": "UAR Form 8 — Revised 11.5.2024",
+      "displayName": "Exclusive Right to Sell Listing Agreement & Agency Disclosure",
+      "pathname": "templates/agreements/uar-exclusive-right-to-sell-2024-11-05.pdf",
+      "url": "https://zmyxmcrwaeqppuo7.private.blob.vercel-storage.com/templates/agreements/uar-exclusive-right-to-sell-2024-11-05.pdf",
+      "contentHash": "177186c76af6956e195d519312638cf66a6d488d973ba94a74bd984aa49b4d81",
+      "byteSize": 143573,
+      "uploadedAt": "2026-07-02T02:54:11.145Z"
+    },
+    {
+      "slug": "uar-data-form-residential",
+      "version": "2024-11-05",
+      "revisionLabel": "URE Data Form — Residential",
+      "displayName": "Data Form — Residential",
+      "pathname": "templates/agreements/uar-data-form-residential-2024-11-05.pdf",
+      "url": "https://zmyxmcrwaeqppuo7.private.blob.vercel-storage.com/templates/agreements/uar-data-form-residential-2024-11-05.pdf",
+      "contentHash": "171642f74c453f185a4354c4753fa775850ec0f19d6758006065122b0cc13d84",
+      "byteSize": 330712,
+      "uploadedAt": "2026-07-02T02:54:11.851Z"
+    }
+  ]
+}

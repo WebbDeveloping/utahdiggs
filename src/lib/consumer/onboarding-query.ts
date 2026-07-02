@@ -1,3 +1,4 @@
+import { findSignedListingAgreementDocument } from "@/lib/documents/listing-document-kinds";
 import { prisma } from "@/lib/db";
 import type { OnboardingListingDetail } from "@/types/onboarding";
 
@@ -23,6 +24,11 @@ export async function getOnboardingListing(
       submittedAt: true,
       status: true,
       portalSlug: true,
+      contacts: {
+        where: { role: "PRIMARY" },
+        take: 1,
+        select: { contact: { select: { phone: true } } },
+      },
       documents: {
         orderBy: { uploadedAt: "asc" },
         select: { id: true, name: true, url: true, uploadedAt: true },
@@ -35,5 +41,12 @@ export async function getOnboardingListing(
 
   if (!listing) return null;
 
-  return listing;
+  const signedAgreementDocument = findSignedListingAgreementDocument(listing.documents);
+  const { contacts, ...listingData } = listing;
+
+  return {
+    ...listingData,
+    sellerPhone: contacts[0]?.contact.phone ?? "",
+    signedAgreementDocumentId: signedAgreementDocument?.id ?? null,
+  };
 }

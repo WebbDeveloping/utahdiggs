@@ -19,11 +19,38 @@ function createPrismaClient() {
   return new PrismaClient({ adapter });
 }
 
+function agreementSignatureFieldNames(client: PrismaClient): Set<string> | null {
+  const fields = (
+    client as unknown as {
+      _runtimeDataModel?: {
+        models?: {
+          AgreementSignature?: { fields?: Array<{ name: string }> };
+        };
+      };
+    }
+  )._runtimeDataModel?.models?.AgreementSignature?.fields;
+
+  if (!Array.isArray(fields)) {
+    return null;
+  }
+
+  return new Set(fields.map((field) => field.name));
+}
+
+function isCachedPrismaClientValid(client: PrismaClient): boolean {
+  if (!("customer" in client && "agreementSignature" in client)) {
+    return false;
+  }
+
+  const agreementSignatureFields = agreementSignatureFieldNames(client);
+  return agreementSignatureFields?.has("formData") ?? false;
+}
+
 function getPrismaClient(): PrismaClient {
   const cached = globalForPrisma.prisma;
 
-  // Dev HMR can keep a Prisma client from before a schema change (e.g. missing delegates).
-  if (cached && "customer" in cached && "agreementSignature" in cached) {
+  // Dev HMR can keep a Prisma client from before a schema change (missing delegates/fields).
+  if (cached && isCachedPrismaClientValid(cached)) {
     return cached;
   }
 

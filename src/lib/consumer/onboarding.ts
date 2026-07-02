@@ -34,7 +34,7 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     id: "agreement",
     order: 2,
     title: "Sign listing agreement",
-    description: "Review and sign your Glide RE listing agreement",
+    description: "Review and sign the exclusive right to sell listing agreement",
     href: (id) => `/account/onboarding/${id}/agreement`,
     requires: ["plan"],
     required: true,

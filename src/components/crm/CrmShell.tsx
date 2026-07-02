@@ -14,6 +14,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
@@ -42,6 +43,12 @@ const navItems: NavItem[] = [
   { label: "Contacts", href: "/crm/contacts", icon: <ContactsOutlinedIcon /> },
   { label: "Offers", href: "/crm/offers", icon: <LocalOfferOutlinedIcon />, soon: true },
   { label: "Seller requests", href: "/crm/requests", icon: <InboxOutlinedIcon />, soon: true },
+  {
+    label: "Agreement templates",
+    href: "/crm/agreement-templates",
+    icon: <DescriptionOutlinedIcon />,
+    adminOnly: true,
+  },
   { label: "Team", href: "/crm/users", icon: <PeopleOutlinedIcon />, adminOnly: true },
 ];
 

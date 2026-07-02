@@ -28,6 +28,7 @@ import {
   isOnboardingListing,
 } from "@/lib/consumer/mls-draft";
 import { formatCurrency } from "@/lib/crm/format";
+import { buildListingDocumentsPath } from "@/lib/consumer/listing-documents-path";
 import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 export const metadata: Metadata = {
@@ -178,6 +179,14 @@ export default async function AccountListingsPage({
                               >
                                 <Button size="small" variant="outlined">
                                   Continue
+                                </Button>
+                              </Link>
+                              <Link
+                                href={buildListingDocumentsPath(listing.id)}
+                                style={{ textDecoration: "none" }}
+                              >
+                                <Button size="small" variant="text">
+                                  Documents
                                 </Button>
                               </Link>
                               {isMlsDraft(listing) ? (

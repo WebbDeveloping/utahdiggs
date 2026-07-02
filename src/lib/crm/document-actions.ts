@@ -20,7 +20,7 @@ export type CrmDocumentActionState = {
   success?: boolean;
 };
 
-async function assertCrmListingAccess(listingId: string) {
+export async function assertCrmListingAccess(listingId: string) {
   const session = await auth();
   const user = getSessionUser(session);
   if (!user || !canManageListings(user.role)) {

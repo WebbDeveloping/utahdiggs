@@ -46,6 +46,7 @@ export async function createListingDocumentAction(
       },
     });
     revalidatePath(`/account/listings/${listingId}`);
+    revalidatePath(`/account/listings/${listingId}/documents`);
     return { success: true };
   } catch (error) {
     const message = error instanceof Error ? error.message : "Upload failed.";

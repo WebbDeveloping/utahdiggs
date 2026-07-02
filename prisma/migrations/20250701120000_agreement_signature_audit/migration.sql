@@ -1,8 +1,12 @@
 -- CreateEnum
-CREATE TYPE "SignatureMethod" AS ENUM ('DRAW', 'TYPE');
+DO $$ BEGIN
+  CREATE TYPE "SignatureMethod" AS ENUM ('DRAW', 'TYPE');
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
 
 -- CreateTable
-CREATE TABLE "AgreementSignature" (
+CREATE TABLE IF NOT EXISTS "AgreementSignature" (
     "id" TEXT NOT NULL,
     "listingId" TEXT NOT NULL,
     "customerId" TEXT NOT NULL,
@@ -22,13 +26,26 @@ CREATE TABLE "AgreementSignature" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "AgreementSignature_listingId_key" ON "AgreementSignature"("listingId");
+CREATE UNIQUE INDEX IF NOT EXISTS "AgreementSignature_listingId_key" ON "AgreementSignature"("listingId");
 
 -- CreateIndex
-CREATE INDEX "AgreementSignature_customerId_idx" ON "AgreementSignature"("customerId");
+CREATE INDEX IF NOT EXISTS "AgreementSignature_customerId_idx" ON "AgreementSignature"("customerId");
 
 -- AddForeignKey
-ALTER TABLE "AgreementSignature" ADD CONSTRAINT "AgreementSignature_listingId_fkey" FOREIGN KEY ("listingId") REFERENCES "Listing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  ALTER TABLE "AgreementSignature"
+    ADD CONSTRAINT "AgreementSignature_listingId_fkey"
+    FOREIGN KEY ("listingId") REFERENCES "Listing"("id")
+    ON DELETE CASCADE ON UPDATE CASCADE;
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
 
--- AddForeignKey
-ALTER TABLE "AgreementSignature" ADD CONSTRAINT "AgreementSignature_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  ALTER TABLE "AgreementSignature"
+    ADD CONSTRAINT "AgreementSignature_customerId_fkey"
+    FOREIGN KEY ("customerId") REFERENCES "Customer"("id")
+    ON DELETE CASCADE ON UPDATE CASCADE;
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;

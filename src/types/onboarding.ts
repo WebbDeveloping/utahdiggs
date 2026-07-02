@@ -14,12 +14,14 @@ export type OnboardingListingDetail = {
   onboardingStatus: OnboardingStatus;
   agreementSignedAt: Date | null;
   agreementSignatureUrl: string | null;
+  signedAgreementDocumentId: string | null;
   proPhotoTourRequested: boolean;
   scheduledCallAt: Date | null;
   callNotes: string | null;
   submittedAt: Date | null;
   status: ListingStatus;
   portalSlug: string;
+  sellerPhone: string;
   documents: {
     id: string;
     name: string;

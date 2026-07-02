@@ -72,7 +72,7 @@ export async function uploadSignedAgreementPdf(
 ): Promise<string> {
   const access = getServerDocumentBlobAccess();
   const blobConfig = getPrivateBlobConfig() ?? getPublicBlobConfig();
-  const pathname = buildDocumentPathname(listingId, "listing-agreement-signed.pdf");
+  const pathname = buildDocumentPathname(listingId, "uar-listing-agreement-signed.pdf");
 
   const result = await put(pathname, Buffer.from(pdfBytes), {
     access,

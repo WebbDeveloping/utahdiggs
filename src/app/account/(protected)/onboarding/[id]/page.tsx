@@ -13,6 +13,7 @@ import {
   formatServicePlan,
   isOnboardingInProgress,
 } from "@/lib/consumer/onboarding";
+import { buildListingDocumentsPath } from "@/lib/consumer/listing-documents-path";
 import { getOnboardingListing } from "@/lib/consumer/onboarding-query";
 import { notFound } from "next/navigation";
 
@@ -76,6 +77,11 @@ export default async function OnboardingHubPage({
             <LinkButton href="/account/listings" color="inherit">
               My listings
             </LinkButton>
+            {listing.agreementSignedAt ? (
+              <LinkButton href={buildListingDocumentsPath(listing.id)} variant="outlined">
+                View documents
+              </LinkButton>
+            ) : null}
             {listing.submittedAt ? (
               <LinkButton href={`/account/listings/${listing.id}`} variant="outlined">
                 View dashboard

@@ -8,9 +8,14 @@ import {
   SignatureMethod,
 } from "@/generated/prisma/client";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
-import { buildOnboardingPath, formatServicePlan } from "@/lib/consumer/onboarding";
+import { buildOnboardingPath } from "@/lib/consumer/onboarding";
+import { buildListingDocumentsPath } from "@/lib/consumer/listing-documents-path";
+import { LISTING_AGREEMENT_SIGNED_NAME } from "@/lib/documents/listing-document-kinds";
 import { prisma } from "@/lib/db";
-import { getListingAgreementContent } from "@/content/listing-agreement";
+import {
+  buildUarAgreementPrefill,
+  resolveUarAgreementValues,
+} from "@/content/uar-listing-agreement";
 import {
   sendAgreementSignedEmail,
   sendOnboardingCallScheduledEmail,
@@ -18,10 +23,11 @@ import {
 } from "@/lib/email/templates/onboarding-notifications";
 import {
   getRequestAuditContext,
-  hashListingAgreementContent,
+  hashUarAgreementSubmission,
   LISTING_AGREEMENT_VERSION,
 } from "@/lib/signature/agreement-audit";
-import { generateSignedAgreementPdf } from "@/lib/signature/generate-signed-agreement-pdf";
+import { generateFinalUarForm8Pdf } from "@/lib/signature/fill-uar-form-8-template";
+import { parseUarAgreementFormData } from "@/lib/signature/uar-agreement-schema";
 import {
   fetchSignatureImageBytes,
   uploadSignedAgreementPdf,
@@ -43,6 +49,7 @@ function revalidateOnboarding(listingId: string) {
   revalidatePath(`${buildOnboardingPath(listingId)}/agreement`);
   revalidatePath(`${buildOnboardingPath(listingId)}/photos`);
   revalidatePath(`${buildOnboardingPath(listingId)}/call`);
+  revalidatePath(buildListingDocumentsPath(listingId));
   revalidatePath("/account/listings");
 }
 
@@ -89,10 +96,7 @@ export async function signListingAgreementAction(
   if (!session) return { error: "You must be signed in." };
 
   const listingId = formData.get("listingId")?.toString().trim();
-  const signatureUrl = formData.get("signatureUrl")?.toString().trim();
   const esignConsent = formData.get("esignConsent")?.toString();
-  const signatureMethodRaw = formData.get("signatureMethod")?.toString().trim();
-  const signerNameFromForm = formData.get("signerName")?.toString().trim();
 
   if (!listingId) return { error: "Missing listing." };
   if (esignConsent !== "on") {
@@ -102,8 +106,13 @@ export async function signListingAgreementAction(
       },
     };
   }
-  if (!signatureUrl) {
-    return { fieldErrors: { signatureUrl: "Signature is required." } };
+
+  const parsed = parseUarAgreementFormData(formData);
+  if (parsed.fieldErrors) {
+    return { fieldErrors: parsed.fieldErrors };
+  }
+  if (!parsed.values) {
+    return { error: "Invalid agreement form submission." };
   }
 
   const listing = await getOwnedListing(listingId, session.id);
@@ -115,62 +124,88 @@ export async function signListingAgreementAction(
     return { error: "This agreement has already been signed." };
   }
 
-  const sellerName =
-    listing.contacts.find((c) => c.role === "PRIMARY")?.contact.name ??
-    session.name ??
-    "Seller";
-  const signerName = signerNameFromForm || session.name || sellerName;
+  const formValues = {
+    ...parsed.values,
+    seller1Phone:
+      listing.contacts.find((contact) => contact.role === "PRIMARY")?.contact.phone?.trim() ?? "",
+  };
+  const signerName = `${formValues.seller1FirstName} ${formValues.seller1LastName}`.trim();
   if (signerName.length < 2) {
     return {
       fieldErrors: {
-        signatureUrl: "Please provide your full name with your signature.",
+        seller1FirstName: "Please provide the seller's full name.",
       },
     };
   }
 
   const signatureMethod =
-    signatureMethodRaw === "type" ? SignatureMethod.TYPE : SignatureMethod.DRAW;
+    formValues.signatureMethod === "type" ? SignatureMethod.TYPE : SignatureMethod.DRAW;
   const signedAt = new Date();
-  const agreementHash = hashListingAgreementContent(listing.servicePlan);
+  const formSubmissionHash = hashUarAgreementSubmission(listing.servicePlan, formValues);
   const { ipAddress, userAgent } = await getRequestAuditContext();
+  const prefill = buildUarAgreementPrefill({
+    address: formValues.propertyAddress,
+    city: formValues.propertyCity,
+    state: formValues.propertyState,
+    zip: formValues.propertyZip,
+    sellerEmail: formValues.sellerEmail,
+    servicePlan: listing.servicePlan,
+  });
+  const resolvedValues = resolveUarAgreementValues(formValues, prefill, listing.servicePlan);
 
   let signedDocumentUrl: string;
+  let agreementHash: string;
   try {
-    const signaturePngBytes = await fetchSignatureImageBytes(signatureUrl);
-    const agreementContent = getListingAgreementContent(listing.servicePlan);
-    const pdfBytes = await generateSignedAgreementPdf({
-      content: agreementContent,
-      property: {
-        address: listing.address,
-        city: listing.city,
-        state: listing.state,
-        zip: listing.zip,
-      },
-      planLabel: formatServicePlan(listing.servicePlan),
+    const seller1SignaturePngBytes = await fetchSignatureImageBytes(formValues.seller1SignatureUrl);
+    const seller1InitialsPngBytes = await fetchSignatureImageBytes(formValues.seller1InitialsUrl);
+    const seller2SignaturePngBytes =
+      formValues.multipleOwners === "YES" && formValues.seller2SignatureUrl
+        ? await fetchSignatureImageBytes(formValues.seller2SignatureUrl)
+        : undefined;
+    const seller2InitialsPngBytes =
+      formValues.multipleOwners === "YES" && formValues.seller2InitialsUrl
+        ? await fetchSignatureImageBytes(formValues.seller2InitialsUrl)
+        : undefined;
+
+    const pdfInput = {
+      values: resolvedValues,
       audit: {
         signerName,
-        signerEmail: session.email,
+        signerEmail: formValues.sellerEmail,
         signatureMethod,
         signedAt,
         agreementVersion: LISTING_AGREEMENT_VERSION,
-        agreementHash,
+        agreementHash: formSubmissionHash,
         ipAddress,
         userAgent,
       },
-      signaturePngBytes,
-    });
+      seller1SignaturePngBytes,
+      seller1InitialsPngBytes,
+      seller2SignaturePngBytes,
+      seller2InitialsPngBytes,
+    };
+
+    const result = await generateFinalUarForm8Pdf(pdfInput);
+    const pdfBytes = result.pdfBytes;
+    agreementHash = result.documentHash;
+
     signedDocumentUrl = await uploadSignedAgreementPdf(listingId, pdfBytes);
   } catch (error) {
     console.error("Signed agreement PDF generation failed:", error);
     return { error: "Could not generate signed agreement. Please try again." };
   }
 
+  const sellerName =
+    listing.contacts.find((c) => c.role === "PRIMARY")?.contact.name ??
+    session.name ??
+    signerName;
+
   await prisma.$transaction(async (tx) => {
     await tx.listing.update({
       where: { id: listingId },
       data: {
         agreementSignedAt: signedAt,
-        agreementSignatureUrl: signatureUrl,
+        agreementSignatureUrl: formValues.seller1SignatureUrl,
         onboardingStatus: OnboardingStatus.PHOTOS_PENDING,
       },
     });
@@ -180,12 +215,13 @@ export async function signListingAgreementAction(
         listingId,
         customerId: session.id,
         signerName,
-        signerEmail: session.email,
+        signerEmail: formValues.sellerEmail,
         signatureMethod,
-        signatureImageUrl: signatureUrl,
+        signatureImageUrl: formValues.seller1SignatureUrl,
         signedDocumentUrl,
         agreementVersion: LISTING_AGREEMENT_VERSION,
         agreementHash,
+        formData: formValues,
         esignConsentAt: signedAt,
         signedAt,
         ipAddress,
@@ -196,7 +232,7 @@ export async function signListingAgreementAction(
     await tx.document.create({
       data: {
         listingId,
-        name: "Listing Agreement (Signed)",
+        name: LISTING_AGREEMENT_SIGNED_NAME,
         url: signedDocumentUrl,
       },
     });

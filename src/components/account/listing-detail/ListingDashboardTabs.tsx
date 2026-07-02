@@ -11,12 +11,13 @@ import ClosingTeamCards from "@/components/account/listing-detail/ClosingTeamCar
 import ListingBlairNote from "@/components/account/listing-detail/ListingBlairNote";
 import ListingContractCard from "@/components/account/listing-detail/ListingContractCard";
 import ListingDocumentsTab from "@/components/account/listing-detail/ListingDocumentsTab";
+import ListingImagesTab from "@/components/account/listing-detail/ListingImagesTab";
 import ListingOffersTab from "@/components/account/listing-detail/ListingOffersTab";
 import ListingSellerGuideTab from "@/components/account/listing-detail/ListingSellerGuideTab";
 import ListingSellerRequestsTab from "@/components/account/listing-detail/ListingSellerRequestsTab";
 import type { ConsumerListingDetail } from "@/types/consumer-listing-detail";
 
-type TabId = "overview" | "offers" | "guide" | "documents" | "requests";
+type TabId = "overview" | "offers" | "guide" | "images" | "documents" | "requests";
 
 type ListingDashboardTabsProps = {
   listing: ConsumerListingDetail;
@@ -24,15 +25,16 @@ type ListingDashboardTabsProps = {
 
 function getVisibleTabs(status: ListingStatusValue): TabId[] {
   if (status === "SUBMITTED") {
-    return ["guide", "documents"];
+    return ["guide", "images", "documents"];
   }
-  return ["overview", "offers", "guide", "documents", "requests"];
+  return ["overview", "offers", "guide", "images", "documents", "requests"];
 }
 
 const TAB_LABELS: Record<TabId, string> = {
   overview: "Overview",
   offers: "Offers",
   guide: "Seller Guide",
+  images: "Images",
   documents: "Documents",
   requests: "Seller Requests",
 };
@@ -96,6 +98,8 @@ export default function ListingDashboardTabs({ listing }: ListingDashboardTabsPr
       ) : null}
 
       {activeTab === "guide" ? <ListingSellerGuideTab /> : null}
+
+      {activeTab === "images" ? <ListingImagesTab documents={listing.documents} /> : null}
 
       {activeTab === "documents" ? (
         <ListingDocumentsTab listingId={listing.id} documents={listing.documents} />

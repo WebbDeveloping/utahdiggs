@@ -16,6 +16,8 @@
     "db:studio": "prisma studio",
     "import:airtable": "tsx scripts/import-airtable.ts",
     "geocode:listings": "tsx scripts/geocode-listings.ts",
+    "upload:agreement-templates": "tsx scripts/upload-agreement-templates.ts",
+    "debug:uar-form-8-coordinates": "tsx scripts/debug-uar-form-8-coordinates.ts",
     "mls-input:codegen": "node prototypes/jot-forms/mls-input/scripts/codegen.mjs"
   },
   "dependencies": {
@@ -42,6 +44,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-leaflet": "^5.0.0",
+    "react-pdf": "^10.4.1",
     "react-signature-canvas": "^1.1.0-alpha.2",
     "resend": "^6.14.0",
     "zod": "^4.4.3"

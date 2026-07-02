@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import OnboardingAgreementForm from "@/components/account/onboarding/OnboardingAgreementForm";
 import LinkButton from "@/components/ui/LinkButton";
 import OnboardingStepLayout from "@/components/account/onboarding/OnboardingStepLayout";
+import { splitSellerName } from "@/content/uar-listing-agreement";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { buildOnboardingPath } from "@/lib/consumer/onboarding";
 import { getOnboardingListing } from "@/lib/consumer/onboarding-query";
@@ -45,21 +46,36 @@ export default async function OnboardingAgreementPage({
     );
   }
 
+  const { firstName, lastName } = splitSellerName(user.name);
+
   return (
     <OnboardingStepLayout
       user={user}
       listing={listing}
       title="Sign listing agreement"
-      description="Review the agreement below and sign to continue."
+      description="Complete the exclusive right to sell listing agreement below."
     >
       <OnboardingAgreementForm
         listingId={listing.id}
         servicePlan={listing.servicePlan}
         agreementSignedAt={listing.agreementSignedAt}
-        signerName={user.name ?? undefined}
+        signedAgreementDocumentId={listing.signedAgreementDocumentId}
+        listing={{
+          address: listing.address,
+          city: listing.city,
+          state: listing.state,
+          zip: listing.zip,
+        }}
+        sellerEmail={user.email}
+        sellerPhone={listing.sellerPhone}
+        sellerFirstName={firstName}
+        sellerLastName={lastName}
         documentBlobAccess={getServerDocumentBlobAccess()}
       />
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", alignItems: "center" }}>
+        <LinkButton href={`${buildOnboardingPath(listing.id)}/agreement/preview`} variant="outlined">
+          Preview official PDF
+        </LinkButton>
         <LinkButton href={buildOnboardingPath(listing.id)} color="inherit">
           Back to checklist
         </LinkButton>

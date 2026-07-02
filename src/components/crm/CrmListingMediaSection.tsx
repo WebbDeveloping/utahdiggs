@@ -35,6 +35,7 @@ import {
   createCrmListingPhotoFromUpload,
   deleteCrmListingDocument,
 } from "@/lib/crm/document-actions";
+import { buildCrmDocumentHref } from "@/lib/storage/document-access";
 import { partitionListingDocuments } from "@/lib/storage/document-classify";
 import {
   ALLOWED_DOCUMENT_TYPES,
@@ -434,7 +435,7 @@ export default function CrmListingMediaSection({
                   <TableRow>
                     <TableCell>Name</TableCell>
                     <TableCell>Uploaded</TableCell>
-                    <TableCell align="right">File</TableCell>
+                    <TableCell align="right">Actions</TableCell>
                     <TableCell align="right" width={56} />
                   </TableRow>
                 </TableHead>
@@ -444,9 +445,22 @@ export default function CrmListingMediaSection({
                       <TableCell>{doc.name}</TableCell>
                       <TableCell>{formatUploadedAt(doc.uploadedAt)}</TableCell>
                       <TableCell align="right">
-                        <Link href={doc.url} target="_blank" rel="noopener noreferrer">
-                          Download
-                        </Link>
+                        <Stack direction="row" spacing={2} sx={{ justifyContent: "flex-end" }}>
+                          <Link
+                            href={buildCrmDocumentHref(listingId, doc.id, "view")}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            View
+                          </Link>
+                          <Link
+                            href={buildCrmDocumentHref(listingId, doc.id, "download")}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Download
+                          </Link>
+                        </Stack>
                       </TableCell>
                       <TableCell align="right">
                         <IconButton
