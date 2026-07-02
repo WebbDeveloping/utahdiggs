@@ -18,23 +18,23 @@ const MINIMAL_PNG = Uint8Array.from([
 export function buildUarAgreementPreviewInput(): UarAgreementPdfInput {
   const signedAt = new Date("2026-07-01T18:30:00.000Z");
   const formValues = buildDefaultUarAgreementFormValues({
-    address: "401 e 8260 s",
-    city: "sandy",
+    address: "1847 E Millcreek Way",
+    city: "Salt Lake City",
     state: "UT",
-    zip: "84070",
-    sellerEmail: "test9@gmail.com",
-    sellerPhone: "(801) 555-1234",
-    sellerFirstName: "test9",
-    sellerLastName: "testing",
+    zip: "84109",
+    sellerEmail: "michael.anderson@example.com",
+    sellerPhone: "(801) 555-0142",
+    sellerFirstName: "Michael",
+    sellerLastName: "Anderson",
   });
   formValues.buyerAgentPercent = "1.5";
   formValues.buyerAgentDollar = "10000";
   formValues.signedDate = "2026-07-01";
   formValues.multipleOwners = "YES";
-  formValues.seller2FirstName = "Second";
-  formValues.seller2LastName = "Seller";
-  formValues.seller2Email = "seller2@example.com";
-  formValues.seller2Phone = "(801) 555-5678";
+  formValues.seller2FirstName = "Sarah";
+  formValues.seller2LastName = "Anderson";
+  formValues.seller2Email = "sarah.anderson@example.com";
+  formValues.seller2Phone = "(801) 555-0143";
   formValues.sqFtSources = ["County Records"];
   formValues.sqFtOther = "Measured by listing agent";
 
@@ -50,8 +50,8 @@ export function buildUarAgreementPreviewInput(): UarAgreementPdfInput {
   return {
     values: resolveUarAgreementValues(formValues, prefill, "VIRTUAL"),
     audit: {
-      signerName: "test9 testing",
-      signerEmail: "test9@gmail.com",
+      signerName: "Michael Anderson",
+      signerEmail: "michael.anderson@example.com",
       signatureMethod: SignatureMethod.TYPE,
       signedAt,
       agreementVersion: LISTING_AGREEMENT_VERSION,

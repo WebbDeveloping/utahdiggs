@@ -17,7 +17,8 @@ const plans = [
     id: "VIRTUAL" as const,
     name: "Virtual",
     rate: "1%",
-    pitch: "Everything you need to list and sell yourself, guided by our team the whole way.",
+    pitch:
+      "Everything you need to list and sell yourself, guided by our team the whole way.",
     features: [
       "Listed on the MLS for maximum exposure",
       "Syndicated to Zillow, Redfin, Realtor.com & more",
@@ -26,13 +27,15 @@ const plans = [
       "Offer management & e-sign paperwork",
       "Phone & chat support from licensed agents",
     ],
-    finePrint: "Listing fee is 1% of the final sale price or $4,500, whichever is greater.",
+    finePrint:
+      "Listing fee is 1% of the final sale price or $4,500, whichever is greater.",
   },
   {
     id: "FULL_SERVICE" as const,
     name: "Full Service",
     rate: "1.5%",
-    pitch: "Everything in Virtual, plus in-person help to get your home market-ready.",
+    pitch:
+      "Everything in Virtual, plus in-person help to get your home market-ready.",
     features: [
       "Everything in Virtual, plus:",
       "Staging consultation to maximize appeal",
@@ -40,7 +43,8 @@ const plans = [
       "Secure MLS lock box",
       "Professional photo tour included",
     ],
-    finePrint: "Listing fee is 1.5% of the final sale price or $4,500, whichever is greater.",
+    finePrint:
+      "Listing fee is 1.5% of the final sale price or $4,500, whichever is greater.",
     featured: true,
   },
 ];
@@ -54,10 +58,10 @@ export default function OnboardingPlanForm({
   listingId,
   currentPlan,
 }: OnboardingPlanFormProps) {
-  const [state, formAction, pending] = useActionState<OnboardingActionState, FormData>(
-    selectServicePlanAction,
-    {},
-  );
+  const [state, formAction, pending] = useActionState<
+    OnboardingActionState,
+    FormData
+  >(selectServicePlanAction, {});
 
   const selectedPlan = currentPlan ?? null;
 
@@ -68,7 +72,9 @@ export default function OnboardingPlanForm({
         {selectedPlan ? (
           <Alert severity="success" icon={<CheckCircleOutlinedIcon />}>
             You selected the{" "}
-            <strong>{plans.find((p) => p.id === selectedPlan)?.name ?? selectedPlan}</strong>{" "}
+            <strong>
+              {plans.find((p) => p.id === selectedPlan)?.name ?? selectedPlan}
+            </strong>{" "}
             plan. Choose a different plan below if you need to change it.
           </Alert>
         ) : null}
@@ -82,55 +88,62 @@ export default function OnboardingPlanForm({
             const isSelected = selectedPlan === plan.id;
 
             return (
-            <Paper
-              key={plan.id}
-              variant="outlined"
-              sx={{
-                flex: 1,
-                p: 2.5,
-                borderRadius: 2,
-                borderColor: isSelected || plan.featured ? "primary.main" : "divider",
-                borderWidth: isSelected ? 2 : 1,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Stack spacing={2} sx={{ flex: 1 }}>
-                <Stack direction="row" spacing={1} sx={{ alignItems: "baseline" }}>
-                  <Typography variant="h6">{plan.name}</Typography>
-                  <Typography color="primary.main" sx={{ fontWeight: 700 }}>
-                    {plan.rate}
-                  </Typography>
-                </Stack>
-                <Typography color="text.secondary">{plan.pitch}</Typography>
-                <Stack component="ul" spacing={0.5} sx={{ m: 0, pl: 2.5 }}>
-                  {plan.features.map((feature) => (
-                    <Typography key={feature} component="li" variant="body2">
-                      {feature}
+              <Paper
+                key={plan.id}
+                variant="outlined"
+                sx={{
+                  flex: 1,
+                  p: 2.5,
+                  borderRadius: 2,
+                  borderColor:
+                    isSelected || plan.featured ? "primary.main" : "divider",
+                  borderWidth: isSelected ? 2 : 1,
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Stack spacing={2} sx={{ flex: 1 }}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ alignItems: "baseline" }}
+                  >
+                    <Typography variant="h6">{plan.name}</Typography>
+                    <Typography color="primary.main" sx={{ fontWeight: 700 }}>
+                      {plan.rate}
                     </Typography>
-                  ))}
+                  </Stack>
+                  <Typography color="text.secondary">{plan.pitch}</Typography>
+                  <Stack component="ul" spacing={0.5} sx={{ m: 0, pl: 2.5 }}>
+                    {plan.features.map((feature) => (
+                      <Typography key={feature} component="li" variant="body2">
+                        {feature}
+                      </Typography>
+                    ))}
+                  </Stack>
+                  <Typography variant="caption" color="text.secondary">
+                    {plan.finePrint}
+                  </Typography>
+                  <Button
+                    type="submit"
+                    name="servicePlan"
+                    value={plan.id}
+                    variant={
+                      isSelected || plan.featured ? "contained" : "outlined"
+                    }
+                    disabled={pending || isSelected}
+                    sx={{ mt: "auto" }}
+                  >
+                    {pending
+                      ? "Saving…"
+                      : isSelected
+                        ? "Selected"
+                        : selectedPlan
+                          ? `Switch to ${plan.name}`
+                          : `Choose ${plan.name}`}
+                  </Button>
                 </Stack>
-                <Typography variant="caption" color="text.secondary">
-                  {plan.finePrint}
-                </Typography>
-                <Button
-                  type="submit"
-                  name="servicePlan"
-                  value={plan.id}
-                  variant={isSelected || plan.featured ? "contained" : "outlined"}
-                  disabled={pending || isSelected}
-                  sx={{ mt: "auto" }}
-                >
-                  {pending
-                    ? "Saving…"
-                    : isSelected
-                      ? "Selected"
-                      : selectedPlan
-                        ? `Switch to ${plan.name}`
-                        : `Choose ${plan.name}`}
-                </Button>
-              </Stack>
-            </Paper>
+              </Paper>
             );
           })}
         </Stack>

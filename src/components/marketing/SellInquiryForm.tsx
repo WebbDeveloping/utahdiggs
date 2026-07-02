@@ -37,7 +37,9 @@ type FormValues = {
   timeline: Timeline | "";
 };
 
-type FormErrors = Partial<Record<keyof FormValues | "password" | "confirmPassword", string>>;
+type FormErrors = Partial<
+  Record<keyof FormValues | "password" | "confirmPassword", string>
+>;
 
 const emptyForm = (
   initialAddress = "",
@@ -51,7 +53,10 @@ const emptyForm = (
   phone: "",
   streetAddress: initialAddress,
   city: initialCity,
-  state: initialState === "UT" || initialState.toLowerCase() === "utah" ? "Utah" : initialState || "Utah",
+  state:
+    initialState === "UT" || initialState.toLowerCase() === "utah"
+      ? "Utah"
+      : initialState || "Utah",
   zip: initialZip,
   timeline: "",
 });
@@ -78,7 +83,8 @@ function validateStepOne(values: FormValues): FormErrors {
 
   if (!values.phone.trim()) errors.phone = "Phone is required";
 
-  if (!values.streetAddress.trim()) errors.streetAddress = "Street address is required";
+  if (!values.streetAddress.trim())
+    errors.streetAddress = "Street address is required";
   if (!values.city.trim()) errors.city = "City is required";
   if (!values.state) errors.state = "State is required";
 
@@ -118,18 +124,23 @@ export default function SellInquiryForm({
   const [authMode, setAuthMode] = useState<"signup" | "signin">("signup");
   const [checkingEmail, startEmailCheck] = useTransition();
 
-  const authAction = isLoggedIn ? completeLoggedInSellInquiryAction : completeSellInquiryAction;
-  const [state, formAction, pending] = useActionState<SellInquiryState, FormData>(
-    authAction,
-    {},
-  );
+  const authAction = isLoggedIn
+    ? completeLoggedInSellInquiryAction
+    : completeSellInquiryAction;
+  const [state, formAction, pending] = useActionState<
+    SellInquiryState,
+    FormData
+  >(authAction, {});
 
   const mergedErrors: FormErrors = {
     ...errors,
     ...state.fieldErrors,
   };
 
-  function updateField<K extends keyof FormValues>(field: K, value: FormValues[K]) {
+  function updateField<K extends keyof FormValues>(
+    field: K,
+    value: FormValues[K],
+  ) {
     setValues((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => {
@@ -166,7 +177,11 @@ export default function SellInquiryForm({
       <input type="hidden" name="firstName" value={values.firstName.trim()} />
       <input type="hidden" name="lastName" value={values.lastName.trim()} />
       <input type="hidden" name="phone" value={values.phone.trim()} />
-      <input type="hidden" name="streetAddress" value={values.streetAddress.trim()} />
+      <input
+        type="hidden"
+        name="streetAddress"
+        value={values.streetAddress.trim()}
+      />
       <input type="hidden" name="city" value={values.city.trim()} />
       <input type="hidden" name="state" value={values.state} />
       <input type="hidden" name="zip" value={values.zip.trim()} />
@@ -193,12 +208,20 @@ export default function SellInquiryForm({
           {inquiryHiddenFields}
           <input type="hidden" name="emailExists" value={String(isSignIn)} />
           {!isSignIn || emailLocked ? (
-            <input type="hidden" name="email" value={values.email.trim().toLowerCase()} />
+            <input
+              type="hidden"
+              name="email"
+              value={values.email.trim().toLowerCase()}
+            />
           ) : null}
 
           <Box>
             <Typography variant="h5" sx={{ mb: 1 }}>
-              {emailLocked ? "Welcome back!" : isSignIn ? "Sign in to continue" : "Almost done"}
+              {emailLocked
+                ? "Welcome back!"
+                : isSignIn
+                  ? "Sign in to continue"
+                  : "Almost done"}
             </Typography>
             <Typography color="text.secondary">
               {emailLocked
@@ -243,7 +266,10 @@ export default function SellInquiryForm({
             required
             fullWidth
             error={Boolean(mergedErrors.password)}
-            helperText={mergedErrors.password ?? (isSignIn ? undefined : "At least 8 characters")}
+            helperText={
+              mergedErrors.password ??
+              (isSignIn ? undefined : "At least 8 characters")
+            }
             sx={inputSx}
           />
 
@@ -290,7 +316,11 @@ export default function SellInquiryForm({
           </Stack>
 
           {!emailLocked ? (
-            <Typography variant="body2" color="text.secondary" sx={{ textAlign: "center" }}>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ textAlign: "center" }}
+            >
               {isSignIn ? (
                 <>
                   Need a new account?{" "}
@@ -476,7 +506,11 @@ export default function SellInquiryForm({
           />
         </Grid>
         <Grid size={{ xs: 12 }}>
-          <FormControl fullWidth required error={Boolean(mergedErrors.timeline)}>
+          <FormControl
+            fullWidth
+            required
+            error={Boolean(mergedErrors.timeline)}
+          >
             <InputLabel id="sell-inquiry-timeline-label" shrink>
               How soon do you want to sell?
             </InputLabel>
@@ -485,7 +519,9 @@ export default function SellInquiryForm({
               labelId="sell-inquiry-timeline-label"
               label="How soon do you want to sell?"
               value={values.timeline}
-              onChange={(e) => updateField("timeline", e.target.value as Timeline)}
+              onChange={(e) =>
+                updateField("timeline", e.target.value as Timeline)
+              }
               displayEmpty
               renderValue={(selected) =>
                 selected ? (
@@ -514,17 +550,35 @@ export default function SellInquiryForm({
         </Grid>
       </Grid>
 
-      <Typography variant="body2" color="text.secondary" sx={{ mt: 2, fontSize: 13, lineHeight: 1.6 }}>
-        By providing a telephone number and submitting the form, you are consenting to be
-        contacted by Glide RE by call, email and text. Message &amp; data rates may apply.
-        Reply STOP to opt out.
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mt: 2, fontSize: 13, lineHeight: 1.6 }}
+      >
+        By providing a telephone number and submitting the form, you are
+        consenting to be contacted by Glide RE by call, email and text. Message
+        &amp; data rates may apply. Reply STOP to opt out.
       </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mt: 1, fontSize: 13 }}>
-        <Link href="/privacy" underline="hover" color="primary" sx={{ fontWeight: 600 }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mt: 1, fontSize: 13 }}
+      >
+        <Link
+          href="/privacy"
+          underline="hover"
+          color="primary"
+          sx={{ fontWeight: 600 }}
+        >
           Privacy Policy
         </Link>
         {" | "}
-        <Link href="/terms" underline="hover" color="primary" sx={{ fontWeight: 600 }}>
+        <Link
+          href="/terms"
+          underline="hover"
+          color="primary"
+          sx={{ fontWeight: 600 }}
+        >
           Terms &amp; Conditions
         </Link>
         .

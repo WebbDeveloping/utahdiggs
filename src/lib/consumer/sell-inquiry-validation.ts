@@ -15,12 +15,7 @@ export type SellInquiryInput = {
 };
 
 export type SellInquiryFieldErrors = Partial<
-  Record<
-    | keyof SellInquiryInput
-    | "password"
-    | "confirmPassword",
-    string
-  >
+  Record<keyof SellInquiryInput | "password" | "confirmPassword", string>
 >;
 
 export { TIMELINE_OPTIONS };

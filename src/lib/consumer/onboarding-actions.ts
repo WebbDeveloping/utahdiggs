@@ -127,9 +127,12 @@ export async function signListingAgreementAction(
   const formValues = {
     ...parsed.values,
     seller1Phone:
-      listing.contacts.find((contact) => contact.role === "PRIMARY")?.contact.phone?.trim() ?? "",
+      listing.contacts
+        .find((contact) => contact.role === "PRIMARY")
+        ?.contact.phone?.trim() ?? "",
   };
-  const signerName = `${formValues.seller1FirstName} ${formValues.seller1LastName}`.trim();
+  const signerName =
+    `${formValues.seller1FirstName} ${formValues.seller1LastName}`.trim();
   if (signerName.length < 2) {
     return {
       fieldErrors: {
@@ -139,9 +142,14 @@ export async function signListingAgreementAction(
   }
 
   const signatureMethod =
-    formValues.signatureMethod === "type" ? SignatureMethod.TYPE : SignatureMethod.DRAW;
+    formValues.signatureMethod === "type"
+      ? SignatureMethod.TYPE
+      : SignatureMethod.DRAW;
   const signedAt = new Date();
-  const formSubmissionHash = hashUarAgreementSubmission(listing.servicePlan, formValues);
+  const formSubmissionHash = hashUarAgreementSubmission(
+    listing.servicePlan,
+    formValues,
+  );
   const { ipAddress, userAgent } = await getRequestAuditContext();
   const prefill = buildUarAgreementPrefill({
     address: formValues.propertyAddress,
@@ -151,13 +159,21 @@ export async function signListingAgreementAction(
     sellerEmail: formValues.sellerEmail,
     servicePlan: listing.servicePlan,
   });
-  const resolvedValues = resolveUarAgreementValues(formValues, prefill, listing.servicePlan);
+  const resolvedValues = resolveUarAgreementValues(
+    formValues,
+    prefill,
+    listing.servicePlan,
+  );
 
   let signedDocumentUrl: string;
   let agreementHash: string;
   try {
-    const seller1SignaturePngBytes = await fetchSignatureImageBytes(formValues.seller1SignatureUrl);
-    const seller1InitialsPngBytes = await fetchSignatureImageBytes(formValues.seller1InitialsUrl);
+    const seller1SignaturePngBytes = await fetchSignatureImageBytes(
+      formValues.seller1SignatureUrl,
+    );
+    const seller1InitialsPngBytes = await fetchSignatureImageBytes(
+      formValues.seller1InitialsUrl,
+    );
     const seller2SignaturePngBytes =
       formValues.multipleOwners === "YES" && formValues.seller2SignatureUrl
         ? await fetchSignatureImageBytes(formValues.seller2SignatureUrl)
@@ -263,7 +279,8 @@ export async function submitOnboardingPhotosAction(
   if (!session) return { error: "You must be signed in." };
 
   const listingId = formData.get("listingId")?.toString().trim();
-  const proPhotoTourRequested = formData.get("proPhotoTourRequested") === "true";
+  const proPhotoTourRequested =
+    formData.get("proPhotoTourRequested") === "true";
 
   if (!listingId) return { error: "Missing listing." };
 
@@ -289,7 +306,8 @@ export async function submitOnboardingPhotosAction(
   if (isFullService && photos.length < 1 && !proPhotoTourRequested) {
     return {
       fieldErrors: {
-        photos: "Upload photos or check the box to schedule a professional photo tour.",
+        photos:
+          "Upload photos or check the box to schedule a professional photo tour.",
       },
     };
   }
@@ -363,7 +381,9 @@ export async function scheduleOnboardingCallAction(
     return { fieldErrors: { callDate: "Invalid date or time." } };
   }
   if (scheduledCallAt.getTime() < Date.now()) {
-    return { fieldErrors: { callDate: "Please choose a future date and time." } };
+    return {
+      fieldErrors: { callDate: "Please choose a future date and time." },
+    };
   }
 
   const listing = await getOwnedListing(listingId, session.id);

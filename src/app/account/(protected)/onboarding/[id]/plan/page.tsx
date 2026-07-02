@@ -16,7 +16,9 @@ type OnboardingPlanPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export default async function OnboardingPlanPage({ params }: OnboardingPlanPageProps) {
+export default async function OnboardingPlanPage({
+  params,
+}: OnboardingPlanPageProps) {
   const user = await getConsumerSession();
   if (!user) return null;
 
@@ -31,7 +33,10 @@ export default async function OnboardingPlanPage({ params }: OnboardingPlanPageP
       title="Choose your plan"
       description="Select Virtual or Full Service. You can review details on each plan before continuing."
     >
-      <OnboardingPlanForm listingId={listing.id} currentPlan={listing.servicePlan} />
+      <OnboardingPlanForm
+        listingId={listing.id}
+        currentPlan={listing.servicePlan}
+      />
       <Stack direction="row" spacing={2}>
         <LinkButton href={buildOnboardingPath(listing.id)} color="inherit">
           Back to checklist
