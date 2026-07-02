@@ -53,7 +53,7 @@ export default function SiteHeader({ user = null }: SiteHeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(menuAnchor);
-  const listHomeHref = user ? LISTING_INTAKE_PATH : "/sell/inquiry";
+  const listHomeHref = LISTING_INTAKE_PATH;
 
   const authControls = user ? (
     <>

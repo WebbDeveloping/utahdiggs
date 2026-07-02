@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import MarketingLinkButton from "@/components/marketing/MarketingLinkButton";
 import SectionHeading from "@/components/marketing/SectionHeading";
 import { sectionAnchorSx } from "@/components/marketing/marketing-section";
-import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 const plans = [
@@ -47,9 +46,8 @@ const plans = [
   },
 ] as const;
 
-export default async function PricingSection() {
-  const user = await getConsumerSession();
-  const listHomeHref = user ? LISTING_INTAKE_PATH : "/sell/inquiry";
+export default function PricingSection() {
+  const listHomeHref = LISTING_INTAKE_PATH;
 
   return (
     <Box

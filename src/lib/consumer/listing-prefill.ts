@@ -6,8 +6,11 @@ export type ListingPrefillInput = {
   inquiryId?: string;
 };
 
-/** Default entry for logged-in sellers starting a new listing */
-export const LISTING_INTAKE_PATH = "/account/listings/new";
+/** Public entry for starting a new listing (sell inquiry → onboarding). */
+export const LISTING_INTAKE_PATH = "/sell/inquiry";
+
+/** Legacy account path; kept for login redirects and bookmarks. */
+export const LEGACY_LISTING_INTAKE_PATH = "/account/listings/new";
 
 export type ListingPrefillValues = {
   address: string;

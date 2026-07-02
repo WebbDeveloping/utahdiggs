@@ -39,15 +39,20 @@ type FormValues = {
 
 type FormErrors = Partial<Record<keyof FormValues | "password" | "confirmPassword", string>>;
 
-const emptyForm = (initialAddress = ""): FormValues => ({
+const emptyForm = (
+  initialAddress = "",
+  initialCity = "",
+  initialState = "",
+  initialZip = "",
+): FormValues => ({
   firstName: "",
   lastName: "",
   email: "",
   phone: "",
   streetAddress: initialAddress,
-  city: "",
-  state: "Utah",
-  zip: "",
+  city: initialCity,
+  state: initialState === "UT" || initialState.toLowerCase() === "utah" ? "Utah" : initialState || "Utah",
+  zip: initialZip,
   timeline: "",
 });
 
@@ -91,15 +96,23 @@ function validateStepOne(values: FormValues): FormErrors {
 
 type SellInquiryFormProps = {
   initialAddress?: string;
+  initialCity?: string;
+  initialState?: string;
+  initialZip?: string;
   isLoggedIn?: boolean;
 };
 
 export default function SellInquiryForm({
   initialAddress = "",
+  initialCity = "",
+  initialState = "",
+  initialZip = "",
   isLoggedIn = false,
 }: SellInquiryFormProps) {
   const [step, setStep] = useState<1 | 2>(1);
-  const [values, setValues] = useState<FormValues>(() => emptyForm(initialAddress));
+  const [values, setValues] = useState<FormValues>(() =>
+    emptyForm(initialAddress, initialCity, initialState, initialZip),
+  );
   const [errors, setErrors] = useState<FormErrors>({});
   const [emailExists, setEmailExists] = useState(false);
   const [authMode, setAuthMode] = useState<"signup" | "signin">("signup");

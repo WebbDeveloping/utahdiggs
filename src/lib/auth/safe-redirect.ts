@@ -38,5 +38,5 @@ export function appendNextParam(path: string, next: string | null | undefined): 
 
 export function isListingFlowRedirect(next: string | null | undefined): boolean {
   const safe = getSafeRedirectPath(next, "");
-  return safe.includes("/account/listings/new");
+  return safe.includes("/account/listings/new") || safe.includes("/sell/inquiry");
 }

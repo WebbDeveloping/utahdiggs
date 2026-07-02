@@ -54,6 +54,6 @@ describe("hashUarAgreementSubmission", () => {
   });
 
   it("uses the current agreement version constant", () => {
-    assert.equal(LISTING_AGREEMENT_VERSION, "uar-form-8-2025-v1");
+    assert.equal(LISTING_AGREEMENT_VERSION, "uar-form-8-template-2024-11-05");
   });
 });

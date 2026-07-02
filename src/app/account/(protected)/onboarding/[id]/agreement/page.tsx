@@ -73,7 +73,12 @@ export default async function OnboardingAgreementPage({
         documentBlobAccess={getServerDocumentBlobAccess()}
       />
       <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", alignItems: "center" }}>
-        <LinkButton href={`${buildOnboardingPath(listing.id)}/agreement/preview`} variant="outlined">
+        <LinkButton
+          href={`${buildOnboardingPath(listing.id)}/agreement/preview`}
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="outlined"
+        >
           Preview official PDF
         </LinkButton>
         <LinkButton href={buildOnboardingPath(listing.id)} color="inherit">

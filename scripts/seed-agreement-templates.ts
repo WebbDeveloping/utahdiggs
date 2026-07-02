@@ -1,12 +1,15 @@
 import { config as loadEnv } from "dotenv";
-import { AGREEMENT_TEMPLATE_DEFINITIONS } from "../src/lib/signature/agreement-template-definitions";
-import manifest from "../src/lib/signature/agreement-templates.manifest.json";
-import { prisma } from "../src/lib/db";
 
 loadEnv({ path: ".env.local", override: true });
 loadEnv();
 
 async function main() {
+  const { AGREEMENT_TEMPLATE_DEFINITIONS } = await import(
+    "../src/lib/signature/agreement-template-definitions"
+  );
+  const manifest = (await import("../src/lib/signature/agreement-templates.manifest.json")).default;
+  const { prisma } = await import("../src/lib/db");
+
   for (const definition of AGREEMENT_TEMPLATE_DEFINITIONS) {
     const uploaded = manifest.templates.find((entry) => entry.slug === definition.slug);
     if (!uploaded) {
@@ -46,13 +49,11 @@ async function main() {
 
     console.log(`Seeded ${definition.slug} (${definition.version})`);
   }
+
+  await prisma.$disconnect();
 }
 
-main()
-  .catch((error) => {
-    console.error(error instanceof Error ? error.message : error);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main().catch((error) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exit(1);
+});

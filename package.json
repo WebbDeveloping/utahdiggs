@@ -7,7 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --test src/**/*.test.ts",
+    "test": "tsx --test 'src/**/*.test.ts'",
     "postinstall": "prisma generate",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
@@ -17,6 +17,7 @@
     "import:airtable": "tsx scripts/import-airtable.ts",
     "geocode:listings": "tsx scripts/geocode-listings.ts",
     "upload:agreement-templates": "tsx scripts/upload-agreement-templates.ts",
+    "seed:agreement-templates": "tsx scripts/seed-agreement-templates.ts",
     "debug:uar-form-8-coordinates": "tsx scripts/debug-uar-form-8-coordinates.ts",
     "mls-input:codegen": "node prototypes/jot-forms/mls-input/scripts/codegen.mjs"
   },

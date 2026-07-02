@@ -20,6 +20,7 @@ import MlsInputProgress from "./MlsInputProgress";
 import MlsInputStepView from "./MlsInputStep";
 import MlsDraftDeleteButton from "@/components/account/MlsDraftDeleteButton";
 import { buildListingDocumentsPath } from "@/lib/consumer/listing-documents-path";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 function buildInitialValues(
   user: MlsInputWizardProps["user"],
@@ -230,7 +231,7 @@ export default function MlsInputWizard({
           ) : null}
           <Button
             component={NextLink}
-            href="/account/listings/new"
+            href={LISTING_INTAKE_PATH}
             variant="text"
             color="inherit"
           >

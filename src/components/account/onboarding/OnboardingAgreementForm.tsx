@@ -190,6 +190,8 @@ export default function OnboardingAgreementForm({
           <Button
             component="a"
             href={`${buildOnboardingPath(listingId)}/agreement/preview`}
+            target="_blank"
+            rel="noopener noreferrer"
             variant="outlined"
             disabled={pending}
           >

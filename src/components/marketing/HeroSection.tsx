@@ -51,7 +51,7 @@ export default async function HeroSection() {
                 </Box>
                 .
               </Typography>
-              <HeroAddressTabs isLoggedIn={Boolean(user)} />
+              <HeroAddressTabs />
             </Stack>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>

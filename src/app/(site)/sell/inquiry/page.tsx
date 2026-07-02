@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import SellInquiryForm from "@/components/marketing/SellInquiryForm";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { parseListingPrefillFromSearchParams } from "@/lib/consumer/listing-prefill";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import { OG_IMAGES } from "@/lib/seo/site";
 
@@ -17,13 +18,17 @@ export const metadata = createPageMetadata({
 });
 
 type SellInquiryPageProps = {
-  searchParams: Promise<{ address?: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export default async function SellInquiryPage({ searchParams }: SellInquiryPageProps) {
   const user = await getConsumerSession();
-  const { address } = await searchParams;
-  const initialAddress = address?.trim() ?? "";
+  const params = await searchParams;
+  const prefill = parseListingPrefillFromSearchParams(params);
+  const initialAddress = prefill?.address ?? "";
+  const initialCity = prefill?.city ?? "";
+  const initialState = prefill?.state ?? "";
+  const initialZip = prefill?.zip ?? "";
 
   return (
     <SitePageLayoutWithAuth>
@@ -37,7 +42,13 @@ export default async function SellInquiryPage({ searchParams }: SellInquiryPageP
             listing with Glide RE.
           </Typography>
         </Stack>
-        <SellInquiryForm initialAddress={initialAddress} isLoggedIn={Boolean(user)} />
+        <SellInquiryForm
+          initialAddress={initialAddress}
+          initialCity={initialCity}
+          initialState={initialState}
+          initialZip={initialZip}
+          isLoggedIn={Boolean(user)}
+        />
       </Container>
     </SitePageLayoutWithAuth>
   );

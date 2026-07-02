@@ -19,11 +19,7 @@ const tabs: { key: TabKey; label: string }[] = [
   { key: "buy", label: "Buy a home" },
 ];
 
-type HeroAddressTabsProps = {
-  isLoggedIn?: boolean;
-};
-
-export default function HeroAddressTabs({ isLoggedIn = false }: HeroAddressTabsProps) {
+export default function HeroAddressTabs() {
   const router = useRouter();
   const baseId = useId();
   const [activeTab, setActiveTab] = useState<TabKey>("sell");
@@ -45,11 +41,7 @@ export default function HeroAddressTabs({ isLoggedIn = false }: HeroAddressTabsP
     }
     setSellError(false);
     const query = `address=${encodeURIComponent(trimmed)}`;
-    if (isLoggedIn) {
-      router.push(`${LISTING_INTAKE_PATH}?${query}`);
-    } else {
-      router.push(`/sell/inquiry?${query}`);
-    }
+    router.push(`${LISTING_INTAKE_PATH}?${query}`);
   }
 
   function handleBuySubmit(event: FormEvent<HTMLFormElement>) {
