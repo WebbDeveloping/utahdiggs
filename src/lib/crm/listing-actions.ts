@@ -85,9 +85,6 @@ function parseFormData(formData: FormData): {
     fieldErrors.sellerEmail = "Enter a valid email address.";
   }
   if (!sellerPhone) fieldErrors.sellerPhone = "Seller phone is required.";
-  else if (sellerPhone.replace(/\D/g, "").length < 4) {
-    fieldErrors.sellerPhone = "Phone must have at least 4 digits for the portal PIN.";
-  }
 
   const listPrice = parseOptionalNumber(
     asString(formData.get("listPrice")),
@@ -258,9 +255,7 @@ export async function createListingAction(
     return { error: "Failed to create listing. Please try again." };
   }
 
-  redirect(
-    `/crm/listings?created=${encodeURIComponent(result.portalSlug)}&pin=${encodeURIComponent(result.passcode)}`,
-  );
+  redirect(`/crm/listings?created=${encodeURIComponent(result.listingSlug)}`);
 }
 
 export async function approveListingAction(
@@ -282,7 +277,7 @@ export async function approveListingAction(
       zip: true,
       latitude: true,
       longitude: true,
-      portalSlug: true,
+      listingSlug: true,
       offerFormUrl: true,
       listingIntake: { select: { status: true } },
       contacts: {
@@ -345,12 +340,9 @@ export async function approveListingAction(
       const { sendListingWelcomeEmail } = await import(
         "@/lib/email/templates/mls-intake-submitted"
       );
-      const phoneDigits = seller.phone.replace(/\D/g, "");
       await sendListingWelcomeEmail({
         sellerEmail: seller.email,
         sellerName: seller.name,
-        portalSlug: listing.portalSlug,
-        pinHint: phoneDigits.slice(-4) || "****",
         offerFormUrl: listing.offerFormUrl ?? undefined,
       });
     } catch (emailError) {

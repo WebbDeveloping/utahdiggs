@@ -109,9 +109,9 @@ export default async function CrmListingDetailPage({
             </Grid>
             <Grid key="portal-slug" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
-                Portal slug
+                Listing slug
               </Typography>
-              <Typography>{listing.portalSlug}</Typography>
+              <Typography>{listing.listingSlug}</Typography>
             </Grid>
             <Grid key="mls-number" size={{ xs: 12, sm: 6 }}>
               <Typography variant="caption" color="text.secondary">
@@ -193,7 +193,7 @@ export default async function CrmListingDetailPage({
               <CrmApproveListingButton
                 listingId={listing.id}
                 address={listing.address}
-                portalSlug={listing.portalSlug}
+                listingSlug={listing.listingSlug}
               />
             </Stack>
           ) : null}

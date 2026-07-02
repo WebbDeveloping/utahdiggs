@@ -52,8 +52,6 @@ export function crmListingUrl(listingId: string): string {
   return `${appBaseUrl()}/crm/listings/${listingId}`;
 }
 
-export function portalUrl(portalSlug: string): string {
-  const base =
-    process.env.NEXT_PUBLIC_PORTAL_URL?.replace(/\/$/, "") ?? appBaseUrl();
-  return `${base}/${portalSlug}`;
+export function accountLoginUrl(): string {
+  return `${appBaseUrl()}/login`;
 }

@@ -31,7 +31,7 @@ export default function MapListingPopup({ listing }: MapListingPopupProps) {
   return (
     <CardActionArea
       component={NextLink}
-      href={`/homes/${listing.portalSlug}`}
+      href={`/homes/${listing.listingSlug}`}
       sx={{ display: "block", textAlign: "left" }}
     >
       <Box

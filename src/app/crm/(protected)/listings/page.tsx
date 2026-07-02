@@ -28,11 +28,11 @@ import { formatOnboardingStatus } from "@/lib/consumer/onboarding";
 import { getCrmListings, getPendingApprovalListingCount } from "@/lib/crm/listing-queries";
 
 type CrmListingsPageProps = {
-  searchParams: Promise<{ created?: string; pin?: string }>;
+  searchParams: Promise<{ created?: string }>;
 };
 
 export default async function CrmListingsPage({ searchParams }: CrmListingsPageProps) {
-  const { created, pin } = await searchParams;
+  const { created } = await searchParams;
   const session = await auth();
   const user = requireCrmUser(session);
 
@@ -50,7 +50,8 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
     return 0;
   });
 
-  const portalUrl = process.env.NEXT_PUBLIC_PORTAL_URL?.replace(/\/$/, "");
+  const appBaseUrl =
+    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
 
   return (
     <>
@@ -77,20 +78,13 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
         <Alert severity="success" sx={{ mb: 3 }}>
           <Stack spacing={0.5}>
             <Typography>
-              Listing created successfully. Portal slug:{" "}
+              Listing created successfully. Listing slug:{" "}
               <strong>{created}</strong>
-              {pin ? (
-                <>
-                  {" "}
-                  · Seller PIN: <strong>{pin}</strong>
-                </>
-              ) : null}
             </Typography>
-            {portalUrl ? (
-              <Typography variant="body2">
-                Portal URL: {portalUrl}/{created}
-              </Typography>
-            ) : null}
+            <Typography variant="body2">
+              Public page:{" "}
+              <Link href={`/homes/${created}`}>{appBaseUrl}/homes/{created}</Link>
+            </Typography>
           </Stack>
         </Alert>
       ) : null}
@@ -111,7 +105,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
               <TableCell>Onboarding</TableCell>
               <TableCell>Source</TableCell>
               {showAssignedColumn ? <TableCell>Assigned agent</TableCell> : null}
-              <TableCell>Portal slug</TableCell>
+              <TableCell>Listing slug</TableCell>
               <TableCell align="right">Offers</TableCell>
               <TableCell align="right">Requests</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -221,7 +215,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                   ) : null}
                   <TableCell>
                     <Typography variant="body2" color="text.secondary">
-                      {listing.portalSlug}
+                      {listing.listingSlug}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">{listing._count.offers}</TableCell>
@@ -231,7 +225,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                       <CrmApproveListingButton
                         listingId={listing.id}
                         address={listing.address}
-                        portalSlug={listing.portalSlug}
+                        listingSlug={listing.listingSlug}
                       />
                     ) : null}
                   </TableCell>

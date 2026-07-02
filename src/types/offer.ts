@@ -8,7 +8,7 @@ export type OfferFormListing = {
   zip: string;
   listPrice: string | null;
   mlsNumber: string | null;
-  portalSlug: string;
+  listingSlug: string;
   status: ListingStatus;
 };
 
@@ -23,7 +23,7 @@ export const FINANCING_TYPE_OPTIONS = [
 export type FinancingType = (typeof FINANCING_TYPE_OPTIONS)[number];
 
 export type OfferSubmissionInput = {
-  portalSlug: string;
+  listingSlug: string;
   buyersAgent: string;
   buyerAgentEmail: string;
   buyerAgentPhone: string;

@@ -89,7 +89,7 @@ model Customer {
 }
 
 // ---------------------------------------------------------------------------
-// Seller contacts & portal sessions
+// Seller contacts
 // ---------------------------------------------------------------------------
 
 enum ContactRole {
@@ -107,24 +107,8 @@ model Contact {
   updatedAt        DateTime @updatedAt
 
   listings       ListingContact[]
-  portalSessions PortalSession[]
   sellerRequests SellerRequest[]
   documents      Document[]       @relation("DocumentUploadedByContact")
-}
-
-model PortalSession {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  contactId String
-  listingId String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-
-  contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
-  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
-
-  @@index([token])
-  @@index([contactId])
 }
 
 model ListingContact {
@@ -214,8 +198,7 @@ model Listing {
   listDate         DateTime?     @db.Date
   status           ListingStatus @default(ACTIVE)
 
-  portalSlug   String @unique
-  passcodeHash String
+  listingSlug  String @unique
   offerFormUrl String?
 
   blairNote           String?   @db.Text
@@ -263,7 +246,6 @@ model Listing {
   assignedAgent          User?              @relation("ListingAssignedAgent", fields: [assignedAgentId], references: [id], onDelete: SetNull)
 
   contacts       ListingContact[]
-  portalSessions PortalSession[]
   showings       Showing[]
   weeklyStats    WeeklyStat[]
   offers         Offer[]

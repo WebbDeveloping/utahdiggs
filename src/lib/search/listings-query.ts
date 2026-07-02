@@ -55,7 +55,7 @@ function toPublicListing(listing: ListingWithDocuments): PublicListing {
     primaryPhotoUrl: listing.documents[0]?.url ?? null,
     virtualTourUrl: listing.virtualTourUrl,
     listingOffice: listing.listingOffice,
-    portalSlug: listing.portalSlug,
+    listingSlug: listing.listingSlug,
     listDate: listing.listDate?.toISOString().slice(0, 10) ?? null,
     neighborhood: listing.neighborhood,
     subdivision: listing.subdivision,
@@ -273,7 +273,7 @@ export async function getPublicListingBySlug(
 ): Promise<PublicListingDetail | null> {
   const listing = await prisma.listing.findFirst({
     where: {
-      portalSlug: slug,
+      listingSlug: slug,
       status: { in: [...PUBLIC_LISTING_STATUSES] },
     },
     include: {

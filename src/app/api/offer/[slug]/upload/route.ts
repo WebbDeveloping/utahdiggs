@@ -21,7 +21,7 @@ export async function POST(
   const { slug } = await context.params;
 
   const listing = await prisma.listing.findFirst({
-    where: { portalSlug: slug },
+    where: { listingSlug: slug },
     select: { id: true, status: true },
   });
 
@@ -58,7 +58,7 @@ export async function POST(
           addRandomSuffix: false,
           tokenPayload: JSON.stringify({
             listingId: listing.id,
-            portalSlug: slug,
+            listingSlug: slug,
           }),
         };
       },

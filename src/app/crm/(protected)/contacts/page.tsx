@@ -88,9 +88,9 @@ function ContactRoleCell({ contact }: { contact: CrmContactRow }) {
 }
 
 function ContactPortalCell({ contact }: { contact: CrmContactRow }) {
-  const portalSlug = contact.listings[0]?.listing.portalSlug;
+  const listingSlug = contact.listings[0]?.listing.listingSlug;
 
-  if (!portalSlug) {
+  if (!listingSlug) {
     return (
       <Typography variant="body2" color="text.secondary">
         —
@@ -100,7 +100,7 @@ function ContactPortalCell({ contact }: { contact: CrmContactRow }) {
 
   return (
     <Typography variant="body2" color="text.secondary">
-      {portalSlug}
+      {listingSlug}
     </Typography>
   );
 }

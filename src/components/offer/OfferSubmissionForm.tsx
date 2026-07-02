@@ -47,7 +47,7 @@ type OfferSubmissionFormProps = {
 type PdfUploadFieldProps = {
   label: string;
   listingId: string;
-  portalSlug: string;
+  listingSlug: string;
   fieldName: "offerContractUrl" | "preApprovalUrl";
   value: string | null;
   onChange: (url: string | null) => void;
@@ -57,7 +57,7 @@ type PdfUploadFieldProps = {
 function PdfUploadField({
   label,
   listingId,
-  portalSlug,
+  listingSlug,
   fieldName,
   value,
   onChange,
@@ -88,7 +88,7 @@ function PdfUploadField({
       const pathname = buildOfferDocumentPathname(listingId, file.name);
       const result = await upload(pathname, file, {
         access: "public",
-        handleUploadUrl: `/api/offer/${portalSlug}/upload`,
+        handleUploadUrl: `/api/offer/${listingSlug}/upload`,
       });
 
       onChange(result.url);
@@ -181,7 +181,7 @@ export default function OfferSubmissionForm({ listing }: OfferSubmissionFormProp
 
   return (
     <Box component="form" action={formAction}>
-      <input type="hidden" name="portalSlug" value={listing.portalSlug} />
+      <input type="hidden" name="listingSlug" value={listing.listingSlug} />
       <input type="hidden" name="financingType" value={financingType} />
       <input
         type="text"
@@ -422,7 +422,7 @@ export default function OfferSubmissionForm({ listing }: OfferSubmissionFormProp
             <PdfUploadField
               label="Offer contract (REPC) *"
               listingId={listing.id}
-              portalSlug={listing.portalSlug}
+              listingSlug={listing.listingSlug}
               fieldName="offerContractUrl"
               value={offerContractUrl}
               onChange={setOfferContractUrl}
@@ -431,7 +431,7 @@ export default function OfferSubmissionForm({ listing }: OfferSubmissionFormProp
             <PdfUploadField
               label="Pre-approval letter *"
               listingId={listing.id}
-              portalSlug={listing.portalSlug}
+              listingSlug={listing.listingSlug}
               fieldName="preApprovalUrl"
               value={preApprovalUrl}
               onChange={setPreApprovalUrl}

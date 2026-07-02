@@ -51,7 +51,6 @@ async function upsertUser(
 }
 
 type SeedDeps = {
-  passcodeHash: string;
   escrow: { id: string } | null;
   tc: { id: string } | null;
   testAgent: { id: string } | null;
@@ -68,7 +67,7 @@ async function seedMlsTestListing(
 ) {
   const input = mapMlsIntakeToListingInput(values);
   const submittedAt = new Date();
-  const offerFormUrl = `${deps.appBaseUrl}/offer/${config.portalSlug}`;
+  const offerFormUrl = `${deps.appBaseUrl}/offer/${config.listingSlug}`;
 
   const listingData = {
     address: input.address,
@@ -85,7 +84,6 @@ async function seedMlsTestListing(
     description: input.description ?? null,
     mlsNumber: config.mlsNumber,
     status: ListingStatus.SUBMITTED,
-    passcodeHash: deps.passcodeHash,
     offerFormUrl,
     portfolioGroup: config.portfolioGroup,
     escrowOfficerId: deps.escrow?.id ?? null,
@@ -101,11 +99,11 @@ async function seedMlsTestListing(
   };
 
   const listing = await prisma.listing.upsert({
-    where: { portalSlug: config.portalSlug },
+    where: { listingSlug: config.listingSlug },
     update: listingData,
     create: {
       ...listingData,
-      portalSlug: config.portalSlug,
+      listingSlug: config.listingSlug,
     },
   });
 
@@ -224,8 +222,6 @@ async function main() {
     );
   }
 
-  const passcodeHash = await bcrypt.hash("1234", 10);
-
   const seller = await prisma.contact.upsert({
     where: { email: "seller@test.com" },
     update: { name: "Test Seller", phone: "8015551234" },
@@ -287,7 +283,7 @@ async function main() {
   };
 
   const listing = await prisma.listing.upsert({
-    where: { portalSlug: "test-home" },
+    where: { listingSlug: "test-home" },
     update: {
       address: "123 Test Street",
       city: "Salt Lake City",
@@ -299,7 +295,6 @@ async function main() {
       sqft: "2400",
       mlsNumber: "TEST-001",
       status: ListingStatus.ACTIVE,
-      passcodeHash,
       offerFormUrl: "http://localhost:3000/offer/test-home",
       portfolioGroup: "test-portfolio",
       escrowOfficerId: escrow?.id,
@@ -318,8 +313,7 @@ async function main() {
       sqft: "2400",
       mlsNumber: "TEST-001",
       status: ListingStatus.ACTIVE,
-      portalSlug: "test-home",
-      passcodeHash,
+      listingSlug: "test-home",
       offerFormUrl: "http://localhost:3000/offer/test-home",
       portfolioGroup: "test-portfolio",
       escrowOfficerId: escrow?.id,
@@ -330,7 +324,7 @@ async function main() {
   });
 
   const listing2 = await prisma.listing.upsert({
-    where: { portalSlug: "test-home-2" },
+    where: { listingSlug: "test-home-2" },
     update: {
       address: "456 Demo Avenue",
       city: "Salt Lake City",
@@ -342,7 +336,6 @@ async function main() {
       sqft: "3100",
       mlsNumber: "TEST-002",
       status: ListingStatus.ACTIVE,
-      passcodeHash,
       portfolioGroup: "test-portfolio",
       escrowOfficerId: escrow?.id,
       transactionCoordinatorId: tc?.id,
@@ -360,8 +353,7 @@ async function main() {
       sqft: "3100",
       mlsNumber: "TEST-002",
       status: ListingStatus.ACTIVE,
-      portalSlug: "test-home-2",
-      passcodeHash,
+      listingSlug: "test-home-2",
       portfolioGroup: "test-portfolio",
       escrowOfficerId: escrow?.id,
       transactionCoordinatorId: tc?.id,
@@ -437,7 +429,7 @@ async function main() {
   const signature = copySignaturePhoto();
   const mlsSeedInputs = MLS_TEST_LISTING_CONFIGS.map((config) => {
     const { photos, copied, missing } = copySeedPhotos(
-      config.portalSlug,
+      config.listingSlug,
       config.imageNumbers,
     );
     const values = buildMlsTestListingValues(config, photos, signature.url);
@@ -445,7 +437,7 @@ async function main() {
   });
   const validatedMlsListings = validateMlsTestListings(
     mlsSeedInputs.map(({ config, values }) => ({
-      portalSlug: config.portalSlug,
+      listingSlug: config.listingSlug,
       values,
     })),
   );
@@ -456,7 +448,6 @@ async function main() {
     const values = validatedMlsListings[i];
     const { copied, missing } = mlsSeedInputs[i];
     const listing = await seedMlsTestListing(config, values, signature.url, {
-      passcodeHash,
       escrow,
       tc,
       testAgent,
@@ -466,7 +457,7 @@ async function main() {
     });
     mlsTestListingIds.push(listing.id);
     console.log(
-      `MLS test listing seeded: ${config.portalSlug} (${copied} demo photos copied, ${missing} fallback)`,
+      `MLS test listing seeded: ${config.listingSlug} (${copied} demo photos copied, ${missing} fallback)`,
     );
   }
 
@@ -479,17 +470,14 @@ async function main() {
       `  Blair (env):   ${process.env.SEED_ADMIN_EMAIL} / (SEED_ADMIN_PASSWORD)`,
     );
   }
-  console.log("\nPortal test accounts (passcode = last 4 of phone, or 1234):");
-  console.log("  Primary:   seller@test.com / passcode 1234 → /portal/test-home");
-  console.log("  Co-seller: coseller@test.com / passcode 1234 → /portal/test-home");
-  console.log(
-    "  Portfolio: seller@test.com / passcode 1234 → test-home through test-home-5",
-  );
+  console.log("\nSeller account (sign in at /login):");
+  console.log("  seller@test.com / password 1234 → /account");
+  console.log("  Portfolio listings: test-home through test-home-5");
   console.log("\nMLS-complete test listings (CRM → listing → MLS tab):");
   for (let i = 0; i < MLS_TEST_LISTING_CONFIGS.length; i += 1) {
     const config = MLS_TEST_LISTING_CONFIGS[i];
     console.log(
-      `  ${config.portalSlug}: /crm/listings/${mlsTestListingIds[i]} (${config.mlsNumber})`,
+      `  ${config.listingSlug}: /crm/listings/${mlsTestListingIds[i]} (${config.mlsNumber})`,
     );
   }
 }

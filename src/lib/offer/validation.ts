@@ -48,7 +48,7 @@ export function parseOfferSubmissionFormData(formData: FormData): {
     return { input: null, fieldErrors, honeypotTriggered: true };
   }
 
-  const portalSlug = asString(formData.get("portalSlug"));
+  const listingSlug = asString(formData.get("listingSlug"));
   const buyersAgent = asString(formData.get("buyersAgent"));
   const buyerAgentEmail = asString(formData.get("buyerAgentEmail"));
   const buyerAgentPhone = asString(formData.get("buyerAgentPhone"));
@@ -57,7 +57,7 @@ export function parseOfferSubmissionFormData(formData: FormData): {
   const offerContractUrl = asString(formData.get("offerContractUrl"));
   const preApprovalUrl = asString(formData.get("preApprovalUrl"));
 
-  if (!portalSlug) fieldErrors.portalSlug = "Listing not found.";
+  if (!listingSlug) fieldErrors.listingSlug = "Listing not found.";
   if (!buyersAgent) fieldErrors.buyersAgent = "Buyer's agent name is required.";
   if (!buyerAgentEmail) {
     fieldErrors.buyerAgentEmail = "Agent email is required.";
@@ -108,7 +108,7 @@ export function parseOfferSubmissionFormData(formData: FormData): {
 
   return {
     input: {
-      portalSlug,
+      listingSlug,
       buyersAgent,
       buyerAgentEmail,
       buyerAgentPhone,

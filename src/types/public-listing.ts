@@ -22,7 +22,7 @@ export type PublicListing = {
   primaryPhotoUrl: string | null;
   virtualTourUrl: string | null;
   listingOffice: string | null;
-  portalSlug: string;
+  listingSlug: string;
   listDate: string | null;
   neighborhood: string | null;
   subdivision: string | null;

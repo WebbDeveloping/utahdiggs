@@ -53,7 +53,7 @@ export default function PropertyCard({
       }}
     >
       <Box sx={{ position: "relative" }}>
-        <CardActionArea component={NextLink} href={`/homes/${listing.portalSlug}`}>
+        <CardActionArea component={NextLink} href={`/homes/${listing.listingSlug}`}>
           <CardMedia
             component="img"
             height="180"

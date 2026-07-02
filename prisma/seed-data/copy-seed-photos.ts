@@ -36,11 +36,11 @@ function copyIfExists(source: string, dest: string): boolean {
 export type SeedPhoto = { name: string; url: string };
 
 export function copySeedPhotos(
-  portalSlug: string,
+  listingSlug: string,
   imageNumbers: number[],
 ): { photos: SeedPhoto[]; copied: number; missing: number } {
   const baseUrl = getAppBaseUrl();
-  const destDir = path.join(PUBLIC_SEED_DIR, portalSlug);
+  const destDir = path.join(PUBLIC_SEED_DIR, listingSlug);
   const photos: SeedPhoto[] = [];
   let copied = 0;
   let missing = 0;
@@ -55,20 +55,20 @@ export function copySeedPhotos(
       copied += 1;
       photos.push({
         name: label,
-        url: `${baseUrl}/seed-photos/${portalSlug}/${filename}`,
+        url: `${baseUrl}/seed-photos/${listingSlug}/${filename}`,
       });
     } else {
       missing += 1;
       photos.push({
         name: label,
-        url: `https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80&sig=${portalSlug}-${num}`,
+        url: `https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80&sig=${listingSlug}-${num}`,
       });
     }
   });
 
   if (missing > 0) {
     console.warn(
-      `  [seed-photos] ${portalSlug}: ${missing} demo image(s) missing from ${DEMO_SOURCE_DIR}; using fallback URLs`,
+      `  [seed-photos] ${listingSlug}: ${missing} demo image(s) missing from ${DEMO_SOURCE_DIR}; using fallback URLs`,
     );
   }
 

@@ -407,7 +407,7 @@ export default function AddListingForm({
 
         <Section
           title="Primary seller"
-          description="The seller's phone number sets the portal PIN (last 4 digits)."
+          description="Primary seller contact information."
         >
           <TextField
             name="sellerName"

@@ -27,7 +27,7 @@ const crmListingSelect = {
   state: true,
   listPrice: true,
   status: true,
-  portalSlug: true,
+  listingSlug: true,
   mlsNumber: true,
   listDate: true,
   submittedAt: true,

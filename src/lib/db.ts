@@ -19,16 +19,17 @@ function createPrismaClient() {
   return new PrismaClient({ adapter });
 }
 
-function agreementSignatureFieldNames(client: PrismaClient): Set<string> | null {
+function modelFieldNames(
+  client: PrismaClient,
+  modelName: string,
+): Set<string> | null {
   const fields = (
     client as unknown as {
       _runtimeDataModel?: {
-        models?: {
-          AgreementSignature?: { fields?: Array<{ name: string }> };
-        };
+        models?: Record<string, { fields?: Array<{ name: string }> }>;
       };
     }
-  )._runtimeDataModel?.models?.AgreementSignature?.fields;
+  )._runtimeDataModel?.models?.[modelName]?.fields;
 
   if (!Array.isArray(fields)) {
     return null;
@@ -42,8 +43,21 @@ function isCachedPrismaClientValid(client: PrismaClient): boolean {
     return false;
   }
 
-  const agreementSignatureFields = agreementSignatureFieldNames(client);
-  return agreementSignatureFields?.has("formData") ?? false;
+  // Portal PIN auth removed; stale HMR clients still expose portalSession.
+  if ("portalSession" in client) {
+    return false;
+  }
+
+  const agreementSignatureFields = modelFieldNames(client, "AgreementSignature");
+  if (!agreementSignatureFields?.has("formData")) {
+    return false;
+  }
+
+  const listingFields = modelFieldNames(client, "Listing");
+  return (
+    (listingFields?.has("listingSlug") ?? false) &&
+    !listingFields?.has("portalSlug")
+  );
 }
 
 function getPrismaClient(): PrismaClient {

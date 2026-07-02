@@ -16,13 +16,13 @@ import { approveListingAction } from "@/lib/crm/listing-actions";
 type CrmApproveListingButtonProps = {
   listingId: string;
   address: string;
-  portalSlug: string;
+  listingSlug: string;
 };
 
 export default function CrmApproveListingButton({
   listingId,
   address,
-  portalSlug,
+  listingSlug,
 }: CrmApproveListingButtonProps) {
   const [open, setOpen] = useState(false);
   const [mlsNumber, setMlsNumber] = useState("");
@@ -63,8 +63,8 @@ export default function CrmApproveListingButton({
               fullWidth
             />
             <Alert severity="info">
-              Portal slug: <strong>{portalSlug}</strong>. Seller PIN is the last 4 digits of
-              their phone on file. A welcome email will be sent if Resend is configured.
+              Listing slug: <strong>{listingSlug}</strong>. The seller will receive a welcome
+              email with a link to sign in at <strong>/login</strong>.
             </Alert>
             {error ? <Alert severity="error">{error}</Alert> : null}
           </Stack>

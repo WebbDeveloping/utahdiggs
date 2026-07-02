@@ -367,7 +367,7 @@ export default function ConsumerListingForm({ user, initialValues }: ConsumerLis
 
         <Section
           title="Seller information"
-          description="Used for seller portal access. Your phone's last 4 digits become your portal PIN."
+          description="Your contact information for this listing."
         >
           <TextField
             name="sellerName"

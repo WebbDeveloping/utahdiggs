@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import { MLS_TEST_LISTING_CONFIGS, buildMlsTestListingValues } from "../../../prisma/seed-data/mls-test-listings";
 import { mapIntakeToPropertyDetails } from "./map-intake-to-property-details";
 
-const testHome4Config = MLS_TEST_LISTING_CONFIGS.find((l) => l.portalSlug === "test-home-4");
+const testHome4Config = MLS_TEST_LISTING_CONFIGS.find((l) => l.listingSlug === "test-home-4");
 assert.ok(testHome4Config, "test-home-4 seed config should exist");
 
 const testHome4Values = buildMlsTestListingValues(

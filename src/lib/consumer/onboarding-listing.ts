@@ -1,6 +1,5 @@
 import { ContactRole, ListingStatus, OnboardingStatus } from "@/generated/prisma/client";
-import { generateListingPasscodeHash } from "@/lib/auth/portal-auth";
-import { generateUniquePortalSlug } from "@/lib/crm/slug";
+import { generateUniqueListingSlug } from "@/lib/crm/slug";
 import { prisma } from "@/lib/db";
 
 function appBaseUrl(): string {
@@ -24,9 +23,8 @@ export type CreateOnboardingListingInput = {
 export async function createOnboardingListing(
   input: CreateOnboardingListingInput,
 ): Promise<{ listingId: string }> {
-  const portalSlug = await generateUniquePortalSlug(input.address, input.city);
-  const { passcodeHash } = await generateListingPasscodeHash(input.sellerPhone);
-  const offerFormUrl = `${appBaseUrl()}/offer/${portalSlug}`;
+  const listingSlug = await generateUniqueListingSlug(input.address, input.city);
+  const offerFormUrl = `${appBaseUrl()}/offer/${listingSlug}`;
   const sellerEmail = input.sellerEmail.trim().toLowerCase();
 
   const listing = await prisma.$transaction(async (tx) => {
@@ -37,8 +35,7 @@ export async function createOnboardingListing(
         state: input.state.trim().toUpperCase() || "UT",
         zip: input.zip.trim() || "00000",
         status: ListingStatus.SUBMITTED,
-        portalSlug,
-        passcodeHash,
+        listingSlug,
         offerFormUrl,
         customerId: input.customerId,
         submittedAt: null,

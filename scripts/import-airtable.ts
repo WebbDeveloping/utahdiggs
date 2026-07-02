@@ -9,7 +9,6 @@
  */
 
 import "dotenv/config";
-import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { normalizePostgresUrl } from "../src/lib/postgres-url";
 import {
@@ -213,11 +212,8 @@ async function main() {
   console.log("Importing listings...");
   for (const record of await fetchAllRecords(TABLE_IDS.listings)) {
     const f = record.fields;
-    const portalSlug = asString(f["Portal Slug"]);
-    if (!portalSlug) continue;
-
-    const passcode = asString(f["Passcode"]) ?? "0000";
-    const passcodeHash = await bcrypt.hash(passcode, 10);
+    const listingSlug = asString(f["Portal Slug"]);
+    if (!listingSlug) continue;
 
     const escrowIds = linkedIds(f["Escrow Officer"]);
     const tcIds = linkedIds(f["Transaction Coordinator"]);
@@ -236,8 +232,7 @@ async function main() {
         mlsNumber: asString(f["MLS Number"]),
         listDate: asDate(f["List Date"]),
         status: mapListingStatus(f["Status"]),
-        portalSlug,
-        passcodeHash,
+        listingSlug,
         offerFormUrl: asString(f["Offer Form URL"]),
         blairNote: asString(f["Blair Note"]),
         blairNoteDate: asDate(f["Blair Note Date"]),
@@ -269,8 +264,7 @@ async function main() {
         mlsNumber: asString(f["MLS Number"]),
         listDate: asDate(f["List Date"]),
         status: mapListingStatus(f["Status"]),
-        portalSlug,
-        passcodeHash,
+        listingSlug,
         offerFormUrl: asString(f["Offer Form URL"]),
         blairNote: asString(f["Blair Note"]),
         blairNoteDate: asDate(f["Blair Note Date"]),

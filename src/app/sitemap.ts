@@ -37,14 +37,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       status: { in: [...PUBLIC_LISTING_STATUSES] },
     },
     select: {
-      portalSlug: true,
+      listingSlug: true,
       updatedAt: true,
     },
     orderBy: { updatedAt: "desc" },
   });
 
   const listingRoutes: MetadataRoute.Sitemap = listings.map((listing) => ({
-    url: `${SITE_URL}/homes/${listing.portalSlug}`,
+    url: `${SITE_URL}/homes/${listing.listingSlug}`,
     lastModified: listing.updatedAt,
     changeFrequency: "weekly",
     priority: 0.7,

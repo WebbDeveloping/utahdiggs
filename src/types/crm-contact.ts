@@ -8,7 +8,7 @@ export type CrmContactListingLink = {
     address: string;
     city: string;
     status: ListingStatusValue;
-    portalSlug: string;
+    listingSlug: string;
     assignedAgentId: string | null;
   };
 };

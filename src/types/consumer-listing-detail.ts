@@ -49,7 +49,7 @@ export type ConsumerListingDetail = {
   listPrice: string | null;
   listDate: Date | null;
   status: ListingStatusValue;
-  portalSlug: string;
+  listingSlug: string;
   blairNote: string | null;
   blairNoteDate: Date | null;
   priceReductionDate: Date | null;

@@ -45,7 +45,7 @@ const accessibleListingSelect = {
       address: true,
       city: true,
       status: true,
-      portalSlug: true,
+      listingSlug: true,
       assignedAgentId: true,
     },
   },

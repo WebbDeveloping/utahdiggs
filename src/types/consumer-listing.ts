@@ -39,7 +39,7 @@ export type CustomerListingSummary = {
   state: string;
   listPrice: string | null;
   status: ListingStatus;
-  portalSlug: string;
+  listingSlug: string;
   primaryPhotoUrl: string | null;
   submittedAt: Date | null;
   createdAt: Date;

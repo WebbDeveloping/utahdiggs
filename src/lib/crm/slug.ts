@@ -8,7 +8,7 @@ export function slugify(text: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-export async function generateUniquePortalSlug(
+export async function generateUniqueListingSlug(
   address: string,
   city: string,
 ): Promise<string> {
@@ -18,7 +18,7 @@ export async function generateUniquePortalSlug(
   let slug = base;
   let counter = 2;
 
-  while (await prisma.listing.findUnique({ where: { portalSlug: slug } })) {
+  while (await prisma.listing.findUnique({ where: { listingSlug: slug } })) {
     slug = `${base}-${counter}`;
     counter++;
   }

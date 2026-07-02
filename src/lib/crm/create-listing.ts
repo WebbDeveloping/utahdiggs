@@ -1,8 +1,7 @@
 import { ContactRole, ListingStatus } from "@/generated/prisma/client";
-import { generateListingPasscodeHash } from "@/lib/auth/portal-auth";
 import { prisma } from "@/lib/db";
 import { geocodeListingAddress } from "@/lib/geocode";
-import { generateUniquePortalSlug } from "@/lib/crm/slug";
+import { generateUniqueListingSlug } from "@/lib/crm/slug";
 import type { CreateListingInput } from "@/types/crm-listing";
 
 function appBaseUrl(): string {
@@ -14,8 +13,7 @@ function appBaseUrl(): string {
 
 export type CreateListingResult = {
   listingId: string;
-  portalSlug: string;
-  passcode: string;
+  listingSlug: string;
 };
 
 export type CreateListingOptions = {
@@ -30,11 +28,8 @@ export async function createListing(
 ): Promise<CreateListingResult> {
   const { userId, customerId, assignedAgentId } = options;
   const sellerEmail = input.sellerEmail.trim().toLowerCase();
-  const portalSlug = await generateUniquePortalSlug(input.address, input.city);
-  const { passcode, passcodeHash } = await generateListingPasscodeHash(
-    input.sellerPhone,
-  );
-  const offerFormUrl = `${appBaseUrl()}/offer/${portalSlug}`;
+  const listingSlug = await generateUniqueListingSlug(input.address, input.city);
+  const offerFormUrl = `${appBaseUrl()}/offer/${listingSlug}`;
   const isSubmitted = input.status === ListingStatus.SUBMITTED;
 
   const listing = await prisma.$transaction(async (tx) => {
@@ -64,8 +59,7 @@ export async function createListing(
         mlsNumber: input.mlsNumber?.trim() || null,
         listDate: isSubmitted ? null : (input.listDate ?? new Date()),
         status: input.status,
-        portalSlug,
-        passcodeHash,
+        listingSlug,
         offerFormUrl,
         yearBuilt: input.yearBuilt ?? null,
         lotSizeAcres: input.lotSizeAcres ?? null,
@@ -159,7 +153,6 @@ export async function createListing(
 
   return {
     listingId: listing.id,
-    portalSlug,
-    passcode,
+    listingSlug,
   };
 }

@@ -1,4 +1,4 @@
-import { crmListingUrl, sendEmail } from "@/lib/email/send";
+import { crmListingUrl, sendEmail, accountLoginUrl } from "@/lib/email/send";
 import { resolveAgentNotificationEmail } from "@/lib/email/agent-notification";
 
 export async function sendMlsIntakeSubmittedEmail(input: {
@@ -30,13 +30,9 @@ export async function sendMlsIntakeSubmittedEmail(input: {
 export async function sendListingWelcomeEmail(input: {
   sellerEmail: string;
   sellerName: string;
-  portalSlug: string;
-  pinHint: string;
   offerFormUrl?: string;
 }): Promise<void> {
-  const portal = process.env.NEXT_PUBLIC_PORTAL_URL
-    ? `${process.env.NEXT_PUBLIC_PORTAL_URL.replace(/\/$/, "")}/${input.portalSlug}`
-    : undefined;
+  const loginUrl = accountLoginUrl();
 
   await sendEmail({
     to: input.sellerEmail,
@@ -44,12 +40,7 @@ export async function sendListingWelcomeEmail(input: {
     html: `
       <h2>Welcome, ${input.sellerName}</h2>
       <p>Your listing has been approved and is now live on Utah Digs.</p>
-      ${
-        portal
-          ? `<p><strong>Seller portal:</strong> <a href="${portal}">${portal}</a></p>
-             <p>Your portal PIN is the last 4 digits of the phone number on file (${input.pinHint}).</p>`
-          : `<p>Your portal PIN is the last 4 digits of the phone number on file (${input.pinHint}).</p>`
-      }
+      <p><a href="${loginUrl}">Sign in to your account</a> to track showings, offers, web traffic, and more.</p>
       ${
         input.offerFormUrl
           ? `<p><strong>Offer form:</strong> <a href="${input.offerFormUrl}">${input.offerFormUrl}</a></p>`

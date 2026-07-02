@@ -20,7 +20,7 @@ export type OnboardingListingDetail = {
   callNotes: string | null;
   submittedAt: Date | null;
   status: ListingStatus;
-  portalSlug: string;
+  listingSlug: string;
   sellerPhone: string;
   documents: {
     id: string;

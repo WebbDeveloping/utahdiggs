@@ -23,7 +23,7 @@ export async function submitOfferAction(
     return { fieldErrors };
   }
 
-  const listing = await getActiveOfferListingBySlug(input.portalSlug);
+  const listing = await getActiveOfferListingBySlug(input.listingSlug);
   if (!listing) {
     return { error: "This property is not currently accepting offers." };
   }

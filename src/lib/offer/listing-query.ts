@@ -15,7 +15,7 @@ function toOfferFormListing(listing: {
   zip: string;
   listPrice: { toString(): string } | null;
   mlsNumber: string | null;
-  portalSlug: string;
+  listingSlug: string;
   status: ListingStatus;
 }): OfferFormListing {
   return {
@@ -26,7 +26,7 @@ function toOfferFormListing(listing: {
     zip: listing.zip,
     listPrice: listing.listPrice?.toString() ?? null,
     mlsNumber: listing.mlsNumber,
-    portalSlug: listing.portalSlug,
+    listingSlug: listing.listingSlug,
     status: listing.status,
   };
 }
@@ -35,7 +35,7 @@ export async function getOfferFormListing(
   slug: string,
 ): Promise<OfferFormListingResult> {
   const listing = await prisma.listing.findFirst({
-    where: { portalSlug: slug },
+    where: { listingSlug: slug },
     select: {
       id: true,
       address: true,
@@ -44,7 +44,7 @@ export async function getOfferFormListing(
       zip: true,
       listPrice: true,
       mlsNumber: true,
-      portalSlug: true,
+      listingSlug: true,
       status: true,
     },
   });

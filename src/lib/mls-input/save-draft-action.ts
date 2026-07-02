@@ -8,8 +8,7 @@ import {
   SellInquiryStatus,
 } from "@/generated/prisma/client";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
-import { generateListingPasscodeHash } from "@/lib/auth/portal-auth";
-import { generateUniquePortalSlug } from "@/lib/crm/slug";
+import { generateUniqueListingSlug } from "@/lib/crm/slug";
 import { prisma } from "@/lib/db";
 import type { Prisma } from "@/generated/prisma/client";
 import { validateMlsInputStep } from "./validation";
@@ -125,17 +124,15 @@ export async function saveMlsDraftAction(
       return { listingId, saved: true };
     }
 
-    const portalSlug = await generateUniquePortalSlug(address.address, address.city);
-    const { passcodeHash } = await generateListingPasscodeHash(sellerPhone);
-    const offerFormUrl = `${appBaseUrl()}/offer/${portalSlug}`;
+    const listingSlug = await generateUniqueListingSlug(address.address, address.city);
+    const offerFormUrl = `${appBaseUrl()}/offer/${listingSlug}`;
 
     const created = await prisma.$transaction(async (tx) => {
       const listing = await tx.listing.create({
         data: {
           ...address,
           status: ListingStatus.SUBMITTED,
-          portalSlug,
-          passcodeHash,
+          listingSlug,
           offerFormUrl,
           customerId: session.id,
           submittedAt: null,

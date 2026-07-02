@@ -3,7 +3,7 @@ import type { FullMlsInputValues } from "../../src/lib/mls-input/validation";
 import type { SeedPhoto } from "./copy-seed-photos";
 
 export type MlsTestListingConfig = {
-  portalSlug: string;
+  listingSlug: string;
   mlsNumber: string;
   portfolioGroup: string;
   latitude: number;
@@ -126,7 +126,7 @@ function buildBaseMlsValues(
 
 export const MLS_TEST_LISTING_CONFIGS: MlsTestListingConfig[] = [
   {
-    portalSlug: "test-home-3",
+    listingSlug: "test-home-3",
     mlsNumber: "TEST-003",
     portfolioGroup: "test-portfolio",
     latitude: 40.5649,
@@ -166,7 +166,7 @@ export const MLS_TEST_LISTING_CONFIGS: MlsTestListingConfig[] = [
     },
   },
   {
-    portalSlug: "test-home-4",
+    listingSlug: "test-home-4",
     mlsNumber: "TEST-004",
     portfolioGroup: "test-portfolio",
     latitude: 40.7189,
@@ -232,7 +232,7 @@ export const MLS_TEST_LISTING_CONFIGS: MlsTestListingConfig[] = [
     },
   },
   {
-    portalSlug: "test-home-5",
+    listingSlug: "test-home-5",
     mlsNumber: "TEST-005",
     portfolioGroup: "test-portfolio",
     latitude: 40.5246,
@@ -302,17 +302,17 @@ export function buildMlsTestListingValues(
 }
 
 export function validateMlsTestListings(
-  listings: Array<{ portalSlug: string; values: Record<string, unknown> }>,
+  listings: Array<{ listingSlug: string; values: Record<string, unknown> }>,
 ): FullMlsInputValues[] {
   const validated: FullMlsInputValues[] = [];
 
-  for (const { portalSlug, values } of listings) {
+  for (const { listingSlug, values } of listings) {
     const result = validateFullMlsInput(values);
     if (!result.success) {
       const fields = Object.entries(result.fieldErrors)
         .map(([k, v]) => `${k}: ${v}`)
         .join("; ");
-      throw new Error(`MLS seed validation failed for ${portalSlug}: ${fields}`);
+      throw new Error(`MLS seed validation failed for ${listingSlug}: ${fields}`);
     }
     validated.push(result.data);
   }

@@ -23,7 +23,7 @@ export async function getOnboardingListing(
       callNotes: true,
       submittedAt: true,
       status: true,
-      portalSlug: true,
+      listingSlug: true,
       contacts: {
         where: { role: "PRIMARY" },
         take: 1,

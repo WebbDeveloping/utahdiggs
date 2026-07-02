@@ -34,7 +34,7 @@ export default async function NewListingPage() {
     <>
       <CrmPageHeader
         title="Add listing"
-        description="Create a new property listing. Portal slug, seller PIN, and offer form URL are generated automatically."
+        description="Create a new property listing. Listing slug and offer form URL are generated automatically."
       />
       <AddListingForm
         closingTeam={closingTeam}

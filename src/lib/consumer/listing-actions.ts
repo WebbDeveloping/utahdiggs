@@ -70,6 +70,6 @@ export async function createConsumerListingAction(
   }
 
   redirect(
-    `/account/listings?submitted=${encodeURIComponent(result.portalSlug)}`,
+    `/account/listings?submitted=${encodeURIComponent(result.listingSlug)}`,
   );
 }
