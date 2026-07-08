@@ -15,6 +15,7 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "import:airtable": "tsx scripts/import-airtable.ts",
+    "sync:airtable": "tsx scripts/sync-airtable.ts",
     "geocode:listings": "tsx scripts/geocode-listings.ts",
     "upload:agreement-templates": "tsx scripts/upload-agreement-templates.ts",
     "seed:agreement-templates": "tsx scripts/seed-agreement-templates.ts",
