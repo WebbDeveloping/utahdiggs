@@ -1,3 +1,4 @@
+import { buildCrmDocumentHref } from "@/lib/storage/document-access";
 import { Resend } from "resend";
 
 let resendClient: Resend | null = null;
@@ -48,8 +49,24 @@ function appBaseUrl(): string {
   );
 }
 
+export type CrmListingTab = "summary" | "intake" | "print";
+
 export function crmListingUrl(listingId: string): string {
   return `${appBaseUrl()}/crm/listings/${listingId}`;
+}
+
+export function crmListingTabUrl(
+  listingId: string,
+  tab: CrmListingTab,
+): string {
+  if (tab === "summary") {
+    return crmListingUrl(listingId);
+  }
+  return `${crmListingUrl(listingId)}?tab=${tab}`;
+}
+
+export function crmDocumentUrl(listingId: string, documentId: string): string {
+  return `${appBaseUrl()}${buildCrmDocumentHref(listingId, documentId, "view")}`;
 }
 
 export function accountLoginUrl(): string {

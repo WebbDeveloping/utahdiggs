@@ -1,11 +1,12 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -14,12 +15,18 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import dayjs, { type Dayjs } from "dayjs";
-import { scheduleOnboardingCallAction } from "@/lib/consumer/onboarding-actions";
+import {
+  formatCallDateForEmail,
+  getCallSlotTime,
+} from "@/lib/consumer/call-datetime";
+import {
+  getCallAvailabilityAction,
+  scheduleOnboardingCallAction,
+} from "@/lib/consumer/onboarding-actions";
 import {
   CALL_TIME_SLOTS,
   formatSelectedSlot,
   formatTimeLabel,
-  getAvailableTimeSlots,
   type CallTimeSlot,
 } from "@/lib/consumer/call-time-slots";
 
@@ -47,22 +54,45 @@ export default function OnboardingCallForm({
   const [state, formAction, pending] = useActionState(scheduleOnboardingCallAction, {});
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [availableSlots, setAvailableSlots] = useState<CallTimeSlot[]>([...CALL_TIME_SLOTS]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
 
-  const availableSlots = selectedDate ? getAvailableTimeSlots(selectedDate) : [...CALL_TIME_SLOTS];
+  useEffect(() => {
+    if (!selectedDate) {
+      setAvailableSlots([...CALL_TIME_SLOTS]);
+      return;
+    }
+
+    let cancelled = false;
+    const dateStr = selectedDate.format("YYYY-MM-DD");
+
+    setLoadingSlots(true);
+    void getCallAvailabilityAction(dateStr).then((result) => {
+      if (cancelled) return;
+      setAvailableSlots(result.slots);
+      setLoadingSlots(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedDate]);
+
+  useEffect(() => {
+    if (selectedTime && !availableSlots.includes(selectedTime as CallTimeSlot)) {
+      setSelectedTime(null);
+    }
+  }, [availableSlots, selectedTime]);
+
   const availableSlotSet = new Set(availableSlots);
 
   const handleDateChange = (date: Dayjs | null) => {
     setSelectedDate(date);
-    if (
-      date &&
-      selectedTime &&
-      !getAvailableTimeSlots(date).includes(selectedTime as CallTimeSlot)
-    ) {
-      setSelectedTime(null);
-    }
   };
 
   if (scheduledCallAt) {
+    const confirmedSlot = getCallSlotTime(scheduledCallAt);
+
     return (
       <Stack spacing={4}>
         <Grid container spacing={{ xs: 4, md: 6 }} sx={{ alignItems: "flex-start" }}>
@@ -73,29 +103,19 @@ export default function OnboardingCallForm({
               title={title}
               description={description}
               selectedDate={dayjs(scheduledCallAt)}
-              selectedTime={`${scheduledCallAt.getHours().toString().padStart(2, "0")}:${scheduledCallAt.getMinutes().toString().padStart(2, "0")}`}
+              selectedTime={confirmedSlot}
               confirmed
             />
           </Grid>
           <Grid size={{ xs: 12, md: 7 }}>
             <Paper variant="outlined" sx={{ p: { xs: 2.5, md: 3 } }}>
               <Alert severity="success" icon={<CheckCircleOutlinedIcon />}>
-                Call requested for{" "}
-                {scheduledCallAt.toLocaleString("en-US", {
-                  weekday: "long",
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                  hour: "numeric",
-                  minute: "2-digit",
-                })}
-                . We&apos;ll confirm by email.
+                Call requested for {formatCallDateForEmail(scheduledCallAt)}. We&apos;ll confirm
+                by email.
                 {existingNotes ? (
-                  <>
-                    <Typography variant="body2" sx={{ mt: 1 }}>
-                      Your notes: {existingNotes}
-                    </Typography>
-                  </>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    Your notes: {existingNotes}
+                  </Typography>
                 ) : null}
               </Alert>
             </Paper>
@@ -192,14 +212,19 @@ export default function OnboardingCallForm({
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                       <AccessTimeOutlinedIcon fontSize="small" color="action" />
                       <Typography variant="subtitle2">Time</Typography>
+                      {loadingSlots ? <CircularProgress size={14} /> : null}
                     </Stack>
                     <Typography variant="caption" color="text.secondary">
                       Mountain Time
                     </Typography>
 
-                    {selectedDate && availableSlots.length === 0 ? (
+                    {!selectedDate ? (
                       <Typography variant="body2" color="text.secondary">
-                        No times left today. Please choose another date.
+                        Select a date to see available times.
+                      </Typography>
+                    ) : selectedDate && availableSlots.length === 0 ? (
+                      <Typography variant="body2" color="text.secondary">
+                        No times available on this date. Please choose another date.
                       </Typography>
                     ) : (
                       <Stack spacing={0.75}>
@@ -213,7 +238,7 @@ export default function OnboardingCallForm({
                               type="button"
                               fullWidth
                               variant={isSelected ? "contained" : "outlined"}
-                              disabled={isDisabled}
+                              disabled={isDisabled || loadingSlots}
                               onClick={() => setSelectedTime(slot)}
                               sx={{
                                 py: 0.875,
@@ -265,7 +290,7 @@ export default function OnboardingCallForm({
                     <Button
                       type="submit"
                       variant="contained"
-                      disabled={pending || !selectedDate || !selectedTime}
+                      disabled={pending || !selectedDate || !selectedTime || loadingSlots}
                     >
                       {pending ? "Saving…" : "Request call"}
                     </Button>

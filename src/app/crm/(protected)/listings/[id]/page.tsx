@@ -18,6 +18,7 @@ import {
 import {
   formatCurrency,
   formatListingStatus,
+  formatScheduledCallAt,
   listingStatusColor,
 } from "@/lib/crm/format";
 import { formatOnboardingStatus, formatServicePlan } from "@/lib/consumer/onboarding";
@@ -133,15 +134,7 @@ export default async function CrmListingDetailPage({
                 <Typography variant="caption" color="text.secondary">
                   Onboarding call requested
                 </Typography>
-                <Typography>
-                  {listing.scheduledCallAt.toLocaleString("en-US", {
-                    weekday: "short",
-                    month: "short",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "2-digit",
-                  })}
-                </Typography>
+                <Typography>{formatScheduledCallAt(listing.scheduledCallAt)}</Typography>
                 {listing.callNotes ? (
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
                     {listing.callNotes}

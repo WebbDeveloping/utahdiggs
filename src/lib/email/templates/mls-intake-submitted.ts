@@ -1,4 +1,9 @@
-import { crmListingUrl, sendEmail } from "@/lib/email/send";
+import {
+  crmDocumentUrl,
+  crmListingTabUrl,
+  crmListingUrl,
+  sendEmail,
+} from "@/lib/email/send";
 import { resolveAgentNotificationEmail } from "@/lib/email/agent-notification";
 
 export async function sendMlsIntakeSubmittedEmail(input: {
@@ -7,22 +12,25 @@ export async function sendMlsIntakeSubmittedEmail(input: {
   city: string;
   state: string;
   sellerName: string;
-  offerFormUrl?: string;
+  signedAgreementDocumentId?: string | null;
 }): Promise<void> {
   const detailUrl = crmListingUrl(input.listingId);
-  const offerLine = input.offerFormUrl
-    ? `<p>Offer form: <a href="${input.offerFormUrl}">${input.offerFormUrl}</a></p>`
+  const intakeUrl = crmListingTabUrl(input.listingId, "intake");
+  const agreementLine = input.signedAgreementDocumentId
+    ? `<p><a href="${crmDocumentUrl(input.listingId, input.signedAgreementDocumentId)}">Signed right-to-sell agreement (PDF)</a></p>`
     : "";
 
   await sendEmail({
     to: await resolveAgentNotificationEmail(input.listingId),
-    subject: `New MLS intake: ${input.address}, ${input.city}`,
+    subject: `Ready for Matrix entry: ${input.address}, ${input.city}`,
     html: `
-      <h2>New MLS listing intake submitted</h2>
+      <h2>Ready for Matrix entry</h2>
       <p><strong>${input.sellerName}</strong> submitted the full MLS intake form.</p>
       <p><strong>Property:</strong> ${input.address}, ${input.city}, ${input.state}</p>
-      ${offerLine}
-      <p><a href="${detailUrl}">Review in CRM</a></p>
+      <p><strong>Action required:</strong> Enter this listing in WFRMLS Matrix.</p>
+      <p><a href="${detailUrl}">CRM listing summary</a></p>
+      <p><a href="${intakeUrl}">MLS Intake form (copy fields for Matrix)</a></p>
+      ${agreementLine}
     `,
   });
 }

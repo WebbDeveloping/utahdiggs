@@ -4,22 +4,32 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
   OnboardingStatus,
+  Prisma,
   ServicePlan,
   SignatureMethod,
 } from "@/generated/prisma/client";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { getBookedCallSlotsForDate, isCallSlotAvailable } from "@/lib/consumer/call-availability";
+import { parseCallDateTime } from "@/lib/consumer/call-datetime";
+import {
+  CALL_TIME_SLOTS,
+  getAvailableTimeSlots,
+  type CallTimeSlot,
+} from "@/lib/consumer/call-time-slots";
 import { buildOnboardingPath } from "@/lib/consumer/onboarding";
 import { buildListingDocumentsPath } from "@/lib/consumer/listing-documents-path";
-import { LISTING_AGREEMENT_SIGNED_NAME } from "@/lib/documents/listing-document-kinds";
+import {
+  isListingAgreementDocument,
+  LISTING_AGREEMENT_SIGNED_NAME,
+} from "@/lib/documents/listing-document-kinds";
 import { prisma } from "@/lib/db";
 import {
   buildUarAgreementPrefill,
   resolveUarAgreementValues,
 } from "@/content/uar-listing-agreement";
 import {
-  sendAgreementSignedEmail,
+  sendOnboardingCallConfirmationEmail,
   sendOnboardingCallScheduledEmail,
-  sendOnboardingPhotosSubmittedEmail,
 } from "@/lib/email/templates/onboarding-notifications";
 import {
   getRequestAuditContext,
@@ -33,6 +43,7 @@ import {
   uploadSignedAgreementPdf,
 } from "@/lib/signature/signed-document-storage";
 import type { OnboardingActionState } from "@/types/onboarding";
+import dayjs from "dayjs";
 
 async function getOwnedListing(listingId: string, customerId: string) {
   return prisma.listing.findFirst({
@@ -211,11 +222,6 @@ export async function signListingAgreementAction(
     return { error: "Could not generate signed agreement. Please try again." };
   }
 
-  const sellerName =
-    listing.contacts.find((c) => c.role === "PRIMARY")?.contact.name ??
-    session.name ??
-    signerName;
-
   await prisma.$transaction(async (tx) => {
     await tx.listing.update({
       where: { id: listingId },
@@ -253,19 +259,6 @@ export async function signListingAgreementAction(
       },
     });
   });
-
-  try {
-    await sendAgreementSignedEmail({
-      listingId,
-      address: listing.address,
-      city: listing.city,
-      state: listing.state,
-      sellerName,
-      servicePlan: listing.servicePlan,
-    });
-  } catch (emailError) {
-    console.error("Agreement signed email failed:", emailError);
-  }
 
   revalidateOnboarding(listingId);
   redirect(`${buildOnboardingPath(listingId)}/photos`);
@@ -312,11 +305,6 @@ export async function submitOnboardingPhotosAction(
     };
   }
 
-  const sellerName =
-    listing.contacts.find((c) => c.role === "PRIMARY")?.contact.name ??
-    session.name ??
-    "Seller";
-
   await prisma.$transaction(async (tx) => {
     if (photos.length > 0) {
       await tx.document.createMany({
@@ -337,23 +325,29 @@ export async function submitOnboardingPhotosAction(
     });
   });
 
-  if (photos.length > 0 || proPhotoTourRequested) {
-    try {
-      await sendOnboardingPhotosSubmittedEmail({
-        listingId,
-        address: listing.address,
-        city: listing.city,
-        sellerName,
-        photoCount: photos.length,
-        proPhotoTourRequested,
-      });
-    } catch (emailError) {
-      console.error("Photos submitted email failed:", emailError);
-    }
-  }
-
   revalidateOnboarding(listingId);
   redirect(`${buildOnboardingPath(listingId)}/call`);
+}
+
+export type CallAvailabilityResult = {
+  slots: CallTimeSlot[];
+  error?: string;
+};
+
+export async function getCallAvailabilityAction(date: string): Promise<CallAvailabilityResult> {
+  const session = await getConsumerSession();
+  if (!session) {
+    return { slots: [], error: "You must be signed in." };
+  }
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return { slots: [], error: "Invalid date." };
+  }
+
+  const bookedSlots = await getBookedCallSlotsForDate(date);
+  const slots = getAvailableTimeSlots(dayjs(date), new Date(), bookedSlots);
+
+  return { slots };
 }
 
 export async function scheduleOnboardingCallAction(
@@ -376,8 +370,12 @@ export async function scheduleOnboardingCallAction(
     return { fieldErrors: { callTime: "Please select a time." } };
   }
 
-  const scheduledCallAt = new Date(`${callDate}T${callTime}`);
-  if (Number.isNaN(scheduledCallAt.getTime())) {
+  if (!CALL_TIME_SLOTS.includes(callTime as CallTimeSlot)) {
+    return { fieldErrors: { callTime: "Please select a valid time slot." } };
+  }
+
+  const scheduledCallAt = parseCallDateTime(callDate, callTime);
+  if (!scheduledCallAt) {
     return { fieldErrors: { callDate: "Invalid date or time." } };
   }
   if (scheduledCallAt.getTime() < Date.now()) {
@@ -386,22 +384,61 @@ export async function scheduleOnboardingCallAction(
     };
   }
 
-  const listing = await getOwnedListing(listingId, session.id);
+  const listing = await prisma.listing.findFirst({
+    where: { id: listingId, customerId: session.id },
+    include: {
+      contacts: { include: { contact: true } },
+      documents: { select: { id: true, name: true } },
+    },
+  });
   if (!listing) return { error: "Listing not found." };
+  if (!listing.agreementSignedAt) {
+    return { error: "Please complete earlier onboarding steps first." };
+  }
+
+  const slotAvailable = await isCallSlotAvailable(callDate, callTime, listingId);
+  if (!slotAvailable) {
+    return {
+      fieldErrors: {
+        callTime: "That time was just booked. Please pick another time.",
+      },
+    };
+  }
 
   const sellerName =
     listing.contacts.find((c) => c.role === "PRIMARY")?.contact.name ??
     session.name ??
     "Seller";
 
-  await prisma.listing.update({
-    where: { id: listingId },
-    data: {
-      scheduledCallAt,
-      callNotes: callNotes || null,
-      onboardingStatus: OnboardingStatus.MLS_INTAKE_PENDING,
-    },
-  });
+  const sellerEmail =
+    listing.contacts.find((c) => c.role === "PRIMARY")?.contact.email ?? session.email;
+
+  const photoCount = listing.documents.filter(
+    (document) => !isListingAgreementDocument(document.name),
+  ).length;
+
+  try {
+    await prisma.listing.update({
+      where: { id: listingId },
+      data: {
+        scheduledCallAt,
+        callNotes: callNotes || null,
+        onboardingStatus: OnboardingStatus.MLS_INTAKE_PENDING,
+      },
+    });
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
+      return {
+        fieldErrors: {
+          callTime: "That time was just booked. Please pick another time.",
+        },
+      };
+    }
+    throw error;
+  }
 
   try {
     await sendOnboardingCallScheduledEmail({
@@ -411,6 +448,19 @@ export async function scheduleOnboardingCallAction(
       state: listing.state,
       sellerName,
       servicePlan: listing.servicePlan,
+      scheduledCallAt,
+      callNotes,
+      agreementSignedAt: listing.agreementSignedAt,
+      photoCount,
+      proPhotoTourRequested: listing.proPhotoTourRequested,
+    });
+    await sendOnboardingCallConfirmationEmail({
+      listingId,
+      sellerEmail,
+      sellerName,
+      address: listing.address,
+      city: listing.city,
+      state: listing.state,
       scheduledCallAt,
       callNotes,
     });

@@ -3,6 +3,7 @@ import type {
   OfferStatusValue,
   SellerRequestStatusValue,
 } from "@/lib/crm/listing-status";
+import { formatCallDateTime } from "@/lib/consumer/call-datetime";
 
 export function formatCurrency(value: number | string | null | undefined): string {
   if (value == null || value === "") return "—";
@@ -82,4 +83,9 @@ export function formatSellerRequestStatus(status: SellerRequestStatusValue): str
     COMPLETED: "Completed",
   };
   return labels[status];
+}
+
+export function formatScheduledCallAt(date: Date | null | undefined): string {
+  if (!date) return "—";
+  return formatCallDateTime(date);
 }

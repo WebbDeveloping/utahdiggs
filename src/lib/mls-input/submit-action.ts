@@ -12,6 +12,7 @@ import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { geocodeListingAddress } from "@/lib/geocode";
 import { prisma } from "@/lib/db";
 import type { Prisma } from "@/generated/prisma/client";
+import { findSignedListingAgreementDocument } from "@/lib/documents/listing-document-kinds";
 import { sendMlsIntakeSubmittedEmail } from "@/lib/email/templates/mls-intake-submitted";
 import { mapMlsIntakeToListingInput } from "./map-to-listing";
 import { validateFullMlsInput } from "./validation";
@@ -207,13 +208,19 @@ export async function submitMlsIntakeAction(
     }
 
     try {
+      const documents = await prisma.document.findMany({
+        where: { listingId },
+        select: { id: true, name: true },
+      });
+      const signedAgreement = findSignedListingAgreementDocument(documents);
+
       await sendMlsIntakeSubmittedEmail({
         listingId,
         address: input.address,
         city: input.city,
         state: input.state,
         sellerName: input.sellerName,
-        offerFormUrl: listing.offerFormUrl ?? undefined,
+        signedAgreementDocumentId: signedAgreement?.id,
       });
     } catch (emailError) {
       console.error("MLS intake notification email failed:", emailError);

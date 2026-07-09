@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
@@ -42,6 +43,7 @@ type NavItem = {
 const navItems: NavItem[] = [
   { label: "Dashboard", href: "/crm", icon: <DashboardOutlinedIcon /> },
   { label: "Listings", href: "/crm/listings", icon: <HomeWorkOutlinedIcon /> },
+  { label: "Upcoming calls", href: "/crm/calls", icon: <EventOutlinedIcon /> },
   { label: "Contacts", href: "/crm/contacts", icon: <ContactsOutlinedIcon /> },
   { label: "Offers", href: "/crm/offers", icon: <LocalOfferOutlinedIcon />, soon: true },
   { label: "Seller requests", href: "/crm/requests", icon: <InboxOutlinedIcon />, soon: true },

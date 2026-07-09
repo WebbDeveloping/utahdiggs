@@ -263,6 +263,8 @@ model Listing {
   @@index([customerId])
   @@index([assignedAgentId])
   @@index([onboardingStatus])
+  @@index([scheduledCallAt])
+  @@unique([scheduledCallAt])
 }
 
 model ListingIntake {

@@ -1,4 +1,5 @@
 import type { Dayjs } from "dayjs";
+import { nowInCallTimezone } from "@/lib/consumer/call-datetime";
 
 export const CALL_TIME_SLOTS = [
   "09:00",
@@ -35,17 +36,23 @@ export function formatSelectedSlot(date: Dayjs, time: string): string {
   return slot.format("ddd, MMM D [at] h:mm A");
 }
 
-export function getAvailableTimeSlots(selectedDate: Dayjs, now = new Date()): CallTimeSlot[] {
-  const isToday = selectedDate.isSame(now, "day");
+export function getAvailableTimeSlots(
+  selectedDate: Dayjs,
+  now = new Date(),
+  bookedSlots: readonly CallTimeSlot[] = [],
+): CallTimeSlot[] {
+  const bookedSet = new Set(bookedSlots);
+  const mountainNow = nowInCallTimezone();
+  const isToday = selectedDate.format("YYYY-MM-DD") === mountainNow.format("YYYY-MM-DD");
 
-  if (!isToday) {
-    return [...CALL_TIME_SLOTS];
-  }
+  const afterPastFilter = !isToday
+    ? [...CALL_TIME_SLOTS]
+    : CALL_TIME_SLOTS.filter((slot) => {
+        const [h, m] = slot.split(":").map(Number);
+        const slotMinutes = h * 60 + m;
+        const currentMinutes = mountainNow.hour() * 60 + mountainNow.minute();
+        return slotMinutes > currentMinutes;
+      });
 
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
-  return CALL_TIME_SLOTS.filter((slot) => {
-    const [h, m] = slot.split(":").map(Number);
-    return h * 60 + m > currentMinutes;
-  });
+  return afterPastFilter.filter((slot) => !bookedSet.has(slot));
 }

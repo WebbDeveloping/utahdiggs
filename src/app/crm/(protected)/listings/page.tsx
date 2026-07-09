@@ -22,6 +22,7 @@ import { canApproveListing, requireCrmUser } from "@/lib/crm/access";
 import {
   formatCurrency,
   formatListingStatus,
+  formatScheduledCallAt,
   listingStatusColor,
 } from "@/lib/crm/format";
 import { formatOnboardingStatus } from "@/lib/consumer/onboarding";
@@ -103,6 +104,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
               <TableCell align="right">List price</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Onboarding</TableCell>
+              <TableCell>Call</TableCell>
               <TableCell>Source</TableCell>
               {showAssignedColumn ? <TableCell>Assigned agent</TableCell> : null}
               <TableCell>Listing slug</TableCell>
@@ -114,7 +116,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
           <TableBody>
             {sortedListings.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={showAssignedColumn ? 12 : 11}>
+                <TableCell colSpan={showAssignedColumn ? 13 : 12}>
                   <Typography color="text.secondary" sx={{ py: 3, textAlign: "center" }}>
                     No listings found. Run <code>npm run db:seed</code> to load test data, or
                     add a listing above.
@@ -194,6 +196,11 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                         {formatOnboardingStatus(listing.onboardingStatus)}
                       </Typography>
                     )}
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" color="text.secondary">
+                      {formatScheduledCallAt(listing.scheduledCallAt)}
+                    </Typography>
                   </TableCell>
                   <TableCell>
                     {listing.customerId ? (

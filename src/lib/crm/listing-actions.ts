@@ -380,6 +380,22 @@ export async function approveListingAction(
     }
   }
 
+  try {
+    const { sendListingActivatedEmail } = await import(
+      "@/lib/email/templates/crm-notifications"
+    );
+    await sendListingActivatedEmail({
+      listingId: listing.id,
+      address: listing.address,
+      city: listing.city,
+      state: listing.state,
+      sellerName: primarySeller?.name ?? "Seller",
+      mlsNumber: mlsNumber?.trim() || null,
+    });
+  } catch (emailError) {
+    console.error("Listing activated email failed:", emailError);
+  }
+
   revalidatePath("/crm/listings");
   revalidatePath(`/crm/listings/${listingId}`);
   revalidatePath("/search");

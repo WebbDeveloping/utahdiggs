@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import CrmMlsIntakePrintView from "./CrmMlsIntakePrintView";
 import CrmMlsIntakeView from "./CrmMlsIntakeView";
 import type { MlsInputStep } from "@/lib/mls-input/schema";
+
+type CrmListingTab = "summary" | "intake" | "print";
 
 type CrmListingDetailTabsProps = {
   steps: MlsInputStep[];
@@ -20,14 +23,34 @@ type CrmListingDetailTabsProps = {
   summary: React.ReactNode;
 };
 
+function tabIndexFromParam(
+  tab: CrmListingTab | null,
+  hasIntake: boolean,
+): number {
+  if (!hasIntake) return 0;
+  if (tab === "intake") return 1;
+  if (tab === "print") return 2;
+  return 0;
+}
+
 export default function CrmListingDetailTabs({
   steps,
   intakeData,
   listing,
   summary,
 }: CrmListingDetailTabsProps) {
-  const [tab, setTab] = useState(0);
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get("tab") as CrmListingTab | null;
   const hasIntake = Object.keys(intakeData).length > 0;
+  const initialTab = useMemo(
+    () => tabIndexFromParam(tabParam, hasIntake),
+    [tabParam, hasIntake],
+  );
+  const [tab, setTab] = useState(initialTab);
+
+  useEffect(() => {
+    setTab(initialTab);
+  }, [initialTab]);
 
   return (
     <Box>

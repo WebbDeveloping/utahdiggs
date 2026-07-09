@@ -26,6 +26,33 @@ export async function sendOfferSubmittedEmail(input: {
   });
 }
 
+export async function sendListingActivatedEmail(input: {
+  listingId: string;
+  address: string;
+  city: string;
+  state: string;
+  sellerName: string;
+  mlsNumber?: string | null;
+}): Promise<void> {
+  const detailUrl = crmListingUrl(input.listingId);
+  const mlsLine = input.mlsNumber?.trim()
+    ? input.mlsNumber.trim()
+    : "Not entered yet";
+
+  await sendEmail({
+    to: await resolveAgentNotificationEmail(input.listingId),
+    subject: `Listing live — add to Listtrac + Aligned: ${input.address}, ${input.city}`,
+    html: `
+      <h2>Listing is live</h2>
+      <p><strong>${input.sellerName}</strong></p>
+      <p><strong>Property:</strong> ${input.address}, ${input.city}, ${input.state}</p>
+      <p><strong>MLS#:</strong> ${mlsLine}</p>
+      <p><strong>Action required:</strong> Add this to Listtrac and Aligned Showings.</p>
+      <p><a href="${detailUrl}">View in CRM</a></p>
+    `,
+  });
+}
+
 export async function sendListingAssignedEmail(input: {
   agentEmail: string;
   agentName?: string | null;
