@@ -6,7 +6,7 @@ import MlsDraftBanner from "@/components/account/MlsDraftBanner";
 import MyListingsSection from "@/components/account/MyListingsSection";
 import AccountDashboardStatsCards from "@/components/account/AccountDashboardStatsCards";
 import { getMlsDrafts } from "@/lib/consumer/mls-draft";
-import type { AccountDashboardStats } from "@/types/consumer-account-data";
+import type { ListingOverviewMetrics } from "@/types/consumer-listing-detail";
 import type { CustomerListingSummary } from "@/types/consumer-listing";
 
 type AccountDashboardProps = {
@@ -16,14 +16,14 @@ type AccountDashboardProps = {
     name?: string | null;
   };
   listings: CustomerListingSummary[];
-  stats: AccountDashboardStats;
+  metrics: ListingOverviewMetrics | null;
   draftSaved?: boolean;
 };
 
 export default function AccountDashboard({
   user,
   listings,
-  stats,
+  metrics,
   draftSaved = false,
 }: AccountDashboardProps) {
   const displayName = user.name?.trim() || user.email;
@@ -46,7 +46,7 @@ export default function AccountDashboard({
 
       {mlsDrafts.length > 0 ? <MlsDraftBanner drafts={mlsDrafts} /> : null}
 
-      <AccountDashboardStatsCards stats={stats} />
+      <AccountDashboardStatsCards metrics={metrics} />
 
       <MyListingsSection listings={listings} />
     </Stack>

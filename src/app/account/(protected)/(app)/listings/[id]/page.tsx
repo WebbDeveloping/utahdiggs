@@ -8,6 +8,7 @@ import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { isOnboardingInProgress } from "@/lib/consumer/onboarding";
 import { buildOnboardingPathForListing } from "@/lib/consumer/listing-prefill";
 import { getCustomerListingDetail } from "@/lib/consumer/listing-detail-query";
+import { getListingOverviewMetrics } from "@/lib/consumer/listing-overview-metrics";
 import { getMlsDraftResumePath } from "@/lib/consumer/mls-draft";
 import { notFound, redirect } from "next/navigation";
 
@@ -28,7 +29,10 @@ export default async function AccountListingDetailPage({
   }
 
   const { id } = await params;
-  const listing = await getCustomerListingDetail(user.id, id);
+  const [listing, metrics] = await Promise.all([
+    getCustomerListingDetail(user.id, id),
+    getListingOverviewMetrics(user.id, id),
+  ]);
 
   if (!listing) {
     notFound();
@@ -44,7 +48,11 @@ export default async function AccountListingDetailPage({
 
   return (
     <Stack spacing={4}>
-      <ListingPropertyHeader listing={listing} customerName={user.name} />
+      <ListingPropertyHeader
+        listing={listing}
+        metrics={metrics}
+        customerName={user.name}
+      />
 
       {listing.status === ListingStatus.SUBMITTED && listing.submittedAt ? (
         <Alert severity="info">

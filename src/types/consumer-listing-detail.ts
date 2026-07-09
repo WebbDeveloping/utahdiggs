@@ -36,6 +36,20 @@ export type ConsumerClosingTeamMember = {
   website: string | null;
 };
 
+export type ListingOverviewMetrics = {
+  listPrice: string | null;
+  daysOnMarket: number | null;
+  marketAvgDom: number | null;
+  showingsLastWeek: number;
+  newSavesLastWeek: number | null;
+  webviews: number | null;
+  avgShowingsPerWeek: number | null;
+  totalShowings: number;
+  offerCount: number;
+  priceReductionCount: number;
+  daysSinceLastDrop: number | null;
+};
+
 export type ConsumerListingDetail = {
   id: string;
   address: string;

@@ -1,11 +1,15 @@
-export function daysOnMarket(listDate: Date | null | undefined): number | null {
-  if (!listDate) return null;
-  const start = new Date(listDate);
+export function daysSince(date: Date | null | undefined): number | null {
+  if (!date) return null;
+  const start = new Date(date);
   start.setHours(0, 0, 0, 0);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const diffMs = today.getTime() - start.getTime();
   return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+}
+
+export function daysOnMarket(listDate: Date | null | undefined): number | null {
+  return daysSince(listDate);
 }
 
 export function weeksSinceListDate(listDate: Date | null | undefined): number | null {
