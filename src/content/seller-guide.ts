@@ -189,6 +189,6 @@ export const sellerGuideSections: SellerGuideSection[] = [
 export const sellerGuideContact = {
   phone: "(801) 337-5057",
   phoneHref: "tel:8013375057",
-  email: "Blair@UtahDigs.com",
-  website: "https://utahdigs.com",
+  email: "blair@glidere.com",
+  website: "https://glidere.com",
 };

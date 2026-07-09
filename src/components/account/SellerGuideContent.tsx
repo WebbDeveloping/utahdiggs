@@ -213,7 +213,7 @@ export default function SellerGuideContent() {
         <Link href={sellerGuideContact.phoneHref}>{sellerGuideContact.phone}</Link> ·{" "}
         <Link href={`mailto:${sellerGuideContact.email}`}>{sellerGuideContact.email}</Link> ·{" "}
         <Link href={sellerGuideContact.website} target="_blank" rel="noopener noreferrer">
-          UtahDigs.com
+          glidere.com
         </Link>
       </Typography>
     </Stack>

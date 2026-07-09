@@ -27,7 +27,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## Related
 
-The seller portal currently lives separately at [portal.utahdigs.com](https://portal.utahdigs.com). Future portal routes will be added under `src/app/portal/`.
+Seller account and onboarding routes live in this app under `/account` and `/account/onboarding`.
 
 ## Environment variables
 

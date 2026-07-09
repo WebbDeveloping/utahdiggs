@@ -1,6 +1,7 @@
 import { LegalPageContent } from "@/components/marketing/LegalPageContent";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { CONTACT_EMAIL } from "@/lib/seo/site";
 
 export const metadata = createPageMetadata({
   title: "Privacy Policy",
@@ -47,7 +48,7 @@ const sections = [
   {
     title: "Contact us",
     paragraphs: [
-      "If you have questions about this Privacy Policy or how we handle your information, contact us at Blair@UtahDigs.com.",
+      `If you have questions about this Privacy Policy or how we handle your information, contact us at ${CONTACT_EMAIL}.`,
     ],
   },
 ];

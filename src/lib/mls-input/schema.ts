@@ -1432,7 +1432,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "q98-commentsto",
         "type": "textarea",
-        "label": "Comments To Utah Digs",
+        "label": "Comments To Glide RE",
         "placeholder": "These comments will only be seen by us.  Any special features, situations, concerns etc."
       }
     ]

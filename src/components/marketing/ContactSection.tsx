@@ -1,3 +1,4 @@
+import { CONTACT_EMAIL } from "@/lib/seo/site";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,7 +10,6 @@ import MarketingLinkButton from "@/components/marketing/MarketingLinkButton";
 import { sectionAnchorSx } from "@/components/marketing/marketing-section";
 import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
-const CONTACT_EMAIL = "Blair@UtahDigs.com";
 
 export default function ContactSection() {
   const listHomeHref = LISTING_INTAKE_PATH;

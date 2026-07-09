@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const CONSUMER_SESSION_COOKIE = "utahdigs.consumer.session-token";
+const CONSUMER_SESSION_COOKIE = "glidere.consumer.session-token";
 
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

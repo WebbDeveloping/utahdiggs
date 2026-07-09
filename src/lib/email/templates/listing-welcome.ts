@@ -3,6 +3,13 @@ import {
   accountSignupUrl,
   sendEmail,
 } from "@/lib/email/send";
+import {
+  AGENT_EMAIL,
+  BROKERAGE_LINE,
+  CONTACT_EMAIL,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/seo/site";
 
 export type ListingWelcomeEmailInput = {
   sellerEmail: string;
@@ -112,7 +119,7 @@ function buildListingWelcomeHtml(input: ListingWelcomeEmailInput): string {
     <td class="login-td" style="padding:4px 28px 20px;">
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:14px 16px;">
         <tr><td style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748B;padding-bottom:10px;">&#128273; Your Account Access</td></tr>
-        <tr><td style="font-size:13px;color:#334155;padding-bottom:8px;"><strong>New to Utah Digs?</strong> <a href="${signupUrl}" style="color:#1a3a5c;">Create your account</a> with <strong>${input.sellerEmail}</strong></td></tr>
+        <tr><td style="font-size:13px;color:#334155;padding-bottom:8px;"><strong>New to ${SITE_NAME}?</strong> <a href="${signupUrl}" style="color:#1a3a5c;">Create your account</a> with <strong>${input.sellerEmail}</strong></td></tr>
         <tr><td style="font-size:13px;color:#334155;"><strong>Already have an account?</strong> <a href="${loginUrl}" style="color:#1a3a5c;">Sign in</a></td></tr>
       </table>
     </td>
@@ -124,13 +131,13 @@ function buildListingWelcomeHtml(input: ListingWelcomeEmailInput): string {
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr><td>
           <div style="font-size:13px;font-weight:700;color:#1E293B;">Blair Allen</div>
-          <div style="font-size:12px;color:#64748B;margin-top:2px;">Utah Digs | Kelly Right RE</div>
+          <div style="font-size:12px;color:#64748B;margin-top:2px;">${BROKERAGE_LINE}</div>
           <div style="margin-top:6px;">
             <a href="tel:8013375057" style="font-size:12px;color:#1a3a5c;text-decoration:none;">801.337.5057</a>
             <span style="color:#CBD5E1;margin:0 6px;">&middot;</span>
-            <a href="mailto:Blair@UtahDigs.com" style="font-size:12px;color:#1a3a5c;text-decoration:none;">Blair@UtahDigs.com</a>
+            <a href="mailto:${AGENT_EMAIL}" style="font-size:12px;color:#1a3a5c;text-decoration:none;">${AGENT_EMAIL}</a>
             <span style="color:#CBD5E1;margin:0 6px;">&middot;</span>
-            <a href="https://www.utahdigs.com" style="font-size:12px;color:#1a3a5c;text-decoration:none;">utahdigs.com</a>
+            <a href="${SITE_URL}" style="font-size:12px;color:#1a3a5c;text-decoration:none;">glidere.com</a>
           </div>
         </td></tr>
       </table>

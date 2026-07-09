@@ -224,7 +224,7 @@ parties hereto. If any provision of this Listing Agreement is declared by a cour
     content: `Seller may only cancel the listing agreement under to following conditions:
 1- There are no current active offers on the property
 2- The property is not under contract or pending to be sold
-3- Seller agrees to pay commission on any sale initiated and procured via advertising from the MLS, syndicated sites or advertising created and distributed by Utah Digs | Blair Allen | Kelly Right Real Estate`,
+3- Seller agrees to pay commission on any sale initiated and procured via advertising from the MLS, syndicated sites or advertising created and distributed by Glide RE | Blair Allen | Kelly Right Real Estate`,
   },
   {
     type: "text",

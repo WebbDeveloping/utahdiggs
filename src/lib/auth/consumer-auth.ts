@@ -16,7 +16,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   cookies: {
     sessionToken: {
-      name: "utahdigs.consumer.session-token",
+      name: "glidere.consumer.session-token",
       options: {
         httpOnly: true,
         sameSite: "lax",

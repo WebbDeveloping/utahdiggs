@@ -2,6 +2,14 @@ export const SITE_NAME = "Glide RE";
 
 export const SITE_URL = "https://glidere.com";
 
+export const CONTACT_EMAIL = "contact@glidere.com";
+
+export const AGENT_EMAIL = "blair@glidere.com";
+
+export const NOTIFICATIONS_FROM = `${SITE_NAME} <notifications@glidere.com>`;
+
+export const BROKERAGE_LINE = `${SITE_NAME} | Kelly Right RE`;
+
 export const DEFAULT_TITLE = "Glide RE — Sell smarter. Keep more.";
 
 export const DEFAULT_DESCRIPTION =

@@ -1,6 +1,7 @@
 import { LegalPageContent } from "@/components/marketing/LegalPageContent";
 import SitePageLayoutWithAuth from "@/components/layout/SitePageLayoutWithAuth";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { CONTACT_EMAIL } from "@/lib/seo/site";
 
 export const metadata = createPageMetadata({
   title: "Terms & Conditions",
@@ -54,7 +55,7 @@ const sections = [
     title: "Changes and contact",
     paragraphs: [
       "We may update these Terms & Conditions from time to time. Continued use of the website after changes are posted constitutes acceptance of the revised terms.",
-      "Questions about these terms may be directed to Blair@UtahDigs.com.",
+      `Questions about these terms may be directed to ${CONTACT_EMAIL}.`,
     ],
   },
 ];

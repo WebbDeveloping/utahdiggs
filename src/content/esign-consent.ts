@@ -1,4 +1,6 @@
-export const ESIGN_SUPPORT_EMAIL = "contact@glidere.com";
+import { CONTACT_EMAIL } from "@/lib/seo/site";
+
+export const ESIGN_SUPPORT_EMAIL = CONTACT_EMAIL;
 
 export const ESIGN_CONSENT_TEXT = `By checking this box, I agree to use electronic records and signatures for this listing agreement. I understand that:
 

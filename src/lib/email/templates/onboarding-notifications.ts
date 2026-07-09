@@ -2,6 +2,7 @@ import { crmListingUrl, sendEmail } from "@/lib/email/send";
 import { resolveAgentNotificationEmail } from "@/lib/email/agent-notification";
 import { formatCallDateForEmail } from "@/lib/consumer/call-datetime";
 import { buildOnboardingPath, formatServicePlan } from "@/lib/consumer/onboarding";
+import { SITE_NAME } from "@/lib/seo/site";
 import type { ServicePlan } from "@/generated/prisma/client";
 
 function appBaseUrl(): string {
@@ -102,7 +103,7 @@ export async function sendOnboardingCallConfirmationEmail(input: {
 <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
 <tr>
   <td style="background:#1a3a5c;padding:28px 28px 24px;">
-    <p style="margin:0;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#94a3b8;">Utah Digs</p>
+    <p style="margin:0;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#94a3b8;">${SITE_NAME}</p>
     <h1 style="margin:8px 0 0;font-size:22px;font-weight:600;color:#ffffff;">Your call is scheduled</h1>
   </td>
 </tr>

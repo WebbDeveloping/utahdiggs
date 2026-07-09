@@ -1,3 +1,4 @@
+import { NOTIFICATIONS_FROM } from "@/lib/seo/site";
 import { buildCrmDocumentHref } from "@/lib/storage/document-access";
 import { Resend } from "resend";
 
@@ -32,7 +33,7 @@ export async function sendEmail({
   }
 
   const { error } = await resend.emails.send({
-    from: from ?? "Utah Digs <notifications@utahdigs.com>",
+    from: from ?? NOTIFICATIONS_FROM,
     to: Array.isArray(to) ? to : [to],
     subject,
     html,

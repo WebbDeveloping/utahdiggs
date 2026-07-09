@@ -194,7 +194,7 @@ async function main() {
       name: "Erin White",
       role: ClosingTeamRole.TRANSACTION_COORDINATOR,
       type: "Transaction Coordinator",
-      company: "Utah Digs",
+      company: "Glide RE",
       phone: "",
       email: "",
       website: "",
@@ -211,11 +211,11 @@ async function main() {
 
   // CRM test accounts (dev/test only — do not use these passwords in production)
   await upsertUser("Admin@admin.com", "Test Admin", "admin123", UserRole.ADMIN);
-  await upsertUser("agent@utahdigs.com", "Test Agent", "agent123", UserRole.AGENT);
+  await upsertUser("agent@glidere.com", "Test Agent", "agent123", UserRole.AGENT);
 
   if (process.env.SEED_ADMIN_PASSWORD) {
     await upsertUser(
-      process.env.SEED_ADMIN_EMAIL ?? "blair@utahdigs.com",
+      process.env.SEED_ADMIN_EMAIL ?? "blair@glidere.com",
       process.env.SEED_ADMIN_NAME ?? "Blair",
       process.env.SEED_ADMIN_PASSWORD,
       UserRole.ADMIN,
@@ -250,7 +250,7 @@ async function main() {
   });
 
   const testAgent = await prisma.user.findUnique({
-    where: { email: "agent@utahdigs.com" },
+    where: { email: "agent@glidere.com" },
   });
 
   const listingSearchFields = {
@@ -464,7 +464,7 @@ async function main() {
   console.log("Seed complete.\n");
   console.log("CRM test accounts:");
   console.log("  Admin (main):  Admin@admin.com / admin123");
-  console.log("  Agent:         agent@utahdigs.com / agent123");
+  console.log("  Agent:         agent@glidere.com / agent123");
   if (process.env.SEED_ADMIN_PASSWORD) {
     console.log(
       `  Blair (env):   ${process.env.SEED_ADMIN_EMAIL} / (SEED_ADMIN_PASSWORD)`,

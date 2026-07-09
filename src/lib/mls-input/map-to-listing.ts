@@ -74,7 +74,7 @@ function buildDescription(values: FullMlsInputValues): string | undefined {
     values["q97-publicremarks"],
     values.hoaRemarks ? `HOA: ${values.hoaRemarks}` : undefined,
     values.exclusionsRemarks ? `Exclusions: ${values.exclusionsRemarks}` : undefined,
-    values["q98-commentsto"] ? `Notes to Utah Digs: ${values["q98-commentsto"]}` : undefined,
+    values["q98-commentsto"] ? `Notes to Glide RE: ${values["q98-commentsto"]}` : undefined,
   ].filter(Boolean) as string[];
 
   const text = parts.join("\n\n").trim();

@@ -28,7 +28,7 @@ export function getUarBrokerConfig(): UarAgreementPrefill {
     protectionPeriodMonths: "3",
     agentSignedDate: new Date().toISOString().slice(0, 10),
     cancellationTerms:
-      "Seller may only cancel the listing agreement under to following conditions:\n1- There are no current active offers on the property\n2- The property is not under contract or pending to be sold\n3- Seller agrees to pay commission on any sale initiated and procured via advertising from the MLS, syndicated sites or advertising created and distributed by Utah Digs | Blair Allen | Kelly Right Real Estate",
+      "Seller may only cancel the listing agreement under to following conditions:\n1- There are no current active offers on the property\n2- The property is not under contract or pending to be sold\n3- Seller agrees to pay commission on any sale initiated and procured via advertising from the MLS, syndicated sites or advertising created and distributed by Glide RE | Blair Allen | Kelly Right Real Estate",
     krFeePercent: RIGHT_TO_SELL_FIXED_FEES.krFeePercent,
     krFeeDollar: RIGHT_TO_SELL_FIXED_FEES.krFeeDollar,
     ubFeePercent: RIGHT_TO_SELL_FIXED_FEES.ubFeePercent,

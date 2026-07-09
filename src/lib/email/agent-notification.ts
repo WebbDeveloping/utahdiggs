@@ -1,7 +1,8 @@
 import { prisma } from "@/lib/db";
+import { AGENT_EMAIL } from "@/lib/seo/site";
 
 export function defaultAgentNotificationEmail(): string {
-  return process.env.AGENT_NOTIFICATION_EMAIL ?? "blair@utahdigs.com";
+  return process.env.AGENT_NOTIFICATION_EMAIL ?? AGENT_EMAIL;
 }
 
 export async function resolveAgentNotificationEmail(

@@ -53,7 +53,7 @@ export default function CrmApproveListingButton({
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             <Typography>
-              Approve <strong>{address}</strong> and make it live on Utah Digs search?
+              Approve <strong>{address}</strong> and make it live on Glide RE search?
             </Typography>
             <TextField
               label="MLS number (optional)"
