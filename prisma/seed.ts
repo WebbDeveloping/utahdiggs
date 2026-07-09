@@ -461,6 +461,12 @@ async function main() {
     );
   }
 
+  const { seedEmailTemplates } = await import("../src/lib/email/template-queries");
+  const { seedEmailBrandSettings } = await import("../src/lib/email/brand-theme");
+  await seedEmailBrandSettings();
+  await seedEmailTemplates();
+  console.log("Email brand settings and templates seeded.");
+
   console.log("Seed complete.\n");
   console.log("CRM test accounts:");
   console.log("  Admin (main):  Admin@admin.com / admin123");

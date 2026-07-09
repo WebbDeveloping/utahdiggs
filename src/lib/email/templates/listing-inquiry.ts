@@ -1,4 +1,5 @@
 import { resolveAgentNotificationEmail } from "@/lib/email/agent-notification";
+import { renderEmailTemplate } from "@/lib/email/template-queries";
 import { sendEmail } from "@/lib/email/send";
 import type { ListingInquiryType } from "@/lib/consumer/listing-inquiry-validation";
 
@@ -23,17 +24,21 @@ export async function sendListingInquiryEmail(input: {
     ? `<p><strong>Message:</strong><br>${input.message.replace(/\n/g, "<br>")}</p>`
     : "";
 
+  const rendered = await renderEmailTemplate("listing-inquiry", {
+    subjectPrefix,
+    address: input.address,
+    city: input.city,
+    state: input.state,
+    name: input.name,
+    email: input.email,
+    phone: input.phone,
+    preferredDateLine,
+    messageLine,
+  });
+
   await sendEmail({
     to: await resolveAgentNotificationEmail(input.listingId),
-    subject: `${subjectPrefix}: ${input.address}, ${input.city}`,
-    html: `
-      <h2>${subjectPrefix}</h2>
-      <p><strong>Property:</strong> ${input.address}, ${input.city}, ${input.state}</p>
-      <p><strong>Name:</strong> ${input.name}</p>
-      <p><strong>Email:</strong> <a href="mailto:${input.email}">${input.email}</a></p>
-      <p><strong>Phone:</strong> ${input.phone}</p>
-      ${preferredDateLine}
-      ${messageLine}
-    `,
+    subject: rendered.subject,
+    html: rendered.html,
   });
 }

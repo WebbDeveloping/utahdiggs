@@ -1,5 +1,6 @@
 import { crmListingUrl, sendEmail } from "@/lib/email/send";
 import { resolveAgentNotificationEmail } from "@/lib/email/agent-notification";
+import { renderEmailTemplate } from "@/lib/email/template-queries";
 
 export async function sendOfferSubmittedEmail(input: {
   listingId: string;
@@ -10,19 +11,20 @@ export async function sendOfferSubmittedEmail(input: {
   buyersAgent: string;
   buyerName: string;
 }): Promise<void> {
-  const detailUrl = crmListingUrl(input.listingId);
+  const rendered = await renderEmailTemplate("offer-submitted", {
+    address: input.address,
+    city: input.city,
+    state: input.state,
+    offerPrice: input.offerPrice,
+    buyerName: input.buyerName,
+    buyersAgent: input.buyersAgent,
+    detailUrl: crmListingUrl(input.listingId),
+  });
 
   await sendEmail({
     to: await resolveAgentNotificationEmail(input.listingId),
-    subject: `New offer: ${input.address}, ${input.city}`,
-    html: `
-      <h2>New offer submitted</h2>
-      <p><strong>Property:</strong> ${input.address}, ${input.city}, ${input.state}</p>
-      <p><strong>Offer price:</strong> ${input.offerPrice}</p>
-      <p><strong>Buyer:</strong> ${input.buyerName}</p>
-      <p><strong>Buyer's agent:</strong> ${input.buyersAgent}</p>
-      <p><a href="${detailUrl}">Review in CRM</a></p>
-    `,
+    subject: rendered.subject,
+    html: rendered.html,
   });
 }
 
@@ -34,22 +36,23 @@ export async function sendListingActivatedEmail(input: {
   sellerName: string;
   mlsNumber?: string | null;
 }): Promise<void> {
-  const detailUrl = crmListingUrl(input.listingId);
-  const mlsLine = input.mlsNumber?.trim()
+  const mlsNumber = input.mlsNumber?.trim()
     ? input.mlsNumber.trim()
     : "Not entered yet";
 
+  const rendered = await renderEmailTemplate("listing-activated", {
+    sellerName: input.sellerName,
+    address: input.address,
+    city: input.city,
+    state: input.state,
+    mlsNumber,
+    detailUrl: crmListingUrl(input.listingId),
+  });
+
   await sendEmail({
     to: await resolveAgentNotificationEmail(input.listingId),
-    subject: `Listing live — add to Listtrac + Aligned: ${input.address}, ${input.city}`,
-    html: `
-      <h2>Listing is live</h2>
-      <p><strong>${input.sellerName}</strong></p>
-      <p><strong>Property:</strong> ${input.address}, ${input.city}, ${input.state}</p>
-      <p><strong>MLS#:</strong> ${mlsLine}</p>
-      <p><strong>Action required:</strong> Add this to Listtrac and Aligned Showings.</p>
-      <p><a href="${detailUrl}">View in CRM</a></p>
-    `,
+    subject: rendered.subject,
+    html: rendered.html,
   });
 }
 
@@ -61,17 +64,17 @@ export async function sendListingAssignedEmail(input: {
   state: string;
   listingId: string;
 }): Promise<void> {
-  const detailUrl = crmListingUrl(input.listingId);
-  const greeting = input.agentName ? input.agentName : "there";
+  const rendered = await renderEmailTemplate("listing-assigned", {
+    greeting: input.agentName ? input.agentName : "there",
+    address: input.address,
+    city: input.city,
+    state: input.state,
+    detailUrl: crmListingUrl(input.listingId),
+  });
 
   await sendEmail({
     to: input.agentEmail,
-    subject: `Listing assigned: ${input.address}, ${input.city}`,
-    html: `
-      <h2>Hi ${greeting},</h2>
-      <p>You have been assigned a new listing:</p>
-      <p><strong>${input.address}</strong>, ${input.city}, ${input.state}</p>
-      <p><a href="${detailUrl}">Open in CRM</a></p>
-    `,
+    subject: rendered.subject,
+    html: rendered.html,
   });
 }

@@ -326,7 +326,34 @@ export async function submitOnboardingPhotosAction(
   });
 
   revalidateOnboarding(listingId);
-  redirect(`${buildOnboardingPath(listingId)}/call`);
+  redirect("/account");
+}
+
+export async function skipOnboardingPhotosAction(
+  _prev: OnboardingActionState,
+  formData: FormData,
+): Promise<OnboardingActionState> {
+  const session = await getConsumerSession();
+  if (!session) return { error: "You must be signed in." };
+
+  const listingId = formData.get("listingId")?.toString().trim();
+  if (!listingId) return { error: "Missing listing." };
+
+  const listing = await getOwnedListing(listingId, session.id);
+  if (!listing) return { error: "Listing not found." };
+  if (!listing.agreementSignedAt) {
+    return { error: "Please sign the listing agreement first." };
+  }
+
+  await prisma.listing.update({
+    where: { id: listingId },
+    data: {
+      onboardingStatus: OnboardingStatus.CALL_PENDING,
+    },
+  });
+
+  revalidateOnboarding(listingId);
+  redirect("/account");
 }
 
 export type CallAvailabilityResult = {

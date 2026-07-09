@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
@@ -51,6 +52,12 @@ const navItems: NavItem[] = [
     label: "Agreement templates",
     href: "/crm/agreement-templates",
     icon: <DescriptionOutlinedIcon />,
+    adminOnly: true,
+  },
+  {
+    label: "Email templates",
+    href: "/crm/email-templates",
+    icon: <EmailOutlinedIcon />,
     adminOnly: true,
   },
   { label: "Team", href: "/crm/users", icon: <PeopleOutlinedIcon />, adminOnly: true },

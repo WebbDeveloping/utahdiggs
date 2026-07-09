@@ -66,11 +66,8 @@ export default async function OnboardingPhotosPage({ params }: OnboardingPhotosP
           Back to checklist
         </LinkButton>
         {photosComplete ? (
-          <LinkButton
-            href={`${buildOnboardingPath(listing.id)}/call`}
-            variant="contained"
-          >
-            Continue to call scheduling
+          <LinkButton href="/account" variant="contained">
+            Back to account
           </LinkButton>
         ) : null}
       </Stack>

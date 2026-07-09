@@ -19,6 +19,7 @@
     "geocode:listings": "tsx scripts/geocode-listings.ts",
     "upload:agreement-templates": "tsx scripts/upload-agreement-templates.ts",
     "seed:agreement-templates": "tsx scripts/seed-agreement-templates.ts",
+    "seed:email-templates": "tsx scripts/seed-email-templates.ts",
     "debug:uar-form-8-coordinates": "tsx scripts/debug-uar-form-8-coordinates.ts",
     "mls-input:codegen": "node prototypes/jot-forms/mls-input/scripts/codegen.mjs"
   },
@@ -33,6 +34,10 @@
     "@mui/x-date-pickers": "^9.7.0",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@tiptap/extension-link": "^3.27.3",
+    "@tiptap/pm": "^3.27.3",
+    "@tiptap/react": "^3.27.3",
+    "@tiptap/starter-kit": "^3.27.3",
     "@vercel/blob": "^2.5.0",
     "bcryptjs": "^3.0.3",
     "dayjs": "^1.11.21",

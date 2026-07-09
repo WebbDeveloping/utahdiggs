@@ -39,7 +39,13 @@ function modelFieldNames(
 }
 
 function isCachedPrismaClientValid(client: PrismaClient): boolean {
-  if (!("customer" in client && "agreementSignature" in client)) {
+  if (
+    !(
+      "customer" in client &&
+      "agreementSignature" in client &&
+      "emailBrandSettings" in client
+    )
+  ) {
     return false;
   }
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
@@ -10,10 +11,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
+import DeleteContactButton from "@/components/crm/DeleteContactButton";
 import LinkButton from "@/components/ui/LinkButton";
 import { auth } from "@/lib/auth/admin-auth";
+import { isAdmin } from "@/lib/auth/roles";
 import { requireCrmUser } from "@/lib/crm/access";
 import { getCrmContacts } from "@/lib/crm/contact-queries";
 import {
@@ -111,6 +116,7 @@ export default async function CrmContactsPage({ searchParams }: CrmContactsPageP
   const user = requireCrmUser(session);
   const contacts = await getCrmContacts(user, { q });
   const searchQuery = q?.trim() ?? "";
+  const showDelete = isAdmin(user.role);
 
   return (
     <>
@@ -169,12 +175,13 @@ export default async function CrmContactsPage({ searchParams }: CrmContactsPageP
               <TableCell>Listings</TableCell>
               <TableCell>Role</TableCell>
               <TableCell>Account</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {contacts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6}>
+                <TableCell colSpan={7}>
                   <Typography color="text.secondary" sx={{ py: 3, textAlign: "center" }}>
                     {searchQuery
                       ? "No contacts match your search. Try a different name, email, or phone."
@@ -186,7 +193,12 @@ export default async function CrmContactsPage({ searchParams }: CrmContactsPageP
               contacts.map((contact) => (
                 <TableRow key={contact.id} hover>
                   <TableCell>
-                    <Typography sx={{ fontWeight: 600 }}>{contact.name}</Typography>
+                    <Link
+                      href={`/crm/contacts/${contact.id}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <Typography sx={{ fontWeight: 600 }}>{contact.name}</Typography>
+                    </Link>
                   </TableCell>
                   <TableCell>
                     <Link href={`mailto:${contact.email}`} style={{ color: "inherit" }}>
@@ -202,6 +214,31 @@ export default async function CrmContactsPage({ searchParams }: CrmContactsPageP
                   </TableCell>
                   <TableCell>
                     <ContactAccountCell contact={contact} />
+                  </TableCell>
+                  <TableCell align="right">
+                    <Stack
+                      direction="row"
+                      spacing={0.5}
+                      sx={{ justifyContent: "flex-end", alignItems: "center" }}
+                    >
+                      <Tooltip title="View contact">
+                        <Link href={`/crm/contacts/${contact.id}`}>
+                          <IconButton
+                            size="small"
+                            aria-label={`View ${contact.name}`}
+                          >
+                            <VisibilityOutlinedIcon fontSize="small" />
+                          </IconButton>
+                        </Link>
+                      </Tooltip>
+                      {showDelete ? (
+                        <DeleteContactButton
+                          contactId={contact.id}
+                          contactName={contact.name}
+                          contactEmail={contact.email}
+                        />
+                      ) : null}
+                    </Stack>
                   </TableCell>
                 </TableRow>
               ))

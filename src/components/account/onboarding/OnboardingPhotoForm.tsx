@@ -15,7 +15,10 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import { upload } from "@vercel/blob/client";
-import { submitOnboardingPhotosAction } from "@/lib/consumer/onboarding-actions";
+import {
+  skipOnboardingPhotosAction,
+  submitOnboardingPhotosAction,
+} from "@/lib/consumer/onboarding-actions";
 import {
   ALLOWED_PHOTO_TYPES,
   buildPhotoPathname,
@@ -68,6 +71,11 @@ export default function OnboardingPhotoForm({
     submitOnboardingPhotosAction,
     {},
   );
+  const [skipState, skipFormAction, skipPending] = useActionState<
+    OnboardingActionState,
+    FormData
+  >(skipOnboardingPhotosAction, {});
+  const actionPending = pending || skipPending;
 
   useEffect(() => {
     const urls = previewUrlsRef.current;
@@ -140,15 +148,17 @@ export default function OnboardingPhotoForm({
         value={proPhotoTourRequested ? "true" : "false"}
       />
       <Stack spacing={3}>
-        {state.error ? <Alert severity="error">{state.error}</Alert> : null}
+        {state.error || skipState.error ? (
+          <Alert severity="error">{state.error ?? skipState.error}</Alert>
+        ) : null}
         {state.fieldErrors?.photos ? (
           <Alert severity="error">{state.fieldErrors.photos}</Alert>
         ) : null}
 
         <Typography variant="body2" color="text.secondary">
           {isFullService
-            ? "Upload your own photos now, or check the box below to schedule a professional photo tour. We need at least 2 exterior and 3 interior photos before MLS go-live."
-            : `Add at least one photo now. Up to ${MAX_PHOTO_COUNT} photos, ${MAX_PHOTO_MB} MB each.`}
+            ? "Upload your own photos now, check the box below to schedule a professional photo tour, or skip and add photos later. We need at least 2 exterior and 3 interior photos before MLS go-live."
+            : `Add photos now, or skip and upload later before go-live. Up to ${MAX_PHOTO_COUNT} photos, ${MAX_PHOTO_MB} MB each.`}
         </Typography>
 
         {isFullService ? (
@@ -262,8 +272,17 @@ export default function OnboardingPhotoForm({
         <Stack direction="row" spacing={2} sx={{ justifyContent: "flex-end" }}>
           <Button
             type="submit"
+            formAction={skipFormAction}
+            variant="outlined"
+            color="inherit"
+            disabled={actionPending || hasUploadInProgress}
+          >
+            {skipPending ? "Skipping…" : "Skip for now"}
+          </Button>
+          <Button
+            type="submit"
             variant="contained"
-            disabled={pending || hasUploadInProgress}
+            disabled={actionPending || hasUploadInProgress}
           >
             {pending ? "Saving…" : hasUploadInProgress ? "Uploading…" : "Continue"}
           </Button>
