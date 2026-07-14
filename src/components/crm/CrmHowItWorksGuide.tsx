@@ -191,7 +191,7 @@ export default function CrmHowItWorksGuide() {
             }}
           >
             <Typography variant="overline" color="primary.dark" sx={{ letterSpacing: "0.14em" }}>
-              What Utah Digs is for
+              What Glide RE is for
             </Typography>
             <Typography
               variant="h4"
