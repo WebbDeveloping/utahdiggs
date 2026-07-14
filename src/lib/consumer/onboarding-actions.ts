@@ -23,6 +23,7 @@ import {
   LISTING_AGREEMENT_SIGNED_NAME,
 } from "@/lib/documents/listing-document-kinds";
 import { prisma } from "@/lib/db";
+import { MAX_PHOTO_COUNT } from "@/lib/storage/blob";
 import {
   buildUarAgreementPrefill,
   resolveUarAgreementValues,
@@ -288,7 +289,7 @@ export async function submitOnboardingPhotosAction(
   }
 
   const photos: { name: string; url: string }[] = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < MAX_PHOTO_COUNT; i++) {
     const url = formData.get(`photoUrl${i}`)?.toString().trim();
     const name = formData.get(`photoName${i}`)?.toString().trim();
     if (url) {

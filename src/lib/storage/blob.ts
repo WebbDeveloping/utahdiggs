@@ -7,7 +7,7 @@ export const ALLOWED_PHOTO_TYPES = [
 ] as const;
 
 export const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
-export const MAX_PHOTO_COUNT = 40;
+export const MAX_PHOTO_COUNT = 20;
 export const PHOTO_PATH_PREFIX = "photos/";
 export const DOCUMENT_PATH_PREFIX = "documents/";
 export const OFFER_DOCUMENT_PATH_PREFIX = "offers/";
