@@ -23,6 +23,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -60,6 +61,11 @@ const primaryNavItems: NavItem[] = [
   { label: "Contacts", href: "/crm/contacts", icon: <ContactsOutlinedIcon /> },
   { label: "Offers", href: "/crm/offers", icon: <LocalOfferOutlinedIcon />, soon: true },
   { label: "Seller requests", href: "/crm/requests", icon: <InboxOutlinedIcon />, soon: true },
+  {
+    label: "How it works",
+    href: "/crm/how-it-works",
+    icon: <MenuBookOutlinedIcon />,
+  },
 ];
 
 const settingsNavItems: NavItem[] = [
