@@ -61,6 +61,7 @@ function revalidateOnboarding(listingId: string) {
   revalidatePath(`${buildOnboardingPath(listingId)}/photos`);
   revalidatePath(`${buildOnboardingPath(listingId)}/call`);
   revalidatePath(buildListingDocumentsPath(listingId));
+  revalidatePath("/account");
   revalidatePath("/account/listings");
 }
 
@@ -228,7 +229,7 @@ export async function signListingAgreementAction(
       data: {
         agreementSignedAt: signedAt,
         agreementSignatureUrl: formValues.seller1SignatureUrl,
-        onboardingStatus: OnboardingStatus.PHOTOS_PENDING,
+        onboardingStatus: OnboardingStatus.CALL_PENDING,
       },
     });
 
@@ -261,7 +262,7 @@ export async function signListingAgreementAction(
   });
 
   revalidateOnboarding(listingId);
-  redirect(`${buildOnboardingPath(listingId)}/photos`);
+  redirect(`${buildOnboardingPath(listingId)}/call`);
 }
 
 export async function submitOnboardingPhotosAction(
@@ -281,6 +282,9 @@ export async function submitOnboardingPhotosAction(
   if (!listing) return { error: "Listing not found." };
   if (!listing.agreementSignedAt) {
     return { error: "Please sign the listing agreement first." };
+  }
+  if (!listing.scheduledCallAt) {
+    return { error: "Please schedule your call before uploading photos." };
   }
 
   const photos: { name: string; url: string }[] = [];
@@ -320,13 +324,13 @@ export async function submitOnboardingPhotosAction(
       where: { id: listingId },
       data: {
         proPhotoTourRequested,
-        onboardingStatus: OnboardingStatus.CALL_PENDING,
+        onboardingStatus: OnboardingStatus.MLS_INTAKE_PENDING,
       },
     });
   });
 
   revalidateOnboarding(listingId);
-  redirect("/account");
+  redirect(`/account?mlsPrompt=1&listing=${encodeURIComponent(listingId)}`);
 }
 
 export async function skipOnboardingPhotosAction(
@@ -344,16 +348,19 @@ export async function skipOnboardingPhotosAction(
   if (!listing.agreementSignedAt) {
     return { error: "Please sign the listing agreement first." };
   }
+  if (!listing.scheduledCallAt) {
+    return { error: "Please schedule your call before continuing." };
+  }
 
   await prisma.listing.update({
     where: { id: listingId },
     data: {
-      onboardingStatus: OnboardingStatus.CALL_PENDING,
+      onboardingStatus: OnboardingStatus.MLS_INTAKE_PENDING,
     },
   });
 
   revalidateOnboarding(listingId);
-  redirect("/account");
+  redirect(`/account?mlsPrompt=1&listing=${encodeURIComponent(listingId)}`);
 }
 
 export type CallAvailabilityResult = {
@@ -450,7 +457,7 @@ export async function scheduleOnboardingCallAction(
       data: {
         scheduledCallAt,
         callNotes: callNotes || null,
-        onboardingStatus: OnboardingStatus.MLS_INTAKE_PENDING,
+        onboardingStatus: OnboardingStatus.PHOTOS_PENDING,
       },
     });
   } catch (error) {
@@ -496,5 +503,5 @@ export async function scheduleOnboardingCallAction(
   }
 
   revalidateOnboarding(listingId);
-  redirect(buildOnboardingPath(listingId));
+  redirect(`${buildOnboardingPath(listingId)}/photos`);
 }

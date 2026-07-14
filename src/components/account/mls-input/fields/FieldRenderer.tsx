@@ -282,7 +282,11 @@ export default function FieldRenderer({
 
     const toggle = (opt: string, checked: boolean) => {
       if (checked) {
-        onChange(field.id, [...selected, opt]);
+        if (opt === "None") {
+          onChange(field.id, ["None"]);
+          return;
+        }
+        onChange(field.id, [...selected.filter((s) => s !== "None"), opt]);
       } else {
         onChange(field.id, selected.filter((s) => s !== opt));
       }

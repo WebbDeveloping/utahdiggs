@@ -9,9 +9,19 @@ import { formatListingStatus, listingStatusColor } from "@/lib/crm/format";
 import type { CustomerListingSummary } from "@/types/consumer-listing";
 
 const MLS_DRAFT_STATUS = "DRAFT" as const;
+const MLS_SUBMITTED_STATUS = "SUBMITTED" as const;
 
 export function isMlsDraft(listing: Pick<CustomerListingSummary, "intakeStatus">): boolean {
   return listing.intakeStatus === MLS_DRAFT_STATUS;
+}
+
+export function isMlsIntakePending(
+  listing: Pick<CustomerListingSummary, "onboardingStatus" | "intakeStatus">,
+): boolean {
+  if (listing.intakeStatus === MLS_SUBMITTED_STATUS) return false;
+  return (
+    listing.onboardingStatus === "MLS_INTAKE_PENDING" || isMlsDraft(listing)
+  );
 }
 
 export function isOnboardingListing(
@@ -34,6 +44,18 @@ export function getMlsDrafts(listings: CustomerListingSummary[]): CustomerListin
     .sort((a, b) => {
       const aTime = a.intakeUpdatedAt?.getTime() ?? 0;
       const bTime = b.intakeUpdatedAt?.getTime() ?? 0;
+      return bTime - aTime;
+    });
+}
+
+export function getMlsIntakePendingListings(
+  listings: CustomerListingSummary[],
+): CustomerListingSummary[] {
+  return listings
+    .filter(isMlsIntakePending)
+    .sort((a, b) => {
+      const aTime = a.intakeUpdatedAt?.getTime() ?? a.createdAt.getTime();
+      const bTime = b.intakeUpdatedAt?.getTime() ?? b.createdAt.getTime();
       return bTime - aTime;
     });
 }
@@ -81,7 +103,7 @@ export function formatListingProgressLabel(listing: CustomerListingSummary): str
 }
 
 export function getListingResumePath(listing: CustomerListingSummary): string {
-  if (isMlsDraft(listing)) {
+  if (isMlsIntakePending(listing)) {
     return getMlsDraftResumePath(listing.id);
   }
   if (isOnboardingInProgress(listing)) {

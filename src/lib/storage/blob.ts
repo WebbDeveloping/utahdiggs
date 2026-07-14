@@ -1,4 +1,4 @@
-import { get } from "@vercel/blob";
+import { del, get } from "@vercel/blob";
 
 export const ALLOWED_PHOTO_TYPES = [
   "image/jpeg",
@@ -174,4 +174,63 @@ export async function servePrivateBlob(pathname: string) {
     token: config.token,
     storeId: config.storeId,
   });
+}
+
+/**
+ * Best-effort delete of managed Vercel Blob URLs.
+ * Skips non-Vercel URLs and logs failures without throwing so callers can
+ * keep DB deletes as the source of truth.
+ */
+export async function deleteManagedBlobs(urls: string[]): Promise<void> {
+  const unique = [...new Set(urls.filter((url) => url.trim().length > 0))];
+  const managed = unique.filter(isVercelBlobUrl);
+  if (managed.length === 0) return;
+
+  const publicUrls: string[] = [];
+  const privateUrls: string[] = [];
+
+  for (const url of managed) {
+    if (isPublicBlobUrl(url)) {
+      publicUrls.push(url);
+    } else {
+      privateUrls.push(url);
+    }
+  }
+
+  if (publicUrls.length > 0) {
+    try {
+      const config = getPublicBlobConfig();
+      await del(publicUrls, {
+        token: config.token,
+        storeId: config.storeId,
+      });
+    } catch (error) {
+      console.error("deleteManagedBlobs: failed to delete public blobs", {
+        count: publicUrls.length,
+        error,
+      });
+    }
+  }
+
+  if (privateUrls.length > 0) {
+    try {
+      const config = getPrivateBlobConfig();
+      if (!config) {
+        console.error(
+          "deleteManagedBlobs: private blob token not set; skipped private deletes",
+          { count: privateUrls.length },
+        );
+        return;
+      }
+      await del(privateUrls, {
+        token: config.token,
+        storeId: config.storeId,
+      });
+    } catch (error) {
+      console.error("deleteManagedBlobs: failed to delete private blobs", {
+        count: privateUrls.length,
+        error,
+      });
+    }
+  }
 }

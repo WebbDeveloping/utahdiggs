@@ -21,6 +21,7 @@ import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -61,6 +62,12 @@ const navItems: NavItem[] = [
     adminOnly: true,
   },
   { label: "Team", href: "/crm/users", icon: <PeopleOutlinedIcon />, adminOnly: true },
+  {
+    label: "Database",
+    href: "/crm/database",
+    icon: <StorageOutlinedIcon />,
+    adminOnly: true,
+  },
 ];
 
 type CrmShellProps = {

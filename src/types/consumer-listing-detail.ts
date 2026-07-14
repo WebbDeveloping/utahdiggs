@@ -37,17 +37,26 @@ export type ConsumerClosingTeamMember = {
 };
 
 export type ListingOverviewMetrics = {
+  listingId: string;
+  listingAddress: string;
+  city: string;
+  status: ListingStatusValue;
   listPrice: string | null;
   daysOnMarket: number | null;
   marketAvgDom: number | null;
   showingsLastWeek: number;
   newSavesLastWeek: number | null;
   webviews: number | null;
+  latestSaves: number | null;
   avgShowingsPerWeek: number | null;
   totalShowings: number;
   offerCount: number;
+  pendingOfferCount: number;
   priceReductionCount: number;
+  priceReductionDate: Date | null;
   daysSinceLastDrop: number | null;
+  blairNote: string | null;
+  blairNoteDate: Date | null;
 };
 
 export type ConsumerListingDetail = {

@@ -10,6 +10,7 @@ import {
 import { isListingPhoto } from "@/lib/storage/document-classify";
 import { prisma } from "@/lib/db";
 import {
+  deleteManagedBlobs,
   isPublicBlobUrl,
   isVercelBlobUrl,
   MAX_PHOTO_COUNT,
@@ -147,6 +148,8 @@ export async function deleteCrmListingDocumentAction(
     await prisma.document.delete({
       where: { id: documentId },
     });
+
+    await deleteManagedBlobs([document.url]);
 
     revalidatePath(`/crm/listings/${listingId}`);
     return { success: true };

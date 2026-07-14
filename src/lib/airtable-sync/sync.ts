@@ -5,8 +5,13 @@ import {
   asNumber,
   asString,
   linkedIds,
-  mapListingStatus,
 } from "@/lib/airtable-sync/mappers";
+import {
+  buildListingMatchIndexes,
+  parseMlsFromWeekLabel,
+  resolveListingId,
+  type AirtableListingLookup,
+} from "@/lib/airtable-sync/match-listing";
 
 const TABLES = {
   listings: "Listings",
@@ -15,100 +20,69 @@ const TABLES = {
 } as const;
 
 export type AirtableSyncResult = {
-  listings: { synced: number; skipped: number };
-  weeklyStats: { synced: number; skipped: number };
+  weeklyStats: {
+    synced: number;
+    skipped: number;
+    matchedByMls: number;
+    matchedByAddress: number;
+  };
   marketData: { synced: number; skipped: number };
 };
 
 export async function syncAirtableData(
   prisma: PrismaClient,
 ): Promise<AirtableSyncResult> {
-  const listingIdMap = new Map<string, string>();
-  for (const row of await prisma.listing.findMany({
-    where: { airtableRecordId: { not: null } },
-    select: { id: true, airtableRecordId: true },
-  })) {
-    if (row.airtableRecordId) {
-      listingIdMap.set(row.airtableRecordId, row.id);
-    }
-  }
-
   const result: AirtableSyncResult = {
-    listings: { synced: 0, skipped: 0 },
-    weeklyStats: { synced: 0, skipped: 0 },
+    weeklyStats: {
+      synced: 0,
+      skipped: 0,
+      matchedByMls: 0,
+      matchedByAddress: 0,
+    },
     marketData: { synced: 0, skipped: 0 },
   };
 
+  const airtableListings = new Map<string, AirtableListingLookup>();
   for (const record of await fetchAllAirtableRecords(TABLES.listings)) {
     const f = record.fields;
-    const listingSlug = asString(f["Portal Slug"]);
-    if (!listingSlug) {
-      result.listings.skipped += 1;
-      continue;
-    }
-
-    const mlsNumber = asString(f["MLS Number"]);
-    const existing = await prisma.listing.findFirst({
-      where: {
-        OR: [
-          { airtableRecordId: record.id },
-          { listingSlug },
-          ...(mlsNumber ? [{ mlsNumber }] : []),
-        ],
-      },
-      select: { id: true },
-    });
-
-    const listingData = {
-      airtableRecordId: record.id,
+    airtableListings.set(record.id, {
+      mlsNumber: asString(f["MLS Number"])?.trim() || null,
       address: asString(f["Address"]) ?? "",
       city: asString(f["City"]) ?? "",
-      state: asString(f["State"]) ?? "",
-      zip: asString(f["Zip"]) ?? "",
-      listPrice: asNumber(f["List Price"]),
-      beds: asString(f["Beds"]),
-      baths: asString(f["Baths"]),
-      sqft: asString(f["Sqft"]),
-      mlsNumber,
-      listDate: asDate(f["List Date"]),
-      status: mapListingStatus(f["Status"]),
-      listingSlug,
-      offerFormUrl: asString(f["Offer Form URL"]),
-      blairNote: asString(f["Blair Note"]),
-      blairNoteDate: asDate(f["Blair Note Date"]),
-      latestViews: asNumber(f["Latest Views"]),
-      latestSaves: asNumber(f["Latest Saves"]),
-      latestShowings: asNumber(f["Latest Showings"]),
-      priceReductionDate: asDate(f["Price Reduction Date"]),
-      priceReductionCount: asNumber(f["Price Reduction Count"]) ?? 0,
-      activeOffers: asNumber(f["Active Offers"]) ?? 0,
-      marketAvgDom: asNumber(f["Market Avg DOM"]),
-      portfolioGroup: asString(f["Portfolio Group"]),
-    };
-
-    const listing = existing
-      ? await prisma.listing.update({
-          where: { id: existing.id },
-          data: listingData,
-        })
-      : await prisma.listing.create({ data: listingData });
-
-    listingIdMap.set(record.id, listing.id);
-    result.listings.synced += 1;
+    });
   }
+
+  const pgListings = await prisma.listing.findMany({
+    select: {
+      id: true,
+      mlsNumber: true,
+      address: true,
+      city: true,
+    },
+  });
+  const indexes = buildListingMatchIndexes(pgListings);
 
   for (const record of await fetchAllAirtableRecords(TABLES.weeklyStats)) {
     const f = record.fields;
-    const listingAirtableId = linkedIds(f["Listing"])[0];
-    const listingId = listingAirtableId
-      ? listingIdMap.get(listingAirtableId)
-      : undefined;
     const weekEnding = asDate(f["Week Ending"]);
-    if (!listingId || !weekEnding) {
+    if (!weekEnding) {
       result.weeklyStats.skipped += 1;
       continue;
     }
 
+    const listingAirtableId = linkedIds(f["Listing"])[0];
+    const airtableListing = listingAirtableId
+      ? airtableListings.get(listingAirtableId)
+      : undefined;
+    const weekLabelMls = parseMlsFromWeekLabel(asString(f["Week Label"]));
+
+    const match = resolveListingId(indexes, airtableListing, weekLabelMls);
+    if (!match.listingId || !match.method) {
+      result.weeklyStats.skipped += 1;
+      continue;
+    }
+
+    const listingId = match.listingId;
     const statData = {
       airtableRecordId: record.id,
       listtracTotal30d: asNumber(f["Listtrac Total (30d)"]),
@@ -134,6 +108,11 @@ export async function syncAirtableData(
     });
 
     result.weeklyStats.synced += 1;
+    if (match.method === "mls") {
+      result.weeklyStats.matchedByMls += 1;
+    } else {
+      result.weeklyStats.matchedByAddress += 1;
+    }
   }
 
   for (const record of await fetchAllAirtableRecords(TABLES.marketData)) {

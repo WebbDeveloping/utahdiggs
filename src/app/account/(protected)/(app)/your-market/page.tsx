@@ -18,7 +18,7 @@ export default async function AccountYourMarketPage() {
     <>
       <AccountPageHeader
         title="Your market"
-        description="City-level market trends for the areas where your listings are located."
+        description="City snapshot for where your listings sit — inventory, sales, and pricing context. Price coaching stays on Overview."
       />
       <AccountYourMarketCards markets={markets} />
     </>

@@ -9,6 +9,7 @@ import {
   buildOnboardingPath,
   onboardingStatusIndex,
 } from "@/lib/consumer/onboarding";
+import { buildMlsInputDraftPath } from "@/lib/consumer/listing-prefill";
 import { getOnboardingListing } from "@/lib/consumer/onboarding-query";
 import { notFound } from "next/navigation";
 
@@ -30,7 +31,7 @@ export default async function OnboardingPhotosPage({ params }: OnboardingPhotosP
 
   const photosComplete =
     onboardingStatusIndex(listing.onboardingStatus) >=
-    onboardingStatusIndex("CALL_PENDING");
+    onboardingStatusIndex("MLS_INTAKE_PENDING");
 
   if (!listing.agreementSignedAt) {
     return (
@@ -43,6 +44,22 @@ export default async function OnboardingPhotosPage({ params }: OnboardingPhotosP
           variant="contained"
         >
           Sign agreement
+        </LinkButton>
+      </OnboardingStepLayout>
+    );
+  }
+
+  if (!listing.scheduledCallAt) {
+    return (
+      <OnboardingStepLayout user={user} listing={listing} title="Add photos">
+        <Alert severity="warning">
+          Please schedule your call before uploading photos.
+        </Alert>
+        <LinkButton
+          href={`${buildOnboardingPath(listing.id)}/call`}
+          variant="contained"
+        >
+          Schedule call
         </LinkButton>
       </OnboardingStepLayout>
     );
@@ -66,8 +83,8 @@ export default async function OnboardingPhotosPage({ params }: OnboardingPhotosP
           Back to checklist
         </LinkButton>
         {photosComplete ? (
-          <LinkButton href="/account" variant="contained">
-            Back to account
+          <LinkButton href={buildMlsInputDraftPath(listing.id)} variant="contained">
+            Continue MLS intake
           </LinkButton>
         ) : null}
       </Stack>

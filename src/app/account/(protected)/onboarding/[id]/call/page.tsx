@@ -5,10 +5,7 @@ import OnboardingCallForm from "@/components/account/onboarding/OnboardingCallFo
 import LinkButton from "@/components/ui/LinkButton";
 import OnboardingStepLayout from "@/components/account/onboarding/OnboardingStepLayout";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
-import {
-  buildOnboardingPath,
-  onboardingStatusIndex,
-} from "@/lib/consumer/onboarding";
+import { buildOnboardingPath } from "@/lib/consumer/onboarding";
 import { getOnboardingListing } from "@/lib/consumer/onboarding-query";
 import { notFound } from "next/navigation";
 
@@ -28,21 +25,17 @@ export default async function OnboardingCallPage({ params }: OnboardingCallPageP
   const listing = await getOnboardingListing(user.id, id);
   if (!listing) notFound();
 
-  const photosComplete =
-    onboardingStatusIndex(listing.onboardingStatus) >=
-    onboardingStatusIndex("CALL_PENDING");
-
-  if (!photosComplete) {
+  if (!listing.agreementSignedAt) {
     return (
       <OnboardingStepLayout user={user} listing={listing} title="Schedule your call">
         <Alert severity="warning">
-          Please complete the photos step before scheduling your call.
+          Please sign the listing agreement before scheduling your call.
         </Alert>
         <LinkButton
-          href={`${buildOnboardingPath(listing.id)}/photos`}
+          href={`${buildOnboardingPath(listing.id)}/agreement`}
           variant="contained"
         >
-          Add photos
+          Sign agreement
         </LinkButton>
       </OnboardingStepLayout>
     );
@@ -55,10 +48,10 @@ export default async function OnboardingCallPage({ params }: OnboardingCallPageP
       </LinkButton>
       {listing.scheduledCallAt ? (
         <LinkButton
-          href={`/account/listings/new/mls-input?draft=${encodeURIComponent(listing.id)}`}
+          href={`${buildOnboardingPath(listing.id)}/photos`}
           variant="contained"
         >
-          Start MLS intake
+          Continue to photos
         </LinkButton>
       ) : null}
     </Stack>

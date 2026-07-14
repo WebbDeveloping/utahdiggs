@@ -1,5 +1,6 @@
 "use client";
 
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { MlsInputStep } from "@/lib/mls-input/schema";
@@ -33,14 +34,15 @@ export default function MlsInputStepView({
       {step.fields.map((field) => {
         if (field.type === "content" || isFieldVisible(field.id, values)) {
           return (
-            <FieldRenderer
-              key={field.id}
-              field={field}
-              value={values[field.id]}
-              error={fieldErrors[field.id]}
-              allValues={values}
-              onChange={onChange}
-            />
+            <Box key={field.id} id={`mls-field-${field.id}`}>
+              <FieldRenderer
+                field={field}
+                value={values[field.id]}
+                error={fieldErrors[field.id]}
+                allValues={values}
+                onChange={onChange}
+              />
+            </Box>
           );
         }
         return null;

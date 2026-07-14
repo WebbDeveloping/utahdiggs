@@ -226,7 +226,7 @@ export async function submitMlsIntakeAction(
       console.error("MLS intake notification email failed:", emailError);
     }
 
-    redirect(`/account/onboarding/${listingId}?submitted=1`);
+    redirect(`/account?submitted=1`);
   } catch (error) {
     if (error && typeof error === "object" && "digest" in error) {
       throw error;

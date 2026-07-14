@@ -9,7 +9,9 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import NextLink from "next/link";
 import ClosingTeamCards from "@/components/account/listing-detail/ClosingTeamCards";
+import { priceChangeRequestHref } from "@/lib/consumer/price-change-path";
 import {
   submitDescriptionUpdateAction,
   submitMessageBlairAction,
@@ -21,7 +23,7 @@ import type { ConsumerListingDetail } from "@/types/consumer-listing-detail";
 type ListingSellerRequestsTabProps = {
   listing: Pick<
     ConsumerListingDetail,
-    "id" | "escrowOfficer" | "transactionCoordinator"
+    "id" | "status" | "escrowOfficer" | "transactionCoordinator"
   >;
 };
 
@@ -168,6 +170,21 @@ function MessageForm({ listingId }: { listingId: string }) {
 export default function ListingSellerRequestsTab({ listing }: ListingSellerRequestsTabProps) {
   return (
     <Stack spacing={3}>
+      {listing.status === "ACTIVE" ? (
+        <RequestFormSection
+          title="Request a price change"
+          description="Choose a suggested reduction or enter a custom list price for Blair to update in MLS."
+        >
+          <Button
+            component={NextLink}
+            href={priceChangeRequestHref(listing.id)}
+            variant="contained"
+            sx={{ alignSelf: "flex-start" }}
+          >
+            Start price change request
+          </Button>
+        </RequestFormSection>
+      ) : null}
       <DescriptionForm listingId={listing.id} />
       <OpenHouseForm listingId={listing.id} />
       <MessageForm listingId={listing.id} />

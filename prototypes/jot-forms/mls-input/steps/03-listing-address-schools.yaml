@@ -20,7 +20,8 @@ fields:
   - id: listingQuadrant
     label: Quadrant
     type: radio
-    required: true
+    # WFRMLS detail — hidden from consumer intake; VA/agent fills at MLS entry.
+    status: hidden-in-jotform
     description: "NW, NE, SW, or SE area of the city (WFRMLS requirement)."
     options:
       - NW
@@ -38,9 +39,10 @@ fields:
     jotform:
       id: TODO
   - id: nonStandardAddress
-    label: "Is this a non-standard address? (See directions)"
+    label: "Is this a non-standard address?"
     type: radio
     required: true
+    description: "Choose Yes if the property is hard to find from the street address alone (for example rural, gated, or no formal street address). You will be asked for directions."
     options:
       - "No"
       - "Yes"

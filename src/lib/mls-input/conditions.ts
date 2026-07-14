@@ -221,7 +221,7 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
   }
 ];
 
-const HIDDEN_BY_DEFAULT = new Set<string>(["secondaryOwnerName","secondaryOwnerPhone","secondaryOwnerEmail","directionsRemarks","ownerAddress","hoaFeeMonth","hoaContact","hoaContactPhone","q208-garagecapacity","q209-garagecapacity209","q63-pooltype","q192-howmany","q193-howmany193","q194-ownershowing","q195-phonenumber","q196-email","q197-ownershowing197","q198-ownershowing198","q199-ownershowing199","q200-tenantshowing","q201-ownershowing201","q202-tenantshowing202","q203-tenantshowing203","q204-tenantshowing204","q205-tenantshowing205","q211-name211","q212-typea212","q213-email213","q214-phonenumber214","hoaRemarks","q23-signature23"]);
+const HIDDEN_BY_DEFAULT = new Set<string>(["secondaryOwnerName","secondaryOwnerPhone","secondaryOwnerEmail","listingQuadrant","directionsRemarks","ownerAddress","hoaFeeMonth","hoaContact","hoaContactPhone","q208-garagecapacity","q209-garagecapacity209","q63-pooltype","q192-howmany","q193-howmany193","q194-ownershowing","q195-phonenumber","q196-email","q197-ownershowing197","q198-ownershowing198","q199-ownershowing199","q200-tenantshowing","q201-ownershowing201","q202-tenantshowing202","q203-tenantshowing203","q204-tenantshowing204","q205-tenantshowing205","q211-name211","q212-typea212","q213-email213","q214-phonenumber214","hoaRemarks","q23-signature23"]);
 
 function getFieldValue(values: Record<string, unknown>, fieldId: string): unknown {
   return values[fieldId];

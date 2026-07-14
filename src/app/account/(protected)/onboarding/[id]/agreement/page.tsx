@@ -86,10 +86,10 @@ export default async function OnboardingAgreementPage({
         </LinkButton>
         {listing.agreementSignedAt ? (
           <LinkButton
-            href={`${buildOnboardingPath(listing.id)}/photos`}
+            href={`${buildOnboardingPath(listing.id)}/call`}
             variant="contained"
           >
-            Continue to photos
+            Continue to schedule call
           </LinkButton>
         ) : null}
       </Stack>

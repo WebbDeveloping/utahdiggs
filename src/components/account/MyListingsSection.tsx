@@ -17,6 +17,7 @@ import {
   formatMlsDraftProgress,
   getMlsDraftResumePath,
   isMlsDraft,
+  isMlsIntakePending,
 } from "@/lib/consumer/mls-draft";
 import type { CustomerListingSummary } from "@/types/consumer-listing";
 import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
@@ -65,7 +66,7 @@ export default function MyListingsSection({ listings }: MyListingsSectionProps) 
                       alt={listing.address}
                     />
                     <Box sx={{ flex: 1, minWidth: 0 }}>
-                      {isMlsDraft(listing) ? (
+                      {isMlsIntakePending(listing) ? (
                         <>
                           <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
                             {listing.address}
@@ -96,22 +97,26 @@ export default function MyListingsSection({ listings }: MyListingsSectionProps) 
                       size="small"
                     />
                   </Stack>
-                  {isMlsDraft(listing) ? (
+                  {isMlsIntakePending(listing) ? (
                     <Stack direction="row" spacing={1} sx={{ pl: "80px", alignItems: "center" }}>
                       <Typography variant="caption" color="text.secondary">
-                        {formatMlsDraftProgress(listing.intakeCurrentStep)}
+                        {isMlsDraft(listing)
+                          ? formatMlsDraftProgress(listing.intakeCurrentStep)
+                          : "MLS intake not started"}
                       </Typography>
                       <Link href={getMlsDraftResumePath(listing.id)} style={{ textDecoration: "none" }}>
                         <Button size="small" variant="text" sx={{ minWidth: 0, py: 0 }}>
-                          Continue
+                          {isMlsDraft(listing) ? "Continue" : "Start"}
                         </Button>
                       </Link>
-                      <MlsDraftDeleteButton
-                        listingId={listing.id}
-                        label="Discard"
-                        variant="text"
-                        size="small"
-                      />
+                      {isMlsDraft(listing) ? (
+                        <MlsDraftDeleteButton
+                          listingId={listing.id}
+                          label="Discard"
+                          variant="text"
+                          size="small"
+                        />
+                      ) : null}
                     </Stack>
                   ) : null}
                 </Stack>

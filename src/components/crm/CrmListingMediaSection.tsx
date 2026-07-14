@@ -611,8 +611,8 @@ export default function CrmListingMediaSection({
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            &ldquo;{deleteTarget?.name}&rdquo; will be removed from this listing. The file will
-            remain in storage but will no longer appear here.
+            &ldquo;{deleteTarget?.name}&rdquo; will be permanently removed from this
+            listing and from storage. This cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

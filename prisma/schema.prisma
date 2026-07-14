@@ -493,6 +493,9 @@ model SellerRequest {
   message          String?             @db.Text
   openHouseDate    DateTime?           @db.Date
   openHouseTime    String?
+  currentPrice     Decimal?            @db.Decimal(12, 2)
+  newPrice         Decimal?            @db.Decimal(12, 2)
+  reductionOption  String?
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
 

@@ -77,6 +77,10 @@ export default async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/crm", request.url));
     }
 
+    if (pathname.startsWith("/crm/database") && token?.role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/crm", request.url));
+    }
+
     if (pathname.startsWith("/crm/agreement-templates") && token?.role !== "ADMIN") {
       return NextResponse.redirect(new URL("/crm", request.url));
     }

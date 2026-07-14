@@ -84,6 +84,14 @@ export default function MlsInputWizard({
   const step = MLS_INPUT_STEPS[currentStep - 1];
   const isLastStep = currentStep === MLS_INPUT_STEP_COUNT;
 
+  const fieldErrorIds = Object.keys(fieldErrors);
+  const missingFieldLabels =
+    step && fieldErrorIds.length > 0
+      ? step.fields
+          .filter((field) => fieldErrorIds.includes(field.id))
+          .map((field) => field.label ?? field.id)
+      : [];
+
   useEffect(() => {
     if (skipStepScrollRef.current) {
       skipStepScrollRef.current = false;
@@ -91,6 +99,23 @@ export default function MlsInputWizard({
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentStep]);
+
+  useEffect(() => {
+    const errorIds = Object.keys(fieldErrors);
+    if (!step || errorIds.length === 0) return;
+
+    const firstErrorFieldId = step.fields.find((field) => errorIds.includes(field.id))?.id;
+    if (!firstErrorFieldId) return;
+
+    const container = document.getElementById(`mls-field-${firstErrorFieldId}`);
+    if (!container) return;
+
+    container.scrollIntoView({ behavior: "smooth", block: "center" });
+    const focusable = container.querySelector<HTMLElement>(
+      'input:not([type="hidden"]), textarea, select, button, [tabindex]:not([tabindex="-1"])',
+    );
+    focusable?.focus({ preventScroll: true });
+  }, [fieldErrors, step]);
 
   const handleChange = useCallback((fieldId: string, value: unknown) => {
     setValues((prev) => ({ ...prev, [fieldId]: value }));
@@ -207,9 +232,8 @@ export default function MlsInputWizard({
       <Box
         sx={{
           display: "flex",
-          flexWrap: "wrap",
-          gap: 1.5,
-          justifyContent: "space-between",
+          flexDirection: "column",
+          gap: 1,
           position: "sticky",
           bottom: 0,
           py: 2,
@@ -218,67 +242,82 @@ export default function MlsInputWizard({
           borderColor: "divider",
         }}
       >
-        <Stack direction="row" spacing={1}>
-          {listingId ? (
+        {missingFieldLabels.length > 0 ? (
+          <Typography variant="body2" color="error" role="alert">
+            Please fix: {missingFieldLabels.join(", ")}
+          </Typography>
+        ) : null}
+
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1.5,
+            justifyContent: "space-between",
+          }}
+        >
+          <Stack direction="row" spacing={1}>
+            {listingId ? (
+              <Button
+                component={NextLink}
+                href={buildListingDocumentsPath(listingId)}
+                variant="text"
+                color="inherit"
+              >
+                Listing agreement
+              </Button>
+            ) : null}
             <Button
               component={NextLink}
-              href={buildListingDocumentsPath(listingId)}
+              href={LISTING_INTAKE_PATH}
               variant="text"
               color="inherit"
             >
-              Listing agreement
+              Simple form
             </Button>
-          ) : null}
-          <Button
-            component={NextLink}
-            href={LISTING_INTAKE_PATH}
-            variant="text"
-            color="inherit"
-          >
-            Simple form
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={handleSaveLater}
-            disabled={draftPending || submitPending}
-          >
-            {draftPending ? "Saving…" : "Save & continue later"}
-          </Button>
-          {listingId ? (
-            <MlsDraftDeleteButton
-              listingId={listingId}
-              label="Discard draft"
-              redirectTo="/account/listings/new/mls-input?new=1"
-            />
-          ) : null}
-        </Stack>
+            <Button
+              variant="outlined"
+              onClick={handleSaveLater}
+              disabled={draftPending || submitPending}
+            >
+              {draftPending ? "Saving…" : "Save & continue later"}
+            </Button>
+            {listingId ? (
+              <MlsDraftDeleteButton
+                listingId={listingId}
+                label="Discard draft"
+                redirectTo="/account/listings/new/mls-input?new=1"
+              />
+            ) : null}
+          </Stack>
 
-        <Stack direction="row" spacing={1}>
-          <Button
-            variant="outlined"
-            onClick={handleBack}
-            disabled={currentStep === 1 || draftPending || submitPending}
-          >
-            Back
-          </Button>
-          {isLastStep ? (
+          <Stack direction="row" spacing={1}>
             <Button
-              variant="contained"
-              onClick={() => void handleSubmit()}
-              disabled={draftPending || submitPending}
+              variant="outlined"
+              onClick={handleBack}
+              disabled={currentStep === 1 || draftPending || submitPending}
             >
-              {submitPending ? "Submitting…" : "Submit listing"}
+              Back
             </Button>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={handleNext}
-              disabled={draftPending || submitPending}
-            >
-              {draftPending ? "Saving…" : "Next"}
-            </Button>
-          )}
-        </Stack>
+            {isLastStep ? (
+              <Button
+                variant="contained"
+                onClick={() => void handleSubmit()}
+                disabled={draftPending || submitPending}
+              >
+                {submitPending ? "Submitting…" : "Submit listing"}
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={handleNext}
+                disabled={draftPending || submitPending}
+              >
+                {draftPending ? "Saving…" : "Next"}
+              </Button>
+            )}
+          </Stack>
+        </Box>
       </Box>
 
       <Typography variant="caption" color="text.secondary" sx={{ textAlign: "center" }}>

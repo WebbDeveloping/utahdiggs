@@ -27,7 +27,7 @@ export function buildUarAgreementPreviewInput(): UarAgreementPdfInput {
     sellerFirstName: "Michael",
     sellerLastName: "Anderson",
   });
-  formValues.buyerAgentPercent = "1.5";
+  formValues.buyerAgentPercent = "2.5";
   formValues.buyerAgentDollar = "10000";
   formValues.signedDate = "2026-07-01";
   formValues.multipleOwners = "YES";

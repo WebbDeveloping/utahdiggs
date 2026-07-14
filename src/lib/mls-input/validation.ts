@@ -19,7 +19,7 @@ export const step2Schema = z.object({
 export const step3Schema = z.object({
     "listingAddress": z.object({ street: z.string().min(1, "Street is required"), city: z.string().min(1, "City is required"), state: z.string().min(1, "State is required"), zip: z.string().min(1, "ZIP is required") }),
     "listingCounty": z.string().min(1, "Required"),
-    "listingQuadrant": z.enum(["NW", "NE", "SW", "SE"] as const, { message: "Required" }),
+    "listingQuadrant": z.enum(["NW", "NE", "SW", "SE"] as const).optional(),
     "listingCoordinates": z.string().optional(),
     "nonStandardAddress": z.enum(["No", "Yes"] as const, { message: "Required" }),
     "directionsRemarks": z.string().min(1, "Required"),
@@ -152,7 +152,7 @@ export const fullMlsInputSchema = z.object({
   "secondaryOwnerEmail": z.string().email("Valid email is required"),
   "listingAddress": z.object({ street: z.string().min(1, "Street is required"), city: z.string().min(1, "City is required"), state: z.string().min(1, "State is required"), zip: z.string().min(1, "ZIP is required") }),
   "listingCounty": z.string().min(1, "Required"),
-  "listingQuadrant": z.enum(["NW", "NE", "SW", "SE"] as const, { message: "Required" }),
+  "listingQuadrant": z.enum(["NW", "NE", "SW", "SE"] as const).optional(),
   "listingCoordinates": z.string().optional(),
   "nonStandardAddress": z.enum(["No", "Yes"] as const, { message: "Required" }),
   "directionsRemarks": z.string().min(1, "Required"),

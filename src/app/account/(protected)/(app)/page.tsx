@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
-import { getAccountOverviewMetrics } from "@/lib/consumer/listing-overview-metrics";
+import { getAccountOverviewData } from "@/lib/consumer/listing-overview-metrics";
 import { getCustomerListings } from "@/lib/consumer/listings-query";
 import AccountDashboard from "@/components/account/AccountDashboard";
 
@@ -25,17 +26,31 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
   }
 
   const params = await searchParams;
-  const [listings, metrics] = await Promise.all([
+  const listingIdParam = getParam(params.listing) ?? null;
+
+  const [listings, overview] = await Promise.all([
     getCustomerListings(user.id),
-    getAccountOverviewMetrics(user.id, user.email),
+    getAccountOverviewData(user.id, user.email, listingIdParam),
   ]);
 
+  const mlsPromptListingId =
+    getParam(params.mlsPrompt) === "1" ? (getParam(params.listing) ?? null) : null;
+
   return (
-    <AccountDashboard
-      user={user}
-      listings={listings}
-      metrics={metrics}
-      draftSaved={getParam(params.draftSaved) === "1"}
-    />
+    <Suspense fallback={null}>
+      <AccountDashboard
+        user={user}
+        listings={listings}
+        metrics={overview.metrics}
+        priceHealth={overview.priceHealth}
+        pendingOffer={overview.pendingOffer}
+        recentShowings={overview.recentShowings}
+        marketTeaser={overview.marketTeaser}
+        selectableListings={overview.selectableListings}
+        draftSaved={getParam(params.draftSaved) === "1"}
+        submitted={getParam(params.submitted) === "1"}
+        mlsPromptListingId={mlsPromptListingId}
+      />
+    </Suspense>
   );
 }

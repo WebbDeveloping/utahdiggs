@@ -7,6 +7,8 @@ import { getSessionUser } from "@/lib/crm/access";
 import type { ContactRoleLabel } from "@/lib/crm/contact-roles";
 import type { ListingStatusValue } from "@/lib/crm/listing-status";
 import { prisma } from "@/lib/db";
+import { isListingPhoto } from "@/lib/storage/document-classify";
+import { deleteManagedBlobs } from "@/lib/storage/blob";
 
 export type ContactDeleteActionState = {
   error?: string;
@@ -27,6 +29,8 @@ export type ContactDeletePreview = {
   email: string;
   listings: ContactDeletePreviewListing[];
   customer: { id: string; name: string | null } | null;
+  photoCount: number;
+  documentCount: number;
 };
 
 async function requireAdminSession() {
@@ -36,6 +40,47 @@ async function requireAdminSession() {
     throw new Error("Unauthorized");
   }
   return user;
+}
+
+async function getListingMediaForDelete(listingIds: string[]) {
+  if (listingIds.length === 0) {
+    return {
+      urls: [] as string[],
+      photoCount: 0,
+      documentCount: 0,
+    };
+  }
+
+  const [documents, offerDocuments] = await Promise.all([
+    prisma.document.findMany({
+      where: { listingId: { in: listingIds } },
+      select: { name: true, url: true },
+    }),
+    prisma.offerDocument.findMany({
+      where: { offer: { listingId: { in: listingIds } } },
+      select: { url: true },
+    }),
+  ]);
+
+  let photoCount = 0;
+  let documentCount = 0;
+  const urls: string[] = [];
+
+  for (const doc of documents) {
+    urls.push(doc.url);
+    if (isListingPhoto(doc)) {
+      photoCount += 1;
+    } else {
+      documentCount += 1;
+    }
+  }
+
+  for (const doc of offerDocuments) {
+    urls.push(doc.url);
+    documentCount += 1;
+  }
+
+  return { urls, photoCount, documentCount };
 }
 
 export async function getContactDeletePreviewAction(
@@ -71,10 +116,14 @@ export async function getContactDeletePreviewAction(
       return { error: "Contact not found." };
     }
 
-    const customer = await prisma.customer.findUnique({
-      where: { email: contact.email },
-      select: { id: true, name: true },
-    });
+    const listingIds = contact.listings.map((link) => link.listing.id);
+    const [{ photoCount, documentCount }, customer] = await Promise.all([
+      getListingMediaForDelete(listingIds),
+      prisma.customer.findUnique({
+        where: { email: contact.email },
+        select: { id: true, name: true },
+      }),
+    ]);
 
     return {
       preview: {
@@ -89,6 +138,8 @@ export async function getContactDeletePreviewAction(
           role: link.role,
         })),
         customer,
+        photoCount,
+        documentCount,
       },
     };
   } catch (error) {
@@ -125,6 +176,7 @@ export async function deleteContactAction(
     }
 
     const listingIds = contact.listings.map((link) => link.listingId);
+    const { urls } = await getListingMediaForDelete(listingIds);
 
     await prisma.$transaction(async (tx) => {
       if (listingIds.length > 0) {
@@ -141,6 +193,8 @@ export async function deleteContactAction(
         where: { id: contact.id },
       });
     });
+
+    await deleteManagedBlobs(urls);
 
     revalidatePath("/crm/contacts");
     revalidatePath("/crm/listings");

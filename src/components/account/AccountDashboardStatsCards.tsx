@@ -4,8 +4,8 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { formatAccountNumber } from "@/lib/consumer/format-date";
-import { domBadgeColor } from "@/lib/consumer/listing-stats";
+import { formatAccountDate, formatAccountNumber } from "@/lib/consumer/format-date";
+import { domBadgeColor } from "@/lib/consumer/coaching-rules";
 import { formatCurrency } from "@/lib/crm/format";
 import type { ListingOverviewMetrics } from "@/types/consumer-listing-detail";
 
@@ -17,10 +17,12 @@ function MetricCard({
   label,
   value,
   chip,
+  hint,
 }: {
   label: string;
   value: string;
   chip?: ReactNode;
+  hint?: string;
 }) {
   return (
     <Paper variant="outlined" sx={{ p: 2.5, borderRadius: 2, height: "100%" }}>
@@ -34,6 +36,11 @@ function MetricCard({
           </Typography>
           {chip}
         </Stack>
+        {hint ? (
+          <Typography variant="caption" color="text.secondary">
+            {hint}
+          </Typography>
+        ) : null}
       </Stack>
     </Paper>
   );
@@ -48,7 +55,16 @@ export default function AccountDashboardStatsCards({
   metrics,
 }: AccountDashboardStatsCardsProps) {
   const showingsOffersValue =
-    metrics != null ? `${metrics.totalShowings} / ${metrics.offerCount}` : "—";
+    metrics != null
+      ? `${metrics.totalShowings} / ${metrics.pendingOfferCount}`
+      : "—";
+
+  const reductionsHint =
+    metrics != null &&
+    metrics.priceReductionCount > 0 &&
+    metrics.priceReductionDate
+      ? `Last reduced ${formatAccountDate(metrics.priceReductionDate)}`
+      : undefined;
 
   return (
     <Grid container spacing={2}>
@@ -75,12 +91,20 @@ export default function AccountDashboardStatsCards({
         <MetricCard
           label="Showings last week"
           value={formatMetricNumber(metrics?.showingsLastWeek)}
+          hint={
+            metrics != null ? `Total ${formatMetricNumber(metrics.totalShowings)}` : undefined
+          }
         />
       </Grid>
       <Grid size={{ xs: 6, sm: 4, md: 3 }}>
         <MetricCard
-          label="New saves last week"
-          value={formatMetricNumber(metrics?.newSavesLastWeek)}
+          label="Pending offers"
+          value={formatMetricNumber(metrics?.pendingOfferCount)}
+          hint={
+            metrics != null
+              ? `${formatMetricNumber(metrics.offerCount)} total submitted`
+              : undefined
+          }
         />
       </Grid>
       <Grid size={{ xs: 6, sm: 4, md: 3 }}>
@@ -88,32 +112,30 @@ export default function AccountDashboardStatsCards({
       </Grid>
       <Grid size={{ xs: 6, sm: 4, md: 3 }}>
         <MetricCard
-          label="Average showings per week"
-          value={
-            metrics?.avgShowingsPerWeek != null
-              ? metrics.avgShowingsPerWeek.toLocaleString("en-US", {
-                  maximumFractionDigits: 1,
-                  minimumFractionDigits: 0,
-                })
-              : "—"
+          label="Saves"
+          value={formatMetricNumber(metrics?.latestSaves ?? metrics?.newSavesLastWeek)}
+          hint={
+            metrics?.newSavesLastWeek != null
+              ? `+${formatAccountNumber(metrics.newSavesLastWeek)} last week`
+              : undefined
           }
         />
       </Grid>
       <Grid size={{ xs: 6, sm: 4, md: 3 }}>
-        <MetricCard label="Showings / offers" value={showingsOffersValue} />
-      </Grid>
-      <Grid size={{ xs: 6, sm: 4, md: 3 }}>
         <MetricCard
-          label="Price reductions"
-          value={formatMetricNumber(metrics?.priceReductionCount)}
+          label="Showings / pending offers"
+          value={showingsOffersValue}
         />
       </Grid>
-      <Grid size={{ xs: 6, sm: 4, md: 3 }}>
-        <MetricCard
-          label="Days since last drop"
-          value={formatMetricNumber(metrics?.daysSinceLastDrop)}
-        />
-      </Grid>
+      {metrics != null && metrics.priceReductionCount > 0 ? (
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+          <MetricCard
+            label="Price reductions"
+            value={formatMetricNumber(metrics.priceReductionCount)}
+            hint={reductionsHint}
+          />
+        </Grid>
+      ) : null}
     </Grid>
   );
 }

@@ -3,8 +3,8 @@ import type { OnboardingStatus, ServicePlan } from "@/generated/prisma/client";
 export type OnboardingStepId =
   | "plan"
   | "agreement"
-  | "photos"
   | "call"
+  | "photos"
   | "expectations"
   | "mls";
 
@@ -40,21 +40,21 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     required: true,
   },
   {
-    id: "photos",
+    id: "call",
     order: 3,
-    title: "Add photos",
-    description: "Upload listing photos or request a professional tour",
-    href: (id) => `/account/onboarding/${id}/photos`,
+    title: "Schedule your call",
+    description: "Pick a time to connect with our team",
+    href: (id) => `/account/onboarding/${id}/call`,
     requires: ["agreement"],
     required: true,
   },
   {
-    id: "call",
+    id: "photos",
     order: 4,
-    title: "Schedule your call",
-    description: "Pick a time to connect with our team",
-    href: (id) => `/account/onboarding/${id}/call`,
-    requires: ["photos"],
+    title: "Add photos",
+    description: "Upload listing photos or request a professional tour",
+    href: (id) => `/account/onboarding/${id}/photos`,
+    requires: ["call"],
     required: true,
   },
   {
@@ -72,7 +72,7 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     title: "MLS listing intake",
     description: "Complete the full WFRMLS form (~20–25 min)",
     href: (id) => `/account/listings/new/mls-input?draft=${encodeURIComponent(id)}`,
-    requires: ["call"],
+    requires: ["photos"],
     required: true,
   },
 ];
@@ -90,8 +90,8 @@ export type OnboardingListingFields = {
 const STATUS_ORDER: OnboardingStatus[] = [
   "PLAN_PENDING",
   "AGREEMENT_PENDING",
-  "PHOTOS_PENDING",
   "CALL_PENDING",
+  "PHOTOS_PENDING",
   "MLS_INTAKE_PENDING",
   "ONBOARDING_COMPLETE",
 ];
@@ -115,11 +115,13 @@ export function isStepComplete(
       return listing.servicePlan != null;
     case "agreement":
       return listing.agreementSignedAt != null;
-    case "photos":
-      return onboardingStatusIndex(listing.onboardingStatus) >=
-        onboardingStatusIndex("CALL_PENDING");
     case "call":
       return listing.scheduledCallAt != null;
+    case "photos":
+      return (
+        onboardingStatusIndex(listing.onboardingStatus) >=
+        onboardingStatusIndex("MLS_INTAKE_PENDING")
+      );
     case "expectations":
       return true;
     case "mls":
@@ -148,8 +150,13 @@ export function getCurrentStepId(listing: OnboardingListingFields): OnboardingSt
   }
   if (!listing.servicePlan) return "plan";
   if (!listing.agreementSignedAt) return "agreement";
-  if (listing.onboardingStatus === "PHOTOS_PENDING") return "photos";
   if (!listing.scheduledCallAt) return "call";
+  if (
+    onboardingStatusIndex(listing.onboardingStatus) <
+    onboardingStatusIndex("MLS_INTAKE_PENDING")
+  ) {
+    return "photos";
+  }
   return "mls";
 }
 
@@ -163,10 +170,10 @@ export function formatOnboardingStatus(status: OnboardingStatus): string {
       return "Choose plan";
     case "AGREEMENT_PENDING":
       return "Sign agreement";
-    case "PHOTOS_PENDING":
-      return "Add photos";
     case "CALL_PENDING":
       return "Schedule call";
+    case "PHOTOS_PENDING":
+      return "Add photos";
     case "MLS_INTAKE_PENDING":
       return "MLS intake";
     case "ONBOARDING_COMPLETE":

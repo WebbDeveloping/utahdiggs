@@ -1,5 +1,7 @@
 /**
- * Sync Listings, Weekly Stats, and Market Data from the duplicate Airtable base.
+ * Sync Weekly Stats and Market Data from Airtable onto existing Postgres listings.
+ * Weekly stats match by MLS# (then street address); market data matches by city.
+ * Does not create or update Listing rows.
  *
  * Usage:
  *   npm run sync:airtable
@@ -24,7 +26,7 @@ async function main() {
     adapter: new PrismaPg({ connectionString }),
   });
 
-  console.log("Syncing Airtable → Postgres (listings, weekly stats, market data)...");
+  console.log("Syncing Airtable → Postgres (weekly stats, market data)...");
   const result = await syncAirtableData(prisma);
   console.log(JSON.stringify(result, null, 2));
   await prisma.$disconnect();

@@ -91,6 +91,7 @@ describe("parseUarAgreementFormData", () => {
     assert.equal(defaults.propertyAddress, "123 Main St");
     assert.equal(defaults.sellerEmail, "jane@example.com");
     assert.equal(defaults.multipleOwners, "NO");
+    assert.equal(defaults.buyerAgentPercent, "2.5");
   });
 });
 

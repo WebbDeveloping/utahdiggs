@@ -116,8 +116,9 @@ export default function DeleteContactButton({
               <>
                 <DialogContentText>
                   This permanently deletes <strong>{contactName}</strong> (
-                  {contactEmail}) and all related CRM data listed below. This
-                  cannot be undone.
+                  {contactEmail}), their linked listings, and all uploaded
+                  photos and documents for those listings. This cannot be
+                  undone.
                 </DialogContentText>
 
                 <Stack spacing={0.75}>
@@ -137,6 +138,15 @@ export default function DeleteContactButton({
                       </Typography>
                     ))
                   )}
+                </Stack>
+
+                <Stack spacing={0.5}>
+                  <Typography variant="subtitle2">Files to delete</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {preview.photoCount + preview.documentCount === 0
+                      ? "No listing photos or documents."
+                      : `${preview.photoCount} photo${preview.photoCount === 1 ? "" : "s"} and ${preview.documentCount} document${preview.documentCount === 1 ? "" : "s"} will be permanently removed from storage.`}
+                  </Typography>
                 </Stack>
 
                 <Stack spacing={0.5}>

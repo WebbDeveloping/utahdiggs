@@ -251,7 +251,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "listingQuadrant",
         "label": "Quadrant",
         "type": "radio",
-        "required": true,
+        "status": "hidden-in-jotform",
         "description": "NW, NE, SW, or SE area of the city (WFRMLS requirement).",
         "options": [
           "NW",
@@ -270,9 +270,10 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       },
       {
         "id": "nonStandardAddress",
-        "label": "Is this a non-standard address? (See directions)",
+        "label": "Is this a non-standard address?",
         "type": "radio",
         "required": true,
+        "description": "Choose Yes if the property is hard to find from the street address alone (for example rural, gated, or no formal street address). You will be asked for directions.",
         "options": [
           "No",
           "Yes"
@@ -1432,7 +1433,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "q98-commentsto",
         "type": "textarea",
-        "label": "Comments To Glide RE",
+        "label": "Comments To Utah Digs",
         "placeholder": "These comments will only be seen by us.  Any special features, situations, concerns etc."
       }
     ]
@@ -1446,10 +1447,11 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "field-218",
         "type": "content",
-        "content": "Photos\nIf you have your own photos you can upload now. We recommend uploading later in your seller account under \"manage your listing\" to avoid resetting this form if files are too large. We will need 2 exterior and 3 interior photos minimum to list on the MLS.\n** A professional photo tour is included with the Full Service Listing and will be scheduled upon receipt of your listing agreement and this form**\n"
+        "content": "Photos\nIf you have your own photos you can upload now. We recommend uploading later in your seller app/portal under \"manage your listing\" to avoid resetting this form if files are too large. We will need 2 exterior and 3 interior photos minimum to list on the MLS.\n** A professional photo tour is included with the Full Service Listing and will be scheduled upon receipt of your listing agreement and this form**\n"
       },
       {
         "id": "field-44",
+        "label": "Property photos",
         "type": "file",
         "multiple": true
       }
