@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import CrmMlsIntakePrintView from "./CrmMlsIntakePrintView";
-import CrmMlsIntakeView from "./CrmMlsIntakeView";
+import CrmMlsIntakeView, { type CrmMlsIntakePhoto } from "./CrmMlsIntakeView";
 import type { MlsInputStep } from "@/lib/mls-input/schema";
 
 type CrmListingTab = "summary" | "intake" | "print";
@@ -20,6 +20,7 @@ type CrmListingDetailTabsProps = {
     state: string;
     zip: string;
   };
+  photos?: CrmMlsIntakePhoto[];
   summary: React.ReactNode;
 };
 
@@ -37,6 +38,7 @@ export default function CrmListingDetailTabs({
   steps,
   intakeData,
   listing,
+  photos = [],
   summary,
 }: CrmListingDetailTabsProps) {
   const searchParams = useSearchParams();
@@ -62,7 +64,12 @@ export default function CrmListingDetailTabs({
 
       {tab === 0 ? summary : null}
       {hasIntake && tab === 1 ? (
-        <CrmMlsIntakeView steps={steps} data={intakeData} />
+        <CrmMlsIntakeView
+          steps={steps}
+          data={intakeData}
+          listing={listing}
+          photos={photos}
+        />
       ) : null}
       {hasIntake && tab === 2 ? (
         <CrmMlsIntakePrintView steps={steps} data={intakeData} listing={listing} />

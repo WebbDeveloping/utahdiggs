@@ -4,7 +4,7 @@
 
 - [x] **Buyer commission default** — Make the buyers % in onboarding default to 2.5% (2½ percent).
 
-- [ ] **Bulk photo upload for listings** — Add bulk photo upload for a listing, capped at **20 photos max**.
+- [x] **Bulk photo upload for listings** — Add bulk photo upload for a listing, capped at **20 photos max**.
 
 - [x] **"Your market" page** — Slim city snapshot only (inventory / sales / pricing). Not a second coaching engine; Overview keeps price health + CTA. See `docs/coaching-rules/your-market.md`.
 
@@ -25,7 +25,7 @@ UX / field fixes for `/account/listings/new/mls-input`.
 
 - [x] **Validation: scroll / focus first error on Next** — On failed Next/Submit, scroll/focus first invalid field and list missing labels near the action buttons.
 
-- [ ] **Solar follow-up questions when Solar = Yes** — Today “Does the property have solar?” is Yes/No only (HOA already has conditional follow-ups; solar does not). When **Yes**, show additional fields. Recommended starter set (Utah / UAR solar guidance + MLS practicality):
+- [x] **Solar follow-up questions when Solar = Yes** — Today “Does the property have solar?” is Yes/No only (HOA already has conditional follow-ups; solar does not). When **Yes**, show additional fields. Recommended starter set (Utah / UAR solar guidance + MLS practicality):
   - **Ownership** (required): Owned / Leased / Power Purchase Agreement (PPA) — must-have.
   - **If Leased or PPA** (dynamic): solar company name; approx. monthly payment; remaining term / expiration; is the agreement transferable to buyer?
   - **Useful for all Yes answers**: year installed; system size (kW) if known; battery storage? (Yes/No/Unknown); any loan or lien (e.g. PACE / UCC)? (Yes/No/Unknown); documents available to upload later? (Yes/No).
@@ -40,7 +40,7 @@ UX / field fixes for `/account/listings/new/mls-input`.
 ## MLS handoff (VA workflow)
 
 - [x] **MLS Queue page** — `/crm/mls-queue` with submitted intakes, Open intake / Approve, admin VA settings (default Agent + fallback email). Intake-submitted emails route to the configured VA.
-- [ ] **Easy MLS copy workflow** — Think through a simple way a VA can copy all MLS info and photos from our site into the actual MLS, then get the MLS# back to us.
+- [x] **Easy MLS copy workflow** — Think through a simple way a VA can copy all MLS info and photos from our site into the actual MLS, then get the MLS# back to us.
 
 ## Offers
 
@@ -51,5 +51,5 @@ UX / field fixes for `/account/listings/new/mls-input`.
 - [ ] **Homeowner identity verification** — Figure out how to verify the homeowner is who they say they are. Can be done manually by Blair on a video call; may need a way to collect photo ID or similar.
 
 - [x] **Require MLS# on approve** — Approve action and dialog require MLS number before going live.
-- [ ] **Improve the approve flow** — Replace the simple “approve” button with a better internal review process:
+- [x] **Improve the approve flow** — Replace the simple “approve” button with a better internal review process:
   - Checklist of everything the team needs to verify before approval (listing details, sq ft, owner identity, etc.)

@@ -80,6 +80,16 @@ export type MlsInputFormValues = {
   "hoaContactPhone"?: string;
   "shortTermRentals"?: string;
   "solar"?: string;
+  "solarOwnership"?: string;
+  "solarYearInstalled"?: string;
+  "solarSystemSizeKw"?: string;
+  "solarBatteryStorage"?: string;
+  "solarLoanOrLien"?: string;
+  "solarDocsAvailable"?: string;
+  "solarCompanyName"?: string;
+  "solarMonthlyPayment"?: string;
+  "solarAgreementTerm"?: string;
+  "solarTransferable"?: string;
   "q11-propertytype"?: string;
   "constructionStatus"?: string;
   "q51-styleof51"?: string;
@@ -403,6 +413,100 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "options": [
           "Yes",
           "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "solarOwnership",
+        "label": "Solar ownership",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Owned",
+          "Leased",
+          "Power Purchase Agreement (PPA)"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "solarYearInstalled",
+        "label": "Year installed",
+        "type": "number",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 2020"
+      },
+      {
+        "id": "solarSystemSizeKw",
+        "label": "System size (kW)",
+        "type": "number",
+        "status": "hidden-in-jotform",
+        "placeholder": "if known"
+      },
+      {
+        "id": "solarBatteryStorage",
+        "label": "Battery storage?",
+        "type": "radio",
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No",
+          "Unknown"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "solarLoanOrLien",
+        "label": "Loan or lien (e.g. PACE / UCC)?",
+        "type": "radio",
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No",
+          "Unknown"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "solarDocsAvailable",
+        "label": "Documents available to upload later?",
+        "type": "radio",
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "solarCompanyName",
+        "label": "Solar company name",
+        "type": "text",
+        "status": "hidden-in-jotform"
+      },
+      {
+        "id": "solarMonthlyPayment",
+        "label": "Approx. monthly payment",
+        "type": "currency",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., $120"
+      },
+      {
+        "id": "solarAgreementTerm",
+        "label": "Remaining term / expiration",
+        "type": "text",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 12 years left or Dec 2035"
+      },
+      {
+        "id": "solarTransferable",
+        "label": "Agreement transferable to buyer?",
+        "type": "radio",
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No",
+          "Unknown"
         ],
         "otherText": false
       }

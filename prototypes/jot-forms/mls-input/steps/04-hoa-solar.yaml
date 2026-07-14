@@ -51,3 +51,97 @@ fields:
       - "No"
     jotform:
       id: TODO
+  - id: solarOwnership
+    label: Solar ownership
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - Owned
+      - Leased
+      - Power Purchase Agreement (PPA)
+    jotform:
+      id: TODO
+      name: q_solarOwnership
+  - id: solarYearInstalled
+    label: Year installed
+    type: number
+    status: hidden-in-jotform
+    placeholder: "e.g., 2020"
+    jotform:
+      id: TODO
+      name: q_solarYearInstalled
+  - id: solarSystemSizeKw
+    label: System size (kW)
+    type: number
+    status: hidden-in-jotform
+    placeholder: "if known"
+    jotform:
+      id: TODO
+      name: q_solarSystemSizeKw
+  - id: solarBatteryStorage
+    label: Battery storage?
+    type: radio
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+      - Unknown
+    jotform:
+      id: TODO
+      name: q_solarBatteryStorage
+  - id: solarLoanOrLien
+    label: "Loan or lien (e.g. PACE / UCC)?"
+    type: radio
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+      - Unknown
+    jotform:
+      id: TODO
+      name: q_solarLoanOrLien
+  - id: solarDocsAvailable
+    label: Documents available to upload later?
+    type: radio
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_solarDocsAvailable
+  - id: solarCompanyName
+    label: Solar company name
+    type: text
+    status: hidden-in-jotform
+    jotform:
+      id: TODO
+      name: q_solarCompanyName
+  - id: solarMonthlyPayment
+    label: Approx. monthly payment
+    type: currency
+    status: hidden-in-jotform
+    placeholder: "e.g., $120"
+    jotform:
+      id: TODO
+      name: q_solarMonthlyPayment
+  - id: solarAgreementTerm
+    label: Remaining term / expiration
+    type: text
+    status: hidden-in-jotform
+    placeholder: "e.g., 12 years left or Dec 2035"
+    jotform:
+      id: TODO
+      name: q_solarAgreementTerm
+  - id: solarTransferable
+    label: Agreement transferable to buyer?
+    type: radio
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+      - Unknown
+    jotform:
+      id: TODO
+      name: q_solarTransferable

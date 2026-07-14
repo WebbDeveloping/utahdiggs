@@ -237,6 +237,10 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                         listingId={listing.id}
                         address={listing.address}
                         listingSlug={listing.listingSlug}
+                        photoCount={listing.photoCount}
+                        beds={listing.beds}
+                        baths={listing.baths}
+                        sqft={listing.sqft}
                       />
                     ) : null}
                   </TableCell>

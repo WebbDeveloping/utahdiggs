@@ -7,17 +7,22 @@ import {
   type CrmSessionUser,
 } from "@/lib/crm/access";
 import { prisma } from "@/lib/db";
+import { isListingPhoto } from "@/lib/storage/document-classify";
 
 export type MlsQueueListing = {
   id: string;
   address: string;
   city: string;
   state: string;
+  beds: string | null;
+  baths: string | null;
+  sqft: string | null;
   listingSlug: string;
   mlsNumber: string | null;
   submittedAt: Date | null;
   intakeSubmittedAt: Date | null;
   sellerName: string;
+  photoCount: number;
   assignedAgent: {
     id: string;
     name: string | null;
@@ -45,6 +50,9 @@ export async function getMlsQueueListings(
       address: true,
       city: true,
       state: true,
+      beds: true,
+      baths: true,
+      sqft: true,
       listingSlug: true,
       mlsNumber: true,
       submittedAt: true,
@@ -56,6 +64,9 @@ export async function getMlsQueueListings(
         select: { contact: { select: { name: true, email: true } } },
       },
       customer: { select: { name: true, email: true } },
+      documents: {
+        select: { url: true, name: true },
+      },
     },
   });
 
@@ -73,11 +84,15 @@ export async function getMlsQueueListings(
       address: listing.address,
       city: listing.city,
       state: listing.state,
+      beds: listing.beds,
+      baths: listing.baths,
+      sqft: listing.sqft,
       listingSlug: listing.listingSlug,
       mlsNumber: listing.mlsNumber,
       submittedAt: listing.submittedAt,
       intakeSubmittedAt: listing.listingIntake?.submittedAt ?? null,
       sellerName,
+      photoCount: listing.documents.filter((doc) => isListingPhoto(doc)).length,
       assignedAgent: listing.assignedAgent,
     };
   });

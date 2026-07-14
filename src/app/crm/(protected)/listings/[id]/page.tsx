@@ -30,6 +30,7 @@ import { getDefaultMlsVaUserId } from "@/lib/crm/mls-ops-settings";
 import { getActiveAgents, getCrmListingById } from "@/lib/crm/listing-queries";
 import { getCrmShowings } from "@/lib/crm/showing-queries";
 import { getCrmWeeklyStats } from "@/lib/crm/weekly-stat-queries";
+import { partitionListingDocuments } from "@/lib/storage/document-classify";
 import { notFound } from "next/navigation";
 
 type CrmListingDetailPageProps = {
@@ -64,6 +65,12 @@ export default async function CrmListingDetailPage({
   ]);
 
   const primarySeller = listing.contacts.find((c) => c.role === "PRIMARY")?.contact;
+  const { photos: listingPhotos } = partitionListingDocuments(listing.documents);
+  const intakePhotos = listingPhotos.map((photo) => ({
+    id: photo.id,
+    name: photo.name,
+    url: photo.url,
+  }));
 
   const summary = (
     <Stack spacing={3}>
@@ -198,6 +205,11 @@ export default async function CrmListingDetailPage({
                 listingId={listing.id}
                 address={listing.address}
                 listingSlug={listing.listingSlug}
+                photoCount={intakePhotos.length}
+                beds={listing.beds}
+                baths={listing.baths}
+                sqft={listing.sqft}
+                sellerName={primarySeller?.name ?? listing.customer?.name ?? null}
               />
             </Stack>
           ) : null}
@@ -241,6 +253,7 @@ export default async function CrmListingDetailPage({
           state: listing.state,
           zip: listing.zip,
         }}
+        photos={intakePhotos}
         summary={summary}
       />
     </>

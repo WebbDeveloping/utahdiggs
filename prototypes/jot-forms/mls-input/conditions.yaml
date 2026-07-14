@@ -48,6 +48,47 @@ rules:
       - hoaContactPhone
       - hoaRemarks
 
+  - id: solar-follow-ups
+    description: Show solar details when property has solar.
+    when:
+      field: solar
+      equals: "Yes"
+    show:
+      - solarOwnership
+      - solarYearInstalled
+      - solarSystemSizeKw
+      - solarBatteryStorage
+      - solarLoanOrLien
+      - solarDocsAvailable
+
+  - id: solar-leased-details
+    description: Show lease/PPA terms when solar is leased.
+    when:
+      all:
+        - field: solar
+          equals: "Yes"
+        - field: solarOwnership
+          equals: Leased
+    show:
+      - solarCompanyName
+      - solarMonthlyPayment
+      - solarAgreementTerm
+      - solarTransferable
+
+  - id: solar-ppa-details
+    description: Show lease/PPA terms when solar is under a PPA.
+    when:
+      all:
+        - field: solar
+          equals: "Yes"
+        - field: solarOwnership
+          equals: "Power Purchase Agreement (PPA)"
+    show:
+      - solarCompanyName
+      - solarMonthlyPayment
+      - solarAgreementTerm
+      - solarTransferable
+
   - id: level-matrix-rows
     description: Level breakdown matrix row count follows the selected number of levels.
     dynamic:

@@ -5,7 +5,7 @@ import {
   resolveCanAccessListing,
   type CrmSessionUser,
 } from "@/lib/crm/access";
-import { getPrimaryListingPhotoUrl } from "@/lib/storage/document-classify";
+import { getPrimaryListingPhotoUrl, isListingPhoto } from "@/lib/storage/document-classify";
 
 const pendingApprovalWhere = {
   status: ListingStatus.SUBMITTED,
@@ -26,6 +26,9 @@ const crmListingSelect = {
   address: true,
   city: true,
   state: true,
+  beds: true,
+  baths: true,
+  sqft: true,
   listPrice: true,
   status: true,
   listingSlug: true,
@@ -62,6 +65,7 @@ export async function getCrmListings(user: CrmSessionUser) {
   return listings.map(({ documents, ...listing }) => ({
     ...listing,
     primaryPhotoUrl: getPrimaryListingPhotoUrl(documents),
+    photoCount: documents.filter((doc) => isListingPhoto(doc)).length,
   }));
 }
 
