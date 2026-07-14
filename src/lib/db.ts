@@ -61,10 +61,15 @@ function isCachedPrismaClientValid(client: PrismaClient): boolean {
   }
 
   const listingFields = modelFieldNames(client, "Listing");
-  return (
-    (listingFields?.has("listingSlug") ?? false) &&
-    !listingFields?.has("portalSlug")
-  );
+  if (
+    !(listingFields?.has("listingSlug") ?? false) ||
+    listingFields?.has("portalSlug")
+  ) {
+    return false;
+  }
+
+  const marketDataFields = modelFieldNames(client, "MarketData");
+  return marketDataFields?.has("isManualOverride") ?? false;
 }
 
 function getPrismaClient(): PrismaClient {

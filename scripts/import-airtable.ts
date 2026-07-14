@@ -463,51 +463,42 @@ async function main() {
     const reportDate = asDate(f["Report Date"]);
     if (!city || !reportDate) continue;
 
+    const existing = await prisma.marketData.findUnique({
+      where: { city_reportDate: { city, reportDate } },
+      select: { isManualOverride: true },
+    });
+    if (existing?.isManualOverride) continue;
+
+    const marketData = {
+      airtableRecordId: record.id,
+      homesForSale: asNumber(f["Homes For Sale"]),
+      homesForSaleChangePct: asNumber(f["Homes For Sale Change Pct"]),
+      newToMarket: asNumber(f["New To Market"]),
+      newToMarketChangePct: asNumber(f["New To Market Change Pct"]),
+      homesSoldCount: asNumber(f["Homes Sold Count"]),
+      homesSoldChangePct: asNumber(f["Homes Sold Change Pct"]),
+      avgDom: asNumber(f["Avg DOM"]),
+      domChangePct: asNumber(f["DOM Change Pct"]),
+      avgHomePrice: asNumber(f["Avg Home Price"]),
+      avgHomePriceChangePct: asNumber(f["Avg Home Price Change Pct"]),
+      avgSoldPrice: asNumber(f["Avg Sold Price"]),
+      avgSoldPriceChangePct: asNumber(f["Avg Sold Price Change Pct"]),
+      pricePerSqFt: asNumber(f["Price Per Sq Ft"]),
+      pricePerSqFtChangePct: asNumber(f["Price Per Sq Ft Change Pct"]),
+      priceReductionsCount: asNumber(f["Price Reductions Count"]),
+      priceReductionsChangePct: asNumber(f["Price Reductions Change Pct"]),
+      soldToListedRatio: asString(f["Sold To Listed Ratio"]),
+      soldToListedChangePct: asNumber(f["Sold To Listed Change Pct"]),
+      isManualOverride: false,
+    };
+
     await prisma.marketData.upsert({
       where: { city_reportDate: { city, reportDate } },
-      update: {
-        airtableRecordId: record.id,
-        homesForSale: asNumber(f["Homes For Sale"]),
-        homesForSaleChangePct: asNumber(f["Homes For Sale Change Pct"]),
-        newToMarket: asNumber(f["New To Market"]),
-        newToMarketChangePct: asNumber(f["New To Market Change Pct"]),
-        homesSoldCount: asNumber(f["Homes Sold Count"]),
-        homesSoldChangePct: asNumber(f["Homes Sold Change Pct"]),
-        avgDom: asNumber(f["Avg DOM"]),
-        domChangePct: asNumber(f["DOM Change Pct"]),
-        avgHomePrice: asNumber(f["Avg Home Price"]),
-        avgHomePriceChangePct: asNumber(f["Avg Home Price Change Pct"]),
-        avgSoldPrice: asNumber(f["Avg Sold Price"]),
-        avgSoldPriceChangePct: asNumber(f["Avg Sold Price Change Pct"]),
-        pricePerSqFt: asNumber(f["Price Per Sq Ft"]),
-        pricePerSqFtChangePct: asNumber(f["Price Per Sq Ft Change Pct"]),
-        priceReductionsCount: asNumber(f["Price Reductions Count"]),
-        priceReductionsChangePct: asNumber(f["Price Reductions Change Pct"]),
-        soldToListedRatio: asNumber(f["Sold To Listed Ratio"]),
-        soldToListedChangePct: asNumber(f["Sold To Listed Change Pct"]),
-      },
+      update: marketData,
       create: {
-        airtableRecordId: record.id,
+        ...marketData,
         city,
         reportDate,
-        homesForSale: asNumber(f["Homes For Sale"]),
-        homesForSaleChangePct: asNumber(f["Homes For Sale Change Pct"]),
-        newToMarket: asNumber(f["New To Market"]),
-        newToMarketChangePct: asNumber(f["New To Market Change Pct"]),
-        homesSoldCount: asNumber(f["Homes Sold Count"]),
-        homesSoldChangePct: asNumber(f["Homes Sold Change Pct"]),
-        avgDom: asNumber(f["Avg DOM"]),
-        domChangePct: asNumber(f["DOM Change Pct"]),
-        avgHomePrice: asNumber(f["Avg Home Price"]),
-        avgHomePriceChangePct: asNumber(f["Avg Home Price Change Pct"]),
-        avgSoldPrice: asNumber(f["Avg Sold Price"]),
-        avgSoldPriceChangePct: asNumber(f["Avg Sold Price Change Pct"]),
-        pricePerSqFt: asNumber(f["Price Per Sq Ft"]),
-        pricePerSqFtChangePct: asNumber(f["Price Per Sq Ft Change Pct"]),
-        priceReductionsCount: asNumber(f["Price Reductions Count"]),
-        priceReductionsChangePct: asNumber(f["Price Reductions Change Pct"]),
-        soldToListedRatio: asNumber(f["Sold To Listed Ratio"]),
-        soldToListedChangePct: asNumber(f["Sold To Listed Change Pct"]),
       },
     });
   }

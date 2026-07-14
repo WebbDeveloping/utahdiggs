@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
+import Collapse from "@mui/material/Collapse";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
@@ -17,18 +18,22 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
 import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import NextLink from "next/link";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "@/components/ui/Logo";
 import AppShellNavPills from "@/components/layout/AppShellNavPills";
 import { formatUserRole, type CrmUserRole } from "@/lib/crm/roles";
@@ -43,7 +48,7 @@ type NavItem = {
   adminOnly?: boolean;
 };
 
-const navItems: NavItem[] = [
+const primaryNavItems: NavItem[] = [
   { label: "Dashboard", href: "/crm", icon: <DashboardOutlinedIcon /> },
   { label: "Listings", href: "/crm/listings", icon: <HomeWorkOutlinedIcon /> },
   {
@@ -55,6 +60,15 @@ const navItems: NavItem[] = [
   { label: "Contacts", href: "/crm/contacts", icon: <ContactsOutlinedIcon /> },
   { label: "Offers", href: "/crm/offers", icon: <LocalOfferOutlinedIcon />, soon: true },
   { label: "Seller requests", href: "/crm/requests", icon: <InboxOutlinedIcon />, soon: true },
+];
+
+const settingsNavItems: NavItem[] = [
+  {
+    label: "Market data",
+    href: "/crm/market-data",
+    icon: <ShowChartOutlinedIcon />,
+    adminOnly: true,
+  },
   {
     label: "Agreement templates",
     href: "/crm/agreement-templates",
@@ -76,6 +90,61 @@ const navItems: NavItem[] = [
   },
 ];
 
+const allNavItems = [...primaryNavItems, ...settingsNavItems];
+
+const navItemButtonSx = {
+  borderRadius: 2,
+  mb: 0.5,
+  "&.Mui-selected": {
+    backgroundColor: "primary.light",
+    color: "primary.dark",
+    "& .MuiListItemIcon-root": { color: "primary.main" },
+  },
+} as const;
+
+function isNavItemActive(pathname: string, href: string) {
+  return href === "/crm" ? pathname === "/crm" : pathname.startsWith(href);
+}
+
+function NavItemLink({
+  item,
+  active,
+  onNavigate,
+  nested,
+}: {
+  item: NavItem;
+  active: boolean;
+  onNavigate?: () => void;
+  nested?: boolean;
+}) {
+  return (
+    <ListItemButton
+      component={NextLink}
+      href={item.href}
+      selected={active}
+      onClick={onNavigate}
+      sx={{
+        ...navItemButtonSx,
+        ...(nested ? { pl: 4 } : null),
+      }}
+    >
+      <ListItemIcon sx={{ minWidth: 40, color: "text.secondary" }}>{item.icon}</ListItemIcon>
+      <ListItemText
+        primary={item.label}
+        sx={{
+          "& .MuiListItemText-primary": {
+            fontWeight: active ? 600 : 500,
+            fontSize: nested ? 14 : 15,
+          },
+        }}
+      />
+      {item.soon ? (
+        <Chip label="Soon" size="small" variant="outlined" sx={{ height: 22, fontSize: 11 }} />
+      ) : null}
+    </ListItemButton>
+  );
+}
+
 type CrmShellProps = {
   user: {
     name?: string | null;
@@ -87,52 +156,67 @@ type CrmShellProps = {
 
 function SidebarNav({ onNavigate, userRole }: { onNavigate?: () => void; userRole: CrmUserRole }) {
   const pathname = usePathname();
+  const visibleSettings = settingsNavItems.filter(
+    (item) => !item.adminOnly || userRole === "ADMIN",
+  );
+  const settingsChildActive = visibleSettings.some((item) =>
+    isNavItemActive(pathname, item.href),
+  );
+  const [settingsOpen, setSettingsOpen] = useState(settingsChildActive);
+
+  useEffect(() => {
+    if (settingsChildActive) {
+      setSettingsOpen(true);
+    }
+  }, [settingsChildActive]);
 
   return (
     <List sx={{ px: 1.5, py: 1 }}>
-      {navItems
-        .filter((item) => !item.adminOnly || userRole === "ADMIN")
-        .map((item) => {
-        const active =
-          item.href === "/crm"
-            ? pathname === "/crm"
-            : pathname.startsWith(item.href);
+      {primaryNavItems.map((item) => (
+        <NavItemLink
+          key={item.href}
+          item={item}
+          active={isNavItemActive(pathname, item.href)}
+          onNavigate={onNavigate}
+        />
+      ))}
 
-        return (
+      {visibleSettings.length > 0 ? (
+        <>
           <ListItemButton
-            key={item.href}
-            component={NextLink}
-            href={item.href}
-            selected={active}
-            onClick={onNavigate}
-            sx={{
-              borderRadius: 2,
-              mb: 0.5,
-              "&.Mui-selected": {
-                backgroundColor: "primary.light",
-                color: "primary.dark",
-                "& .MuiListItemIcon-root": { color: "primary.main" },
-              },
-            }}
+            onClick={() => setSettingsOpen((open) => !open)}
+            selected={settingsChildActive && !settingsOpen}
+            sx={navItemButtonSx}
           >
             <ListItemIcon sx={{ minWidth: 40, color: "text.secondary" }}>
-              {item.icon}
+              <SettingsOutlinedIcon />
             </ListItemIcon>
             <ListItemText
-              primary={item.label}
+              primary="Settings"
               sx={{
                 "& .MuiListItemText-primary": {
-                  fontWeight: active ? 600 : 500,
+                  fontWeight: settingsChildActive ? 600 : 500,
                   fontSize: 15,
                 },
               }}
             />
-            {item.soon ? (
-              <Chip label="Soon" size="small" variant="outlined" sx={{ height: 22, fontSize: 11 }} />
-            ) : null}
+            {settingsOpen ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-        );
-      })}
+          <Collapse in={settingsOpen} timeout="auto" unmountOnExit>
+            <List disablePadding>
+              {visibleSettings.map((item) => (
+                <NavItemLink
+                  key={item.href}
+                  item={item}
+                  active={isNavItemActive(pathname, item.href)}
+                  onNavigate={onNavigate}
+                  nested
+                />
+              ))}
+            </List>
+          </Collapse>
+        </>
+      ) : null}
     </List>
   );
 }
@@ -197,7 +281,7 @@ function SidebarContent({
 export default function CrmShell({ user, children }: CrmShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const pillItems = navItems
+  const pillItems = allNavItems
     .filter((item) => !item.adminOnly || user.role === "ADMIN")
     .map(({ label, href, icon, soon }) => ({
       label,

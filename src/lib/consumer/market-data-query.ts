@@ -49,7 +49,7 @@ export async function getSellerMarketData(
       avgSoldPrice: row.avgSoldPrice?.toString() ?? null,
       pricePerSqFt: row.pricePerSqFt?.toString() ?? null,
       priceReductionsCount: row.priceReductionsCount,
-      soldToListedRatio: row.soldToListedRatio?.toString() ?? null,
+      soldToListedRatio: row.soldToListedRatio ?? null,
     }))
     .sort((a, b) => a.city.localeCompare(b.city));
 }

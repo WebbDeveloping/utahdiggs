@@ -406,25 +406,26 @@ model MarketData {
   airtableRecordId String?  @unique
   city             String
   reportDate       DateTime @db.Date
+  isManualOverride Boolean  @default(false)
 
-  homesForSale            Int?
-  homesForSaleChangePct   Decimal? @db.Decimal(8, 4)
-  newToMarket             Int?
-  newToMarketChangePct    Decimal? @db.Decimal(8, 4)
-  homesSoldCount          Int?
-  homesSoldChangePct      Decimal? @db.Decimal(8, 4)
-  avgDom                  Int?
-  domChangePct            Decimal? @db.Decimal(8, 4)
-  avgHomePrice            Decimal? @db.Decimal(14, 2)
-  avgHomePriceChangePct   Decimal? @db.Decimal(8, 4)
-  avgSoldPrice            Decimal? @db.Decimal(14, 2)
-  avgSoldPriceChangePct   Decimal? @db.Decimal(8, 4)
-  pricePerSqFt            Decimal? @db.Decimal(10, 2)
-  pricePerSqFtChangePct   Decimal? @db.Decimal(8, 4)
-  priceReductionsCount    Int?
+  homesForSale             Int?
+  homesForSaleChangePct    Decimal? @db.Decimal(8, 4)
+  newToMarket              Int?
+  newToMarketChangePct     Decimal? @db.Decimal(8, 4)
+  homesSoldCount           Int?
+  homesSoldChangePct       Decimal? @db.Decimal(8, 4)
+  avgDom                   Int?
+  domChangePct             Decimal? @db.Decimal(8, 4)
+  avgHomePrice             Decimal? @db.Decimal(14, 2)
+  avgHomePriceChangePct    Decimal? @db.Decimal(8, 4)
+  avgSoldPrice             Decimal? @db.Decimal(14, 2)
+  avgSoldPriceChangePct    Decimal? @db.Decimal(8, 4)
+  pricePerSqFt             Decimal? @db.Decimal(10, 2)
+  pricePerSqFtChangePct    Decimal? @db.Decimal(8, 4)
+  priceReductionsCount     Int?
   priceReductionsChangePct Decimal? @db.Decimal(8, 4)
-  soldToListedRatio       Decimal? @db.Decimal(8, 4)
-  soldToListedChangePct   Decimal? @db.Decimal(8, 4)
+  soldToListedRatio        String?
+  soldToListedChangePct    Decimal? @db.Decimal(8, 4)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

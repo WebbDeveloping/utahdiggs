@@ -32,6 +32,10 @@ export function canEditMlsOpsSettings(user: CrmSessionUser): boolean {
   return isAdmin(user.role);
 }
 
+export function canEditMarketData(user: CrmSessionUser): boolean {
+  return isAdmin(user.role);
+}
+
 export function isDefaultMlsVa(
   userId: string,
   defaultVaUserId: string | null,

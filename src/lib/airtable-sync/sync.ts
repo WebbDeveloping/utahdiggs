@@ -124,6 +124,15 @@ export async function syncAirtableData(
       continue;
     }
 
+    const existing = await prisma.marketData.findUnique({
+      where: { city_reportDate: { city, reportDate } },
+      select: { isManualOverride: true },
+    });
+    if (existing?.isManualOverride) {
+      result.marketData.skipped += 1;
+      continue;
+    }
+
     const marketData = {
       airtableRecordId: record.id,
       homesForSale: asNumber(f["Homes For Sale"]),
@@ -142,8 +151,9 @@ export async function syncAirtableData(
       pricePerSqFtChangePct: asNumber(f["Price Per Sq Ft Change Pct"]),
       priceReductionsCount: asNumber(f["Price Reductions Count"]),
       priceReductionsChangePct: asNumber(f["Price Reductions Change Pct"]),
-      soldToListedRatio: asNumber(f["Sold To Listed Ratio"]),
+      soldToListedRatio: asString(f["Sold To Listed Ratio"]),
       soldToListedChangePct: asNumber(f["Sold To Listed Change Pct"]),
+      isManualOverride: false,
     };
 
     await prisma.marketData.upsert({

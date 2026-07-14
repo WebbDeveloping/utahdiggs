@@ -319,7 +319,7 @@ export async function getAccountOverviewData(
         avgSoldPrice: marketRow.avgSoldPrice?.toString() ?? null,
         pricePerSqFt: marketRow.pricePerSqFt?.toString() ?? null,
         priceReductionsCount: marketRow.priceReductionsCount,
-        soldToListedRatio: marketRow.soldToListedRatio?.toString() ?? null,
+        soldToListedRatio: marketRow.soldToListedRatio ?? null,
       }
     : null;
 
