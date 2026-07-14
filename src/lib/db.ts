@@ -43,7 +43,8 @@ function isCachedPrismaClientValid(client: PrismaClient): boolean {
     !(
       "customer" in client &&
       "agreementSignature" in client &&
-      "emailBrandSettings" in client
+      "emailBrandSettings" in client &&
+      "mlsOpsSettings" in client
     )
   ) {
     return false;

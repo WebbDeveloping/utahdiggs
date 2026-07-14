@@ -39,6 +39,7 @@ UX / field fixes for `/account/listings/new/mls-input`.
 
 ## MLS handoff (VA workflow)
 
+- [x] **MLS Queue page** — `/crm/mls-queue` with submitted intakes, Open intake / Approve, admin VA settings (default Agent + fallback email). Intake-submitted emails route to the configured VA.
 - [ ] **Easy MLS copy workflow** — Think through a simple way a VA can copy all MLS info and photos from our site into the actual MLS, then get the MLS# back to us.
 
 ## Offers
@@ -49,6 +50,6 @@ UX / field fixes for `/account/listings/new/mls-input`.
 
 - [ ] **Homeowner identity verification** — Figure out how to verify the homeowner is who they say they are. Can be done manually by Blair on a video call; may need a way to collect photo ID or similar.
 
+- [x] **Require MLS# on approve** — Approve action and dialog require MLS number before going live.
 - [ ] **Improve the approve flow** — Replace the simple “approve” button with a better internal review process:
   - Checklist of everything the team needs to verify before approval (listing details, sq ft, owner identity, etc.)
-  - Before approving, the reviewer enters the **MLS#**

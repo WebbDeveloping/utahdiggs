@@ -463,9 +463,11 @@ async function main() {
 
   const { seedEmailTemplates } = await import("../src/lib/email/template-queries");
   const { seedEmailBrandSettings } = await import("../src/lib/email/brand-theme");
+  const { seedMlsOpsSettings } = await import("../src/lib/crm/mls-ops-settings");
   await seedEmailBrandSettings();
+  await seedMlsOpsSettings();
   await seedEmailTemplates();
-  console.log("Email brand settings and templates seeded.");
+  console.log("Email brand settings, MLS ops settings, and templates seeded.");
 
   console.log("Seed complete.\n");
   console.log("CRM test accounts:");

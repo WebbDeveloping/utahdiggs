@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@/lib/auth/admin-auth";
 import { canManageListings } from "@/lib/auth/roles";
 import {
-  canAccessListing,
   getSessionUser,
+  resolveCanAccessListing,
 } from "@/lib/crm/access";
 import { isListingPhoto } from "@/lib/storage/document-classify";
 import { prisma } from "@/lib/db";
@@ -30,10 +30,10 @@ export async function assertCrmListingAccess(listingId: string) {
 
   const listing = await prisma.listing.findUnique({
     where: { id: listingId },
-    select: { id: true, assignedAgentId: true },
+    select: { id: true, assignedAgentId: true, status: true },
   });
 
-  if (!listing || !canAccessListing(user, listing)) {
+  if (!listing || !(await resolveCanAccessListing(user, listing))) {
     throw new Error("Listing not found.");
   }
 

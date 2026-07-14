@@ -27,6 +27,7 @@ import {
 } from "@/lib/crm/format";
 import { formatOnboardingStatus } from "@/lib/consumer/onboarding";
 import { getCrmListings, getPendingApprovalListingCount } from "@/lib/crm/listing-queries";
+import { getDefaultMlsVaUserId } from "@/lib/crm/mls-ops-settings";
 
 type CrmListingsPageProps = {
   searchParams: Promise<{ created?: string }>;
@@ -37,7 +38,10 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
   const session = await auth();
   const user = requireCrmUser(session);
 
-  const listings = await getCrmListings(user);
+  const [listings, defaultVaUserId] = await Promise.all([
+    getCrmListings(user),
+    getDefaultMlsVaUserId(),
+  ]);
   const pendingApprovalCount = await getPendingApprovalListingCount(user);
   const showAssignedColumn = isAdmin(user.role);
 
@@ -128,7 +132,7 @@ export default async function CrmListingsPage({ searchParams }: CrmListingsPageP
                 const isDraftIntake =
                   listing.listingIntake?.status === IntakeStatus.DRAFT;
                 const showApprove =
-                  canApproveListing(user, listing) && !isDraftIntake;
+                  canApproveListing(user, listing, defaultVaUserId) && !isDraftIntake;
 
                 return (
                 <TableRow key={listing.id} hover>

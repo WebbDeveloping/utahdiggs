@@ -2,7 +2,7 @@ import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth/admin-auth";
 import { canManageListings } from "@/lib/auth/roles";
-import { canAccessListing, getSessionUser } from "@/lib/crm/access";
+import { getSessionUser, resolveCanAccessListing } from "@/lib/crm/access";
 import { prisma } from "@/lib/db";
 import {
   ALLOWED_PHOTO_TYPES,
@@ -36,9 +36,9 @@ export async function POST(request: Request): Promise<NextResponse> {
   if (listingId) {
     const listing = await prisma.listing.findUnique({
       where: { id: listingId },
-      select: { assignedAgentId: true },
+      select: { assignedAgentId: true, status: true },
     });
-    if (!listing || !canAccessListing(user, listing)) {
+    if (!listing || !(await resolveCanAccessListing(user, listing))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
   }

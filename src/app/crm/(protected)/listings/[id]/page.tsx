@@ -26,6 +26,7 @@ import { MLS_INPUT_STEPS } from "@/lib/mls-input/schema";
 import { auth } from "@/lib/auth/admin-auth";
 import { isAdmin } from "@/lib/auth/roles";
 import { canApproveListing, requireCrmUser } from "@/lib/crm/access";
+import { getDefaultMlsVaUserId } from "@/lib/crm/mls-ops-settings";
 import { getActiveAgents, getCrmListingById } from "@/lib/crm/listing-queries";
 import { getCrmShowings } from "@/lib/crm/showing-queries";
 import { getCrmWeeklyStats } from "@/lib/crm/weekly-stat-queries";
@@ -50,8 +51,9 @@ export default async function CrmListingDetailPage({
 
   const intakeData = (listing.listingIntake?.data as Record<string, unknown>) ?? {};
   const isDraftIntake = listing.listingIntake?.status === IntakeStatus.DRAFT;
+  const defaultVaUserId = await getDefaultMlsVaUserId();
   const showApprove =
-    canApproveListing(user, listing) &&
+    canApproveListing(user, listing, defaultVaUserId) &&
     (!listing.listingIntake || listing.listingIntake.status === IntakeStatus.SUBMITTED);
 
   const agents = isAdmin(user.role) ? await getActiveAgents() : [];

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Box from "@mui/material/Box";
+import { useRouter } from "next/navigation";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -24,17 +24,25 @@ export default function CrmApproveListingButton({
   address,
   listingSlug,
 }: CrmApproveListingButtonProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mlsNumber, setMlsNumber] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const trimmedMls = mlsNumber.trim();
+
   const handleApprove = async () => {
+    if (!trimmedMls) {
+      setError("MLS number is required.");
+      return;
+    }
     setPending(true);
     setError(null);
     try {
-      await approveListingAction(listingId, mlsNumber.trim() || undefined);
+      await approveListingAction(listingId, trimmedMls);
       setOpen(false);
+      router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to approve listing.");
     } finally {
@@ -56,11 +64,13 @@ export default function CrmApproveListingButton({
               Approve <strong>{address}</strong> and make it live on Glide RE search?
             </Typography>
             <TextField
-              label="MLS number (optional)"
+              label="MLS number"
               value={mlsNumber}
               onChange={(e) => setMlsNumber(e.target.value)}
               placeholder="Enter after WFRMLS Matrix entry"
+              required
               fullWidth
+              autoFocus
             />
             <Alert severity="info">
               Listing slug: <strong>{listingSlug}</strong>. The seller will receive a welcome
@@ -73,7 +83,12 @@ export default function CrmApproveListingButton({
           <Button onClick={() => setOpen(false)} disabled={pending}>
             Cancel
           </Button>
-          <Button variant="contained" color="success" onClick={handleApprove} disabled={pending}>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={handleApprove}
+            disabled={pending || !trimmedMls}
+          >
             {pending ? "Approving…" : "Approve & go live"}
           </Button>
         </DialogActions>

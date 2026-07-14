@@ -32,6 +32,7 @@ model User {
   sessions         Session[]
   documents        Document[] @relation("DocumentUploadedByUser")
   assignedListings Listing[]  @relation("ListingAssignedAgent")
+  mlsOpsAsDefaultVa MlsOpsSettings[] @relation("MlsOpsDefaultVa")
 }
 
 model Account {
@@ -555,6 +556,20 @@ model EmailBrandSettings {
   accentBackground String   @default("#EFF6FF")
   buttonRadius     String   @default("10px")
   updatedAt        DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// MLS ops (VA handoff)
+// ---------------------------------------------------------------------------
+
+model MlsOpsSettings {
+  id                   String   @id @default("default")
+  defaultVaUserId      String?
+  fallbackEmail        String?
+  preferAssignedAgent  Boolean  @default(false)
+  updatedAt            DateTime @updatedAt
+
+  defaultVaUser User? @relation("MlsOpsDefaultVa", fields: [defaultVaUserId], references: [id], onDelete: SetNull)
 }
 
 // ---------------------------------------------------------------------------

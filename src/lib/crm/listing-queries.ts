@@ -2,6 +2,7 @@ import { ListingStatus } from "@/generated/prisma/client";
 import { prisma } from "@/lib/db";
 import {
   getListingWhereForUser,
+  resolveCanAccessListing,
   type CrmSessionUser,
 } from "@/lib/crm/access";
 import { getPrimaryListingPhotoUrl } from "@/lib/storage/document-classify";
@@ -65,11 +66,8 @@ export async function getCrmListings(user: CrmSessionUser) {
 }
 
 export async function getCrmListingById(user: CrmSessionUser, id: string) {
-  return prisma.listing.findFirst({
-    where: {
-      id,
-      ...getListingWhereForUser(user),
-    },
+  const listing = await prisma.listing.findUnique({
+    where: { id },
     include: {
       listingIntake: true,
       contacts: { include: { contact: true } },
@@ -78,6 +76,16 @@ export async function getCrmListingById(user: CrmSessionUser, id: string) {
       assignedAgent: { select: { id: true, name: true, email: true } },
     },
   });
+
+  if (!listing) {
+    return null;
+  }
+
+  if (!(await resolveCanAccessListing(user, listing))) {
+    return null;
+  }
+
+  return listing;
 }
 
 export async function getActiveAgents() {

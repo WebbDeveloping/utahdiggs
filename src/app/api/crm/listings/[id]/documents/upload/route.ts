@@ -2,7 +2,7 @@ import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth/admin-auth";
 import { canManageListings } from "@/lib/auth/roles";
-import { canAccessListing, getSessionUser } from "@/lib/crm/access";
+import { getSessionUser, resolveCanAccessListing } from "@/lib/crm/access";
 import { prisma } from "@/lib/db";
 import {
   ALLOWED_DOCUMENT_TYPES,
@@ -30,10 +30,10 @@ export async function POST(
 
   const listing = await prisma.listing.findUnique({
     where: { id: listingId },
-    select: { id: true, assignedAgentId: true },
+    select: { id: true, assignedAgentId: true, status: true },
   });
 
-  if (!listing || !canAccessListing(user, listing)) {
+  if (!listing || !(await resolveCanAccessListing(user, listing))) {
     return NextResponse.json({ error: "Listing not found." }, { status: 404 });
   }
 

@@ -6,10 +6,10 @@ import { ContactRole, ListingStatus, UserRole } from "@/generated/prisma/client"
 import { auth } from "@/lib/auth/admin-auth";
 import { canManageListings, isAdmin } from "@/lib/auth/roles";
 import {
-  canApproveListing,
   canAssignAgent,
   getSessionUser,
   requireCrmUser,
+  resolveCanApproveListing,
 } from "@/lib/crm/access";
 import { createListing } from "@/lib/crm/create-listing";
 import { geocodeListingAddress } from "@/lib/geocode";
@@ -265,6 +265,11 @@ export async function approveListingAction(
   const session = await auth();
   const user = requireCrmUser(session);
 
+  const trimmedMlsNumber = mlsNumber?.trim() ?? "";
+  if (!trimmedMlsNumber) {
+    throw new Error("MLS number is required before approving.");
+  }
+
   const listing = await prisma.listing.findUnique({
     where: { id: listingId },
     select: {
@@ -297,7 +302,7 @@ export async function approveListingAction(
     throw new Error("Listing not found.");
   }
 
-  if (!canApproveListing(user, listing)) {
+  if (!(await resolveCanApproveListing(user, listing))) {
     throw new Error("Unauthorized");
   }
 
@@ -329,7 +334,7 @@ export async function approveListingAction(
     data: {
       status: ListingStatus.ACTIVE,
       listDate: new Date(),
-      ...(mlsNumber ? { mlsNumber } : {}),
+      mlsNumber: trimmedMlsNumber,
       ...(customerId && !listing.customerId ? { customerId } : {}),
     },
   });
@@ -390,7 +395,7 @@ export async function approveListingAction(
       city: listing.city,
       state: listing.state,
       sellerName: primarySeller?.name ?? "Seller",
-      mlsNumber: mlsNumber?.trim() || null,
+      mlsNumber: trimmedMlsNumber,
     });
   } catch (emailError) {
     console.error("Listing activated email failed:", emailError);
@@ -398,6 +403,7 @@ export async function approveListingAction(
 
   revalidatePath("/crm/listings");
   revalidatePath(`/crm/listings/${listingId}`);
+  revalidatePath("/crm/mls-queue");
   revalidatePath("/search");
 }
 

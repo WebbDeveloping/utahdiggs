@@ -4,7 +4,7 @@ import {
   crmListingUrl,
   sendEmail,
 } from "@/lib/email/send";
-import { resolveAgentNotificationEmail } from "@/lib/email/agent-notification";
+import { resolveMlsIntakeNotificationEmail } from "@/lib/crm/mls-ops-settings";
 import { renderEmailTemplate } from "@/lib/email/template-queries";
 
 export async function sendMlsIntakeSubmittedEmail(input: {
@@ -30,7 +30,7 @@ export async function sendMlsIntakeSubmittedEmail(input: {
   });
 
   await sendEmail({
-    to: await resolveAgentNotificationEmail(input.listingId),
+    to: await resolveMlsIntakeNotificationEmail(input.listingId),
     subject: rendered.subject,
     html: rendered.html,
   });

@@ -21,6 +21,7 @@ import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
 import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CloseIcon from "@mui/icons-material/Close";
@@ -45,6 +46,11 @@ type NavItem = {
 const navItems: NavItem[] = [
   { label: "Dashboard", href: "/crm", icon: <DashboardOutlinedIcon /> },
   { label: "Listings", href: "/crm/listings", icon: <HomeWorkOutlinedIcon /> },
+  {
+    label: "MLS Queue",
+    href: "/crm/mls-queue",
+    icon: <PlaylistAddCheckOutlinedIcon />,
+  },
   { label: "Upcoming calls", href: "/crm/calls", icon: <EventOutlinedIcon /> },
   { label: "Contacts", href: "/crm/contacts", icon: <ContactsOutlinedIcon /> },
   { label: "Offers", href: "/crm/offers", icon: <LocalOfferOutlinedIcon />, soon: true },
