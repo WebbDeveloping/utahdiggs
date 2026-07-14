@@ -3,6 +3,7 @@ import AccountPageHeader from "@/components/account/AccountPageHeader";
 import AccountShowingsList from "@/components/account/AccountShowingsList";
 import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { getSellerListingsScope } from "@/lib/consumer/seller-listings-scope";
+import { buildShowingsWeekChartData } from "@/lib/consumer/showings-chart-data";
 import { getSellerShowings } from "@/lib/consumer/showings-query";
 
 export const metadata: Metadata = {
@@ -18,6 +19,8 @@ export default async function AccountShowingsPage() {
     getSellerListingsScope(user.id, user.email),
   ]);
 
+  const weekChart = buildShowingsWeekChartData(showings, 8);
+
   return (
     <>
       <AccountPageHeader
@@ -27,6 +30,7 @@ export default async function AccountShowingsPage() {
       <AccountShowingsList
         showings={showings}
         multiListing={scope.listings.length > 1}
+        weekChart={weekChart}
       />
     </>
   );
