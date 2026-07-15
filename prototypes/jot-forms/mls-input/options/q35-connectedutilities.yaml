@@ -1,16 +1,22 @@
-label: Connected Utilities
+label: Utilities
 options:
-  - Natural Gas
-  - Power
-  - Sewer
-  - Septic
-  - Culinary Water Only
-  - Irrigantion Water
-  - Secondary Water
-  - Water Rights Owned
-  - Water Shares
-  - Well
-  - Spring
-  - value: other
-    label: Other
-    allowText: true
+  - "Gas: Available"
+  - "Gas: Connected"
+  - "Gas: Not Available"
+  - "Gas: Not Connected"
+  - "Power: Available"
+  - "Power: Connected"
+  - "Power: Not Available"
+  - "Power: Not Connected"
+  - "Sewer: Available"
+  - "Sewer: Connected"
+  - "Sewer: Not Available"
+  - "Sewer: Not Connected"
+  - "Sewer: Private"
+  - "Sewer: Public"
+  - "Sewer: Septic Tank"
+  - "Water: Available"
+  - "Water: Connected"
+  - "Water: Not Available"
+  - "Water: Not Connected"
+  - See Remarks

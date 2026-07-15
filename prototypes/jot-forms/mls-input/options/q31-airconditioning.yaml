@@ -1,0 +1,15 @@
+label: Air Conditioning
+options:
+  - None
+  - Active Solar
+  - Central Air; Electric
+  - Central Air; Gas
+  - "Evap. Cooler: Roof"
+  - "Evap. Cooler: Window"
+  - Geothermal
+  - Heat Pump
+  - Passive Solar
+  - Natural Ventilation
+  - Refrig. Air; Window
+  - Seer 16 Or Higher
+  - See Remarks

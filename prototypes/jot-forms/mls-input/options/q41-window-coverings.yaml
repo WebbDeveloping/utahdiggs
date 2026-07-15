@@ -4,9 +4,7 @@ options:
   - Draperies
   - Full
   - None
-  - Partial
+  - Part
   - Plantation Shutters
   - Shades
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

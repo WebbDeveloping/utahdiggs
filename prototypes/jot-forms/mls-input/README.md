@@ -83,7 +83,7 @@ See [`conditions.yaml`](conditions.yaml) for:
 
 Documented in `form.yaml` → `gaps` and `conditions.yaml` → `knownGaps`:
 
-1. **Agent-only WFRMLS Matrix fields** (listing dates, agent IDs, BAC, listing type, dual/VAR rate) are intentionally omitted — Utah Digs staff enter these when submitting to MLS.
+1. **Ops Matrix leftovers** (BAC compensation, dual/VAR rate, photo instructions) remain staff-only. Listing dates, listing type, and agent/office names are optional intake fields for Data Form auto-fill.
 2. **Steps 1–4 and newly added WFRMLS fields** lack JotForm field IDs in the dump (`jotform.id: TODO`).
 
 ## WFRMLS coverage (spec update)

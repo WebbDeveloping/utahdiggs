@@ -18,12 +18,28 @@ fields:
     required: false
     description: Select any that apply, or leave blank if none.
     $ref: options/q29-typea29.yaml
+  - id: deckCount
+    type: number
+    label: "# of Decks"
+    placeholder: "e.g., 1"
+    description: Total number of decks on the property, if any.
+    jotform:
+      id: TODO
+      name: q_deckCount
+  - id: patioCount
+    type: number
+    label: "# of Patios"
+    placeholder: "e.g., 1"
+    description: Total number of patios on the property, if any.
+    jotform:
+      id: TODO
+      name: q_patioCount
   - id: q30-typea30
     type: checkbox
     jotform:
       id: 30
       name: "q30_typeA30[]"
-    label: Parking
+    label: Garage / Parking
     required: true
     $ref: options/q30-typea30.yaml
   - id: q208-garagecapacity

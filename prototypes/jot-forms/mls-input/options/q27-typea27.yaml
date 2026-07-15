@@ -1,19 +1,25 @@
-label: Accessibility
+label: Accessibility Features
 options:
   - None
   - "32\" Wide Doorways"
   - "36\" Wide Hallways"
+  - Access to Elec. Outlet
+  - Audible Alerts
   - Ceiling Lift System
   - Elevator
+  - Frnt-Cntrld Stove / Oven
   - Fully Accessible
   - Grab Bars
   - Ground Level
+  - Modified Kitchen
+  - No-Step Entry
   - Porch Lift
   - Ramp
   - Roll-In Shower
   - Single Level Living
   - Stair Lift
+  - Universal Design
+  - Visible Alerts
+  - Visitable
   - Wheelchair Access
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

@@ -50,3 +50,18 @@ fields:
     jotform:
       id: TODO
       name: q_secondaryOwnerEmail
+  - id: specialOwnerType
+    label: Special Owner Type
+    type: checkbox
+    required: false
+    description: Select any that apply, or leave blank if none.
+    options:
+      - REO/Bank Owned
+      - HUD Owned
+      - Agent Owned
+      - Fractional Ownership
+      - LLC
+      - Trust
+    jotform:
+      id: TODO
+      name: "q_specialOwnerType[]"

@@ -1,25 +1,39 @@
 label: Lot Facts
 options:
+  - None
   - Additional Land Available
   - Adjacent to Golf Course
   - Corner Lot
   - Cul-de-sac
   - Curb & Gutter
-  - Fenced, Full
-  - Fenced, Part
+  - "Drip Irrigation: Auto-full"
+  - "Drip Irrigation: Auto-part"
+  - "Drip Irrigation: Manual-full"
+  - "Drip Irrigation: Manual-part"
+  - "Fenced, Full"
+  - "Fenced, Part"
+  - Greywater Collection
+  - Pervious Paving
   - Private
-  - Road, Paved
-  - Road, Unpaved
+  - Rainwater Collection
+  - "Road: Paved"
+  - "Road: Unpaved"
   - Secluded Yard
   - Sidewalks
-  - Terrain, Flat
-  - Terrain, Grad Slope
-  - Terrain, Hilly
-  - Terrain, Mountain
-  - View, Lake
-  - View, Mountain
-  - View, Valley
+  - "Sprinkler: Auto-full"
+  - "Sprinkler: Auto-part"
+  - "Sprinkler: Manual-full"
+  - "Sprinkler: Manual-part"
+  - "Terrain: Flat"
+  - "Terrain: Grad Slope"
+  - "Terrain: Hilly"
+  - "Terrain: Mountain"
+  - "Terrain: Steep Slope"
+  - "View: Lake"
+  - "View: Mountain"
+  - "View: Red Rock"
+  - "View: Valley"
+  - "View: Water"
+  - Waterfront
   - Wooded
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

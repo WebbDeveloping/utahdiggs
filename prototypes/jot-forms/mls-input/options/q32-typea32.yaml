@@ -1,11 +1,14 @@
 label: Exterior
 options:
   - Aluminum
+  - Asbestos Shingles
+  - Asphalt Shingles
   - Brick
   - Cedar
   - Cement Board
   - Cinder Block
   - Clapboard/Masonite
+  - Composition
   - Concrete
   - Container
   - Frame
@@ -13,11 +16,10 @@ options:
   - Insulated Concrete Forms
   - Log
   - Metal
-  - Wood
+  - Other Wood
+  - Redwood
   - Stone
+  - Straw Bale
   - Stucco
   - Vinyl
-  - Shingles
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

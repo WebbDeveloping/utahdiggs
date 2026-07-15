@@ -1,16 +1,15 @@
-label: Yard
+label: Landscaping
 options:
-  - Full Landscaping
+  - None
+  - Fruit Trees
+  - "Landscaping: Full"
+  - "Landscaping: Part"
   - Mature Trees
+  - Pines
+  - Scrub Oak
   - Stream
+  - Terraced Yard
+  - Vegetable Garden
+  - Waterfall
   - Xeriscaped
-  - Adjacent To Golf Course
-  - Cul-de-sac
-  - Corner Lot
-  - Sprinkler System
-  - Fenced
-  - Waterfront
-  - Wooded
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

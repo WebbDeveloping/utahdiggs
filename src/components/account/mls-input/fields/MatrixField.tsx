@@ -47,6 +47,7 @@ export default function MatrixField({
   const rowLabels = dynamicLabels?.length
     ? dynamicLabels
     : (field.rows ?? []);
+  const columns = field.columns ?? [];
 
   const updateCell = (
     rowLabel: string,
@@ -75,11 +76,11 @@ export default function MatrixField({
         elevation={0}
         sx={{ border: "1px solid", borderColor: "divider", overflowX: "auto" }}
       >
-        <Table size="small" sx={{ minWidth: 720 }}>
+        <Table size="small" sx={{ minWidth: columns.length <= 2 ? 360 : 720 }}>
           <TableHead>
             <TableRow>
               <TableCell sx={{ fontWeight: 600, minWidth: 120 }}>Level</TableCell>
-              {(field.columns ?? []).map((col) => (
+              {columns.map((col) => (
                 <TableCell key={col.id} sx={{ fontWeight: 600, minWidth: 100 }}>
                   {col.label}
                 </TableCell>
@@ -90,7 +91,7 @@ export default function MatrixField({
             {rowLabels.map((rowLabel) => (
               <TableRow key={rowLabel}>
                 <TableCell sx={{ fontWeight: 500 }}>{rowLabel}</TableCell>
-                {(field.columns ?? []).map((col) => {
+                {columns.map((col) => {
                   const cellValue = value[rowLabel]?.[col.id];
 
                   if (col.type === "select" && col.options?.length) {

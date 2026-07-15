@@ -8,28 +8,20 @@ fields:
       name: "q39_typeA39[]"
     label: Storage
     required: true
-    options:
-      - Basement
-      - Carport
-      - Garage
-      - Patio
-      - Shed
-      - value: other
-        label: Other
-        allowText: true
+    $ref: options/q39-typea39.yaml
   - id: q35-connectedutilities
     type: checkbox
     jotform:
       id: 35
       name: "q35_connectedUtilities[]"
-    label: Connected Utilities
+    label: Utilities
     required: true
     $ref: options/q35-connectedutilities.yaml
   - id: q44-water
     type: checkbox
     label: Water
     required: true
-    description: Select all water sources that apply (WFRMLS separate from connected utilities).
+    description: Select all water sources that apply.
     $ref: options/q44-water.yaml
     jotform:
       id: TODO
@@ -64,13 +56,4 @@ fields:
       name: "q40_typeA40[]"
     label: Terms (acceptable terms of sale)
     required: true
-    options:
-      - Cash
-      - Conventional Loan
-      - VA / FHA Loan
-      - Exchange
-      - Lease Option
-      - Seller Finance
-      - value: other
-        label: Other
-        allowText: true
+    $ref: options/q40-typea40.yaml

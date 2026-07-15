@@ -9,11 +9,10 @@ options:
   - Laminate
   - Linoleum
   - Marble
-  - Natural Stone
+  - Natural Rock
   - Slate
   - Tile
+  - Travertine
   - Vinyl
-  - LVP / Vinyl Plank
-  - value: other
-    label: Other
-    allowText: true
+  - Vinyl (LVP)
+  - See Remarks

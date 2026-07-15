@@ -1,284 +1,4938 @@
 {
   "slug": "uar-data-form-residential",
   "version": "2024-11-05",
-  "pageSize": { "width": 612, "height": 792 },
+  "pageSize": {
+    "width": 612,
+    "height": 792
+  },
   "textFields": {
-    "houseNumber": { "page": 0, "x": 72, "y": 710, "size": 8, "maxWidth": 70 },
-    "streetName": { "page": 0, "x": 160, "y": 710, "size": 8, "maxWidth": 180 },
-    "city": { "page": 0, "x": 72, "y": 668, "size": 8, "maxWidth": 140 },
-    "county": { "page": 0, "x": 230, "y": 668, "size": 8, "maxWidth": 120 },
-    "state": { "page": 0, "x": 370, "y": 668, "size": 8, "maxWidth": 40 },
-    "zip": { "page": 0, "x": 430, "y": 668, "size": 8, "maxWidth": 60 },
-    "coordNorthSouth": { "page": 0, "x": 400, "y": 685, "size": 8, "maxWidth": 50 },
-    "coordEastWest": { "page": 0, "x": 480, "y": 685, "size": 8, "maxWidth": 50 },
-    "projectSubdivision": { "page": 0, "x": 140, "y": 640, "size": 8, "maxWidth": 200 },
-    "zoningText": { "page": 0, "x": 400, "y": 640, "size": 8, "maxWidth": 120 },
-    "listPrice": { "page": 0, "x": 120, "y": 600, "size": 9, "maxWidth": 100 },
-    "schoolDistrict": { "page": 0, "x": 140, "y": 548, "size": 8, "maxWidth": 200 },
-    "elementarySchool": { "page": 0, "x": 140, "y": 532, "size": 8, "maxWidth": 200 },
-    "juniorHighSchool": { "page": 0, "x": 140, "y": 516, "size": 8, "maxWidth": 200 },
-    "highSchool": { "page": 0, "x": 140, "y": 500, "size": 8, "maxWidth": 200 },
-    "otherSchool": { "page": 0, "x": 140, "y": 484, "size": 8, "maxWidth": 200 },
-    "hoaFee": { "page": 0, "x": 200, "y": 440, "size": 8, "maxWidth": 60 },
-    "hoaChangeFeeAmount": { "page": 0, "x": 420, "y": 420, "size": 8, "maxWidth": 60 },
-    "hoaContact": { "page": 0, "x": 120, "y": 400, "size": 8, "maxWidth": 180 },
-    "hoaContactPhone": { "page": 0, "x": 340, "y": 400, "size": 8, "maxWidth": 120 },
-    "hoaRemarks": { "page": 0, "x": 72, "y": 280, "size": 7, "maxWidth": 468 },
-    "page0InitialsDate": { "page": 0, "x": 480, "y": 48, "size": 8, "maxWidth": 80 },
-    "taxParcelNumber": { "page": 1, "x": 160, "y": 730, "size": 8, "maxWidth": 160 },
-    "estimatedTaxes": { "page": 1, "x": 400, "y": 730, "size": 8, "maxWidth": 80 },
-    "yearBuilt": { "page": 1, "x": 120, "y": 560, "size": 8, "maxWidth": 50 },
-    "effectiveYearBuilt": { "page": 1, "x": 260, "y": 560, "size": 8, "maxWidth": 50 },
-    "waterShares": { "page": 1, "x": 400, "y": 560, "size": 8, "maxWidth": 100 },
-    "acres": { "page": 1, "x": 120, "y": 420, "size": 8, "maxWidth": 60 },
-    "lotFrontage": { "page": 1, "x": 200, "y": 420, "size": 8, "maxWidth": 50 },
-    "lotSide": { "page": 1, "x": 280, "y": 420, "size": 8, "maxWidth": 50 },
-    "lotBack": { "page": 1, "x": 360, "y": 420, "size": 8, "maxWidth": 50 },
-    "garageCapacity": { "page": 1, "x": 140, "y": 120, "size": 8, "maxWidth": 40 },
-    "carportCapacity": { "page": 1, "x": 260, "y": 120, "size": 8, "maxWidth": 40 },
-    "parkingCapacity": { "page": 1, "x": 380, "y": 120, "size": 8, "maxWidth": 40 },
-    "rvParkingHeight": { "page": 1, "x": 140, "y": 100, "size": 8, "maxWidth": 50 },
-    "rvParkingLength": { "page": 1, "x": 260, "y": 100, "size": 8, "maxWidth": 50 },
-    "solarInstallDate": { "page": 1, "x": 300, "y": 500, "size": 8, "maxWidth": 80 },
-    "solarLeasingCompany": { "page": 1, "x": 140, "y": 470, "size": 8, "maxWidth": 160 },
-    "solarFinanceCompany": { "page": 1, "x": 340, "y": 470, "size": 8, "maxWidth": 160 },
-    "aduSqft": { "page": 1, "x": 280, "y": 240, "size": 8, "maxWidth": 50 },
-    "aduBeds": { "page": 1, "x": 360, "y": 240, "size": 8, "maxWidth": 30 },
-    "aduBaths": { "page": 1, "x": 420, "y": 240, "size": 8, "maxWidth": 30 },
-    "aduMonthlyRent": { "page": 1, "x": 200, "y": 160, "size": 8, "maxWidth": 70 },
-    "aduRemarks": { "page": 1, "x": 72, "y": 130, "size": 7, "maxWidth": 468 },
-    "page1InitialsDate": { "page": 1, "x": 480, "y": 48, "size": 8, "maxWidth": 80 },
-    "ownerName": { "page": 2, "x": 120, "y": 700, "size": 9, "maxWidth": 220 },
-    "ownerPhone": { "page": 2, "x": 120, "y": 660, "size": 8, "maxWidth": 140 },
-    "basementFinished": { "page": 2, "x": 200, "y": 480, "size": 8, "maxWidth": 60 },
-    "approxSqFt": { "page": 2, "x": 120, "y": 280, "size": 8, "maxWidth": 50 },
-    "beds": { "page": 2, "x": 200, "y": 280, "size": 8, "maxWidth": 30 },
-    "bathsFull": { "page": 2, "x": 260, "y": 280, "size": 8, "maxWidth": 24 },
-    "bathsThreeQuarter": { "page": 2, "x": 300, "y": 280, "size": 8, "maxWidth": 24 },
-    "bathsHalf": { "page": 2, "x": 340, "y": 280, "size": 8, "maxWidth": 24 },
-    "page2InitialsDate": { "page": 2, "x": 480, "y": 48, "size": 8, "maxWidth": 80 },
-    "page3InitialsDate": { "page": 3, "x": 480, "y": 48, "size": 8, "maxWidth": 80 },
-    "showingInstructions": { "page": 4, "x": 72, "y": 200, "size": 7, "maxWidth": 220 },
-    "page4InitialsDate": { "page": 4, "x": 480, "y": 48, "size": 8, "maxWidth": 80 },
-    "publicRemarks": { "page": 5, "x": 72, "y": 620, "size": 8, "maxWidth": 468 },
-    "exclusionsRemarks": { "page": 5, "x": 72, "y": 400, "size": 8, "maxWidth": 468 },
-    "directions": { "page": 5, "x": 72, "y": 280, "size": 8, "maxWidth": 468 },
-    "signedDate": { "page": 5, "x": 280, "y": 120, "size": 9, "maxWidth": 100 },
-    "page5InitialsDate": { "page": 5, "x": 480, "y": 48, "size": 8, "maxWidth": 80 }
+    "houseNumber": {
+      "page": 0,
+      "x": 72,
+      "y": 710,
+      "size": 8,
+      "maxWidth": 70
+    },
+    "streetName": {
+      "page": 0,
+      "x": 160,
+      "y": 710,
+      "size": 8,
+      "maxWidth": 180
+    },
+    "city": {
+      "page": 0,
+      "x": 72,
+      "y": 668,
+      "size": 8,
+      "maxWidth": 140
+    },
+    "county": {
+      "page": 0,
+      "x": 230,
+      "y": 668,
+      "size": 8,
+      "maxWidth": 120
+    },
+    "state": {
+      "page": 0,
+      "x": 370,
+      "y": 668,
+      "size": 8,
+      "maxWidth": 40
+    },
+    "zip": {
+      "page": 0,
+      "x": 430,
+      "y": 668,
+      "size": 8,
+      "maxWidth": 60
+    },
+    "coordNorthSouth": {
+      "page": 0,
+      "x": 400,
+      "y": 685,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "coordEastWest": {
+      "page": 0,
+      "x": 480,
+      "y": 685,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "projectSubdivision": {
+      "page": 0,
+      "x": 140,
+      "y": 640,
+      "size": 8,
+      "maxWidth": 200
+    },
+    "zoningText": {
+      "page": 0,
+      "x": 400,
+      "y": 640,
+      "size": 8,
+      "maxWidth": 120
+    },
+    "listPrice": {
+      "page": 0,
+      "x": 120,
+      "y": 600,
+      "size": 9,
+      "maxWidth": 100
+    },
+    "schoolDistrict": {
+      "page": 0,
+      "x": 140,
+      "y": 548,
+      "size": 8,
+      "maxWidth": 200
+    },
+    "elementarySchool": {
+      "page": 0,
+      "x": 140,
+      "y": 532,
+      "size": 8,
+      "maxWidth": 200
+    },
+    "juniorHighSchool": {
+      "page": 0,
+      "x": 140,
+      "y": 516,
+      "size": 8,
+      "maxWidth": 200
+    },
+    "highSchool": {
+      "page": 0,
+      "x": 140,
+      "y": 500,
+      "size": 8,
+      "maxWidth": 200
+    },
+    "otherSchool": {
+      "page": 0,
+      "x": 140,
+      "y": 484,
+      "size": 8,
+      "maxWidth": 200
+    },
+    "hoaFee": {
+      "page": 0,
+      "x": 200,
+      "y": 440,
+      "size": 8,
+      "maxWidth": 60
+    },
+    "hoaChangeFeeAmount": {
+      "page": 0,
+      "x": 420,
+      "y": 420,
+      "size": 8,
+      "maxWidth": 60
+    },
+    "hoaContact": {
+      "page": 0,
+      "x": 120,
+      "y": 400,
+      "size": 8,
+      "maxWidth": 180
+    },
+    "hoaContactPhone": {
+      "page": 0,
+      "x": 340,
+      "y": 400,
+      "size": 8,
+      "maxWidth": 120
+    },
+    "hoaRemarks": {
+      "page": 0,
+      "x": 72,
+      "y": 280,
+      "size": 7,
+      "maxWidth": 468
+    },
+    "page0InitialsDate": {
+      "page": 0,
+      "x": 480,
+      "y": 48,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "taxParcelNumber": {
+      "page": 1,
+      "x": 160,
+      "y": 730,
+      "size": 8,
+      "maxWidth": 160
+    },
+    "estimatedTaxes": {
+      "page": 1,
+      "x": 400,
+      "y": 730,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "yearBuilt": {
+      "page": 1,
+      "x": 120,
+      "y": 560,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "effectiveYearBuilt": {
+      "page": 1,
+      "x": 260,
+      "y": 560,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "waterShares": {
+      "page": 1,
+      "x": 400,
+      "y": 560,
+      "size": 8,
+      "maxWidth": 100
+    },
+    "acres": {
+      "page": 1,
+      "x": 120,
+      "y": 420,
+      "size": 8,
+      "maxWidth": 60
+    },
+    "lotFrontage": {
+      "page": 1,
+      "x": 200,
+      "y": 420,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "lotSide": {
+      "page": 1,
+      "x": 280,
+      "y": 420,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "lotBack": {
+      "page": 1,
+      "x": 360,
+      "y": 420,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "garageCapacity": {
+      "page": 1,
+      "x": 140,
+      "y": 120,
+      "size": 8,
+      "maxWidth": 40
+    },
+    "carportCapacity": {
+      "page": 1,
+      "x": 260,
+      "y": 120,
+      "size": 8,
+      "maxWidth": 40
+    },
+    "parkingCapacity": {
+      "page": 1,
+      "x": 380,
+      "y": 120,
+      "size": 8,
+      "maxWidth": 40
+    },
+    "rvParkingHeight": {
+      "page": 1,
+      "x": 140,
+      "y": 100,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "rvParkingLength": {
+      "page": 1,
+      "x": 260,
+      "y": 100,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "solarInstallDate": {
+      "page": 1,
+      "x": 300,
+      "y": 500,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "solarLeasingCompany": {
+      "page": 1,
+      "x": 140,
+      "y": 470,
+      "size": 8,
+      "maxWidth": 160
+    },
+    "solarFinanceCompany": {
+      "page": 1,
+      "x": 340,
+      "y": 470,
+      "size": 8,
+      "maxWidth": 160
+    },
+    "aduSqft": {
+      "page": 1,
+      "x": 280,
+      "y": 240,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "aduBeds": {
+      "page": 1,
+      "x": 360,
+      "y": 240,
+      "size": 8,
+      "maxWidth": 30
+    },
+    "aduBaths": {
+      "page": 1,
+      "x": 420,
+      "y": 240,
+      "size": 8,
+      "maxWidth": 30
+    },
+    "aduMonthlyRent": {
+      "page": 1,
+      "x": 200,
+      "y": 160,
+      "size": 8,
+      "maxWidth": 70
+    },
+    "aduRemarks": {
+      "page": 1,
+      "x": 72,
+      "y": 130,
+      "size": 7,
+      "maxWidth": 468
+    },
+    "page1InitialsDate": {
+      "page": 1,
+      "x": 480,
+      "y": 48,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "ownerName": {
+      "page": 2,
+      "x": 120,
+      "y": 700,
+      "size": 9,
+      "maxWidth": 220
+    },
+    "ownerPhone": {
+      "page": 2,
+      "x": 120,
+      "y": 660,
+      "size": 8,
+      "maxWidth": 140
+    },
+    "basementFinished": {
+      "page": 2,
+      "x": 200,
+      "y": 480,
+      "size": 8,
+      "maxWidth": 60
+    },
+    "approxSqFt": {
+      "page": 2,
+      "x": 120,
+      "y": 280,
+      "size": 8,
+      "maxWidth": 50
+    },
+    "beds": {
+      "page": 2,
+      "x": 200,
+      "y": 280,
+      "size": 8,
+      "maxWidth": 30
+    },
+    "bathsFull": {
+      "page": 2,
+      "x": 260,
+      "y": 280,
+      "size": 8,
+      "maxWidth": 24
+    },
+    "bathsThreeQuarter": {
+      "page": 2,
+      "x": 300,
+      "y": 280,
+      "size": 8,
+      "maxWidth": 24
+    },
+    "bathsHalf": {
+      "page": 2,
+      "x": 340,
+      "y": 280,
+      "size": 8,
+      "maxWidth": 24
+    },
+    "page2InitialsDate": {
+      "page": 2,
+      "x": 480,
+      "y": 48,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "page3InitialsDate": {
+      "page": 3,
+      "x": 480,
+      "y": 48,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "page4InitialsDate": {
+      "page": 4,
+      "x": 480,
+      "y": 48,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "publicRemarks": {
+      "page": 5,
+      "x": 72,
+      "y": 620,
+      "size": 8,
+      "maxWidth": 468
+    },
+    "exclusionsRemarks": {
+      "page": 5,
+      "x": 72,
+      "y": 400,
+      "size": 8,
+      "maxWidth": 468
+    },
+    "directions": {
+      "page": 5,
+      "x": 72,
+      "y": 280,
+      "size": 8,
+      "maxWidth": 468
+    },
+    "signedDate": {
+      "page": 5,
+      "x": 280,
+      "y": 120,
+      "size": 9,
+      "maxWidth": 100
+    },
+    "page5InitialsDate": {
+      "page": 5,
+      "x": 480,
+      "y": 48,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "propInfo_Level4_sqft": {
+      "page": 2,
+      "x": 120,
+      "y": 400,
+      "size": 7,
+      "maxWidth": 40
+    },
+    "propInfo_Level4_beds": {
+      "page": 2,
+      "x": 175,
+      "y": 400,
+      "size": 7,
+      "maxWidth": 24
+    },
+    "propInfo_Level4_bathsFull": {
+      "page": 2,
+      "x": 230,
+      "y": 400,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level4_bathsThreeQuarter": {
+      "page": 2,
+      "x": 260,
+      "y": 400,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level4_bathsHalf": {
+      "page": 2,
+      "x": 290,
+      "y": 400,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level3_sqft": {
+      "page": 2,
+      "x": 120,
+      "y": 385,
+      "size": 7,
+      "maxWidth": 40
+    },
+    "propInfo_Level3_beds": {
+      "page": 2,
+      "x": 175,
+      "y": 385,
+      "size": 7,
+      "maxWidth": 24
+    },
+    "propInfo_Level3_bathsFull": {
+      "page": 2,
+      "x": 230,
+      "y": 385,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level3_bathsThreeQuarter": {
+      "page": 2,
+      "x": 260,
+      "y": 385,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level3_bathsHalf": {
+      "page": 2,
+      "x": 290,
+      "y": 385,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level2_sqft": {
+      "page": 2,
+      "x": 120,
+      "y": 370,
+      "size": 7,
+      "maxWidth": 40
+    },
+    "propInfo_Level2_beds": {
+      "page": 2,
+      "x": 175,
+      "y": 370,
+      "size": 7,
+      "maxWidth": 24
+    },
+    "propInfo_Level2_bathsFull": {
+      "page": 2,
+      "x": 230,
+      "y": 370,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level2_bathsThreeQuarter": {
+      "page": 2,
+      "x": 260,
+      "y": 370,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level2_bathsHalf": {
+      "page": 2,
+      "x": 290,
+      "y": 370,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level1_sqft": {
+      "page": 2,
+      "x": 120,
+      "y": 355,
+      "size": 7,
+      "maxWidth": 40
+    },
+    "propInfo_Level1_beds": {
+      "page": 2,
+      "x": 175,
+      "y": 355,
+      "size": 7,
+      "maxWidth": 24
+    },
+    "propInfo_Level1_bathsFull": {
+      "page": 2,
+      "x": 230,
+      "y": 355,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level1_bathsThreeQuarter": {
+      "page": 2,
+      "x": 260,
+      "y": 355,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Level1_bathsHalf": {
+      "page": 2,
+      "x": 290,
+      "y": 355,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Basement1_sqft": {
+      "page": 2,
+      "x": 120,
+      "y": 340,
+      "size": 7,
+      "maxWidth": 40
+    },
+    "propInfo_Basement1_beds": {
+      "page": 2,
+      "x": 175,
+      "y": 340,
+      "size": 7,
+      "maxWidth": 24
+    },
+    "propInfo_Basement1_bathsFull": {
+      "page": 2,
+      "x": 230,
+      "y": 340,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Basement1_bathsThreeQuarter": {
+      "page": 2,
+      "x": 260,
+      "y": 340,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "propInfo_Basement1_bathsHalf": {
+      "page": 2,
+      "x": 290,
+      "y": 340,
+      "size": 7,
+      "maxWidth": 20
+    },
+    "deckCount": {
+      "page": 2,
+      "x": 420,
+      "y": 260,
+      "size": 8,
+      "maxWidth": 30
+    },
+    "patioCount": {
+      "page": 2,
+      "x": 500,
+      "y": 260,
+      "size": 8,
+      "maxWidth": 30
+    },
+    "listingEffectiveDate": {
+      "page": 2,
+      "x": 160,
+      "y": 720,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "listingExpirationDate": {
+      "page": 2,
+      "x": 340,
+      "y": 720,
+      "size": 8,
+      "maxWidth": 80
+    },
+    "possession": {
+      "page": 2,
+      "x": 120,
+      "y": 540,
+      "size": 8,
+      "maxWidth": 160
+    },
+    "appointmentContact": {
+      "page": 2,
+      "x": 200,
+      "y": 640,
+      "size": 8,
+      "maxWidth": 180
+    },
+    "contactPhone1": {
+      "page": 2,
+      "x": 140,
+      "y": 620,
+      "size": 8,
+      "maxWidth": 100
+    },
+    "contactPhone2": {
+      "page": 2,
+      "x": 300,
+      "y": 620,
+      "size": 8,
+      "maxWidth": 100
+    },
+    "listingAgentName": {
+      "page": 2,
+      "x": 120,
+      "y": 80,
+      "size": 8,
+      "maxWidth": 160
+    },
+    "listingCoAgentName": {
+      "page": 2,
+      "x": 320,
+      "y": 80,
+      "size": 8,
+      "maxWidth": 160
+    },
+    "listingOfficeName": {
+      "page": 2,
+      "x": 120,
+      "y": 60,
+      "size": 8,
+      "maxWidth": 220
+    }
   },
   "checkboxFields": {
-    "nonStandardAddress": { "page": 0, "x": 220, "y": 740, "size": 9 },
-    "houseDir_N": { "page": 0, "x": 145, "y": 725, "size": 9 },
-    "houseDir_S": { "page": 0, "x": 160, "y": 725, "size": 9 },
-    "houseDir_E": { "page": 0, "x": 175, "y": 725, "size": 9 },
-    "houseDir_W": { "page": 0, "x": 190, "y": 725, "size": 9 },
-    "streetDir_N": { "page": 0, "x": 345, "y": 725, "size": 9 },
-    "streetDir_S": { "page": 0, "x": 360, "y": 725, "size": 9 },
-    "streetDir_E": { "page": 0, "x": 375, "y": 725, "size": 9 },
-    "streetDir_W": { "page": 0, "x": 390, "y": 725, "size": 9 },
-    "quadrant_NW": { "page": 0, "x": 400, "y": 700, "size": 9 },
-    "quadrant_NE": { "page": 0, "x": 430, "y": 700, "size": 9 },
-    "quadrant_SW": { "page": 0, "x": 460, "y": 700, "size": 9 },
-    "quadrant_SE": { "page": 0, "x": 490, "y": 700, "size": 9 },
-    "listingStatus_Active": { "page": 0, "x": 120, "y": 620, "size": 9 },
-    "hoa_Yes": { "page": 0, "x": 120, "y": 460, "size": 9 },
-    "hoa_No": { "page": 0, "x": 160, "y": 460, "size": 9 },
-    "hoaFee_Monthly": { "page": 0, "x": 280, "y": 440, "size": 9 },
-    "hoaFee_Quarterly": { "page": 0, "x": 340, "y": 440, "size": 9 },
-    "hoaFee_Annually": { "page": 0, "x": 400, "y": 440, "size": 9 },
-    "hoaChangeFee_Percentage of sales price": { "page": 0, "x": 280, "y": 420, "size": 9 },
-    "hoaChangeFee_Dollar amount": { "page": 0, "x": 380, "y": 420, "size": 9 },
-    "hoaContactPhone_Voice": { "page": 0, "x": 470, "y": 400, "size": 9 },
-    "hoaRentalCap_Yes": { "page": 0, "x": 200, "y": 380, "size": 9 },
-    "hoaRentalCap_No": { "page": 0, "x": 240, "y": 380, "size": 9 },
-    "hoaAmenities_Alarm System Paid": { "page": 0, "x": 72, "y": 360, "size": 8 },
-    "hoaAmenities_Barbecue": { "page": 0, "x": 180, "y": 360, "size": 8 },
-    "hoaAmenities_Biking Trails": { "page": 0, "x": 260, "y": 360, "size": 8 },
-    "hoaAmenities_Bocce Ball Court": { "page": 0, "x": 360, "y": 360, "size": 8 },
-    "hoaAmenities_Cable TV Paid": { "page": 0, "x": 470, "y": 360, "size": 8 },
-    "hoaAmenities_Club House": { "page": 0, "x": 72, "y": 348, "size": 8 },
-    "hoaAmenities_Common RV Parking": { "page": 0, "x": 160, "y": 348, "size": 8 },
-    "hoaAmenities_Concierge": { "page": 0, "x": 280, "y": 348, "size": 8 },
-    "hoaAmenities_Controlled Access": { "page": 0, "x": 360, "y": 348, "size": 8 },
-    "hoaAmenities_Earthquake Insurance": { "page": 0, "x": 470, "y": 348, "size": 8 },
-    "hoaAmenities_Electricity Paid": { "page": 0, "x": 72, "y": 336, "size": 8 },
-    "hoaAmenities_Fire Pit": { "page": 0, "x": 180, "y": 336, "size": 8 },
-    "hoaAmenities_Gas Paid": { "page": 0, "x": 260, "y": 336, "size": 8 },
-    "hoaAmenities_Gated": { "page": 0, "x": 340, "y": 336, "size": 8 },
-    "hoaAmenities_Golf Course": { "page": 0, "x": 400, "y": 336, "size": 8 },
-    "hoaAmenities_Gym Room": { "page": 0, "x": 480, "y": 336, "size": 8 },
-    "hoaAmenities_Hiking Trails": { "page": 0, "x": 72, "y": 324, "size": 8 },
-    "hoaAmenities_Horse Trails": { "page": 0, "x": 160, "y": 324, "size": 8 },
-    "hoaAmenities_Insurance Paid": { "page": 0, "x": 250, "y": 324, "size": 8 },
-    "hoaAmenities_Internet Paid": { "page": 0, "x": 360, "y": 324, "size": 8 },
-    "hoaAmenities_Maintenance Paid": { "page": 0, "x": 450, "y": 324, "size": 8 },
-    "hoaAmenities_On Site Security": { "page": 0, "x": 72, "y": 312, "size": 8 },
-    "hoaAmenities_On site Property Mgmt": { "page": 0, "x": 180, "y": 312, "size": 8 },
-    "hoaAmenities_Pet Rules": { "page": 0, "x": 320, "y": 312, "size": 8 },
-    "hoaAmenities_Pets Not Permitted": { "page": 0, "x": 400, "y": 312, "size": 8 },
-    "hoaAmenities_Pets Permitted": { "page": 0, "x": 500, "y": 312, "size": 8 },
-    "hoaAmenities_Pickleball Court": { "page": 0, "x": 72, "y": 300, "size": 8 },
-    "hoaAmenities_Picnic Area": { "page": 0, "x": 180, "y": 300, "size": 8 },
-    "hoaAmenities_Playground": { "page": 0, "x": 270, "y": 300, "size": 8 },
-    "hoaAmenities_Pool": { "page": 0, "x": 350, "y": 300, "size": 8 },
-    "hoaAmenities_Racquet Ball Court": { "page": 0, "x": 400, "y": 300, "size": 8 },
-    "hoaAmenities_Sauna": { "page": 0, "x": 520, "y": 300, "size": 8 },
-    "hoaAmenities_Security": { "page": 0, "x": 72, "y": 288, "size": 8 },
-    "hoaAmenities_Sewer Paid": { "page": 0, "x": 140, "y": 288, "size": 8 },
-    "hoaAmenities_Snow Removal": { "page": 0, "x": 220, "y": 288, "size": 8 },
-    "hoaAmenities_Spa": { "page": 0, "x": 310, "y": 288, "size": 8 },
-    "hoaAmenities_Storage Area": { "page": 0, "x": 360, "y": 288, "size": 8 },
-    "hoaAmenities_Tennis Court": { "page": 0, "x": 450, "y": 288, "size": 8 },
-    "hoaAmenities_Trash Paid": { "page": 0, "x": 72, "y": 276, "size": 8 },
-    "hoaAmenities_Water Paid": { "page": 0, "x": 160, "y": 276, "size": 8 },
-    "hoaAmenities_Other (See Remarks)": { "page": 0, "x": 250, "y": 276, "size": 8 },
-    "shortTermRental_YES": { "page": 0, "x": 180, "y": 200, "size": 9 },
-    "shortTermRental_NO": { "page": 0, "x": 220, "y": 200, "size": 9 },
-    "projectRestriction_Yes": { "page": 0, "x": 180, "y": 180, "size": 9 },
-    "projectRestriction_No": { "page": 0, "x": 220, "y": 180, "size": 9 },
-    "seniorCommunity_Yes": { "page": 0, "x": 340, "y": 180, "size": 9 },
-    "seniorCommunity_No": { "page": 0, "x": 380, "y": 180, "size": 9 },
-    "maintenanceFree_Yes": { "page": 0, "x": 480, "y": 180, "size": 9 },
-    "maintenanceFree_No": { "page": 0, "x": 520, "y": 180, "size": 9 },
-    "propertyType_Single Family": { "page": 1, "x": 140, "y": 680, "size": 9 },
-    "propertyType_Condominium": { "page": 1, "x": 240, "y": 680, "size": 9 },
-    "propertyType_Mobile (w/o land)": { "page": 1, "x": 340, "y": 680, "size": 9 },
-    "propertyType_Recreational": { "page": 1, "x": 460, "y": 680, "size": 9 },
-    "propertyType_Townhouse": { "page": 1, "x": 140, "y": 665, "size": 9 },
-    "propertyType_Twin": { "page": 1, "x": 240, "y": 665, "size": 9 },
-    "pud_Yes": { "page": 1, "x": 120, "y": 650, "size": 9 },
-    "pud_No": { "page": 1, "x": 160, "y": 650, "size": 9 },
-    "pid_Yes": { "page": 1, "x": 220, "y": 650, "size": 9 },
-    "pid_No": { "page": 1, "x": 260, "y": 650, "size": 9 },
-    "noAssignedParcelNumber": { "page": 1, "x": 72, "y": 745, "size": 9 },
-    "style_2-Story": { "page": 1, "x": 120, "y": 600, "size": 9 },
-    "style_A-Frame": { "page": 1, "x": 180, "y": 600, "size": 9 },
-    "style_Basement": { "page": 1, "x": 240, "y": 600, "size": 9 },
-    "style_Bungalow/Cottage": { "page": 1, "x": 300, "y": 600, "size": 9 },
-    "style_Cabin": { "page": 1, "x": 400, "y": 600, "size": 9 },
-    "style_Condo, High Rise": { "page": 1, "x": 120, "y": 585, "size": 9 },
-    "style_Condo, Main Level": { "page": 1, "x": 220, "y": 585, "size": 9 },
-    "style_Condo, Middle Level": { "page": 1, "x": 340, "y": 585, "size": 9 },
-    "style_Condo, Studio": { "page": 1, "x": 450, "y": 585, "size": 9 },
-    "style_Condo, Top Level": { "page": 1, "x": 120, "y": 570, "size": 9 },
-    "style_Manufactured": { "page": 1, "x": 220, "y": 570, "size": 9 },
-    "style_Mid-Century Modern": { "page": 1, "x": 320, "y": 570, "size": 9 },
-    "style_Mobile": { "page": 1, "x": 450, "y": 570, "size": 9 },
-    "style_Modern": { "page": 1, "x": 120, "y": 555, "size": 8 },
-    "style_Modular": { "page": 1, "x": 180, "y": 555, "size": 8 },
-    "style_Patio Home": { "page": 1, "x": 250, "y": 555, "size": 8 },
-    "style_Rambler/Ranch": { "page": 1, "x": 340, "y": 555, "size": 8 },
-    "style_Southwest": { "page": 1, "x": 440, "y": 555, "size": 8 },
-    "style_Split-Entry/Bi-Level": { "page": 1, "x": 120, "y": 540, "size": 8 },
-    "style_Townhouse, Row-End": { "page": 1, "x": 250, "y": 540, "size": 8 },
-    "style_Townhouse, Row-Mid": { "page": 1, "x": 380, "y": 540, "size": 8 },
-    "style_Tri/Multi-Level": { "page": 1, "x": 120, "y": 525, "size": 8 },
-    "style_Tudor": { "page": 1, "x": 230, "y": 525, "size": 8 },
-    "style_Victorian": { "page": 1, "x": 290, "y": 525, "size": 8 },
-    "style_See Remarks": { "page": 1, "x": 370, "y": 525, "size": 8 },
-    "constructionStatus_Built /Standing": { "page": 1, "x": 140, "y": 450, "size": 9 },
-    "constructionStatus_Under Construction": { "page": 1, "x": 280, "y": 450, "size": 9 },
-    "constructionStatus_To Be Built": { "page": 1, "x": 420, "y": 450, "size": 9 },
-    "lotIrregularShape_Yes": { "page": 1, "x": 440, "y": 420, "size": 9 },
-    "lotIrregularShape_No": { "page": 1, "x": 480, "y": 420, "size": 9 },
-    "frontageFacing_N": { "page": 1, "x": 120, "y": 400, "size": 9 },
-    "frontageFacing_S": { "page": 1, "x": 150, "y": 400, "size": 9 },
-    "frontageFacing_E": { "page": 1, "x": 180, "y": 400, "size": 9 },
-    "frontageFacing_W": { "page": 1, "x": 210, "y": 400, "size": 9 },
-    "frontageFacing_NE": { "page": 1, "x": 250, "y": 400, "size": 9 },
-    "frontageFacing_SE": { "page": 1, "x": 290, "y": 400, "size": 9 },
-    "frontageFacing_NW": { "page": 1, "x": 330, "y": 400, "size": 9 },
-    "frontageFacing_SW": { "page": 1, "x": 380, "y": 400, "size": 9 },
-    "hasSolar_Yes": { "page": 1, "x": 140, "y": 500, "size": 9 },
-    "hasSolar_No": { "page": 1, "x": 180, "y": 500, "size": 9 },
-    "solarOwnership_Solar Owned": { "page": 1, "x": 140, "y": 485, "size": 9 },
-    "solarOwnership_Solar Leased": { "page": 1, "x": 240, "y": 485, "size": 9 },
-    "solarOwnership_Solar Financed": { "page": 1, "x": 340, "y": 485, "size": 9 },
-    "adu_Yes": { "page": 1, "x": 120, "y": 260, "size": 9 },
-    "adu_No": { "page": 1, "x": 160, "y": 260, "size": 9 },
-    "aduType_Attached": { "page": 1, "x": 200, "y": 260, "size": 9 },
-    "aduType_Detached": { "page": 1, "x": 260, "y": 260, "size": 9 },
-    "aduKitchen_Yes": { "page": 1, "x": 120, "y": 220, "size": 9 },
-    "aduKitchen_No": { "page": 1, "x": 160, "y": 220, "size": 9 },
-    "aduSeparateEntrance_Yes": { "page": 1, "x": 280, "y": 220, "size": 9 },
-    "aduSeparateEntrance_No": { "page": 1, "x": 320, "y": 220, "size": 9 },
-    "aduSeparateWaterMeter_Yes": { "page": 1, "x": 120, "y": 200, "size": 9 },
-    "aduSeparateWaterMeter_No": { "page": 1, "x": 160, "y": 200, "size": 9 },
-    "aduSeparateGasMeter_Yes": { "page": 1, "x": 280, "y": 200, "size": 9 },
-    "aduSeparateGasMeter_No": { "page": 1, "x": 320, "y": 200, "size": 9 },
-    "aduSeparateElectricMeter_Yes": { "page": 1, "x": 440, "y": 200, "size": 9 },
-    "aduSeparateElectricMeter_No": { "page": 1, "x": 480, "y": 200, "size": 9 },
-    "aduCurrentlyRented_Yes": { "page": 1, "x": 120, "y": 180, "size": 9 },
-    "aduCurrentlyRented_No": { "page": 1, "x": 160, "y": 180, "size": 9 },
-    "listingType_Exclusive Right to Sell (ERS)": { "page": 2, "x": 140, "y": 620, "size": 9 },
-    "basementType_Full": { "page": 2, "x": 180, "y": 500, "size": 9 },
-    "basementType_Partial": { "page": 2, "x": 240, "y": 500, "size": 9 },
-    "basementType_None/Crawl Space": { "page": 2, "x": 320, "y": 500, "size": 9 },
-    "flooring_Hardwood": { "page": 3, "x": 120, "y": 500, "size": 9 },
-    "flooring_Carpet": { "page": 3, "x": 200, "y": 500, "size": 9 },
-    "flooring_Tile": { "page": 3, "x": 280, "y": 500, "size": 9 },
-    "flooring_Laminate": { "page": 3, "x": 340, "y": 500, "size": 9 },
-    "airConditioning_Central Air; Gas": { "page": 3, "x": 140, "y": 680, "size": 9 },
-    "airConditioning_Central Air; Electric": { "page": 3, "x": 280, "y": 680, "size": 9 },
-    "heating_Forced Air": { "page": 3, "x": 140, "y": 400, "size": 9 },
-    "heating_Gas: Central": { "page": 3, "x": 240, "y": 400, "size": 9 },
-    "exterior_Stucco": { "page": 3, "x": 140, "y": 580, "size": 9 },
-    "exterior_Brick": { "page": 3, "x": 220, "y": 580, "size": 9 },
-    "exterior_Frame": { "page": 3, "x": 300, "y": 580, "size": 9 },
-    "garageParking_Attached": { "page": 3, "x": 140, "y": 340, "size": 9 },
-    "garageParking_Detached": { "page": 3, "x": 230, "y": 340, "size": 9 },
-    "driveway_Concrete": { "page": 3, "x": 140, "y": 620, "size": 9 },
-    "driveway_Asphalt": { "page": 3, "x": 230, "y": 620, "size": 9 },
-    "poolAvailable_Yes": { "page": 4, "x": 160, "y": 380, "size": 9 },
-    "poolAvailable_No": { "page": 4, "x": 200, "y": 380, "size": 9 },
-    "roof_Asphalt Shingles": { "page": 4, "x": 140, "y": 300, "size": 9 },
-    "roof_Tile": { "page": 4, "x": 260, "y": 300, "size": 9 },
-    "lotFacts_Curb & Gutter": { "page": 4, "x": 140, "y": 440, "size": 9 },
-    "lotFacts_Sidewalks": { "page": 4, "x": 260, "y": 440, "size": 9 },
-    "lotFacts_Terrain: Flat": { "page": 4, "x": 360, "y": 440, "size": 9 },
-    "landscaping_Landscaping: Full": { "page": 4, "x": 140, "y": 480, "size": 9 },
-    "utilities_Gas: Connected": { "page": 4, "x": 140, "y": 160, "size": 9 },
-    "utilities_Power: Connected": { "page": 4, "x": 260, "y": 160, "size": 9 },
-    "utilities_Sewer: Connected": { "page": 4, "x": 400, "y": 160, "size": 9 },
-    "water_Culinary": { "page": 4, "x": 140, "y": 130, "size": 9 },
-    "telecommunications_Fiber": { "page": 4, "x": 140, "y": 100, "size": 9 },
-    "telecommunications_Broadband Cable": { "page": 4, "x": 260, "y": 100, "size": 9 },
-    "zoning_Single-Family": { "page": 4, "x": 140, "y": 70, "size": 9 },
-    "terms_Cash": { "page": 4, "x": 140, "y": 190, "size": 9 },
-    "terms_Conventional": { "page": 4, "x": 220, "y": 190, "size": 9 },
-    "terms_FHA": { "page": 4, "x": 320, "y": 190, "size": 9 },
-    "terms_VA": { "page": 4, "x": 380, "y": 190, "size": 9 },
-    "windowCoverings_Blinds": { "page": 4, "x": 140, "y": 40, "size": 9 },
-    "animals_None": { "page": 1, "x": 140, "y": 360, "size": 9 },
-    "animals_Livestock": { "page": 1, "x": 200, "y": 360, "size": 9 },
-    "animals_Pets < 20 Lbs.": { "page": 1, "x": 280, "y": 360, "size": 9 },
-    "animals_Pets 20 - 75 Lbs.": { "page": 1, "x": 380, "y": 360, "size": 9 },
-    "animals_Pets > 75 Lbs.": { "page": 1, "x": 480, "y": 360, "size": 9 },
-    "animals_See Remarks": { "page": 1, "x": 140, "y": 345, "size": 9 },
-    "petsAllowed_No": { "page": 1, "x": 200, "y": 380, "size": 9 },
-    "petsAllowed_Yes": { "page": 1, "x": 160, "y": 380, "size": 9 },
-    "showInstructions_Vacant": { "page": 4, "x": 140, "y": 250, "size": 9 },
-    "showInstructions_Call Owner / Appt": { "page": 4, "x": 260, "y": 250, "size": 9 },
-    "showInstructions_Call Tenant / Appt": { "page": 4, "x": 420, "y": 250, "size": 9 },
-    "specialListingConditions_Third Party Approval Required": { "page": 2, "x": 140, "y": 560, "size": 9 },
-    "specialListingConditions_Price Was Approved by Third Party": { "page": 2, "x": 300, "y": 560, "size": 9 },
-    "specialListingConditions_Offer Under Third Party Review": { "page": 2, "x": 460, "y": 560, "size": 9 }
+    "nonStandardAddress": {
+      "page": 0,
+      "x": 220,
+      "y": 740,
+      "size": 9
+    },
+    "houseDir_N": {
+      "page": 0,
+      "x": 145,
+      "y": 725,
+      "size": 9
+    },
+    "houseDir_S": {
+      "page": 0,
+      "x": 160,
+      "y": 725,
+      "size": 9
+    },
+    "houseDir_E": {
+      "page": 0,
+      "x": 175,
+      "y": 725,
+      "size": 9
+    },
+    "houseDir_W": {
+      "page": 0,
+      "x": 190,
+      "y": 725,
+      "size": 9
+    },
+    "streetDir_N": {
+      "page": 0,
+      "x": 345,
+      "y": 725,
+      "size": 9
+    },
+    "streetDir_S": {
+      "page": 0,
+      "x": 360,
+      "y": 725,
+      "size": 9
+    },
+    "streetDir_E": {
+      "page": 0,
+      "x": 375,
+      "y": 725,
+      "size": 9
+    },
+    "streetDir_W": {
+      "page": 0,
+      "x": 390,
+      "y": 725,
+      "size": 9
+    },
+    "quadrant_NW": {
+      "page": 0,
+      "x": 400,
+      "y": 700,
+      "size": 9
+    },
+    "quadrant_NE": {
+      "page": 0,
+      "x": 430,
+      "y": 700,
+      "size": 9
+    },
+    "quadrant_SW": {
+      "page": 0,
+      "x": 460,
+      "y": 700,
+      "size": 9
+    },
+    "quadrant_SE": {
+      "page": 0,
+      "x": 490,
+      "y": 700,
+      "size": 9
+    },
+    "listingStatus_Active": {
+      "page": 0,
+      "x": 120,
+      "y": 620,
+      "size": 9
+    },
+    "hoa_Yes": {
+      "page": 0,
+      "x": 120,
+      "y": 460,
+      "size": 9
+    },
+    "hoa_No": {
+      "page": 0,
+      "x": 160,
+      "y": 460,
+      "size": 9
+    },
+    "hoaFee_Monthly": {
+      "page": 0,
+      "x": 280,
+      "y": 440,
+      "size": 9
+    },
+    "hoaFee_Quarterly": {
+      "page": 0,
+      "x": 340,
+      "y": 440,
+      "size": 9
+    },
+    "hoaFee_Annually": {
+      "page": 0,
+      "x": 400,
+      "y": 440,
+      "size": 9
+    },
+    "hoaChangeFee_Percentage of sales price": {
+      "page": 0,
+      "x": 280,
+      "y": 420,
+      "size": 9
+    },
+    "hoaChangeFee_Dollar amount": {
+      "page": 0,
+      "x": 380,
+      "y": 420,
+      "size": 9
+    },
+    "hoaContactPhone_Voice": {
+      "page": 0,
+      "x": 470,
+      "y": 400,
+      "size": 9
+    },
+    "hoaRentalCap_Yes": {
+      "page": 0,
+      "x": 200,
+      "y": 380,
+      "size": 9
+    },
+    "hoaRentalCap_No": {
+      "page": 0,
+      "x": 240,
+      "y": 380,
+      "size": 9
+    },
+    "hoaAmenities_Alarm System Paid": {
+      "page": 0,
+      "x": 72,
+      "y": 360,
+      "size": 8
+    },
+    "hoaAmenities_Barbecue": {
+      "page": 0,
+      "x": 180,
+      "y": 360,
+      "size": 8
+    },
+    "hoaAmenities_Biking Trails": {
+      "page": 0,
+      "x": 260,
+      "y": 360,
+      "size": 8
+    },
+    "hoaAmenities_Bocce Ball Court": {
+      "page": 0,
+      "x": 360,
+      "y": 360,
+      "size": 8
+    },
+    "hoaAmenities_Cable TV Paid": {
+      "page": 0,
+      "x": 470,
+      "y": 360,
+      "size": 8
+    },
+    "hoaAmenities_Club House": {
+      "page": 0,
+      "x": 72,
+      "y": 348,
+      "size": 8
+    },
+    "hoaAmenities_Common RV Parking": {
+      "page": 0,
+      "x": 160,
+      "y": 348,
+      "size": 8
+    },
+    "hoaAmenities_Concierge": {
+      "page": 0,
+      "x": 280,
+      "y": 348,
+      "size": 8
+    },
+    "hoaAmenities_Controlled Access": {
+      "page": 0,
+      "x": 360,
+      "y": 348,
+      "size": 8
+    },
+    "hoaAmenities_Earthquake Insurance": {
+      "page": 0,
+      "x": 470,
+      "y": 348,
+      "size": 8
+    },
+    "hoaAmenities_Electricity Paid": {
+      "page": 0,
+      "x": 72,
+      "y": 336,
+      "size": 8
+    },
+    "hoaAmenities_Fire Pit": {
+      "page": 0,
+      "x": 180,
+      "y": 336,
+      "size": 8
+    },
+    "hoaAmenities_Gas Paid": {
+      "page": 0,
+      "x": 260,
+      "y": 336,
+      "size": 8
+    },
+    "hoaAmenities_Gated": {
+      "page": 0,
+      "x": 340,
+      "y": 336,
+      "size": 8
+    },
+    "hoaAmenities_Golf Course": {
+      "page": 0,
+      "x": 400,
+      "y": 336,
+      "size": 8
+    },
+    "hoaAmenities_Gym Room": {
+      "page": 0,
+      "x": 480,
+      "y": 336,
+      "size": 8
+    },
+    "hoaAmenities_Hiking Trails": {
+      "page": 0,
+      "x": 72,
+      "y": 324,
+      "size": 8
+    },
+    "hoaAmenities_Horse Trails": {
+      "page": 0,
+      "x": 160,
+      "y": 324,
+      "size": 8
+    },
+    "hoaAmenities_Insurance Paid": {
+      "page": 0,
+      "x": 250,
+      "y": 324,
+      "size": 8
+    },
+    "hoaAmenities_Internet Paid": {
+      "page": 0,
+      "x": 360,
+      "y": 324,
+      "size": 8
+    },
+    "hoaAmenities_Maintenance Paid": {
+      "page": 0,
+      "x": 450,
+      "y": 324,
+      "size": 8
+    },
+    "hoaAmenities_On Site Security": {
+      "page": 0,
+      "x": 72,
+      "y": 312,
+      "size": 8
+    },
+    "hoaAmenities_On site Property Mgmt": {
+      "page": 0,
+      "x": 180,
+      "y": 312,
+      "size": 8
+    },
+    "hoaAmenities_Pet Rules": {
+      "page": 0,
+      "x": 320,
+      "y": 312,
+      "size": 8
+    },
+    "hoaAmenities_Pets Not Permitted": {
+      "page": 0,
+      "x": 400,
+      "y": 312,
+      "size": 8
+    },
+    "hoaAmenities_Pets Permitted": {
+      "page": 0,
+      "x": 500,
+      "y": 312,
+      "size": 8
+    },
+    "hoaAmenities_Pickleball Court": {
+      "page": 0,
+      "x": 72,
+      "y": 300,
+      "size": 8
+    },
+    "hoaAmenities_Picnic Area": {
+      "page": 0,
+      "x": 180,
+      "y": 300,
+      "size": 8
+    },
+    "hoaAmenities_Playground": {
+      "page": 0,
+      "x": 270,
+      "y": 300,
+      "size": 8
+    },
+    "hoaAmenities_Pool": {
+      "page": 0,
+      "x": 350,
+      "y": 300,
+      "size": 8
+    },
+    "hoaAmenities_Racquet Ball Court": {
+      "page": 0,
+      "x": 400,
+      "y": 300,
+      "size": 8
+    },
+    "hoaAmenities_Sauna": {
+      "page": 0,
+      "x": 520,
+      "y": 300,
+      "size": 8
+    },
+    "hoaAmenities_Security": {
+      "page": 0,
+      "x": 72,
+      "y": 288,
+      "size": 8
+    },
+    "hoaAmenities_Sewer Paid": {
+      "page": 0,
+      "x": 140,
+      "y": 288,
+      "size": 8
+    },
+    "hoaAmenities_Snow Removal": {
+      "page": 0,
+      "x": 220,
+      "y": 288,
+      "size": 8
+    },
+    "hoaAmenities_Spa": {
+      "page": 0,
+      "x": 310,
+      "y": 288,
+      "size": 8
+    },
+    "hoaAmenities_Storage Area": {
+      "page": 0,
+      "x": 360,
+      "y": 288,
+      "size": 8
+    },
+    "hoaAmenities_Tennis Court": {
+      "page": 0,
+      "x": 450,
+      "y": 288,
+      "size": 8
+    },
+    "hoaAmenities_Trash Paid": {
+      "page": 0,
+      "x": 72,
+      "y": 276,
+      "size": 8
+    },
+    "hoaAmenities_Water Paid": {
+      "page": 0,
+      "x": 160,
+      "y": 276,
+      "size": 8
+    },
+    "hoaAmenities_Other (See Remarks)": {
+      "page": 0,
+      "x": 250,
+      "y": 276,
+      "size": 8
+    },
+    "shortTermRental_YES": {
+      "page": 0,
+      "x": 180,
+      "y": 200,
+      "size": 9
+    },
+    "shortTermRental_NO": {
+      "page": 0,
+      "x": 220,
+      "y": 200,
+      "size": 9
+    },
+    "projectRestriction_Yes": {
+      "page": 0,
+      "x": 180,
+      "y": 180,
+      "size": 9
+    },
+    "projectRestriction_No": {
+      "page": 0,
+      "x": 220,
+      "y": 180,
+      "size": 9
+    },
+    "seniorCommunity_Yes": {
+      "page": 0,
+      "x": 340,
+      "y": 180,
+      "size": 9
+    },
+    "seniorCommunity_No": {
+      "page": 0,
+      "x": 380,
+      "y": 180,
+      "size": 9
+    },
+    "maintenanceFree_Yes": {
+      "page": 0,
+      "x": 480,
+      "y": 180,
+      "size": 9
+    },
+    "maintenanceFree_No": {
+      "page": 0,
+      "x": 520,
+      "y": 180,
+      "size": 9
+    },
+    "propertyType_Single Family": {
+      "page": 1,
+      "x": 140,
+      "y": 680,
+      "size": 9
+    },
+    "propertyType_Condominium": {
+      "page": 1,
+      "x": 240,
+      "y": 680,
+      "size": 9
+    },
+    "propertyType_Mobile (w/o land)": {
+      "page": 1,
+      "x": 340,
+      "y": 680,
+      "size": 9
+    },
+    "propertyType_Recreational": {
+      "page": 1,
+      "x": 460,
+      "y": 680,
+      "size": 9
+    },
+    "propertyType_Townhouse": {
+      "page": 1,
+      "x": 140,
+      "y": 665,
+      "size": 9
+    },
+    "propertyType_Twin": {
+      "page": 1,
+      "x": 240,
+      "y": 665,
+      "size": 9
+    },
+    "pud_Yes": {
+      "page": 1,
+      "x": 120,
+      "y": 650,
+      "size": 9
+    },
+    "pud_No": {
+      "page": 1,
+      "x": 160,
+      "y": 650,
+      "size": 9
+    },
+    "pid_Yes": {
+      "page": 1,
+      "x": 220,
+      "y": 650,
+      "size": 9
+    },
+    "pid_No": {
+      "page": 1,
+      "x": 260,
+      "y": 650,
+      "size": 9
+    },
+    "noAssignedParcelNumber": {
+      "page": 1,
+      "x": 72,
+      "y": 745,
+      "size": 9
+    },
+    "style_2-Story": {
+      "page": 1,
+      "x": 120,
+      "y": 600,
+      "size": 9
+    },
+    "style_A-Frame": {
+      "page": 1,
+      "x": 180,
+      "y": 600,
+      "size": 9
+    },
+    "style_Basement": {
+      "page": 1,
+      "x": 240,
+      "y": 600,
+      "size": 9
+    },
+    "style_Bungalow/Cottage": {
+      "page": 1,
+      "x": 300,
+      "y": 600,
+      "size": 9
+    },
+    "style_Cabin": {
+      "page": 1,
+      "x": 400,
+      "y": 600,
+      "size": 9
+    },
+    "style_Condo, High Rise": {
+      "page": 1,
+      "x": 120,
+      "y": 585,
+      "size": 9
+    },
+    "style_Condo, Main Level": {
+      "page": 1,
+      "x": 220,
+      "y": 585,
+      "size": 9
+    },
+    "style_Condo, Middle Level": {
+      "page": 1,
+      "x": 340,
+      "y": 585,
+      "size": 9
+    },
+    "style_Condo, Studio": {
+      "page": 1,
+      "x": 450,
+      "y": 585,
+      "size": 9
+    },
+    "style_Condo, Top Level": {
+      "page": 1,
+      "x": 120,
+      "y": 570,
+      "size": 9
+    },
+    "style_Manufactured": {
+      "page": 1,
+      "x": 220,
+      "y": 570,
+      "size": 9
+    },
+    "style_Mid-Century Modern": {
+      "page": 1,
+      "x": 320,
+      "y": 570,
+      "size": 9
+    },
+    "style_Mobile": {
+      "page": 1,
+      "x": 450,
+      "y": 570,
+      "size": 9
+    },
+    "style_Modern": {
+      "page": 1,
+      "x": 120,
+      "y": 555,
+      "size": 8
+    },
+    "style_Modular": {
+      "page": 1,
+      "x": 180,
+      "y": 555,
+      "size": 8
+    },
+    "style_Patio Home": {
+      "page": 1,
+      "x": 250,
+      "y": 555,
+      "size": 8
+    },
+    "style_Rambler/Ranch": {
+      "page": 1,
+      "x": 340,
+      "y": 555,
+      "size": 8
+    },
+    "style_Southwest": {
+      "page": 1,
+      "x": 440,
+      "y": 555,
+      "size": 8
+    },
+    "style_Split-Entry/Bi-Level": {
+      "page": 1,
+      "x": 120,
+      "y": 540,
+      "size": 8
+    },
+    "style_Townhouse, Row-End": {
+      "page": 1,
+      "x": 250,
+      "y": 540,
+      "size": 8
+    },
+    "style_Townhouse, Row-Mid": {
+      "page": 1,
+      "x": 380,
+      "y": 540,
+      "size": 8
+    },
+    "style_Tri/Multi-Level": {
+      "page": 1,
+      "x": 120,
+      "y": 525,
+      "size": 8
+    },
+    "style_Tudor": {
+      "page": 1,
+      "x": 230,
+      "y": 525,
+      "size": 8
+    },
+    "style_Victorian": {
+      "page": 1,
+      "x": 290,
+      "y": 525,
+      "size": 8
+    },
+    "style_See Remarks": {
+      "page": 1,
+      "x": 370,
+      "y": 525,
+      "size": 8
+    },
+    "constructionStatus_Built /Standing": {
+      "page": 1,
+      "x": 140,
+      "y": 450,
+      "size": 9
+    },
+    "constructionStatus_Under Construction": {
+      "page": 1,
+      "x": 280,
+      "y": 450,
+      "size": 9
+    },
+    "constructionStatus_To Be Built": {
+      "page": 1,
+      "x": 420,
+      "y": 450,
+      "size": 9
+    },
+    "lotIrregularShape_Yes": {
+      "page": 1,
+      "x": 440,
+      "y": 420,
+      "size": 9
+    },
+    "lotIrregularShape_No": {
+      "page": 1,
+      "x": 480,
+      "y": 420,
+      "size": 9
+    },
+    "frontageFacing_N": {
+      "page": 1,
+      "x": 120,
+      "y": 400,
+      "size": 9
+    },
+    "frontageFacing_S": {
+      "page": 1,
+      "x": 150,
+      "y": 400,
+      "size": 9
+    },
+    "frontageFacing_E": {
+      "page": 1,
+      "x": 180,
+      "y": 400,
+      "size": 9
+    },
+    "frontageFacing_W": {
+      "page": 1,
+      "x": 210,
+      "y": 400,
+      "size": 9
+    },
+    "frontageFacing_NE": {
+      "page": 1,
+      "x": 250,
+      "y": 400,
+      "size": 9
+    },
+    "frontageFacing_SE": {
+      "page": 1,
+      "x": 290,
+      "y": 400,
+      "size": 9
+    },
+    "frontageFacing_NW": {
+      "page": 1,
+      "x": 330,
+      "y": 400,
+      "size": 9
+    },
+    "frontageFacing_SW": {
+      "page": 1,
+      "x": 380,
+      "y": 400,
+      "size": 9
+    },
+    "hasSolar_Yes": {
+      "page": 1,
+      "x": 140,
+      "y": 500,
+      "size": 9
+    },
+    "hasSolar_No": {
+      "page": 1,
+      "x": 180,
+      "y": 500,
+      "size": 9
+    },
+    "solarOwnership_Solar Owned": {
+      "page": 1,
+      "x": 140,
+      "y": 485,
+      "size": 9
+    },
+    "solarOwnership_Solar Leased": {
+      "page": 1,
+      "x": 240,
+      "y": 485,
+      "size": 9
+    },
+    "solarOwnership_Solar Financed": {
+      "page": 1,
+      "x": 340,
+      "y": 485,
+      "size": 9
+    },
+    "adu_Yes": {
+      "page": 1,
+      "x": 120,
+      "y": 260,
+      "size": 9
+    },
+    "adu_No": {
+      "page": 1,
+      "x": 160,
+      "y": 260,
+      "size": 9
+    },
+    "aduType_Attached": {
+      "page": 1,
+      "x": 200,
+      "y": 260,
+      "size": 9
+    },
+    "aduType_Detached": {
+      "page": 1,
+      "x": 260,
+      "y": 260,
+      "size": 9
+    },
+    "aduKitchen_Yes": {
+      "page": 1,
+      "x": 120,
+      "y": 220,
+      "size": 9
+    },
+    "aduKitchen_No": {
+      "page": 1,
+      "x": 160,
+      "y": 220,
+      "size": 9
+    },
+    "aduSeparateEntrance_Yes": {
+      "page": 1,
+      "x": 280,
+      "y": 220,
+      "size": 9
+    },
+    "aduSeparateEntrance_No": {
+      "page": 1,
+      "x": 320,
+      "y": 220,
+      "size": 9
+    },
+    "aduSeparateWaterMeter_Yes": {
+      "page": 1,
+      "x": 120,
+      "y": 200,
+      "size": 9
+    },
+    "aduSeparateWaterMeter_No": {
+      "page": 1,
+      "x": 160,
+      "y": 200,
+      "size": 9
+    },
+    "aduSeparateGasMeter_Yes": {
+      "page": 1,
+      "x": 280,
+      "y": 200,
+      "size": 9
+    },
+    "aduSeparateGasMeter_No": {
+      "page": 1,
+      "x": 320,
+      "y": 200,
+      "size": 9
+    },
+    "aduSeparateElectricMeter_Yes": {
+      "page": 1,
+      "x": 440,
+      "y": 200,
+      "size": 9
+    },
+    "aduSeparateElectricMeter_No": {
+      "page": 1,
+      "x": 480,
+      "y": 200,
+      "size": 9
+    },
+    "aduCurrentlyRented_Yes": {
+      "page": 1,
+      "x": 120,
+      "y": 180,
+      "size": 9
+    },
+    "aduCurrentlyRented_No": {
+      "page": 1,
+      "x": 160,
+      "y": 180,
+      "size": 9
+    },
+    "listingType_Exclusive Right to Sell (ERS)": {
+      "page": 2,
+      "x": 140,
+      "y": 620,
+      "size": 9
+    },
+    "basementType_Full": {
+      "page": 2,
+      "x": 180,
+      "y": 500,
+      "size": 9
+    },
+    "basementType_Partial": {
+      "page": 2,
+      "x": 240,
+      "y": 500,
+      "size": 9
+    },
+    "basementType_None/Crawl Space": {
+      "page": 2,
+      "x": 320,
+      "y": 500,
+      "size": 9
+    },
+    "flooring_Hardwood": {
+      "page": 3,
+      "x": 200,
+      "y": 352,
+      "size": 8
+    },
+    "flooring_Carpet": {
+      "page": 3,
+      "x": 200,
+      "y": 388,
+      "size": 8
+    },
+    "flooring_Tile": {
+      "page": 3,
+      "x": 200,
+      "y": 280,
+      "size": 8
+    },
+    "flooring_Laminate": {
+      "page": 3,
+      "x": 200,
+      "y": 340,
+      "size": 8
+    },
+    "airConditioning_Central Air; Gas": {
+      "page": 3,
+      "x": 72,
+      "y": 372,
+      "size": 8
+    },
+    "airConditioning_Central Air; Electric": {
+      "page": 3,
+      "x": 72,
+      "y": 386,
+      "size": 8
+    },
+    "heating_Forced Air": {
+      "page": 3,
+      "x": 380,
+      "y": 455,
+      "size": 8
+    },
+    "heating_Gas: Central": {
+      "page": 3,
+      "x": 380,
+      "y": 444,
+      "size": 8
+    },
+    "exterior_Stucco": {
+      "page": 3,
+      "x": 320,
+      "y": 230,
+      "size": 8
+    },
+    "exterior_Brick": {
+      "page": 3,
+      "x": 320,
+      "y": 468,
+      "size": 8
+    },
+    "exterior_Frame": {
+      "page": 3,
+      "x": 320,
+      "y": 356,
+      "size": 8
+    },
+    "garageParking_Attached": {
+      "page": 3,
+      "x": 380,
+      "y": 738,
+      "size": 8
+    },
+    "garageParking_Detached": {
+      "page": 3,
+      "x": 380,
+      "y": 714,
+      "size": 8
+    },
+    "driveway_Concrete": {
+      "page": 3,
+      "x": 320,
+      "y": 688,
+      "size": 8
+    },
+    "driveway_Asphalt": {
+      "page": 3,
+      "x": 320,
+      "y": 730,
+      "size": 8
+    },
+    "poolAvailable_Yes": {
+      "page": 4,
+      "x": 380,
+      "y": 729,
+      "size": 8
+    },
+    "poolAvailable_No": {
+      "page": 4,
+      "x": 420,
+      "y": 729,
+      "size": 8
+    },
+    "roof_Asphalt Shingles": {
+      "page": 4,
+      "x": 380,
+      "y": 531,
+      "size": 8
+    },
+    "roof_Tile": {
+      "page": 4,
+      "x": 380,
+      "y": 375,
+      "size": 8
+    },
+    "lotFacts_Curb & Gutter": {
+      "page": 4,
+      "x": 200,
+      "y": 526,
+      "size": 8
+    },
+    "lotFacts_Sidewalks": {
+      "page": 4,
+      "x": 200,
+      "y": 372,
+      "size": 8
+    },
+    "lotFacts_Terrain: Flat": {
+      "page": 4,
+      "x": 200,
+      "y": 317,
+      "size": 8
+    },
+    "landscaping_Landscaping: Full": {
+      "page": 4,
+      "x": 200,
+      "y": 717,
+      "size": 8
+    },
+    "utilities_Gas: Connected": {
+      "page": 4,
+      "x": 575,
+      "y": 718,
+      "size": 8
+    },
+    "utilities_Power: Connected": {
+      "page": 4,
+      "x": 575,
+      "y": 674,
+      "size": 8
+    },
+    "utilities_Sewer: Connected": {
+      "page": 4,
+      "x": 575,
+      "y": 630,
+      "size": 8
+    },
+    "water_Culinary": {
+      "page": 4,
+      "x": 575,
+      "y": 503,
+      "size": 8
+    },
+    "telecommunications_Fiber": {
+      "page": 4,
+      "x": 540,
+      "y": 601,
+      "size": 8
+    },
+    "telecommunications_Broadband Cable": {
+      "page": 4,
+      "x": 540,
+      "y": 637,
+      "size": 8
+    },
+    "zoning_Single-Family": {
+      "page": 4,
+      "x": 575,
+      "y": 227,
+      "size": 8
+    },
+    "terms_Cash": {
+      "page": 4,
+      "x": 540,
+      "y": 523,
+      "size": 8
+    },
+    "terms_Conventional": {
+      "page": 4,
+      "x": 540,
+      "y": 501,
+      "size": 8
+    },
+    "terms_FHA": {
+      "page": 4,
+      "x": 540,
+      "y": 446,
+      "size": 8
+    },
+    "terms_VA": {
+      "page": 4,
+      "x": 540,
+      "y": 358,
+      "size": 8
+    },
+    "windowCoverings_Blinds": {
+      "page": 4,
+      "x": 575,
+      "y": 376,
+      "size": 8
+    },
+    "animals_None": {
+      "page": 1,
+      "x": 140,
+      "y": 360,
+      "size": 9
+    },
+    "animals_Livestock": {
+      "page": 1,
+      "x": 200,
+      "y": 360,
+      "size": 9
+    },
+    "animals_Pets < 20 Lbs.": {
+      "page": 1,
+      "x": 280,
+      "y": 360,
+      "size": 9
+    },
+    "animals_Pets 20 - 75 Lbs.": {
+      "page": 1,
+      "x": 380,
+      "y": 360,
+      "size": 9
+    },
+    "animals_Pets > 75 Lbs.": {
+      "page": 1,
+      "x": 480,
+      "y": 360,
+      "size": 9
+    },
+    "animals_See Remarks": {
+      "page": 1,
+      "x": 140,
+      "y": 345,
+      "size": 9
+    },
+    "petsAllowed_No": {
+      "page": 1,
+      "x": 200,
+      "y": 380,
+      "size": 9
+    },
+    "petsAllowed_Yes": {
+      "page": 1,
+      "x": 160,
+      "y": 380,
+      "size": 9
+    },
+    "showInstructions_Vacant": {
+      "page": 4,
+      "x": 380,
+      "y": 179,
+      "size": 8
+    },
+    "showInstructions_Call Owner / Appt": {
+      "page": 4,
+      "x": 380,
+      "y": 299,
+      "size": 8
+    },
+    "showInstructions_Call Tenant / Appt": {
+      "page": 4,
+      "x": 380,
+      "y": 275,
+      "size": 8
+    },
+    "specialListingConditions_Third Party Approval Required": {
+      "page": 2,
+      "x": 140,
+      "y": 560,
+      "size": 9
+    },
+    "specialListingConditions_Price Was Approved by Third Party": {
+      "page": 2,
+      "x": 300,
+      "y": 560,
+      "size": 9
+    },
+    "specialListingConditions_Offer Under Third Party Review": {
+      "page": 2,
+      "x": 460,
+      "y": 560,
+      "size": 9
+    },
+    "propInfo_Level4_primary": {
+      "page": 2,
+      "x": 200,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_family": {
+      "page": 2,
+      "x": 320,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_den": {
+      "page": 2,
+      "x": 350,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_formalLiving": {
+      "page": 2,
+      "x": 380,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_kitchen": {
+      "page": 2,
+      "x": 420,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_breakfast": {
+      "page": 2,
+      "x": 450,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_formalDining": {
+      "page": 2,
+      "x": 480,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_semiFormal": {
+      "page": 2,
+      "x": 510,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_laundry": {
+      "page": 2,
+      "x": 540,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level4_fireplace": {
+      "page": 2,
+      "x": 570,
+      "y": 400,
+      "size": 8
+    },
+    "propInfo_Level3_primary": {
+      "page": 2,
+      "x": 200,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_family": {
+      "page": 2,
+      "x": 320,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_den": {
+      "page": 2,
+      "x": 350,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_formalLiving": {
+      "page": 2,
+      "x": 380,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_kitchen": {
+      "page": 2,
+      "x": 420,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_breakfast": {
+      "page": 2,
+      "x": 450,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_formalDining": {
+      "page": 2,
+      "x": 480,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_semiFormal": {
+      "page": 2,
+      "x": 510,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_laundry": {
+      "page": 2,
+      "x": 540,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level3_fireplace": {
+      "page": 2,
+      "x": 570,
+      "y": 385,
+      "size": 8
+    },
+    "propInfo_Level2_primary": {
+      "page": 2,
+      "x": 200,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_family": {
+      "page": 2,
+      "x": 320,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_den": {
+      "page": 2,
+      "x": 350,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_formalLiving": {
+      "page": 2,
+      "x": 380,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_kitchen": {
+      "page": 2,
+      "x": 420,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_breakfast": {
+      "page": 2,
+      "x": 450,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_formalDining": {
+      "page": 2,
+      "x": 480,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_semiFormal": {
+      "page": 2,
+      "x": 510,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_laundry": {
+      "page": 2,
+      "x": 540,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level2_fireplace": {
+      "page": 2,
+      "x": 570,
+      "y": 370,
+      "size": 8
+    },
+    "propInfo_Level1_primary": {
+      "page": 2,
+      "x": 200,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_family": {
+      "page": 2,
+      "x": 320,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_den": {
+      "page": 2,
+      "x": 350,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_formalLiving": {
+      "page": 2,
+      "x": 380,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_kitchen": {
+      "page": 2,
+      "x": 420,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_breakfast": {
+      "page": 2,
+      "x": 450,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_formalDining": {
+      "page": 2,
+      "x": 480,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_semiFormal": {
+      "page": 2,
+      "x": 510,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_laundry": {
+      "page": 2,
+      "x": 540,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Level1_fireplace": {
+      "page": 2,
+      "x": 570,
+      "y": 355,
+      "size": 8
+    },
+    "propInfo_Basement1_primary": {
+      "page": 2,
+      "x": 200,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_family": {
+      "page": 2,
+      "x": 320,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_den": {
+      "page": 2,
+      "x": 350,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_formalLiving": {
+      "page": 2,
+      "x": 380,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_kitchen": {
+      "page": 2,
+      "x": 420,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_breakfast": {
+      "page": 2,
+      "x": 450,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_formalDining": {
+      "page": 2,
+      "x": 480,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_semiFormal": {
+      "page": 2,
+      "x": 510,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_laundry": {
+      "page": 2,
+      "x": 540,
+      "y": 340,
+      "size": 8
+    },
+    "propInfo_Basement1_fireplace": {
+      "page": 2,
+      "x": 570,
+      "y": 340,
+      "size": 8
+    },
+    "basementType_Daylight": {
+      "page": 2,
+      "x": 80,
+      "y": 500,
+      "size": 9
+    },
+    "basementType_Entrance": {
+      "page": 2,
+      "x": 140,
+      "y": 500,
+      "size": 9
+    },
+    "basementType_Shelf": {
+      "page": 2,
+      "x": 420,
+      "y": 500,
+      "size": 9
+    },
+    "basementType_Slab": {
+      "page": 2,
+      "x": 470,
+      "y": 500,
+      "size": 9
+    },
+    "basementType_Walkout": {
+      "page": 2,
+      "x": 510,
+      "y": 500,
+      "size": 9
+    },
+    "basementType_See Remarks": {
+      "page": 2,
+      "x": 560,
+      "y": 500,
+      "size": 9
+    },
+    "listingType_Exclusive Agency (EAL)": {
+      "page": 2,
+      "x": 300,
+      "y": 620,
+      "size": 9
+    },
+    "specialOwnerType_REO/Bank Owned": {
+      "page": 2,
+      "x": 140,
+      "y": 680,
+      "size": 9
+    },
+    "specialOwnerType_HUD Owned": {
+      "page": 2,
+      "x": 240,
+      "y": 680,
+      "size": 9
+    },
+    "specialOwnerType_Agent Owned": {
+      "page": 2,
+      "x": 340,
+      "y": 680,
+      "size": 9
+    },
+    "specialOwnerType_Fractional Ownership": {
+      "page": 2,
+      "x": 440,
+      "y": 680,
+      "size": 9
+    },
+    "specialOwnerType_LLC": {
+      "page": 2,
+      "x": 140,
+      "y": 665,
+      "size": 9
+    },
+    "specialOwnerType_Trust": {
+      "page": 2,
+      "x": 220,
+      "y": 665,
+      "size": 9
+    },
+    "contactType_Agent": {
+      "page": 2,
+      "x": 140,
+      "y": 650,
+      "size": 9
+    },
+    "contactType_Owner": {
+      "page": 2,
+      "x": 200,
+      "y": 650,
+      "size": 9
+    },
+    "contactType_Assistant": {
+      "page": 2,
+      "x": 270,
+      "y": 650,
+      "size": 9
+    },
+    "specialListingConditions_Short Sale": {
+      "page": 2,
+      "x": 140,
+      "y": 580,
+      "size": 9
+    },
+    "specialListingConditions_In Foreclosure": {
+      "page": 2,
+      "x": 240,
+      "y": 580,
+      "size": 9
+    },
+    "specialListingConditions_In Probate": {
+      "page": 2,
+      "x": 340,
+      "y": 580,
+      "size": 9
+    },
+    "specialListingConditions_Bankruptcy": {
+      "page": 2,
+      "x": 440,
+      "y": 580,
+      "size": 9
+    },
+    "specialListingConditions_Notice of Default": {
+      "page": 2,
+      "x": 140,
+      "y": 565,
+      "size": 9
+    },
+    "specialListingConditions_Trustee Sale": {
+      "page": 2,
+      "x": 280,
+      "y": 565,
+      "size": 9
+    },
+    "specialListingConditions_Auction": {
+      "page": 2,
+      "x": 400,
+      "y": 565,
+      "size": 9
+    },
+    "accessibility_32\" Wide Doorways": {
+      "page": 3,
+      "x": 72,
+      "y": 730,
+      "size": 8
+    },
+    "accessibility_36\" Wide Hallways": {
+      "page": 3,
+      "x": 72,
+      "y": 716,
+      "size": 8
+    },
+    "accessibility_Access to Elec. Outlet": {
+      "page": 3,
+      "x": 72,
+      "y": 702,
+      "size": 8
+    },
+    "accessibility_Audible Alerts": {
+      "page": 3,
+      "x": 72,
+      "y": 688,
+      "size": 8
+    },
+    "accessibility_Ceiling Lift System": {
+      "page": 3,
+      "x": 72,
+      "y": 674,
+      "size": 8
+    },
+    "accessibility_Elevator": {
+      "page": 3,
+      "x": 72,
+      "y": 660,
+      "size": 8
+    },
+    "accessibility_Frnt-Cntrld Stove / Oven": {
+      "page": 3,
+      "x": 72,
+      "y": 646,
+      "size": 8
+    },
+    "accessibility_Fully Accessible": {
+      "page": 3,
+      "x": 72,
+      "y": 632,
+      "size": 8
+    },
+    "accessibility_Grab Bars": {
+      "page": 3,
+      "x": 72,
+      "y": 618,
+      "size": 8
+    },
+    "accessibility_Ground Level": {
+      "page": 3,
+      "x": 72,
+      "y": 604,
+      "size": 8
+    },
+    "accessibility_Modified Kitchen": {
+      "page": 3,
+      "x": 72,
+      "y": 590,
+      "size": 8
+    },
+    "accessibility_No-Step Entry": {
+      "page": 3,
+      "x": 72,
+      "y": 576,
+      "size": 8
+    },
+    "accessibility_Porch Lift": {
+      "page": 3,
+      "x": 72,
+      "y": 562,
+      "size": 8
+    },
+    "accessibility_Ramp": {
+      "page": 3,
+      "x": 72,
+      "y": 548,
+      "size": 8
+    },
+    "accessibility_Roll-In Shower": {
+      "page": 3,
+      "x": 72,
+      "y": 534,
+      "size": 8
+    },
+    "accessibility_Single Level Living": {
+      "page": 3,
+      "x": 72,
+      "y": 520,
+      "size": 8
+    },
+    "accessibility_Stair Lift": {
+      "page": 3,
+      "x": 72,
+      "y": 506,
+      "size": 8
+    },
+    "accessibility_Universal Design": {
+      "page": 3,
+      "x": 72,
+      "y": 492,
+      "size": 8
+    },
+    "accessibility_Visible Alerts": {
+      "page": 3,
+      "x": 72,
+      "y": 478,
+      "size": 8
+    },
+    "accessibility_Visitable": {
+      "page": 3,
+      "x": 72,
+      "y": 464,
+      "size": 8
+    },
+    "accessibility_Wheelchair Access": {
+      "page": 3,
+      "x": 72,
+      "y": 450,
+      "size": 8
+    },
+    "accessibility_See Remarks": {
+      "page": 3,
+      "x": 72,
+      "y": 436,
+      "size": 8
+    },
+    "airConditioning_Active Solar": {
+      "page": 3,
+      "x": 72,
+      "y": 400,
+      "size": 8
+    },
+    "airConditioning_Evap. Cooler: Roof": {
+      "page": 3,
+      "x": 72,
+      "y": 358,
+      "size": 8
+    },
+    "airConditioning_Evap. Cooler: Window": {
+      "page": 3,
+      "x": 72,
+      "y": 344,
+      "size": 8
+    },
+    "airConditioning_Geothermal": {
+      "page": 3,
+      "x": 72,
+      "y": 330,
+      "size": 8
+    },
+    "airConditioning_Heat Pump": {
+      "page": 3,
+      "x": 72,
+      "y": 316,
+      "size": 8
+    },
+    "airConditioning_Passive Solar": {
+      "page": 3,
+      "x": 72,
+      "y": 302,
+      "size": 8
+    },
+    "airConditioning_Natural Ventilation": {
+      "page": 3,
+      "x": 72,
+      "y": 288,
+      "size": 8
+    },
+    "airConditioning_Refrig. Air; Window": {
+      "page": 3,
+      "x": 72,
+      "y": 274,
+      "size": 8
+    },
+    "airConditioning_Seer 16 Or Higher": {
+      "page": 3,
+      "x": 72,
+      "y": 260,
+      "size": 8
+    },
+    "airConditioning_See Remarks": {
+      "page": 3,
+      "x": 72,
+      "y": 246,
+      "size": 8
+    },
+    "amenities_Cable TV Available": {
+      "page": 3,
+      "x": 72,
+      "y": 220,
+      "size": 8
+    },
+    "amenities_Cable TV Wired": {
+      "page": 3,
+      "x": 72,
+      "y": 206,
+      "size": 8
+    },
+    "amenities_Clubhouse": {
+      "page": 3,
+      "x": 72,
+      "y": 192,
+      "size": 8
+    },
+    "amenities_Electric Dryer Hookup": {
+      "page": 3,
+      "x": 72,
+      "y": 178,
+      "size": 8
+    },
+    "amenities_Exercise Room": {
+      "page": 3,
+      "x": 72,
+      "y": 164,
+      "size": 8
+    },
+    "amenities_Gas Dryer Hookup": {
+      "page": 3,
+      "x": 72,
+      "y": 150,
+      "size": 8
+    },
+    "amenities_Gated Community": {
+      "page": 3,
+      "x": 72,
+      "y": 136,
+      "size": 8
+    },
+    "amenities_Home Warranty": {
+      "page": 3,
+      "x": 72,
+      "y": 122,
+      "size": 8
+    },
+    "amenities_Park / Playground": {
+      "page": 3,
+      "x": 72,
+      "y": 108,
+      "size": 8
+    },
+    "amenities_Pickleball Court": {
+      "page": 3,
+      "x": 72,
+      "y": 94,
+      "size": 8
+    },
+    "amenities_Sauna / Steam Room": {
+      "page": 3,
+      "x": 72,
+      "y": 80,
+      "size": 8
+    },
+    "amenities_Ski-In/Ski-Out": {
+      "page": 3,
+      "x": 72,
+      "y": 66,
+      "size": 8
+    },
+    "amenities_Swimming Pool": {
+      "page": 3,
+      "x": 72,
+      "y": 52,
+      "size": 8
+    },
+    "amenities_Tennis Court": {
+      "page": 3,
+      "x": 72,
+      "y": 38,
+      "size": 8
+    },
+    "amenities_Workshop": {
+      "page": 3,
+      "x": 72,
+      "y": 24,
+      "size": 8
+    },
+    "amenities_See Remarks": {
+      "page": 3,
+      "x": 72,
+      "y": 10,
+      "size": 8
+    },
+    "driveway_Circular": {
+      "page": 3,
+      "x": 320,
+      "y": 716,
+      "size": 8
+    },
+    "driveway_Common Drive": {
+      "page": 3,
+      "x": 320,
+      "y": 702,
+      "size": 8
+    },
+    "driveway_Dirt": {
+      "page": 3,
+      "x": 320,
+      "y": 674,
+      "size": 8
+    },
+    "driveway_Gravel": {
+      "page": 3,
+      "x": 320,
+      "y": 660,
+      "size": 8
+    },
+    "driveway_Heated": {
+      "page": 3,
+      "x": 320,
+      "y": 646,
+      "size": 8
+    },
+    "driveway_See Remarks": {
+      "page": 3,
+      "x": 320,
+      "y": 632,
+      "size": 8
+    },
+    "environmentalCerts_Built Green": {
+      "page": 3,
+      "x": 320,
+      "y": 600,
+      "size": 8
+    },
+    "environmentalCerts_Energy Star": {
+      "page": 3,
+      "x": 320,
+      "y": 586,
+      "size": 8
+    },
+    "environmentalCerts_Home Energy Rating": {
+      "page": 3,
+      "x": 320,
+      "y": 572,
+      "size": 8
+    },
+    "environmentalCerts_Leed": {
+      "page": 3,
+      "x": 320,
+      "y": 558,
+      "size": 8
+    },
+    "environmentalCerts_See Remarks": {
+      "page": 3,
+      "x": 320,
+      "y": 544,
+      "size": 8
+    },
+    "exterior_Aluminum": {
+      "page": 3,
+      "x": 320,
+      "y": 510,
+      "size": 8
+    },
+    "exterior_Asbestos Shingles": {
+      "page": 3,
+      "x": 320,
+      "y": 496,
+      "size": 8
+    },
+    "exterior_Asphalt Shingles": {
+      "page": 3,
+      "x": 320,
+      "y": 482,
+      "size": 8
+    },
+    "exterior_Cedar": {
+      "page": 3,
+      "x": 320,
+      "y": 454,
+      "size": 8
+    },
+    "exterior_Cement Board": {
+      "page": 3,
+      "x": 320,
+      "y": 440,
+      "size": 8
+    },
+    "exterior_Cinder Block": {
+      "page": 3,
+      "x": 320,
+      "y": 426,
+      "size": 8
+    },
+    "exterior_Clapboard/Masonite": {
+      "page": 3,
+      "x": 320,
+      "y": 412,
+      "size": 8
+    },
+    "exterior_Composition": {
+      "page": 3,
+      "x": 320,
+      "y": 398,
+      "size": 8
+    },
+    "exterior_Concrete": {
+      "page": 3,
+      "x": 320,
+      "y": 384,
+      "size": 8
+    },
+    "exterior_Container": {
+      "page": 3,
+      "x": 320,
+      "y": 370,
+      "size": 8
+    },
+    "exterior_Glass": {
+      "page": 3,
+      "x": 320,
+      "y": 342,
+      "size": 8
+    },
+    "exterior_Insulated Concrete Forms": {
+      "page": 3,
+      "x": 320,
+      "y": 328,
+      "size": 8
+    },
+    "exterior_Log": {
+      "page": 3,
+      "x": 320,
+      "y": 314,
+      "size": 8
+    },
+    "exterior_Metal": {
+      "page": 3,
+      "x": 320,
+      "y": 300,
+      "size": 8
+    },
+    "exterior_Other Wood": {
+      "page": 3,
+      "x": 320,
+      "y": 286,
+      "size": 8
+    },
+    "exterior_Redwood": {
+      "page": 3,
+      "x": 320,
+      "y": 272,
+      "size": 8
+    },
+    "exterior_Stone": {
+      "page": 3,
+      "x": 320,
+      "y": 258,
+      "size": 8
+    },
+    "exterior_Straw Bale": {
+      "page": 3,
+      "x": 320,
+      "y": 244,
+      "size": 8
+    },
+    "exterior_Vinyl": {
+      "page": 3,
+      "x": 320,
+      "y": 216,
+      "size": 8
+    },
+    "exterior_See Remarks": {
+      "page": 3,
+      "x": 320,
+      "y": 202,
+      "size": 8
+    },
+    "exteriorFeatures_Atrium": {
+      "page": 3,
+      "x": 200,
+      "y": 750,
+      "size": 8
+    },
+    "exteriorFeatures_Attic Fan": {
+      "page": 3,
+      "x": 200,
+      "y": 738,
+      "size": 8
+    },
+    "exteriorFeatures_Awnings": {
+      "page": 3,
+      "x": 200,
+      "y": 726,
+      "size": 8
+    },
+    "exteriorFeatures_Balcony": {
+      "page": 3,
+      "x": 200,
+      "y": 714,
+      "size": 8
+    },
+    "exteriorFeatures_Barn": {
+      "page": 3,
+      "x": 200,
+      "y": 702,
+      "size": 8
+    },
+    "exteriorFeatures_Basement Entrance": {
+      "page": 3,
+      "x": 200,
+      "y": 690,
+      "size": 8
+    },
+    "exteriorFeatures_Bay Box Windows": {
+      "page": 3,
+      "x": 200,
+      "y": 678,
+      "size": 8
+    },
+    "exteriorFeatures_Deck: Covered": {
+      "page": 3,
+      "x": 200,
+      "y": 666,
+      "size": 8
+    },
+    "exteriorFeatures_Double Pane Windows": {
+      "page": 3,
+      "x": 200,
+      "y": 654,
+      "size": 8
+    },
+    "exteriorFeatures_Entry (Foyer)": {
+      "page": 3,
+      "x": 200,
+      "y": 642,
+      "size": 8
+    },
+    "exteriorFeatures_Greenhouse Windows": {
+      "page": 3,
+      "x": 200,
+      "y": 630,
+      "size": 8
+    },
+    "exteriorFeatures_Horse Property": {
+      "page": 3,
+      "x": 200,
+      "y": 618,
+      "size": 8
+    },
+    "exteriorFeatures_Out Buildings": {
+      "page": 3,
+      "x": 200,
+      "y": 606,
+      "size": 8
+    },
+    "exteriorFeatures_Outdoor Lighting": {
+      "page": 3,
+      "x": 200,
+      "y": 594,
+      "size": 8
+    },
+    "exteriorFeatures_Patio: Covered": {
+      "page": 3,
+      "x": 200,
+      "y": 582,
+      "size": 8
+    },
+    "exteriorFeatures_Patio: Open": {
+      "page": 3,
+      "x": 200,
+      "y": 570,
+      "size": 8
+    },
+    "exteriorFeatures_Porch: Open": {
+      "page": 3,
+      "x": 200,
+      "y": 558,
+      "size": 8
+    },
+    "exteriorFeatures_Porch: Screened": {
+      "page": 3,
+      "x": 200,
+      "y": 546,
+      "size": 8
+    },
+    "exteriorFeatures_Secured Building": {
+      "page": 3,
+      "x": 200,
+      "y": 534,
+      "size": 8
+    },
+    "exteriorFeatures_Secured Parking": {
+      "page": 3,
+      "x": 200,
+      "y": 522,
+      "size": 8
+    },
+    "exteriorFeatures_Skylights": {
+      "page": 3,
+      "x": 200,
+      "y": 510,
+      "size": 8
+    },
+    "exteriorFeatures_Sliding Glass Doors": {
+      "page": 3,
+      "x": 200,
+      "y": 498,
+      "size": 8
+    },
+    "exteriorFeatures_Stained Glass Windows": {
+      "page": 3,
+      "x": 200,
+      "y": 486,
+      "size": 8
+    },
+    "exteriorFeatures_Storm Doors": {
+      "page": 3,
+      "x": 200,
+      "y": 474,
+      "size": 8
+    },
+    "exteriorFeatures_Storm Windows": {
+      "page": 3,
+      "x": 200,
+      "y": 462,
+      "size": 8
+    },
+    "exteriorFeatures_Triple Pane Windows": {
+      "page": 3,
+      "x": 200,
+      "y": 450,
+      "size": 8
+    },
+    "exteriorFeatures_Walk Out": {
+      "page": 3,
+      "x": 200,
+      "y": 438,
+      "size": 8
+    },
+    "exteriorFeatures_See Remarks": {
+      "page": 3,
+      "x": 200,
+      "y": 426,
+      "size": 8
+    },
+    "flooring_Bamboo": {
+      "page": 3,
+      "x": 200,
+      "y": 400,
+      "size": 8
+    },
+    "flooring_Concrete": {
+      "page": 3,
+      "x": 200,
+      "y": 376,
+      "size": 8
+    },
+    "flooring_Cork": {
+      "page": 3,
+      "x": 200,
+      "y": 364,
+      "size": 8
+    },
+    "flooring_Linoleum": {
+      "page": 3,
+      "x": 200,
+      "y": 328,
+      "size": 8
+    },
+    "flooring_Marble": {
+      "page": 3,
+      "x": 200,
+      "y": 316,
+      "size": 8
+    },
+    "flooring_Natural Rock": {
+      "page": 3,
+      "x": 200,
+      "y": 304,
+      "size": 8
+    },
+    "flooring_Slate": {
+      "page": 3,
+      "x": 200,
+      "y": 292,
+      "size": 8
+    },
+    "flooring_Travertine": {
+      "page": 3,
+      "x": 200,
+      "y": 268,
+      "size": 8
+    },
+    "flooring_Vinyl": {
+      "page": 3,
+      "x": 200,
+      "y": 256,
+      "size": 8
+    },
+    "flooring_Vinyl (LVP)": {
+      "page": 3,
+      "x": 200,
+      "y": 244,
+      "size": 8
+    },
+    "flooring_See Remarks": {
+      "page": 3,
+      "x": 200,
+      "y": 232,
+      "size": 8
+    },
+    "garageParking_2 Car Deep (Tandem)": {
+      "page": 3,
+      "x": 380,
+      "y": 750,
+      "size": 8
+    },
+    "garageParking_Built-in": {
+      "page": 3,
+      "x": 380,
+      "y": 726,
+      "size": 8
+    },
+    "garageParking_Electrical Vehicle Charging Station": {
+      "page": 3,
+      "x": 380,
+      "y": 702,
+      "size": 8
+    },
+    "garageParking_Extra Height": {
+      "page": 3,
+      "x": 380,
+      "y": 690,
+      "size": 8
+    },
+    "garageParking_Extra Length": {
+      "page": 3,
+      "x": 380,
+      "y": 678,
+      "size": 8
+    },
+    "garageParking_Extra Width": {
+      "page": 3,
+      "x": 380,
+      "y": 666,
+      "size": 8
+    },
+    "garageParking_Heated": {
+      "page": 3,
+      "x": 380,
+      "y": 654,
+      "size": 8
+    },
+    "garageParking_Opener": {
+      "page": 3,
+      "x": 380,
+      "y": 642,
+      "size": 8
+    },
+    "garageParking_Parking: Covered": {
+      "page": 3,
+      "x": 380,
+      "y": 630,
+      "size": 8
+    },
+    "garageParking_Parking: Uncovered": {
+      "page": 3,
+      "x": 380,
+      "y": 618,
+      "size": 8
+    },
+    "garageParking_RV Electrical Hookup": {
+      "page": 3,
+      "x": 380,
+      "y": 606,
+      "size": 8
+    },
+    "garageParking_RV Parking": {
+      "page": 3,
+      "x": 380,
+      "y": 594,
+      "size": 8
+    },
+    "garageParking_Storage Above": {
+      "page": 3,
+      "x": 380,
+      "y": 582,
+      "size": 8
+    },
+    "garageParking_Workbench": {
+      "page": 3,
+      "x": 380,
+      "y": 570,
+      "size": 8
+    },
+    "garageParking_Workshop": {
+      "page": 3,
+      "x": 380,
+      "y": 558,
+      "size": 8
+    },
+    "garageParking_See Remarks": {
+      "page": 3,
+      "x": 380,
+      "y": 546,
+      "size": 8
+    },
+    "heating_>= 95% efficiency": {
+      "page": 3,
+      "x": 380,
+      "y": 510,
+      "size": 8
+    },
+    "heating_Active Solar": {
+      "page": 3,
+      "x": 380,
+      "y": 499,
+      "size": 8
+    },
+    "heating_Electric": {
+      "page": 3,
+      "x": 380,
+      "y": 488,
+      "size": 8
+    },
+    "heating_Electric: Baseboard": {
+      "page": 3,
+      "x": 380,
+      "y": 477,
+      "size": 8
+    },
+    "heating_Electric: Radiant": {
+      "page": 3,
+      "x": 380,
+      "y": 466,
+      "size": 8
+    },
+    "heating_Gas: Radiant": {
+      "page": 3,
+      "x": 380,
+      "y": 433,
+      "size": 8
+    },
+    "heating_Gas: Stove": {
+      "page": 3,
+      "x": 380,
+      "y": 422,
+      "size": 8
+    },
+    "heating_Geothermal": {
+      "page": 3,
+      "x": 380,
+      "y": 411,
+      "size": 8
+    },
+    "heating_Gravity Heater": {
+      "page": 3,
+      "x": 380,
+      "y": 400,
+      "size": 8
+    },
+    "heating_Heat Pump": {
+      "page": 3,
+      "x": 380,
+      "y": 389,
+      "size": 8
+    },
+    "heating_Heat Recovery": {
+      "page": 3,
+      "x": 380,
+      "y": 378,
+      "size": 8
+    },
+    "heating_Hot Water": {
+      "page": 3,
+      "x": 380,
+      "y": 367,
+      "size": 8
+    },
+    "heating_Hydronic": {
+      "page": 3,
+      "x": 380,
+      "y": 356,
+      "size": 8
+    },
+    "heating_Oil": {
+      "page": 3,
+      "x": 380,
+      "y": 345,
+      "size": 8
+    },
+    "heating_Passive Solar": {
+      "page": 3,
+      "x": 380,
+      "y": 334,
+      "size": 8
+    },
+    "heating_Propane": {
+      "page": 3,
+      "x": 380,
+      "y": 323,
+      "size": 8
+    },
+    "heating_Radiant: In Floor": {
+      "page": 3,
+      "x": 380,
+      "y": 312,
+      "size": 8
+    },
+    "heating_Space Heater": {
+      "page": 3,
+      "x": 380,
+      "y": 301,
+      "size": 8
+    },
+    "heating_Steam": {
+      "page": 3,
+      "x": 380,
+      "y": 290,
+      "size": 8
+    },
+    "heating_Wall Heater": {
+      "page": 3,
+      "x": 380,
+      "y": 279,
+      "size": 8
+    },
+    "heating_Wood Burning": {
+      "page": 3,
+      "x": 380,
+      "y": 268,
+      "size": 8
+    },
+    "heating_See Remarks": {
+      "page": 3,
+      "x": 380,
+      "y": 257,
+      "size": 8
+    },
+    "inclusions_Alarm System": {
+      "page": 3,
+      "x": 493,
+      "y": 699,
+      "size": 8
+    },
+    "exclusions_Alarm System": {
+      "page": 3,
+      "x": 513,
+      "y": 699,
+      "size": 8
+    },
+    "inclusions_Basketball Standard": {
+      "page": 3,
+      "x": 493,
+      "y": 688,
+      "size": 8
+    },
+    "exclusions_Basketball Standard": {
+      "page": 3,
+      "x": 513,
+      "y": 688,
+      "size": 8
+    },
+    "inclusions_Ceiling Fan": {
+      "page": 3,
+      "x": 493,
+      "y": 677,
+      "size": 8
+    },
+    "exclusions_Ceiling Fan": {
+      "page": 3,
+      "x": 513,
+      "y": 677,
+      "size": 8
+    },
+    "inclusions_Compactor": {
+      "page": 3,
+      "x": 493,
+      "y": 666,
+      "size": 8
+    },
+    "exclusions_Compactor": {
+      "page": 3,
+      "x": 513,
+      "y": 666,
+      "size": 8
+    },
+    "inclusions_Dishwasher: Portable": {
+      "page": 3,
+      "x": 493,
+      "y": 655,
+      "size": 8
+    },
+    "exclusions_Dishwasher: Portable": {
+      "page": 3,
+      "x": 513,
+      "y": 655,
+      "size": 8
+    },
+    "inclusions_Dog Run": {
+      "page": 3,
+      "x": 493,
+      "y": 644,
+      "size": 8
+    },
+    "exclusions_Dog Run": {
+      "page": 3,
+      "x": 513,
+      "y": 644,
+      "size": 8
+    },
+    "inclusions_Dryer": {
+      "page": 3,
+      "x": 493,
+      "y": 633,
+      "size": 8
+    },
+    "exclusions_Dryer": {
+      "page": 3,
+      "x": 513,
+      "y": 633,
+      "size": 8
+    },
+    "inclusions_Electric Air Cleaner": {
+      "page": 3,
+      "x": 493,
+      "y": 622,
+      "size": 8
+    },
+    "exclusions_Electric Air Cleaner": {
+      "page": 3,
+      "x": 513,
+      "y": 622,
+      "size": 8
+    },
+    "inclusions_Fireplace Equipment": {
+      "page": 3,
+      "x": 493,
+      "y": 611,
+      "size": 8
+    },
+    "exclusions_Fireplace Equipment": {
+      "page": 3,
+      "x": 513,
+      "y": 611,
+      "size": 8
+    },
+    "inclusions_Fireplace Insert": {
+      "page": 3,
+      "x": 493,
+      "y": 600,
+      "size": 8
+    },
+    "exclusions_Fireplace Insert": {
+      "page": 3,
+      "x": 513,
+      "y": 600,
+      "size": 8
+    },
+    "inclusions_Freezer": {
+      "page": 3,
+      "x": 493,
+      "y": 589,
+      "size": 8
+    },
+    "exclusions_Freezer": {
+      "page": 3,
+      "x": 513,
+      "y": 589,
+      "size": 8
+    },
+    "inclusions_Gas Grill / BBQ": {
+      "page": 3,
+      "x": 493,
+      "y": 578,
+      "size": 8
+    },
+    "exclusions_Gas Grill / BBQ": {
+      "page": 3,
+      "x": 513,
+      "y": 578,
+      "size": 8
+    },
+    "inclusions_Gazebo": {
+      "page": 3,
+      "x": 493,
+      "y": 567,
+      "size": 8
+    },
+    "exclusions_Gazebo": {
+      "page": 3,
+      "x": 513,
+      "y": 567,
+      "size": 8
+    },
+    "inclusions_Hot Tub": {
+      "page": 3,
+      "x": 493,
+      "y": 556,
+      "size": 8
+    },
+    "exclusions_Hot Tub": {
+      "page": 3,
+      "x": 513,
+      "y": 556,
+      "size": 8
+    },
+    "inclusions_Humidifer": {
+      "page": 3,
+      "x": 493,
+      "y": 545,
+      "size": 8
+    },
+    "exclusions_Humidifer": {
+      "page": 3,
+      "x": 513,
+      "y": 545,
+      "size": 8
+    },
+    "inclusions_Microwave": {
+      "page": 3,
+      "x": 493,
+      "y": 534,
+      "size": 8
+    },
+    "exclusions_Microwave": {
+      "page": 3,
+      "x": 513,
+      "y": 534,
+      "size": 8
+    },
+    "inclusions_Play Gym": {
+      "page": 3,
+      "x": 493,
+      "y": 523,
+      "size": 8
+    },
+    "exclusions_Play Gym": {
+      "page": 3,
+      "x": 513,
+      "y": 523,
+      "size": 8
+    },
+    "inclusions_Projector": {
+      "page": 3,
+      "x": 493,
+      "y": 512,
+      "size": 8
+    },
+    "exclusions_Projector": {
+      "page": 3,
+      "x": 513,
+      "y": 512,
+      "size": 8
+    },
+    "inclusions_Range": {
+      "page": 3,
+      "x": 493,
+      "y": 501,
+      "size": 8
+    },
+    "exclusions_Range": {
+      "page": 3,
+      "x": 513,
+      "y": 501,
+      "size": 8
+    },
+    "inclusions_Range Hood": {
+      "page": 3,
+      "x": 493,
+      "y": 490,
+      "size": 8
+    },
+    "exclusions_Range Hood": {
+      "page": 3,
+      "x": 513,
+      "y": 490,
+      "size": 8
+    },
+    "inclusions_Refrigerator": {
+      "page": 3,
+      "x": 493,
+      "y": 479,
+      "size": 8
+    },
+    "exclusions_Refrigerator": {
+      "page": 3,
+      "x": 513,
+      "y": 479,
+      "size": 8
+    },
+    "inclusions_Satellite Dish": {
+      "page": 3,
+      "x": 493,
+      "y": 468,
+      "size": 8
+    },
+    "exclusions_Satellite Dish": {
+      "page": 3,
+      "x": 513,
+      "y": 468,
+      "size": 8
+    },
+    "inclusions_Satellite Equipment": {
+      "page": 3,
+      "x": 493,
+      "y": 457,
+      "size": 8
+    },
+    "exclusions_Satellite Equipment": {
+      "page": 3,
+      "x": 513,
+      "y": 457,
+      "size": 8
+    },
+    "inclusions_Smart Thermostat(s)": {
+      "page": 3,
+      "x": 493,
+      "y": 446,
+      "size": 8
+    },
+    "exclusions_Smart Thermostat(s)": {
+      "page": 3,
+      "x": 513,
+      "y": 446,
+      "size": 8
+    },
+    "inclusions_Storage Shed(s)": {
+      "page": 3,
+      "x": 493,
+      "y": 435,
+      "size": 8
+    },
+    "exclusions_Storage Shed(s)": {
+      "page": 3,
+      "x": 513,
+      "y": 435,
+      "size": 8
+    },
+    "inclusions_Swing Set": {
+      "page": 3,
+      "x": 493,
+      "y": 424,
+      "size": 8
+    },
+    "exclusions_Swing Set": {
+      "page": 3,
+      "x": 513,
+      "y": 424,
+      "size": 8
+    },
+    "inclusions_Trampoline": {
+      "page": 3,
+      "x": 493,
+      "y": 413,
+      "size": 8
+    },
+    "exclusions_Trampoline": {
+      "page": 3,
+      "x": 513,
+      "y": 413,
+      "size": 8
+    },
+    "inclusions_TV Antenna": {
+      "page": 3,
+      "x": 493,
+      "y": 402,
+      "size": 8
+    },
+    "exclusions_TV Antenna": {
+      "page": 3,
+      "x": 513,
+      "y": 402,
+      "size": 8
+    },
+    "inclusions_Video Camera(s)": {
+      "page": 3,
+      "x": 493,
+      "y": 391,
+      "size": 8
+    },
+    "exclusions_Video Camera(s)": {
+      "page": 3,
+      "x": 513,
+      "y": 391,
+      "size": 8
+    },
+    "inclusions_Video Door Bell(s)": {
+      "page": 3,
+      "x": 493,
+      "y": 380,
+      "size": 8
+    },
+    "exclusions_Video Door Bell(s)": {
+      "page": 3,
+      "x": 513,
+      "y": 380,
+      "size": 8
+    },
+    "inclusions_Washer": {
+      "page": 3,
+      "x": 493,
+      "y": 369,
+      "size": 8
+    },
+    "exclusions_Washer": {
+      "page": 3,
+      "x": 513,
+      "y": 369,
+      "size": 8
+    },
+    "inclusions_Water Softener: Own": {
+      "page": 3,
+      "x": 493,
+      "y": 358,
+      "size": 8
+    },
+    "exclusions_Water Softener: Own": {
+      "page": 3,
+      "x": 513,
+      "y": 358,
+      "size": 8
+    },
+    "inclusions_Water Softener: Rent": {
+      "page": 3,
+      "x": 493,
+      "y": 347,
+      "size": 8
+    },
+    "exclusions_Water Softener: Rent": {
+      "page": 3,
+      "x": 513,
+      "y": 347,
+      "size": 8
+    },
+    "inclusions_Window Coverings": {
+      "page": 3,
+      "x": 493,
+      "y": 336,
+      "size": 8
+    },
+    "exclusions_Window Coverings": {
+      "page": 3,
+      "x": 513,
+      "y": 336,
+      "size": 8
+    },
+    "inclusions_Wood Stove": {
+      "page": 3,
+      "x": 493,
+      "y": 325,
+      "size": 8
+    },
+    "exclusions_Wood Stove": {
+      "page": 3,
+      "x": 513,
+      "y": 325,
+      "size": 8
+    },
+    "inclusions_Workbench": {
+      "page": 3,
+      "x": 493,
+      "y": 314,
+      "size": 8
+    },
+    "exclusions_Workbench": {
+      "page": 3,
+      "x": 513,
+      "y": 314,
+      "size": 8
+    },
+    "inclusions_See Remarks": {
+      "page": 3,
+      "x": 493,
+      "y": 303,
+      "size": 8
+    },
+    "interiorFeatures_Accessory Apartment": {
+      "page": 4,
+      "x": 22,
+      "y": 729,
+      "size": 8
+    },
+    "interiorFeatures_Alarm: Fire": {
+      "page": 4,
+      "x": 22,
+      "y": 717,
+      "size": 8
+    },
+    "interiorFeatures_Alarm: Security": {
+      "page": 4,
+      "x": 22,
+      "y": 705,
+      "size": 8
+    },
+    "interiorFeatures_Bar: Dry": {
+      "page": 4,
+      "x": 22,
+      "y": 693,
+      "size": 8
+    },
+    "interiorFeatures_Bar: Wet": {
+      "page": 4,
+      "x": 22,
+      "y": 681,
+      "size": 8
+    },
+    "interiorFeatures_Basement Apartment": {
+      "page": 4,
+      "x": 22,
+      "y": 669,
+      "size": 8
+    },
+    "interiorFeatures_Bath: Primary": {
+      "page": 4,
+      "x": 22,
+      "y": 657,
+      "size": 8
+    },
+    "interiorFeatures_Bath: Sep. Tub / Shower": {
+      "page": 4,
+      "x": 22,
+      "y": 645,
+      "size": 8
+    },
+    "interiorFeatures_Central Vacuum": {
+      "page": 4,
+      "x": 22,
+      "y": 633,
+      "size": 8
+    },
+    "interiorFeatures_Closet: Walk-in": {
+      "page": 4,
+      "x": 22,
+      "y": 621,
+      "size": 8
+    },
+    "interiorFeatures_Den / Office": {
+      "page": 4,
+      "x": 22,
+      "y": 609,
+      "size": 8
+    },
+    "interiorFeatures_Dishwasher, Built-in": {
+      "page": 4,
+      "x": 22,
+      "y": 597,
+      "size": 8
+    },
+    "interiorFeatures_Disposal": {
+      "page": 4,
+      "x": 22,
+      "y": 585,
+      "size": 8
+    },
+    "interiorFeatures_Floor Drains": {
+      "page": 4,
+      "x": 22,
+      "y": 573,
+      "size": 8
+    },
+    "interiorFeatures_French Doors": {
+      "page": 4,
+      "x": 22,
+      "y": 561,
+      "size": 8
+    },
+    "interiorFeatures_Gas Log": {
+      "page": 4,
+      "x": 22,
+      "y": 549,
+      "size": 8
+    },
+    "interiorFeatures_Granite Countertops": {
+      "page": 4,
+      "x": 22,
+      "y": 537,
+      "size": 8
+    },
+    "interiorFeatures_Great Room": {
+      "page": 4,
+      "x": 22,
+      "y": 525,
+      "size": 8
+    },
+    "interiorFeatures_Instantaneous Hot Water": {
+      "page": 4,
+      "x": 22,
+      "y": 513,
+      "size": 8
+    },
+    "interiorFeatures_Intercom": {
+      "page": 4,
+      "x": 22,
+      "y": 501,
+      "size": 8
+    },
+    "interiorFeatures_Jetted Tub": {
+      "page": 4,
+      "x": 22,
+      "y": 489,
+      "size": 8
+    },
+    "interiorFeatures_Kitchen: Second": {
+      "page": 4,
+      "x": 22,
+      "y": 477,
+      "size": 8
+    },
+    "interiorFeatures_Kitchen: Updated": {
+      "page": 4,
+      "x": 22,
+      "y": 465,
+      "size": 8
+    },
+    "interiorFeatures_Laundry Chute": {
+      "page": 4,
+      "x": 22,
+      "y": 453,
+      "size": 8
+    },
+    "interiorFeatures_Low VOC Finishes": {
+      "page": 4,
+      "x": 22,
+      "y": 441,
+      "size": 8
+    },
+    "interiorFeatures_Marble Countertops": {
+      "page": 4,
+      "x": 22,
+      "y": 429,
+      "size": 8
+    },
+    "interiorFeatures_Mother-in-law Apt.": {
+      "page": 4,
+      "x": 22,
+      "y": 417,
+      "size": 8
+    },
+    "interiorFeatures_Oven: Double": {
+      "page": 4,
+      "x": 22,
+      "y": 405,
+      "size": 8
+    },
+    "interiorFeatures_Oven: Gas": {
+      "page": 4,
+      "x": 22,
+      "y": 393,
+      "size": 8
+    },
+    "interiorFeatures_Oven: Wall": {
+      "page": 4,
+      "x": 22,
+      "y": 381,
+      "size": 8
+    },
+    "interiorFeatures_Quartz Countertops": {
+      "page": 4,
+      "x": 22,
+      "y": 369,
+      "size": 8
+    },
+    "interiorFeatures_Range / Oven, Built-in": {
+      "page": 4,
+      "x": 22,
+      "y": 357,
+      "size": 8
+    },
+    "interiorFeatures_Range / Oven, Free Stdng.": {
+      "page": 4,
+      "x": 22,
+      "y": 345,
+      "size": 8
+    },
+    "interiorFeatures_Range, Countertop": {
+      "page": 4,
+      "x": 22,
+      "y": 333,
+      "size": 8
+    },
+    "interiorFeatures_Range, Down Vent": {
+      "page": 4,
+      "x": 22,
+      "y": 321,
+      "size": 8
+    },
+    "interiorFeatures_Range, Gas": {
+      "page": 4,
+      "x": 22,
+      "y": 309,
+      "size": 8
+    },
+    "interiorFeatures_Silestone Countertops": {
+      "page": 4,
+      "x": 22,
+      "y": 297,
+      "size": 8
+    },
+    "interiorFeatures_Theater Room": {
+      "page": 4,
+      "x": 22,
+      "y": 285,
+      "size": 8
+    },
+    "interiorFeatures_Vaulted Ceilings": {
+      "page": 4,
+      "x": 22,
+      "y": 273,
+      "size": 8
+    },
+    "interiorFeatures_See Remarks": {
+      "page": 4,
+      "x": 22,
+      "y": 261,
+      "size": 8
+    },
+    "landscaping_Fruit Trees": {
+      "page": 4,
+      "x": 200,
+      "y": 729,
+      "size": 8
+    },
+    "landscaping_Landscaping: Part": {
+      "page": 4,
+      "x": 200,
+      "y": 705,
+      "size": 8
+    },
+    "landscaping_Mature Trees": {
+      "page": 4,
+      "x": 200,
+      "y": 693,
+      "size": 8
+    },
+    "landscaping_Pines": {
+      "page": 4,
+      "x": 200,
+      "y": 681,
+      "size": 8
+    },
+    "landscaping_Scrub Oak": {
+      "page": 4,
+      "x": 200,
+      "y": 669,
+      "size": 8
+    },
+    "landscaping_Stream": {
+      "page": 4,
+      "x": 200,
+      "y": 657,
+      "size": 8
+    },
+    "landscaping_Terraced Yard": {
+      "page": 4,
+      "x": 200,
+      "y": 645,
+      "size": 8
+    },
+    "landscaping_Vegetable Garden": {
+      "page": 4,
+      "x": 200,
+      "y": 633,
+      "size": 8
+    },
+    "landscaping_Waterfall": {
+      "page": 4,
+      "x": 200,
+      "y": 621,
+      "size": 8
+    },
+    "landscaping_Xeriscaped": {
+      "page": 4,
+      "x": 200,
+      "y": 609,
+      "size": 8
+    },
+    "landscaping_See Remarks": {
+      "page": 4,
+      "x": 200,
+      "y": 597,
+      "size": 8
+    },
+    "lotFacts_Additional Land Available": {
+      "page": 4,
+      "x": 200,
+      "y": 570,
+      "size": 8
+    },
+    "lotFacts_Adjacent to Golf Course": {
+      "page": 4,
+      "x": 200,
+      "y": 559,
+      "size": 8
+    },
+    "lotFacts_Corner Lot": {
+      "page": 4,
+      "x": 200,
+      "y": 548,
+      "size": 8
+    },
+    "lotFacts_Cul-de-sac": {
+      "page": 4,
+      "x": 200,
+      "y": 537,
+      "size": 8
+    },
+    "lotFacts_Drip Irrigation: Auto-full": {
+      "page": 4,
+      "x": 200,
+      "y": 515,
+      "size": 8
+    },
+    "lotFacts_Drip Irrigation: Auto-part": {
+      "page": 4,
+      "x": 200,
+      "y": 504,
+      "size": 8
+    },
+    "lotFacts_Drip Irrigation: Manual-full": {
+      "page": 4,
+      "x": 200,
+      "y": 493,
+      "size": 8
+    },
+    "lotFacts_Drip Irrigation: Manual-part": {
+      "page": 4,
+      "x": 200,
+      "y": 482,
+      "size": 8
+    },
+    "lotFacts_Fenced, Full": {
+      "page": 4,
+      "x": 200,
+      "y": 471,
+      "size": 8
+    },
+    "lotFacts_Fenced, Part": {
+      "page": 4,
+      "x": 200,
+      "y": 460,
+      "size": 8
+    },
+    "lotFacts_Greywater Collection": {
+      "page": 4,
+      "x": 200,
+      "y": 449,
+      "size": 8
+    },
+    "lotFacts_Pervious Paving": {
+      "page": 4,
+      "x": 200,
+      "y": 438,
+      "size": 8
+    },
+    "lotFacts_Private": {
+      "page": 4,
+      "x": 200,
+      "y": 427,
+      "size": 8
+    },
+    "lotFacts_Rainwater Collection": {
+      "page": 4,
+      "x": 200,
+      "y": 416,
+      "size": 8
+    },
+    "lotFacts_Road: Paved": {
+      "page": 4,
+      "x": 200,
+      "y": 405,
+      "size": 8
+    },
+    "lotFacts_Road: Unpaved": {
+      "page": 4,
+      "x": 200,
+      "y": 394,
+      "size": 8
+    },
+    "lotFacts_Secluded Yard": {
+      "page": 4,
+      "x": 200,
+      "y": 383,
+      "size": 8
+    },
+    "lotFacts_Sprinkler: Auto-full": {
+      "page": 4,
+      "x": 200,
+      "y": 361,
+      "size": 8
+    },
+    "lotFacts_Sprinkler: Auto-part": {
+      "page": 4,
+      "x": 200,
+      "y": 350,
+      "size": 8
+    },
+    "lotFacts_Sprinkler: Manual-full": {
+      "page": 4,
+      "x": 200,
+      "y": 339,
+      "size": 8
+    },
+    "lotFacts_Sprinkler: Manual-part": {
+      "page": 4,
+      "x": 200,
+      "y": 328,
+      "size": 8
+    },
+    "lotFacts_Terrain: Grad Slope": {
+      "page": 4,
+      "x": 200,
+      "y": 306,
+      "size": 8
+    },
+    "lotFacts_Terrain: Hilly": {
+      "page": 4,
+      "x": 200,
+      "y": 295,
+      "size": 8
+    },
+    "lotFacts_Terrain: Mountain": {
+      "page": 4,
+      "x": 200,
+      "y": 284,
+      "size": 8
+    },
+    "lotFacts_Terrain: Steep Slope": {
+      "page": 4,
+      "x": 200,
+      "y": 273,
+      "size": 8
+    },
+    "lotFacts_View: Lake": {
+      "page": 4,
+      "x": 200,
+      "y": 262,
+      "size": 8
+    },
+    "lotFacts_View: Mountain": {
+      "page": 4,
+      "x": 200,
+      "y": 251,
+      "size": 8
+    },
+    "lotFacts_View: Red Rock": {
+      "page": 4,
+      "x": 200,
+      "y": 240,
+      "size": 8
+    },
+    "lotFacts_View: Valley": {
+      "page": 4,
+      "x": 200,
+      "y": 229,
+      "size": 8
+    },
+    "lotFacts_View: Water": {
+      "page": 4,
+      "x": 200,
+      "y": 218,
+      "size": 8
+    },
+    "lotFacts_Waterfront": {
+      "page": 4,
+      "x": 200,
+      "y": 207,
+      "size": 8
+    },
+    "lotFacts_Wooded": {
+      "page": 4,
+      "x": 200,
+      "y": 196,
+      "size": 8
+    },
+    "lotFacts_See Remarks": {
+      "page": 4,
+      "x": 200,
+      "y": 185,
+      "size": 8
+    },
+    "poolFeatures_Above Ground": {
+      "page": 4,
+      "x": 380,
+      "y": 713,
+      "size": 8
+    },
+    "poolFeatures_Concrete/Gunite": {
+      "page": 4,
+      "x": 380,
+      "y": 701,
+      "size": 8
+    },
+    "poolFeatures_Electronic Cover": {
+      "page": 4,
+      "x": 380,
+      "y": 689,
+      "size": 8
+    },
+    "poolFeatures_Fenced": {
+      "page": 4,
+      "x": 380,
+      "y": 677,
+      "size": 8
+    },
+    "poolFeatures_Fiberglass/Vinyl": {
+      "page": 4,
+      "x": 380,
+      "y": 665,
+      "size": 8
+    },
+    "poolFeatures_Heated": {
+      "page": 4,
+      "x": 380,
+      "y": 653,
+      "size": 8
+    },
+    "poolFeatures_In Ground": {
+      "page": 4,
+      "x": 380,
+      "y": 641,
+      "size": 8
+    },
+    "poolFeatures_Indoor": {
+      "page": 4,
+      "x": 380,
+      "y": 629,
+      "size": 8
+    },
+    "poolFeatures_With Spa": {
+      "page": 4,
+      "x": 380,
+      "y": 617,
+      "size": 8
+    },
+    "poolFeatures_See Remarks": {
+      "page": 4,
+      "x": 380,
+      "y": 605,
+      "size": 8
+    },
+    "spaAvailable_Yes": {
+      "page": 4,
+      "x": 380,
+      "y": 589,
+      "size": 8
+    },
+    "spaAvailable_No": {
+      "page": 4,
+      "x": 420,
+      "y": 589,
+      "size": 8
+    },
+    "communityPool_Yes": {
+      "page": 4,
+      "x": 380,
+      "y": 573,
+      "size": 8
+    },
+    "communityPool_No": {
+      "page": 4,
+      "x": 420,
+      "y": 573,
+      "size": 8
+    },
+    "roof_Aluminum": {
+      "page": 4,
+      "x": 380,
+      "y": 555,
+      "size": 8
+    },
+    "roof_Asbestos Shingles": {
+      "page": 4,
+      "x": 380,
+      "y": 543,
+      "size": 8
+    },
+    "roof_Bitumen": {
+      "page": 4,
+      "x": 380,
+      "y": 519,
+      "size": 8
+    },
+    "roof_Composition": {
+      "page": 4,
+      "x": 380,
+      "y": 507,
+      "size": 8
+    },
+    "roof_Fiberglass": {
+      "page": 4,
+      "x": 380,
+      "y": 495,
+      "size": 8
+    },
+    "roof_Flat": {
+      "page": 4,
+      "x": 380,
+      "y": 483,
+      "size": 8
+    },
+    "roof_Membrane": {
+      "page": 4,
+      "x": 380,
+      "y": 471,
+      "size": 8
+    },
+    "roof_Metal": {
+      "page": 4,
+      "x": 380,
+      "y": 459,
+      "size": 8
+    },
+    "roof_Pitched": {
+      "page": 4,
+      "x": 380,
+      "y": 447,
+      "size": 8
+    },
+    "roof_PVC": {
+      "page": 4,
+      "x": 380,
+      "y": 435,
+      "size": 8
+    },
+    "roof_Rolled-silver": {
+      "page": 4,
+      "x": 380,
+      "y": 423,
+      "size": 8
+    },
+    "roof_Rubber (EPDM)": {
+      "page": 4,
+      "x": 380,
+      "y": 411,
+      "size": 8
+    },
+    "roof_Stone": {
+      "page": 4,
+      "x": 380,
+      "y": 399,
+      "size": 8
+    },
+    "roof_Tar / Gravel": {
+      "page": 4,
+      "x": 380,
+      "y": 387,
+      "size": 8
+    },
+    "roof_Wood Shake Shingles": {
+      "page": 4,
+      "x": 380,
+      "y": 363,
+      "size": 8
+    },
+    "roof_See Remarks": {
+      "page": 4,
+      "x": 380,
+      "y": 351,
+      "size": 8
+    },
+    "showInstructions_Agent Has Key": {
+      "page": 4,
+      "x": 380,
+      "y": 335,
+      "size": 8
+    },
+    "showInstructions_Appt / Use Lockbox": {
+      "page": 4,
+      "x": 380,
+      "y": 323,
+      "size": 8
+    },
+    "showInstructions_Call Agent / Appt": {
+      "page": 4,
+      "x": 380,
+      "y": 311,
+      "size": 8
+    },
+    "showInstructions_Call Showing Service": {
+      "page": 4,
+      "x": 380,
+      "y": 287,
+      "size": 8
+    },
+    "showInstructions_Call Use / Lockbox": {
+      "page": 4,
+      "x": 380,
+      "y": 263,
+      "size": 8
+    },
+    "showInstructions_Combination Box": {
+      "page": 4,
+      "x": 380,
+      "y": 251,
+      "size": 8
+    },
+    "showInstructions_Key At List Office": {
+      "page": 4,
+      "x": 380,
+      "y": 239,
+      "size": 8
+    },
+    "showInstructions_Key Box: Electronic": {
+      "page": 4,
+      "x": 380,
+      "y": 227,
+      "size": 8
+    },
+    "showInstructions_Knock / Use Lockbox": {
+      "page": 4,
+      "x": 380,
+      "y": 215,
+      "size": 8
+    },
+    "showInstructions_Use Aligned Showings": {
+      "page": 4,
+      "x": 380,
+      "y": 203,
+      "size": 8
+    },
+    "showInstructions_Use Showing Service": {
+      "page": 4,
+      "x": 380,
+      "y": 191,
+      "size": 8
+    },
+    "showInstructions_See Remarks": {
+      "page": 4,
+      "x": 380,
+      "y": 167,
+      "size": 8
+    },
+    "storage_Basement": {
+      "page": 4,
+      "x": 540,
+      "y": 729,
+      "size": 8
+    },
+    "storage_Carport": {
+      "page": 4,
+      "x": 540,
+      "y": 717,
+      "size": 8
+    },
+    "storage_Garage": {
+      "page": 4,
+      "x": 540,
+      "y": 705,
+      "size": 8
+    },
+    "storage_Other": {
+      "page": 4,
+      "x": 540,
+      "y": 693,
+      "size": 8
+    },
+    "storage_Patio": {
+      "page": 4,
+      "x": 540,
+      "y": 681,
+      "size": 8
+    },
+    "storage_Shed": {
+      "page": 4,
+      "x": 540,
+      "y": 669,
+      "size": 8
+    },
+    "storage_See Remarks": {
+      "page": 4,
+      "x": 540,
+      "y": 657,
+      "size": 8
+    },
+    "telecommunications_DSL": {
+      "page": 4,
+      "x": 540,
+      "y": 625,
+      "size": 8
+    },
+    "telecommunications_Ethernet, Wired": {
+      "page": 4,
+      "x": 540,
+      "y": 613,
+      "size": 8
+    },
+    "telecommunications_Multiple Phone Lines": {
+      "page": 4,
+      "x": 540,
+      "y": 589,
+      "size": 8
+    },
+    "telecommunications_T-1 Line": {
+      "page": 4,
+      "x": 540,
+      "y": 577,
+      "size": 8
+    },
+    "telecommunications_See Remarks": {
+      "page": 4,
+      "x": 540,
+      "y": 565,
+      "size": 8
+    },
+    "terms_Assumption: Qualify": {
+      "page": 4,
+      "x": 540,
+      "y": 545,
+      "size": 8
+    },
+    "terms_Assumption: Simple": {
+      "page": 4,
+      "x": 540,
+      "y": 534,
+      "size": 8
+    },
+    "terms_Commercial Fin. Req.": {
+      "page": 4,
+      "x": 540,
+      "y": 512,
+      "size": 8
+    },
+    "terms_Conventional Rehabilitation Loan": {
+      "page": 4,
+      "x": 540,
+      "y": 490,
+      "size": 8
+    },
+    "terms_Cryptocurrency": {
+      "page": 4,
+      "x": 540,
+      "y": 479,
+      "size": 8
+    },
+    "terms_Down Payment Assist.": {
+      "page": 4,
+      "x": 540,
+      "y": 468,
+      "size": 8
+    },
+    "terms_Exchange": {
+      "page": 4,
+      "x": 540,
+      "y": 457,
+      "size": 8
+    },
+    "terms_FHA 203(k) - Rehabilitation": {
+      "page": 4,
+      "x": 540,
+      "y": 435,
+      "size": 8
+    },
+    "terms_Lease Option Monthly": {
+      "page": 4,
+      "x": 540,
+      "y": 424,
+      "size": 8
+    },
+    "terms_Lease Option Yearly": {
+      "page": 4,
+      "x": 540,
+      "y": 413,
+      "size": 8
+    },
+    "terms_Owner 2nd": {
+      "page": 4,
+      "x": 540,
+      "y": 402,
+      "size": 8
+    },
+    "terms_Seller Finance": {
+      "page": 4,
+      "x": 540,
+      "y": 391,
+      "size": 8
+    },
+    "terms_Seller Will Subordinate": {
+      "page": 4,
+      "x": 540,
+      "y": 380,
+      "size": 8
+    },
+    "terms_USDA Rural Development": {
+      "page": 4,
+      "x": 540,
+      "y": 369,
+      "size": 8
+    },
+    "terms_See Remarks": {
+      "page": 4,
+      "x": 540,
+      "y": 347,
+      "size": 8
+    },
+    "utilities_Gas: Available": {
+      "page": 4,
+      "x": 575,
+      "y": 729,
+      "size": 8
+    },
+    "utilities_Gas: Not Available": {
+      "page": 4,
+      "x": 575,
+      "y": 707,
+      "size": 8
+    },
+    "utilities_Gas: Not Connected": {
+      "page": 4,
+      "x": 575,
+      "y": 696,
+      "size": 8
+    },
+    "utilities_Power: Available": {
+      "page": 4,
+      "x": 575,
+      "y": 685,
+      "size": 8
+    },
+    "utilities_Power: Not Available": {
+      "page": 4,
+      "x": 575,
+      "y": 663,
+      "size": 8
+    },
+    "utilities_Power: Not Connected": {
+      "page": 4,
+      "x": 575,
+      "y": 652,
+      "size": 8
+    },
+    "utilities_Sewer: Available": {
+      "page": 4,
+      "x": 575,
+      "y": 641,
+      "size": 8
+    },
+    "utilities_Sewer: Not Available": {
+      "page": 4,
+      "x": 575,
+      "y": 619,
+      "size": 8
+    },
+    "utilities_Sewer: Not Connected": {
+      "page": 4,
+      "x": 575,
+      "y": 608,
+      "size": 8
+    },
+    "utilities_Sewer: Private": {
+      "page": 4,
+      "x": 575,
+      "y": 597,
+      "size": 8
+    },
+    "utilities_Sewer: Public": {
+      "page": 4,
+      "x": 575,
+      "y": 586,
+      "size": 8
+    },
+    "utilities_Sewer: Septic Tank": {
+      "page": 4,
+      "x": 575,
+      "y": 575,
+      "size": 8
+    },
+    "utilities_Water: Available": {
+      "page": 4,
+      "x": 575,
+      "y": 564,
+      "size": 8
+    },
+    "utilities_Water: Connected": {
+      "page": 4,
+      "x": 575,
+      "y": 553,
+      "size": 8
+    },
+    "utilities_Water: Not Available": {
+      "page": 4,
+      "x": 575,
+      "y": 542,
+      "size": 8
+    },
+    "utilities_Water: Not Connected": {
+      "page": 4,
+      "x": 575,
+      "y": 531,
+      "size": 8
+    },
+    "utilities_See Remarks": {
+      "page": 4,
+      "x": 575,
+      "y": 520,
+      "size": 8
+    },
+    "water_Irrigation": {
+      "page": 4,
+      "x": 575,
+      "y": 492,
+      "size": 8
+    },
+    "water_Irrigation: Pressure": {
+      "page": 4,
+      "x": 575,
+      "y": 481,
+      "size": 8
+    },
+    "water_Private": {
+      "page": 4,
+      "x": 575,
+      "y": 470,
+      "size": 8
+    },
+    "water_Rights: Owned": {
+      "page": 4,
+      "x": 575,
+      "y": 459,
+      "size": 8
+    },
+    "water_Rights: Rented": {
+      "page": 4,
+      "x": 575,
+      "y": 448,
+      "size": 8
+    },
+    "water_Secondary": {
+      "page": 4,
+      "x": 575,
+      "y": 437,
+      "size": 8
+    },
+    "water_Shares": {
+      "page": 4,
+      "x": 575,
+      "y": 426,
+      "size": 8
+    },
+    "water_Spring": {
+      "page": 4,
+      "x": 575,
+      "y": 415,
+      "size": 8
+    },
+    "water_Well": {
+      "page": 4,
+      "x": 575,
+      "y": 404,
+      "size": 8
+    },
+    "water_See Remarks": {
+      "page": 4,
+      "x": 575,
+      "y": 393,
+      "size": 8
+    },
+    "windowCoverings_Draperies": {
+      "page": 4,
+      "x": 575,
+      "y": 365,
+      "size": 8
+    },
+    "windowCoverings_Full": {
+      "page": 4,
+      "x": 575,
+      "y": 354,
+      "size": 8
+    },
+    "windowCoverings_None": {
+      "page": 4,
+      "x": 575,
+      "y": 343,
+      "size": 8
+    },
+    "windowCoverings_Part": {
+      "page": 4,
+      "x": 575,
+      "y": 332,
+      "size": 8
+    },
+    "windowCoverings_Plantation Shutters": {
+      "page": 4,
+      "x": 575,
+      "y": 321,
+      "size": 8
+    },
+    "windowCoverings_Shades": {
+      "page": 4,
+      "x": 575,
+      "y": 310,
+      "size": 8
+    },
+    "windowCoverings_See Remarks": {
+      "page": 4,
+      "x": 575,
+      "y": 299,
+      "size": 8
+    },
+    "zoning_Agricultural": {
+      "page": 4,
+      "x": 575,
+      "y": 282,
+      "size": 8
+    },
+    "zoning_Commercial": {
+      "page": 4,
+      "x": 575,
+      "y": 271,
+      "size": 8
+    },
+    "zoning_Industrial": {
+      "page": 4,
+      "x": 575,
+      "y": 260,
+      "size": 8
+    },
+    "zoning_Multi-Family": {
+      "page": 4,
+      "x": 575,
+      "y": 249,
+      "size": 8
+    },
+    "zoning_Short Term Rental Allowed": {
+      "page": 4,
+      "x": 575,
+      "y": 238,
+      "size": 8
+    },
+    "zoning_See Remarks": {
+      "page": 4,
+      "x": 575,
+      "y": 216,
+      "size": 8
+    }
   },
   "imageFields": {
-    "page0Initials": { "page": 0, "x": 188, "y": 36, "width": 48, "height": 24 },
-    "page1Initials": { "page": 1, "x": 188, "y": 36, "width": 48, "height": 24 },
-    "page2Initials": { "page": 2, "x": 188, "y": 36, "width": 48, "height": 24 },
-    "page3Initials": { "page": 3, "x": 188, "y": 36, "width": 48, "height": 24 },
-    "page4Initials": { "page": 4, "x": 188, "y": 36, "width": 48, "height": 24 },
-    "page5Initials": { "page": 5, "x": 188, "y": 36, "width": 48, "height": 24 },
-    "page0Initials2": { "page": 0, "x": 250, "y": 36, "width": 48, "height": 24 },
-    "page1Initials2": { "page": 1, "x": 250, "y": 36, "width": 48, "height": 24 },
-    "page2Initials2": { "page": 2, "x": 250, "y": 36, "width": 48, "height": 24 },
-    "page3Initials2": { "page": 3, "x": 250, "y": 36, "width": 48, "height": 24 },
-    "page4Initials2": { "page": 4, "x": 250, "y": 36, "width": 48, "height": 24 },
-    "page5Initials2": { "page": 5, "x": 250, "y": 36, "width": 48, "height": 24 },
-    "owner1Signature": { "page": 5, "x": 72, "y": 100, "width": 180, "height": 40 },
-    "owner2Signature": { "page": 5, "x": 320, "y": 100, "width": 180, "height": 40 }
+    "page0Initials": {
+      "page": 0,
+      "x": 188,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page1Initials": {
+      "page": 1,
+      "x": 188,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page2Initials": {
+      "page": 2,
+      "x": 188,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page3Initials": {
+      "page": 3,
+      "x": 188,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page4Initials": {
+      "page": 4,
+      "x": 188,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page5Initials": {
+      "page": 5,
+      "x": 188,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page0Initials2": {
+      "page": 0,
+      "x": 250,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page1Initials2": {
+      "page": 1,
+      "x": 250,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page2Initials2": {
+      "page": 2,
+      "x": 250,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page3Initials2": {
+      "page": 3,
+      "x": 250,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page4Initials2": {
+      "page": 4,
+      "x": 250,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "page5Initials2": {
+      "page": 5,
+      "x": 250,
+      "y": 36,
+      "width": 48,
+      "height": 24
+    },
+    "owner1Signature": {
+      "page": 5,
+      "x": 72,
+      "y": 100,
+      "width": 180,
+      "height": 40
+    },
+    "owner2Signature": {
+      "page": 5,
+      "x": 320,
+      "y": 100,
+      "width": 180,
+      "height": 40
+    }
   },
   "valueKeys": [
     "houseNumber",
@@ -304,6 +4958,18 @@
     "beds",
     "ownerName",
     "publicRemarks",
-    "signedDate"
+    "signedDate",
+    "deckCount",
+    "patioCount",
+    "propInfo_Level1_sqft",
+    "propInfo_Level1_beds",
+    "propInfo_Basement1_sqft",
+    "listingEffectiveDate",
+    "listingExpirationDate",
+    "possession",
+    "appointmentContact",
+    "contactPhone1",
+    "listingAgentName",
+    "listingOfficeName"
   ]
 }

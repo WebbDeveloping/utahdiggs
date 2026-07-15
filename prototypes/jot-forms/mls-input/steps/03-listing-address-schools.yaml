@@ -122,18 +122,115 @@ fields:
     placeholder: "e.g., $500,000"
     jotform:
       id: TODO
-  - id: shortSale
-    label: Short Sale Status
-    type: radio
-    required: true
-    options:
-      - Not Short Sale
-      - Price Subject to 3rd Party Approval
-      - Price Previously Approved by 3rd Party
-      - Offer Under 3rd Party Review
+  - id: listingEffectiveDate
+    label: Effective Date of Listing Agreement
+    type: text
+    placeholder: "MM/DD/YYYY"
+    description: Optional — VA/agent can fill when the listing agreement is signed.
     jotform:
       id: TODO
-      name: q_shortSale
+      name: q_listingEffectiveDate
+  - id: listingExpirationDate
+    label: Expiration Date
+    type: text
+    placeholder: "MM/DD/YYYY"
+    description: Optional — VA/agent can fill when the listing agreement is signed.
+    jotform:
+      id: TODO
+      name: q_listingExpirationDate
+  - id: listingType
+    label: Listing Type
+    type: radio
+    description: Optional — defaults to Exclusive Right to Sell (ERS) if left blank.
+    options:
+      - Exclusive Right to Sell (ERS)
+      - Exclusive Agency (EAL)
+    jotform:
+      id: TODO
+      name: q_listingType
+  - id: specialListingConditions
+    label: Special Listing Conditions
+    type: checkbox
+    required: false
+    description: Select any that apply, or leave blank if none.
+    options:
+      - Short Sale
+      - In Foreclosure
+      - In Probate
+      - Bankruptcy
+      - Notice of Default
+      - Trustee Sale
+      - Price Was Approved by Third Party
+      - Third Party Approval Required
+      - Offer Under Third Party Review
+      - Auction
+    jotform:
+      id: TODO
+      name: "q_specialListingConditions[]"
+  - id: possession
+    label: Possession
+    type: text
+    placeholder: "e.g., Upon Closing, Immediate, Negotiable"
+    description: When the buyer may take possession (optional).
+    jotform:
+      id: TODO
+      name: q_possession
+  - id: contactType
+    label: Contact Type
+    type: radio
+    description: Who to contact for appointments and access (optional).
+    options:
+      - Agent
+      - Owner
+      - Assistant
+    jotform:
+      id: TODO
+      name: q_contactType
+  - id: appointmentContact
+    label: Contact for Appointments & Access
+    type: text
+    placeholder: "Name of contact person"
+    jotform:
+      id: TODO
+      name: q_appointmentContact
+  - id: contactPhone1
+    label: Contact Phone 1
+    type: phone
+    placeholder: (000) 000-0000
+    jotform:
+      id: TODO
+      name: q_contactPhone1
+  - id: contactPhone2
+    label: Contact Phone 2
+    type: phone
+    placeholder: (000) 000-0000
+    jotform:
+      id: TODO
+      name: q_contactPhone2
+  - id: listingAgentName
+    label: Listing Agent
+    type: text
+    placeholder: "Agent name"
+    description: Optional — VA/agent can fill.
+    jotform:
+      id: TODO
+      name: q_listingAgentName
+  - id: listingCoAgentName
+    label: Co-Agent
+    type: text
+    placeholder: "Co-agent name, if any"
+    description: Optional — VA/agent can fill.
+    jotform:
+      id: TODO
+      name: q_listingCoAgentName
+  - id: listingOfficeName
+    label: Office Name
+    type: text
+    placeholder: "Listing office / brokerage"
+    description: Optional — VA/agent can fill.
+    jotform:
+      id: TODO
+      name: q_listingOfficeName
   - id: schools
     label: Schools
     type: matrix

@@ -75,8 +75,8 @@ steps:
     title: Signature
 gaps:
   - >-
-    Agent-only WFRMLS Matrix fields (listing dates, agent IDs, BAC, listing type, dual/VAR rate)
-    are intentionally omitted — Utah Digs staff enter these when submitting to MLS.
+    Some listing-ops fields (dates, listing type, agent/office) are now optional MLS intake
+    inputs so the Data Form can auto-fill; staff may still enter or correct them in Matrix.
   - Early steps and newly added WFRMLS fields lack JotForm IDs in the source dump; marked TODO for migration mapping.
 wfrmlsCoverage:
   addedInSpecUpdate:

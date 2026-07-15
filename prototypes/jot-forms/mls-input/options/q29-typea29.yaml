@@ -1,18 +1,31 @@
 label: Exterior Special Features
 options:
   - None
+  - Atrium
+  - Attic Fan
+  - Awnings
   - Balcony
   - Barn
   - Basement Entrance
   - Bay Box Windows
   - "Deck: Covered"
+  - Double Pane Windows
+  - Entry (Foyer)
+  - Greenhouse Windows
   - Horse Property
   - Out Buildings
   - Outdoor Lighting
-  - Patio Covered
-  - Porch
+  - "Patio: Covered"
+  - "Patio: Open"
+  - "Porch: Open"
+  - "Porch: Screened"
+  - Secured Building
+  - Secured Parking
   - Skylights
-  - Walkout
-  - value: other
-    label: Other
-    allowText: true
+  - Sliding Glass Doors
+  - Stained Glass Windows
+  - Storm Doors
+  - Storm Windows
+  - Triple Pane Windows
+  - Walk Out
+  - See Remarks

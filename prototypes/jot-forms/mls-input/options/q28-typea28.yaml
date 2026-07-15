@@ -1,12 +1,10 @@
 label: Driveway
 options:
-  - Concrete
   - Asphalt
   - Circular
   - Common Drive
-  - Gravel
+  - Concrete
   - Dirt
+  - Gravel
   - Heated
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

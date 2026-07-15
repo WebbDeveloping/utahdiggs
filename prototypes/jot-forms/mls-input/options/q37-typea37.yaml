@@ -1,18 +1,20 @@
 label: Roof
 options:
-  - Asphalt Shingles
-  - Wood Shake
-  - Metal
   - Aluminum
-  - Flat
-  - Fiberglass
+  - Asbestos Shingles
+  - Asphalt Shingles
+  - Bitumen
   - Composition
+  - Fiberglass
+  - Flat
   - Membrane
+  - Metal
+  - Pitched
   - PVC
+  - Rolled-silver
   - Rubber (EPDM)
   - Stone
   - Tar / Gravel
   - Tile
-  - value: other
-    label: Other
-    allowText: true
+  - Wood Shake Shingles
+  - See Remarks

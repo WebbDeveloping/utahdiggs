@@ -14,6 +14,7 @@ export const step2Schema = z.object({
     "secondaryOwnerName": z.object({ first: z.string().min(1, "First name is required"), last: z.string().min(1, "Last name is required") }),
     "secondaryOwnerPhone": z.string().min(7, "Phone is required"),
     "secondaryOwnerEmail": z.string().email("Valid email is required"),
+    "specialOwnerType": z.array(z.string()).optional(),
 });
 
 export const step3Schema = z.object({
@@ -30,7 +31,18 @@ export const step3Schema = z.object({
     "ownerAddressSameAsListing": z.enum(["Yes", "No"] as const, { message: "Required" }),
     "ownerAddress": z.object({ street: z.string().min(1, "Street is required"), city: z.string().min(1, "City is required"), state: z.string().min(1, "State is required"), zip: z.string().min(1, "ZIP is required") }),
     "listingPrice": z.string().min(1, "Required"),
-    "shortSale": z.enum(["Not Short Sale", "Price Subject to 3rd Party Approval", "Price Previously Approved by 3rd Party", "Offer Under 3rd Party Review"] as const, { message: "Required" }),
+    "listingEffectiveDate": z.string().optional(),
+    "listingExpirationDate": z.string().optional(),
+    "listingType": z.enum(["Exclusive Right to Sell (ERS)", "Exclusive Agency (EAL)"] as const).optional(),
+    "specialListingConditions": z.array(z.string()).optional(),
+    "possession": z.string().optional(),
+    "contactType": z.enum(["Agent", "Owner", "Assistant"] as const).optional(),
+    "appointmentContact": z.string().optional(),
+    "contactPhone1": z.string().optional(),
+    "contactPhone2": z.string().optional(),
+    "listingAgentName": z.string().optional(),
+    "listingCoAgentName": z.string().optional(),
+    "listingOfficeName": z.string().optional(),
     "schools": z.record(z.string(), z.object({ "name": z.string().optional() }).partial()),
     "otherSchool": z.string().optional(),
 });
@@ -102,7 +114,7 @@ export const step6Schema = z.object({
     "levelCount": z.enum(["1", "2", "3", "4", "5"] as const, { message: "Required" }),
     "q26-typea26": z.array(z.string()).min(1, "Select at least one"),
     "basementFinished": z.enum(["Yes", "No", "Partial", "N/A"] as const, { message: "Required" }),
-    "q117-2level117": z.record(z.string(), z.object({ "square-footage": z.string().optional(), "bedrooms": z.enum(["0", "1", "2", "3", "4", "5", "6", "7"] as const).optional(), "master-y-n": z.array(z.string()).optional(), "full-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "3-4-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "1-2-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "living-fam-rm": z.array(z.string()).optional(), "laundry": z.array(z.string()).optional(), "fireplace": z.array(z.string()).optional() }).partial()).optional(),
+    "q117-2level117": z.record(z.string(), z.object({ "square-footage": z.string().optional(), "bedrooms": z.enum(["0", "1", "2", "3", "4", "5", "6", "7"] as const).optional(), "master-y-n": z.array(z.string()).optional(), "full-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "3-4-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "1-2-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "family": z.array(z.string()).optional(), "den": z.array(z.string()).optional(), "formal-living": z.array(z.string()).optional(), "kitchen": z.array(z.string()).optional(), "breakfast": z.array(z.string()).optional(), "formal-dining": z.array(z.string()).optional(), "semi-formal": z.array(z.string()).optional(), "laundry": z.array(z.string()).optional(), "fireplace": z.array(z.string()).optional() }).partial()).optional(),
 });
 
 export const step7Schema = z.object({
@@ -118,6 +130,8 @@ export const step7Schema = z.object({
 export const step8Schema = z.object({
     "q32-typea32": z.array(z.string()).min(1, "Select at least one"),
     "q29-typea29": z.array(z.string()).optional(),
+    "deckCount": z.string().optional(),
+    "patioCount": z.string().optional(),
     "q30-typea30": z.array(z.string()).min(1, "Select at least one"),
     "q208-garagecapacity": z.string().optional(),
     "q209-garagecapacity209": z.string().optional(),
@@ -130,6 +144,8 @@ export const step8Schema = z.object({
 export const step9Schema = z.object({
     "q184-doesthe": z.enum(["Yes", "No"] as const, { message: "Required" }),
     "q63-pooltype": z.array(z.string()).min(1, "Select at least one"),
+    "spaAvailable": z.enum(["Yes", "No"] as const, { message: "Required" }),
+    "communityPool": z.enum(["Yes", "No"] as const, { message: "Required" }),
     "q37-typea37": z.array(z.string()).min(1, "Select at least one"),
     "q36-typea36": z.array(z.string()).min(1, "Select at least one"),
     "q43-lot-facts": z.array(z.string()).min(1, "Select at least one"),
@@ -148,7 +164,7 @@ export const step10Schema = z.object({
 });
 
 export const step11Schema = z.object({
-    "q19-typea19": z.array(z.string()).optional(),
+    "q19-typea19": z.record(z.string(), z.object({ "include": z.array(z.string()).optional(), "exclude": z.array(z.string()).optional() }).partial()).optional(),
 });
 
 export const step12Schema = z.object({
@@ -168,6 +184,7 @@ export const step12Schema = z.object({
     "q204-tenantshowing204": z.string().optional(),
     "q205-tenantshowing205": z.string().email().optional().or(z.literal("")),
     "q100-showinginstructions": z.string().optional(),
+    "showInstructions": z.array(z.string()).optional(),
 });
 
 export const step13Schema = z.object({
@@ -203,6 +220,7 @@ export const fullMlsInputSchema = z.object({
   "secondaryOwnerName": z.object({ first: z.string().min(1, "First name is required"), last: z.string().min(1, "Last name is required") }),
   "secondaryOwnerPhone": z.string().min(7, "Phone is required"),
   "secondaryOwnerEmail": z.string().email("Valid email is required"),
+  "specialOwnerType": z.array(z.string()).optional(),
   "listingAddress": z.object({ street: z.string().min(1, "Street is required"), city: z.string().min(1, "City is required"), state: z.string().min(1, "State is required"), zip: z.string().min(1, "ZIP is required") }),
   "houseNumberDirection": z.enum(["N", "S", "E", "W"] as const).optional(),
   "streetDirection": z.enum(["N", "S", "E", "W"] as const).optional(),
@@ -216,7 +234,18 @@ export const fullMlsInputSchema = z.object({
   "ownerAddressSameAsListing": z.enum(["Yes", "No"] as const, { message: "Required" }),
   "ownerAddress": z.object({ street: z.string().min(1, "Street is required"), city: z.string().min(1, "City is required"), state: z.string().min(1, "State is required"), zip: z.string().min(1, "ZIP is required") }),
   "listingPrice": z.string().min(1, "Required"),
-  "shortSale": z.enum(["Not Short Sale", "Price Subject to 3rd Party Approval", "Price Previously Approved by 3rd Party", "Offer Under 3rd Party Review"] as const, { message: "Required" }),
+  "listingEffectiveDate": z.string().optional(),
+  "listingExpirationDate": z.string().optional(),
+  "listingType": z.enum(["Exclusive Right to Sell (ERS)", "Exclusive Agency (EAL)"] as const).optional(),
+  "specialListingConditions": z.array(z.string()).optional(),
+  "possession": z.string().optional(),
+  "contactType": z.enum(["Agent", "Owner", "Assistant"] as const).optional(),
+  "appointmentContact": z.string().optional(),
+  "contactPhone1": z.string().optional(),
+  "contactPhone2": z.string().optional(),
+  "listingAgentName": z.string().optional(),
+  "listingCoAgentName": z.string().optional(),
+  "listingOfficeName": z.string().optional(),
   "schools": z.record(z.string(), z.object({ "name": z.string().optional() }).partial()),
   "otherSchool": z.string().optional(),
   "hoa": z.enum(["Yes", "No"] as const, { message: "Required" }),
@@ -279,7 +308,7 @@ export const fullMlsInputSchema = z.object({
   "levelCount": z.enum(["1", "2", "3", "4", "5"] as const, { message: "Required" }),
   "q26-typea26": z.array(z.string()).min(1, "Select at least one"),
   "basementFinished": z.enum(["Yes", "No", "Partial", "N/A"] as const, { message: "Required" }),
-  "q117-2level117": z.record(z.string(), z.object({ "square-footage": z.string().optional(), "bedrooms": z.enum(["0", "1", "2", "3", "4", "5", "6", "7"] as const).optional(), "master-y-n": z.array(z.string()).optional(), "full-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "3-4-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "1-2-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "living-fam-rm": z.array(z.string()).optional(), "laundry": z.array(z.string()).optional(), "fireplace": z.array(z.string()).optional() }).partial()).optional(),
+  "q117-2level117": z.record(z.string(), z.object({ "square-footage": z.string().optional(), "bedrooms": z.enum(["0", "1", "2", "3", "4", "5", "6", "7"] as const).optional(), "master-y-n": z.array(z.string()).optional(), "full-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "3-4-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "1-2-baths": z.enum(["0", "1", "2", "3", "4", "5", "6"] as const).optional(), "family": z.array(z.string()).optional(), "den": z.array(z.string()).optional(), "formal-living": z.array(z.string()).optional(), "kitchen": z.array(z.string()).optional(), "breakfast": z.array(z.string()).optional(), "formal-dining": z.array(z.string()).optional(), "semi-formal": z.array(z.string()).optional(), "laundry": z.array(z.string()).optional(), "fireplace": z.array(z.string()).optional() }).partial()).optional(),
   "q33-flooring": z.array(z.string()).min(1, "Select at least one"),
   "q34-typea34": z.array(z.string()).optional(),
   "q27-typea27": z.array(z.string()).min(1, "Select at least one"),
@@ -289,6 +318,8 @@ export const fullMlsInputSchema = z.object({
   "q96-hvac96": z.array(z.string()).min(1, "Select at least one"),
   "q32-typea32": z.array(z.string()).min(1, "Select at least one"),
   "q29-typea29": z.array(z.string()).optional(),
+  "deckCount": z.string().optional(),
+  "patioCount": z.string().optional(),
   "q30-typea30": z.array(z.string()).min(1, "Select at least one"),
   "q208-garagecapacity": z.string().optional(),
   "q209-garagecapacity209": z.string().optional(),
@@ -298,6 +329,8 @@ export const fullMlsInputSchema = z.object({
   "q28-typea28": z.array(z.string()).min(1, "Select at least one"),
   "q184-doesthe": z.enum(["Yes", "No"] as const, { message: "Required" }),
   "q63-pooltype": z.array(z.string()).min(1, "Select at least one"),
+  "spaAvailable": z.enum(["Yes", "No"] as const, { message: "Required" }),
+  "communityPool": z.enum(["Yes", "No"] as const, { message: "Required" }),
   "q37-typea37": z.array(z.string()).min(1, "Select at least one"),
   "q36-typea36": z.array(z.string()).min(1, "Select at least one"),
   "q43-lot-facts": z.array(z.string()).min(1, "Select at least one"),
@@ -310,7 +343,7 @@ export const fullMlsInputSchema = z.object({
   "q46-environmental-certs": z.array(z.string()).optional(),
   "q38-zoning": z.array(z.string()).min(1, "Select at least one"),
   "q40-typea40": z.array(z.string()).min(1, "Select at least one"),
-  "q19-typea19": z.array(z.string()).optional(),
+  "q19-typea19": z.record(z.string(), z.object({ "include": z.array(z.string()).optional(), "exclude": z.array(z.string()).optional() }).partial()).optional(),
   "q191-propertyoccupancy": z.enum(["Owner Occupied", "Tenant Occupied", "Vacant / Immediate Appt Approval"] as const, { message: "Required" }),
   "q192-howmany": z.enum(["One", "Two"] as const).optional(),
   "q193-howmany193": z.enum(["One", "Two"] as const).optional(),
@@ -327,6 +360,7 @@ export const fullMlsInputSchema = z.object({
   "q204-tenantshowing204": z.string().optional(),
   "q205-tenantshowing205": z.string().email().optional().or(z.literal("")),
   "q100-showinginstructions": z.string().optional(),
+  "showInstructions": z.array(z.string()).optional(),
   "q207-typea207": z.enum(["Yes", "No, I have someone else"] as const).optional(),
   "q211-name211": z.object({ first: z.string(), last: z.string() }).optional(),
   "q212-typea212": z.string().optional(),

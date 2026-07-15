@@ -287,7 +287,7 @@ rules:
 
 knownGaps:
   - note: >-
-      Agent-only WFRMLS Matrix fields (listing date, expiration date, listing type EAL/ERS,
-      agent/co-agent IDs, BAC compensation, dual/VAR rate, photo instructions) are intentionally
-      omitted — filled by Utah Digs staff when entering the listing.
+      Listing dates, listing type, and agent/office names are optional MLS intake fields so the
+      Data Form can auto-fill; BAC compensation, dual/VAR rate, and photo instructions remain
+      staff-only Matrix entry.
   - note: Early steps (1-4) and newly added fields lack JotForm IDs in the source dump; marked TODO for migration mapping.

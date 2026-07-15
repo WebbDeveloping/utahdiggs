@@ -24,7 +24,7 @@ fields:
     jotform:
       id: 27
       name: "q27_typeA27[]"
-    label: Accessibility
+    label: Accessibility Features
     required: true
     description: Select all that apply, or choose None if not applicable.
     $ref: options/q27-typea27.yaml
@@ -54,15 +54,7 @@ fields:
     label: Air Conditioning
     required: true
     description: Select all that apply, or choose None if not applicable.
-    options:
-      - Central Air; Electric
-      - Central Air; Gas
-      - Evaporative Cooler Roof
-      - Evaporative Cooler Window
-      - None
-      - value: other
-        label: Other
-        allowText: true
+    $ref: options/q31-airconditioning.yaml
   - id: q96-hvac96
     type: checkbox
     jotform:

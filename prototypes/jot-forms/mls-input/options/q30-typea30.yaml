@@ -1,18 +1,20 @@
-label: Parking
+label: Garage / Parking
 options:
-  - Garage
-  - Carport
+  - 2 Car Deep (Tandem)
   - Attached
+  - Built-in
   - Detached
+  - Electrical Vehicle Charging Station
   - Extra Height
   - Extra Length
   - Extra Width
-  - 2 Car Deep (Tandem)
   - Heated
+  - Opener
+  - "Parking: Covered"
+  - "Parking: Uncovered"
+  - RV Electrical Hookup
   - RV Parking
+  - Storage Above
+  - Workbench
   - Workshop
-  - Underground
-  - Assigned Stall
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

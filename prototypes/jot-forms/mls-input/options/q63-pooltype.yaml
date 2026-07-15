@@ -1,14 +1,12 @@
-label: Pool Type / Features
+label: Pool Features
 options:
   - Above Ground
-  - In Ground
-  - Concrete
+  - Concrete/Gunite
+  - Electronic Cover
+  - Fenced
   - Fiberglass/Vinyl
   - Heated
-  - With Spa/Hot Tub
-  - Powered Cover
-  - Fenced
+  - In Ground
   - Indoor
-  - value: other
-    label: Other
-    allowText: true
+  - With Spa
+  - See Remarks

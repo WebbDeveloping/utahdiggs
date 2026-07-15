@@ -63,6 +63,7 @@ export type MlsInputFormValues = {
   "secondaryOwnerName"?: { first: string; last: string };
   "secondaryOwnerPhone"?: string;
   "secondaryOwnerEmail"?: string;
+  "specialOwnerType"?: string[];
   "listingAddress"?: { street: string; city: string; state: string; zip: string };
   "houseNumberDirection"?: string;
   "streetDirection"?: string;
@@ -76,7 +77,18 @@ export type MlsInputFormValues = {
   "ownerAddressSameAsListing"?: string;
   "ownerAddress"?: { street: string; city: string; state: string; zip: string };
   "listingPrice"?: string;
-  "shortSale"?: string;
+  "listingEffectiveDate"?: string;
+  "listingExpirationDate"?: string;
+  "listingType"?: string;
+  "specialListingConditions"?: string[];
+  "possession"?: string;
+  "contactType"?: string;
+  "appointmentContact"?: string;
+  "contactPhone1"?: string;
+  "contactPhone2"?: string;
+  "listingAgentName"?: string;
+  "listingCoAgentName"?: string;
+  "listingOfficeName"?: string;
   "schools"?: Record<string, Record<string, string | string[]>>;
   "otherSchool"?: string;
   "hoa"?: string;
@@ -149,6 +161,8 @@ export type MlsInputFormValues = {
   "q96-hvac96"?: string[];
   "q32-typea32"?: string[];
   "q29-typea29"?: string[];
+  "deckCount"?: string;
+  "patioCount"?: string;
   "q30-typea30"?: string[];
   "q208-garagecapacity"?: string;
   "q209-garagecapacity209"?: string;
@@ -158,6 +172,8 @@ export type MlsInputFormValues = {
   "q28-typea28"?: string[];
   "q184-doesthe"?: string;
   "q63-pooltype"?: string[];
+  "spaAvailable"?: string;
+  "communityPool"?: string;
   "q37-typea37"?: string[];
   "q36-typea36"?: string[];
   "q43-lot-facts"?: string[];
@@ -170,7 +186,7 @@ export type MlsInputFormValues = {
   "q46-environmental-certs"?: string[];
   "q38-zoning"?: string[];
   "q40-typea40"?: string[];
-  "q19-typea19"?: string[];
+  "q19-typea19"?: Record<string, Record<string, string | string[]>>;
   "q191-propertyoccupancy"?: string;
   "q192-howmany"?: string;
   "q193-howmany193"?: string;
@@ -187,6 +203,7 @@ export type MlsInputFormValues = {
   "q204-tenantshowing204"?: string;
   "q205-tenantshowing205"?: string;
   "q100-showinginstructions"?: string;
+  "showInstructions"?: string[];
   "q207-typea207"?: string;
   "q211-name211"?: { first: string; last: string };
   "q212-typea212"?: string;
@@ -277,6 +294,22 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "required": true,
         "placeholder": "example@example.com",
         "status": "hidden-in-jotform"
+      },
+      {
+        "id": "specialOwnerType",
+        "label": "Special Owner Type",
+        "type": "checkbox",
+        "required": false,
+        "description": "Select any that apply, or leave blank if none.",
+        "options": [
+          "REO/Bank Owned",
+          "HUD Owned",
+          "Agent Owned",
+          "Fractional Ownership",
+          "LLC",
+          "Trust"
+        ],
+        "otherText": false
       }
     ]
   },
@@ -407,17 +440,107 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "placeholder": "e.g., $500,000"
       },
       {
-        "id": "shortSale",
-        "label": "Short Sale Status",
+        "id": "listingEffectiveDate",
+        "label": "Effective Date of Listing Agreement",
+        "type": "text",
+        "placeholder": "MM/DD/YYYY",
+        "description": "Optional — VA/agent can fill when the listing agreement is signed."
+      },
+      {
+        "id": "listingExpirationDate",
+        "label": "Expiration Date",
+        "type": "text",
+        "placeholder": "MM/DD/YYYY",
+        "description": "Optional — VA/agent can fill when the listing agreement is signed."
+      },
+      {
+        "id": "listingType",
+        "label": "Listing Type",
         "type": "radio",
-        "required": true,
+        "description": "Optional — defaults to Exclusive Right to Sell (ERS) if left blank.",
         "options": [
-          "Not Short Sale",
-          "Price Subject to 3rd Party Approval",
-          "Price Previously Approved by 3rd Party",
-          "Offer Under 3rd Party Review"
+          "Exclusive Right to Sell (ERS)",
+          "Exclusive Agency (EAL)"
         ],
         "otherText": false
+      },
+      {
+        "id": "specialListingConditions",
+        "label": "Special Listing Conditions",
+        "type": "checkbox",
+        "required": false,
+        "description": "Select any that apply, or leave blank if none.",
+        "options": [
+          "Short Sale",
+          "In Foreclosure",
+          "In Probate",
+          "Bankruptcy",
+          "Notice of Default",
+          "Trustee Sale",
+          "Price Was Approved by Third Party",
+          "Third Party Approval Required",
+          "Offer Under Third Party Review",
+          "Auction"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "possession",
+        "label": "Possession",
+        "type": "text",
+        "placeholder": "e.g., Upon Closing, Immediate, Negotiable",
+        "description": "When the buyer may take possession (optional)."
+      },
+      {
+        "id": "contactType",
+        "label": "Contact Type",
+        "type": "radio",
+        "description": "Who to contact for appointments and access (optional).",
+        "options": [
+          "Agent",
+          "Owner",
+          "Assistant"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "appointmentContact",
+        "label": "Contact for Appointments & Access",
+        "type": "text",
+        "placeholder": "Name of contact person"
+      },
+      {
+        "id": "contactPhone1",
+        "label": "Contact Phone 1",
+        "type": "phone",
+        "placeholder": "(000) 000-0000"
+      },
+      {
+        "id": "contactPhone2",
+        "label": "Contact Phone 2",
+        "type": "phone",
+        "placeholder": "(000) 000-0000"
+      },
+      {
+        "id": "listingAgentName",
+        "label": "Listing Agent",
+        "type": "text",
+        "placeholder": "Agent name",
+        "description": "Optional — VA/agent can fill."
+      },
+      {
+        "id": "listingCoAgentName",
+        "label": "Co-Agent",
+        "type": "text",
+        "placeholder": "Co-agent name, if any",
+        "description": "Optional — VA/agent can fill."
+      },
+      {
+        "id": "listingOfficeName",
+        "label": "Office Name",
+        "type": "text",
+        "placeholder": "Listing office / brokerage",
+        "description": "Optional — VA/agent can fill."
       },
       {
         "id": "schools",
@@ -1113,7 +1236,8 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Walkout",
           "Shelf",
           "Partial",
-          "None / Crawlspace / Slab"
+          "None / Crawlspace / Slab",
+          "See Remarks"
         ],
         "otherText": false
       },
@@ -1203,8 +1327,38 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
             ]
           },
           {
-            "id": "living-fam-rm",
-            "label": "Living/Fam Rm",
+            "id": "family",
+            "label": "Family",
+            "type": "checkbox"
+          },
+          {
+            "id": "den",
+            "label": "Den",
+            "type": "checkbox"
+          },
+          {
+            "id": "formal-living",
+            "label": "Formal Living",
+            "type": "checkbox"
+          },
+          {
+            "id": "kitchen",
+            "label": "Kitchen (K)",
+            "type": "checkbox"
+          },
+          {
+            "id": "breakfast",
+            "label": "Breakfast (B)",
+            "type": "checkbox"
+          },
+          {
+            "id": "formal-dining",
+            "label": "Formal Dining (F)",
+            "type": "checkbox"
+          },
+          {
+            "id": "semi-formal",
+            "label": "Semi-formal (S)",
             "type": "checkbox"
           },
           {
@@ -1250,14 +1404,15 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Laminate",
           "Linoleum",
           "Marble",
-          "Natural Stone",
+          "Natural Rock",
           "Slate",
           "Tile",
+          "Travertine",
           "Vinyl",
-          "LVP / Vinyl Plank",
-          "Other"
+          "Vinyl (LVP)",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q34-typea34",
@@ -1267,47 +1422,81 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "description": "Select any that apply, or leave blank if none.",
         "options": [
           "None",
-          "Wet Bar",
+          "Accessory Apartment",
+          "Alarm: Fire",
+          "Alarm: Security",
+          "Bar: Dry",
+          "Bar: Wet",
           "Basement Apartment",
-          "Master Bath",
-          "Bath: Separate Tub/Shower",
+          "Bath: Primary",
+          "Bath: Sep. Tub / Shower",
+          "Central Vacuum",
+          "Closet: Walk-in",
+          "Den / Office",
+          "Dishwasher, Built-in",
+          "Disposal",
+          "Floor Drains",
+          "French Doors",
+          "Gas Log",
+          "Granite Countertops",
           "Great Room",
-          "Instant Hot Water",
-          "Second Kitchen",
-          "Mother In Law Apartment",
-          "Double Ovens",
-          "Gas Range",
-          "Gas Oven",
+          "Instantaneous Hot Water",
+          "Intercom",
+          "Jetted Tub",
+          "Kitchen: Second",
+          "Kitchen: Updated",
+          "Laundry Chute",
+          "Low VOC Finishes",
+          "Marble Countertops",
+          "Mother-in-law Apt.",
+          "Oven: Double",
+          "Oven: Gas",
+          "Oven: Wall",
+          "Quartz Countertops",
+          "Range / Oven, Built-in",
+          "Range / Oven, Free Stdng.",
+          "Range, Countertop",
+          "Range, Down Vent",
+          "Range, Gas",
+          "Silestone Countertops",
           "Theater Room",
           "Vaulted Ceilings",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q27-typea27",
         "type": "checkbox",
-        "label": "Accessibility",
+        "label": "Accessibility Features",
         "required": true,
         "description": "Select all that apply, or choose None if not applicable.",
         "options": [
           "None",
           "32\" Wide Doorways",
           "36\" Wide Hallways",
+          "Access to Elec. Outlet",
+          "Audible Alerts",
           "Ceiling Lift System",
           "Elevator",
+          "Frnt-Cntrld Stove / Oven",
           "Fully Accessible",
           "Grab Bars",
           "Ground Level",
+          "Modified Kitchen",
+          "No-Step Entry",
           "Porch Lift",
           "Ramp",
           "Roll-In Shower",
           "Single Level Living",
           "Stair Lift",
+          "Universal Design",
+          "Visible Alerts",
+          "Visitable",
           "Wheelchair Access",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q41-window-coverings",
@@ -1320,12 +1509,12 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Draperies",
           "Full",
           "None",
-          "Partial",
+          "Part",
           "Plantation Shutters",
           "Shades",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q42-amenities",
@@ -1344,13 +1533,15 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Gated Community",
           "Home Warranty",
           "Park / Playground",
+          "Pickleball Court",
           "Sauna / Steam Room",
+          "Ski-In/Ski-Out",
           "Swimming Pool",
           "Tennis Court",
           "Workshop",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q31-airconditioning",
@@ -1359,14 +1550,21 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "required": true,
         "description": "Select all that apply, or choose None if not applicable.",
         "options": [
+          "None",
+          "Active Solar",
           "Central Air; Electric",
           "Central Air; Gas",
-          "Evaporative Cooler Roof",
-          "Evaporative Cooler Window",
-          "None",
-          "Other"
+          "Evap. Cooler: Roof",
+          "Evap. Cooler: Window",
+          "Geothermal",
+          "Heat Pump",
+          "Passive Solar",
+          "Natural Ventilation",
+          "Refrig. Air; Window",
+          "Seer 16 Or Higher",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q96-hvac96",
@@ -1376,19 +1574,32 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "description": "Select all that apply, or choose None if unknown.",
         "options": [
           "None",
-          "Furnace / Forced Air",
-          "Gas",
-          "Heat Pump",
-          "Baseboard",
-          "Radiant",
+          ">= 95% efficiency",
+          "Active Solar",
           "Electric",
+          "Electric: Baseboard",
+          "Electric: Radiant",
+          "Forced Air",
+          "Gas: Central",
+          "Gas: Radiant",
+          "Gas: Stove",
+          "Geothermal",
+          "Gravity Heater",
+          "Heat Pump",
+          "Heat Recovery",
+          "Hot Water",
+          "Hydronic",
+          "Oil",
+          "Passive Solar",
           "Propane",
+          "Radiant: In Floor",
+          "Space Heater",
+          "Steam",
+          "Wall Heater",
           "Wood Burning",
-          "Hot Water / Steam",
-          "Solar",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       }
     ]
   },
@@ -1405,11 +1616,14 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "required": true,
         "options": [
           "Aluminum",
+          "Asbestos Shingles",
+          "Asphalt Shingles",
           "Brick",
           "Cedar",
           "Cement Board",
           "Cinder Block",
           "Clapboard/Masonite",
+          "Composition",
           "Concrete",
           "Container",
           "Frame",
@@ -1417,14 +1631,15 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Insulated Concrete Forms",
           "Log",
           "Metal",
-          "Wood",
+          "Other Wood",
+          "Redwood",
           "Stone",
+          "Straw Bale",
           "Stucco",
           "Vinyl",
-          "Shingles",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q29-typea29",
@@ -1434,44 +1649,77 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "description": "Select any that apply, or leave blank if none.",
         "options": [
           "None",
+          "Atrium",
+          "Attic Fan",
+          "Awnings",
           "Balcony",
           "Barn",
           "Basement Entrance",
           "Bay Box Windows",
           "Deck: Covered",
+          "Double Pane Windows",
+          "Entry (Foyer)",
+          "Greenhouse Windows",
           "Horse Property",
           "Out Buildings",
           "Outdoor Lighting",
-          "Patio Covered",
-          "Porch",
+          "Patio: Covered",
+          "Patio: Open",
+          "Porch: Open",
+          "Porch: Screened",
+          "Secured Building",
+          "Secured Parking",
           "Skylights",
-          "Walkout",
-          "Other"
+          "Sliding Glass Doors",
+          "Stained Glass Windows",
+          "Storm Doors",
+          "Storm Windows",
+          "Triple Pane Windows",
+          "Walk Out",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
+      },
+      {
+        "id": "deckCount",
+        "type": "number",
+        "label": "# of Decks",
+        "placeholder": "e.g., 1",
+        "description": "Total number of decks on the property, if any."
+      },
+      {
+        "id": "patioCount",
+        "type": "number",
+        "label": "# of Patios",
+        "placeholder": "e.g., 1",
+        "description": "Total number of patios on the property, if any."
       },
       {
         "id": "q30-typea30",
         "type": "checkbox",
-        "label": "Parking",
+        "label": "Garage / Parking",
         "required": true,
         "options": [
-          "Garage",
-          "Carport",
+          "2 Car Deep (Tandem)",
           "Attached",
+          "Built-in",
           "Detached",
+          "Electrical Vehicle Charging Station",
           "Extra Height",
           "Extra Length",
           "Extra Width",
-          "2 Car Deep (Tandem)",
           "Heated",
+          "Opener",
+          "Parking: Covered",
+          "Parking: Uncovered",
+          "RV Electrical Hookup",
           "RV Parking",
+          "Storage Above",
+          "Workbench",
           "Workshop",
-          "Underground",
-          "Assigned Stall",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q208-garagecapacity",
@@ -1518,16 +1766,16 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "Driveway",
         "required": true,
         "options": [
-          "Concrete",
           "Asphalt",
           "Circular",
           "Common Drive",
-          "Gravel",
+          "Concrete",
           "Dirt",
+          "Gravel",
           "Heated",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       }
     ]
   },
@@ -1540,7 +1788,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "q184-doesthe",
         "type": "radio",
-        "label": "Does the property (including HOA) have a pool?",
+        "label": "Pool Available?",
         "required": true,
         "options": [
           "Yes",
@@ -1551,22 +1799,44 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "q63-pooltype",
         "type": "checkbox",
-        "label": "Pool Type / Features",
+        "label": "If Yes, please specify (Pool Features)",
         "required": true,
         "status": "hidden-in-jotform",
         "options": [
           "Above Ground",
-          "In Ground",
-          "Concrete",
+          "Concrete/Gunite",
+          "Electronic Cover",
+          "Fenced",
           "Fiberglass/Vinyl",
           "Heated",
-          "With Spa/Hot Tub",
-          "Powered Cover",
-          "Fenced",
+          "In Ground",
           "Indoor",
-          "Other"
+          "With Spa",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
+      },
+      {
+        "id": "spaAvailable",
+        "type": "radio",
+        "label": "Spa Available?",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "communityPool",
+        "type": "radio",
+        "label": "Community Pool?",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
       },
       {
         "id": "q37-typea37",
@@ -1574,43 +1844,48 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "Roof",
         "required": true,
         "options": [
-          "Asphalt Shingles",
-          "Wood Shake",
-          "Metal",
           "Aluminum",
-          "Flat",
-          "Fiberglass",
+          "Asbestos Shingles",
+          "Asphalt Shingles",
+          "Bitumen",
           "Composition",
+          "Fiberglass",
+          "Flat",
           "Membrane",
+          "Metal",
+          "Pitched",
           "PVC",
+          "Rolled-silver",
           "Rubber (EPDM)",
           "Stone",
           "Tar / Gravel",
           "Tile",
-          "Other"
+          "Wood Shake Shingles",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q36-typea36",
         "type": "checkbox",
-        "label": "Yard / Landscaping",
+        "label": "Landscaping",
         "required": true,
         "options": [
-          "Full Landscaping",
+          "None",
+          "Fruit Trees",
+          "Landscaping: Full",
+          "Landscaping: Part",
           "Mature Trees",
+          "Pines",
+          "Scrub Oak",
           "Stream",
+          "Terraced Yard",
+          "Vegetable Garden",
+          "Waterfall",
           "Xeriscaped",
-          "Adjacent To Golf Course",
-          "Cul-de-sac",
-          "Corner Lot",
-          "Sprinkler System",
-          "Fenced",
-          "Waterfront",
-          "Wooded",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q43-lot-facts",
@@ -1618,29 +1893,45 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "Lot Facts",
         "required": true,
         "options": [
+          "None",
           "Additional Land Available",
           "Adjacent to Golf Course",
           "Corner Lot",
           "Cul-de-sac",
           "Curb & Gutter",
+          "Drip Irrigation: Auto-full",
+          "Drip Irrigation: Auto-part",
+          "Drip Irrigation: Manual-full",
+          "Drip Irrigation: Manual-part",
           "Fenced, Full",
           "Fenced, Part",
+          "Greywater Collection",
+          "Pervious Paving",
           "Private",
-          "Road, Paved",
-          "Road, Unpaved",
+          "Rainwater Collection",
+          "Road: Paved",
+          "Road: Unpaved",
           "Secluded Yard",
           "Sidewalks",
-          "Terrain, Flat",
-          "Terrain, Grad Slope",
-          "Terrain, Hilly",
-          "Terrain, Mountain",
-          "View, Lake",
-          "View, Mountain",
-          "View, Valley",
+          "Sprinkler: Auto-full",
+          "Sprinkler: Auto-part",
+          "Sprinkler: Manual-full",
+          "Sprinkler: Manual-part",
+          "Terrain: Flat",
+          "Terrain: Grad Slope",
+          "Terrain: Hilly",
+          "Terrain: Mountain",
+          "Terrain: Steep Slope",
+          "View: Lake",
+          "View: Mountain",
+          "View: Red Rock",
+          "View: Valley",
+          "View: Water",
+          "Waterfront",
           "Wooded",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "petsAllowed",
@@ -1686,53 +1977,62 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Basement",
           "Carport",
           "Garage",
+          "Other",
           "Patio",
           "Shed",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q35-connectedutilities",
         "type": "checkbox",
-        "label": "Connected Utilities",
+        "label": "Utilities",
         "required": true,
         "options": [
-          "Natural Gas",
-          "Power",
-          "Sewer",
-          "Septic",
-          "Culinary Water Only",
-          "Irrigantion Water",
-          "Secondary Water",
-          "Water Rights Owned",
-          "Water Shares",
-          "Well",
-          "Spring",
-          "Other"
+          "Gas: Available",
+          "Gas: Connected",
+          "Gas: Not Available",
+          "Gas: Not Connected",
+          "Power: Available",
+          "Power: Connected",
+          "Power: Not Available",
+          "Power: Not Connected",
+          "Sewer: Available",
+          "Sewer: Connected",
+          "Sewer: Not Available",
+          "Sewer: Not Connected",
+          "Sewer: Private",
+          "Sewer: Public",
+          "Sewer: Septic Tank",
+          "Water: Available",
+          "Water: Connected",
+          "Water: Not Available",
+          "Water: Not Connected",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q44-water",
         "type": "checkbox",
         "label": "Water",
         "required": true,
-        "description": "Select all water sources that apply (WFRMLS separate from connected utilities).",
+        "description": "Select all water sources that apply.",
         "options": [
           "Culinary",
           "Irrigation",
-          "Irrigation, Pressure",
+          "Irrigation: Pressure",
           "Private",
-          "Rights, Owned",
-          "Rights, Rented",
+          "Rights: Owned",
+          "Rights: Rented",
           "Secondary",
           "Shares",
           "Spring",
           "Well",
-          "Other"
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q45-telecommunications",
@@ -1743,12 +2043,12 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Broadband Cable",
           "DSL",
           "Ethernet, Wired",
-          "Fiber Optics",
+          "Fiber",
           "Multiple Phone Lines",
-          "Wireless Broadband",
-          "Other"
+          "T-1 Line",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q46-environmental-certs",
@@ -1759,10 +2059,10 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Built Green",
           "Energy Star",
           "Home Energy Rating",
-          "LEED",
-          "Other"
+          "Leed",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q38-zoning",
@@ -1770,16 +2070,15 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "Zoning",
         "required": true,
         "options": [
-          "Residential",
-          "Multi Family",
-          "Short Term Rental Allowed",
-          "Commercial",
           "Agricultural",
-          "Horse Property",
+          "Commercial",
           "Industrial",
-          "Other"
+          "Multi-Family",
+          "Short Term Rental Allowed",
+          "Single-Family",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       },
       {
         "id": "q40-typea40",
@@ -1787,15 +2086,27 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "Terms (acceptable terms of sale)",
         "required": true,
         "options": [
+          "Assumption: Qualify",
+          "Assumption: Simple",
           "Cash",
-          "Conventional Loan",
-          "VA / FHA Loan",
+          "Commercial Fin. Req.",
+          "Conventional",
+          "Conventional Rehabilitation Loan",
+          "Cryptocurrency",
+          "Down Payment Assist.",
           "Exchange",
-          "Lease Option",
+          "FHA",
+          "FHA 203(k) - Rehabilitation",
+          "Lease Option Monthly",
+          "Lease Option Yearly",
+          "Owner 2nd",
           "Seller Finance",
-          "Other"
+          "Seller Will Subordinate",
+          "USDA Rural Development",
+          "VA",
+          "See Remarks"
         ],
-        "otherText": true
+        "otherText": false
       }
     ]
   },
@@ -1807,15 +2118,30 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
     "fields": [
       {
         "id": "q19-typea19",
-        "label": "Personal Property / Conveyances",
-        "type": "checkbox",
-        "description": "Select all items included with the sale.",
-        "options": [
+        "label": "Inclusions / Exclusions",
+        "type": "matrix",
+        "description": "For each item, check Include (conveys with the sale) or Exclude (does not convey). Leave both blank if neither applies.",
+        "columns": [
+          {
+            "id": "include",
+            "label": "Include",
+            "type": "checkbox"
+          },
+          {
+            "id": "exclude",
+            "label": "Exclude",
+            "type": "checkbox"
+          }
+        ],
+        "rows": [
           "Alarm System",
           "Basketball Standard",
-          "Washer",
-          "Dryer",
+          "Ceiling Fan",
+          "Compactor",
+          "Dishwasher: Portable",
           "Dog Run",
+          "Dryer",
+          "Electric Air Cleaner",
           "Fireplace Equipment",
           "Fireplace Insert",
           "Freezer",
@@ -1824,23 +2150,28 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Hot Tub",
           "Humidifier",
           "Microwave",
-          "Gym Equipment",
-          "Playset",
+          "Play Gym",
           "Projector",
           "Range",
+          "Range Hood",
           "Refrigerator",
+          "Satellite Dish",
           "Satellite Equipment",
-          "Storage Shed (s)",
+          "Smart Thermostat(s)",
+          "Storage Shed(s)",
           "Swing Set",
           "Trampoline",
+          "TV Antenna",
+          "Video Camera(s)",
           "Video Door Bell(s)",
-          "Video / Alarm Cameras",
-          "Water Softener",
-          "Workbench",
+          "Washer",
+          "Water Softener: Own",
+          "Water Softener: Rent",
           "Window Coverings",
-          "Other"
-        ],
-        "otherText": true
+          "Wood Stove",
+          "Workbench",
+          "See Remarks"
+        ]
       }
     ]
   },
@@ -1964,8 +2295,33 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "q100-showinginstructions",
         "type": "textarea",
-        "label": "Showing Instructions",
+        "label": "Showing Instructions (remarks)",
         "placeholder": "Please share any important access information and how to handle those items. (Pets, Alarms, Tenants, etc.)  Please be as detailed as possible."
+      },
+      {
+        "id": "showInstructions",
+        "type": "checkbox",
+        "label": "Show Instructions",
+        "required": false,
+        "description": "Select all that apply for the Data Form (optional — occupancy still used as a fallback).",
+        "options": [
+          "Agent Has Key",
+          "Appt / Use Lockbox",
+          "Call Agent / Appt",
+          "Call Owner / Appt",
+          "Call Showing Service",
+          "Call Tenant / Appt",
+          "Call Use / Lockbox",
+          "Combination Box",
+          "Key At List Office",
+          "Key Box: Electronic",
+          "Knock / Use Lockbox",
+          "Use Aligned Showings",
+          "Use Showing Service",
+          "Vacant",
+          "See Remarks"
+        ],
+        "otherText": false
       }
     ]
   },

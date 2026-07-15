@@ -2,14 +2,12 @@ label: Water
 options:
   - Culinary
   - Irrigation
-  - Irrigation, Pressure
+  - "Irrigation: Pressure"
   - Private
-  - Rights, Owned
-  - Rights, Rented
+  - "Rights: Owned"
+  - "Rights: Rented"
   - Secondary
   - Shares
   - Spring
   - Well
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

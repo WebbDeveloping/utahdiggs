@@ -4,7 +4,5 @@ options:
   - Built Green
   - Energy Star
   - Home Energy Rating
-  - LEED
-  - value: other
-    label: Other
-    allowText: true
+  - Leed
+  - See Remarks

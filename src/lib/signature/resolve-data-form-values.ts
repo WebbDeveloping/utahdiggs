@@ -129,47 +129,209 @@ const LOT_FACT_ALIASES: Record<string, string> = {
   "Terrain, Hilly": "Terrain: Hilly",
   "Terrain, Mountain": "Terrain: Mountain",
   "Terrain, Steep Slope": "Terrain: Steep Slope",
+  "Terrain: Flat": "Terrain: Flat",
+  "Road, Paved": "Road: Paved",
+  "Road, Unpaved": "Road: Unpaved",
+  "Road: Paved": "Road: Paved",
+  "Road: Unpaved": "Road: Unpaved",
+  "View, Lake": "View: Lake",
+  "View, Mountain": "View: Mountain",
+  "View, Valley": "View: Valley",
+  "View, Water": "View: Water",
+  "View, Red Rock": "View: Red Rock",
+  "Adjacent To Golf Course": "Adjacent to Golf Course",
+  "Adjacent to Golf Course": "Adjacent to Golf Course",
+  Fenced: "Fenced, Full",
+  "Sprinkler System": "Sprinkler: Auto-full",
+  Other: "See Remarks",
 };
 
 const LANDSCAPING_ALIASES: Record<string, string> = {
   "Full Landscaping": "Landscaping: Full",
   "Part Landscaping": "Landscaping: Part",
+  "Landscaping: Full": "Landscaping: Full",
+  "Landscaping: Part": "Landscaping: Part",
+  Other: "See Remarks",
+};
+
+/** Legacy Yard field options that belong under Lot Facts on the Data Form. */
+const LANDSCAPING_TO_LOT_FACT_ALIASES: Record<string, string> = {
   "Sprinkler System": "Sprinkler: Auto-full",
+  "Adjacent To Golf Course": "Adjacent to Golf Course",
+  "Cul-de-sac": "Cul-de-sac",
+  "Corner Lot": "Corner Lot",
+  Fenced: "Fenced, Full",
+  Waterfront: "Waterfront",
+  Wooded: "Wooded",
 };
 
 const DRIVEWAY_ALIASES: Record<string, string> = {};
 
+const ENVIRONMENTAL_CERT_ALIASES: Record<string, string> = {
+  LEED: "Leed",
+  Leed: "Leed",
+};
+
+const EXTERIOR_ALIASES: Record<string, string> = {
+  Wood: "Other Wood",
+  "Other Wood": "Other Wood",
+  Shingles: "Asphalt Shingles",
+};
+
 const EXTERIOR_FEATURE_ALIASES: Record<string, string> = {
   "Patio Covered": "Patio: Covered",
   "Patio Open": "Patio: Open",
+  "Patio: Covered": "Patio: Covered",
+  "Patio: Open": "Patio: Open",
+  Porch: "Porch: Open",
+  "Porch: Open": "Porch: Open",
+  "Porch: Screened": "Porch: Screened",
+  Walkout: "Walk Out",
+  "Walk Out": "Walk Out",
+};
+
+const FLOORING_ALIASES: Record<string, string> = {
+  "Natural Stone": "Natural Rock",
+  "Natural Rock": "Natural Rock",
+  "LVP / Vinyl Plank": "Vinyl (LVP)",
+  "Vinyl (LVP)": "Vinyl (LVP)",
+  LVP: "Vinyl (LVP)",
 };
 
 const PARKING_ALIASES: Record<string, string> = {
   Garage: "Attached",
+  Carport: "Parking: Covered",
+  "Parking: Covered": "Parking: Covered",
+  "Parking: Uncovered": "Parking: Uncovered",
+  Underground: "See Remarks",
+  "Assigned Stall": "See Remarks",
 };
 
 const HEATING_ALIASES: Record<string, string> = {
   Gas: "Gas: Central",
+  "Gas: Central": "Gas: Central",
   "Furnace / Forced Air": "Forced Air",
+  "Forced Air": "Forced Air",
+  Baseboard: "Electric: Baseboard",
+  "Electric: Baseboard": "Electric: Baseboard",
+  Radiant: "Radiant: In Floor",
+  "Radiant: In Floor": "Radiant: In Floor",
+  "Hot Water / Steam": "Hot Water",
+  "Hot Water": "Hot Water",
+  Steam: "Steam",
+  Solar: "Active Solar",
+  "Active Solar": "Active Solar",
+  "Passive Solar": "Passive Solar",
+};
+
+const AIR_CONDITIONING_ALIASES: Record<string, string> = {
+  "Evaporative Cooler Roof": "Evap. Cooler: Roof",
+  "Evaporative Cooler Window": "Evap. Cooler: Window",
+  "Evap. Cooler: Roof": "Evap. Cooler: Roof",
+  "Evap. Cooler: Window": "Evap. Cooler: Window",
 };
 
 const UTILITIES_ALIASES: Record<string, string> = {
   "Natural Gas": "Gas: Connected",
+  "Gas: Connected": "Gas: Connected",
   Power: "Power: Connected",
+  "Power: Connected": "Power: Connected",
   Sewer: "Sewer: Connected",
+  "Sewer: Connected": "Sewer: Connected",
+  Septic: "Sewer: Septic Tank",
+  "Sewer: Septic Tank": "Sewer: Septic Tank",
+  Other: "See Remarks",
+};
+
+/** Legacy Connected Utilities options that belong under Water on the Data Form. */
+const UTILITIES_TO_WATER_ALIASES: Record<string, string> = {
+  "Culinary Water Only": "Culinary",
+  "Irrigantion Water": "Irrigation",
+  "Irrigation Water": "Irrigation",
+  "Secondary Water": "Secondary",
+  "Water Rights Owned": "Rights: Owned",
+  "Water Shares": "Shares",
+  Well: "Well",
+  Spring: "Spring",
+};
+
+const WATER_ALIASES: Record<string, string> = {
+  "Irrigation, Pressure": "Irrigation: Pressure",
+  "Irrigation: Pressure": "Irrigation: Pressure",
+  "Rights, Owned": "Rights: Owned",
+  "Rights: Owned": "Rights: Owned",
+  "Rights, Rented": "Rights: Rented",
+  "Rights: Rented": "Rights: Rented",
+  Other: "See Remarks",
+};
+
+const WINDOW_COVERING_ALIASES: Record<string, string> = {
+  Partial: "Part",
+  Part: "Part",
+  Other: "See Remarks",
 };
 
 const TERMS_ALIASES: Record<string, string> = {
   "Conventional Loan": "Conventional",
+  Conventional: "Conventional",
   Cash: "Cash",
   FHA: "FHA",
   VA: "VA",
+  "Lease Option": "Lease Option Monthly",
+  "Lease Option Monthly": "Lease Option Monthly",
+  "Lease Option Yearly": "Lease Option Yearly",
+  Exchange: "Exchange",
+  "Seller Finance": "Seller Finance",
+  Other: "See Remarks",
 };
 
 const TELECOM_ALIASES: Record<string, string> = {
   "Fiber Optics": "Fiber",
+  Fiber: "Fiber",
   "Broadband Cable": "Broadband Cable",
   DSL: "DSL",
+  "Ethernet, Wired": "Ethernet, Wired",
+  "Wireless Broadband": "See Remarks",
+  Other: "See Remarks",
+};
+
+/** MLS item labels → Data Form Inclusions/Exclusions checkbox labels. */
+const INCLUSION_ITEM_ALIASES: Record<string, string> = {
+  Humidifier: "Humidifer",
+  "Gym Equipment": "Play Gym",
+  Playset: "Play Gym",
+  "Storage Shed (s)": "Storage Shed(s)",
+  "Video / Alarm Cameras": "Video Camera(s)",
+  "Water Softener": "Water Softener: Own",
+};
+
+const INTERIOR_FEATURE_ALIASES: Record<string, string> = {
+  "Wet Bar": "Bar: Wet",
+  "Master Bath": "Bath: Primary",
+  "Bath: Separate Tub/Shower": "Bath: Sep. Tub / Shower",
+  "Instant Hot Water": "Instantaneous Hot Water",
+  "Second Kitchen": "Kitchen: Second",
+  "Mother In Law Apartment": "Mother-in-law Apt.",
+  "Double Ovens": "Oven: Double",
+  "Gas Range": "Range, Gas",
+  "Gas Oven": "Oven: Gas",
+  Other: "See Remarks",
+};
+
+const POOL_FEATURE_ALIASES: Record<string, string> = {
+  Concrete: "Concrete/Gunite",
+  "Concrete/Gunite": "Concrete/Gunite",
+  "With Spa/Hot Tub": "With Spa",
+  "With Spa": "With Spa",
+  "Powered Cover": "Electronic Cover",
+  "Electronic Cover": "Electronic Cover",
+  Other: "See Remarks",
+};
+
+const ROOF_ALIASES: Record<string, string> = {
+  "Wood Shake": "Wood Shake Shingles",
+  "Wood Shake Shingles": "Wood Shake Shingles",
+  Other: "See Remarks",
 };
 
 const ZONING_ALIASES: Record<string, string> = {
@@ -181,7 +343,48 @@ const ZONING_ALIASES: Record<string, string> = {
   Commercial: "Commercial",
   Agricultural: "Agricultural",
   Industrial: "Industrial",
+  "Horse Property": "See Remarks",
+  Other: "See Remarks",
 };
+
+/** MLS matrix row label → Data Form property-info key prefix. */
+const LEVEL_ROW_PREFIX: Record<string, string> = {
+  "Main Level": "propInfo_Level1",
+  "Second Story": "propInfo_Level2",
+  "Third Story": "propInfo_Level3",
+  "Fourth Story": "propInfo_Level4",
+  Basement: "propInfo_Basement1",
+};
+
+const BASEMENT_TYPE_ALIASES: Record<string, string> = {
+  "None / Crawlspace / Slab": "None/Crawl Space",
+  "None / Crawl Space": "None/Crawl Space",
+  "See Remarks": "See Remarks",
+};
+
+type LevelMatrixRow = Record<string, string | string[]>;
+
+function isMatrixCheckboxOn(cell: string | string[] | undefined): boolean {
+  if (Array.isArray(cell)) {
+    return cell.some((v) => {
+      const t = String(v).trim();
+      return t.length > 0 && t !== "No" && t !== "N";
+    });
+  }
+  if (typeof cell === "string") {
+    const t = cell.trim();
+    return t === "Yes" || t === "Y" || t === "true";
+  }
+  return false;
+}
+
+function cellText(row: LevelMatrixRow, key: string): string {
+  const raw = row[key];
+  if (raw == null) return "";
+  if (Array.isArray(raw)) return "";
+  const t = String(raw).trim();
+  return t === "0" ? "0" : t;
+}
 
 function sumLevelMatrix(values: FullMlsInputValues): {
   beds: string;
@@ -190,9 +393,7 @@ function sumLevelMatrix(values: FullMlsInputValues): {
   bathsHalf: string;
   totalSqft: string;
 } {
-  const matrix = values["q117-2level117"] as
-    | Record<string, Record<string, string | string[]>>
-    | undefined;
+  const matrix = values["q117-2level117"] as Record<string, LevelMatrixRow> | undefined;
   if (!matrix) {
     return { beds: "", bathsFull: "", bathsThreeQuarter: "", bathsHalf: "", totalSqft: "" };
   }
@@ -223,6 +424,84 @@ function sumLevelMatrix(values: FullMlsInputValues): {
     bathsHalf: totalHalf > 0 ? String(totalHalf) : "",
     totalSqft: totalSqft > 0 ? String(totalSqft) : "",
   };
+}
+
+/**
+ * Emits per-level text/checkbox keys for the Data Form property-information grid.
+ * MLS rows (Main / Basement / Stories) map onto PDF Level 1–4 / Basement 1.
+ */
+function emitPropInfoLevelFields(
+  values: FullMlsInputValues,
+  text: Record<string, string>,
+  checkboxes: Record<string, boolean>,
+): void {
+  const matrix = values["q117-2level117"] as Record<string, LevelMatrixRow> | undefined;
+  if (!matrix) return;
+
+  const checkboxCols: Array<{ matrixKey: string; suffix: string }> = [
+    { matrixKey: "master-y-n", suffix: "primary" },
+    { matrixKey: "family", suffix: "family" },
+    { matrixKey: "den", suffix: "den" },
+    { matrixKey: "formal-living", suffix: "formalLiving" },
+    { matrixKey: "kitchen", suffix: "kitchen" },
+    { matrixKey: "breakfast", suffix: "breakfast" },
+    { matrixKey: "formal-dining", suffix: "formalDining" },
+    { matrixKey: "semi-formal", suffix: "semiFormal" },
+    { matrixKey: "laundry", suffix: "laundry" },
+    { matrixKey: "fireplace", suffix: "fireplace" },
+  ];
+
+  for (const [rowLabel, row] of Object.entries(matrix)) {
+    const prefix = LEVEL_ROW_PREFIX[rowLabel];
+    if (!prefix) continue;
+
+    const sqft = cellText(row, "square-footage");
+    if (sqft) text[`${prefix}_sqft`] = sqft;
+    const beds = cellText(row, "bedrooms");
+    if (beds) text[`${prefix}_beds`] = beds;
+    const bathsFull = cellText(row, "full-baths");
+    if (bathsFull) text[`${prefix}_bathsFull`] = bathsFull;
+    const bathsThreeQuarter = cellText(row, "3-4-baths");
+    if (bathsThreeQuarter) text[`${prefix}_bathsThreeQuarter`] = bathsThreeQuarter;
+    const bathsHalf = cellText(row, "1-2-baths");
+    if (bathsHalf) text[`${prefix}_bathsHalf`] = bathsHalf;
+
+    for (const { matrixKey, suffix } of checkboxCols) {
+      setCheckbox(checkboxes, `${prefix}_${suffix}`, isMatrixCheckboxOn(row[matrixKey]));
+    }
+
+    // Legacy combined Living/Fam column → family when new columns absent
+    if (!isMatrixCheckboxOn(row.family) && isMatrixCheckboxOn(row["living-fam-rm"])) {
+      setCheckbox(checkboxes, `${prefix}_family`, true);
+    }
+  }
+}
+
+/**
+ * Emits inclusions_* / exclusions_* checkboxes from the Include|Exclude matrix.
+ * Legacy drafts stored q19-typea19 as a string[] of included items only.
+ */
+function emitInclusionsExclusions(
+  values: FullMlsInputValues,
+  checkboxes: Record<string, boolean>,
+): void {
+  const raw = values["q19-typea19"] as
+    | string[]
+    | Record<string, Record<string, string | string[]>>
+    | undefined;
+
+  if (Array.isArray(raw)) {
+    markSelected(checkboxes, "inclusions", raw, INCLUSION_ITEM_ALIASES);
+    return;
+  }
+  if (!raw || typeof raw !== "object") return;
+
+  for (const [item, cells] of Object.entries(raw)) {
+    const label = INCLUSION_ITEM_ALIASES[item] ?? item;
+    if (!label || label === "None") continue;
+    setCheckbox(checkboxes, `inclusions_${label}`, isMatrixCheckboxOn(cells?.include));
+    setCheckbox(checkboxes, `exclusions_${label}`, isMatrixCheckboxOn(cells?.exclude));
+  }
 }
 
 function parseStreetParts(street: string): {
@@ -293,10 +572,22 @@ export function resolveDataFormValues(
   text.bathsFull = levels.bathsFull;
   text.bathsThreeQuarter = levels.bathsThreeQuarter;
   text.bathsHalf = levels.bathsHalf;
+  text.deckCount = String(values.deckCount ?? "").trim();
+  text.patioCount = String(values.patioCount ?? "").trim();
+  emitPropInfoLevelFields(values, text, checkboxes);
   text.style = STYLE_ALIASES[String(values["q51-styleof51"] ?? "")] ?? String(values["q51-styleof51"] ?? "");
   text.ownerName = formatName(values.primaryOwnerName as FullnameValue);
   text.ownerPhone = String(values.primaryOwnerPhone ?? "").trim();
   text.ownerEmail = String(values.primaryOwnerEmail ?? "").trim();
+  text.listingEffectiveDate = String(values.listingEffectiveDate ?? "").trim();
+  text.listingExpirationDate = String(values.listingExpirationDate ?? "").trim();
+  text.possession = String(values.possession ?? "").trim();
+  text.appointmentContact = String(values.appointmentContact ?? "").trim();
+  text.contactPhone1 = String(values.contactPhone1 ?? "").trim();
+  text.contactPhone2 = String(values.contactPhone2 ?? "").trim();
+  text.listingAgentName = String(values.listingAgentName ?? "").trim();
+  text.listingCoAgentName = String(values.listingCoAgentName ?? "").trim();
+  text.listingOfficeName = String(values.listingOfficeName ?? "").trim();
   text.hoaFee = values.hoa === "Yes" ? String(values.hoaFeeMonth ?? "").trim() : "";
   text.hoaChangeFeeAmount =
     values.hoa === "Yes" &&
@@ -353,7 +644,21 @@ export function resolveDataFormValues(
 
   setCheckbox(checkboxes, "nonStandardAddress", values.nonStandardAddress === "Yes");
   setCheckbox(checkboxes, "listingStatus_Active", true);
-  setCheckbox(checkboxes, "listingType_Exclusive Right to Sell (ERS)", true);
+
+  const listingType = String(values.listingType ?? "").trim();
+  if (listingType === "Exclusive Agency (EAL)") {
+    setCheckbox(checkboxes, "listingType_Exclusive Agency (EAL)", true);
+  } else {
+    // Default ERS when blank (Utah Digs standard listing agreement)
+    setCheckbox(checkboxes, "listingType_Exclusive Right to Sell (ERS)", true);
+  }
+
+  markSelected(checkboxes, "specialOwnerType", values.specialOwnerType as string[] | undefined);
+
+  const contactType = String(values.contactType ?? "").trim();
+  if (contactType === "Agent" || contactType === "Owner" || contactType === "Assistant") {
+    setCheckbox(checkboxes, `contactType_${contactType}`, true);
+  }
 
   const houseDir = values.houseNumberDirection;
   if (houseDir === "N" || houseDir === "S" || houseDir === "E" || houseDir === "W") {
@@ -502,6 +807,20 @@ export function resolveDataFormValues(
     setCheckbox(checkboxes, `frontageFacing_${frontageFacing}`, true);
   }
 
+  const specialConditions = values.specialListingConditions as string[] | undefined;
+  if (specialConditions?.length) {
+    markSelected(checkboxes, "specialListingConditions", specialConditions);
+  } else {
+    // Legacy drafts used a single shortSale radio
+    const legacyShortSale = String(
+      (values as { shortSale?: string }).shortSale ?? "",
+    ).trim();
+    const mapped = SHORT_SALE_ALIASES[legacyShortSale];
+    if (mapped) {
+      setCheckbox(checkboxes, `specialListingConditions_${mapped}`, true);
+    }
+  }
+
   const construction = CONSTRUCTION_ALIASES[String(values.constructionStatus ?? "")];
   if (construction) {
     setCheckbox(checkboxes, `constructionStatus_${construction}`, true);
@@ -512,13 +831,13 @@ export function resolveDataFormValues(
     setCheckbox(checkboxes, `style_${styleKey}`, true);
   }
 
-  const shortSale = SHORT_SALE_ALIASES[String(values.shortSale ?? "")];
-  if (shortSale) {
-    setCheckbox(checkboxes, `specialListingConditions_${shortSale}`, true);
-  }
-
   // Basement type from MLS multi-select
-  markSelected(checkboxes, "basementType", values["q26-typea26"] as string[] | undefined);
+  markSelected(
+    checkboxes,
+    "basementType",
+    values["q26-typea26"] as string[] | undefined,
+    BASEMENT_TYPE_ALIASES,
+  );
   if (values.basementFinished === "Yes") {
     text.basementFinished = "100";
   } else if (values.basementFinished === "Partial") {
@@ -527,14 +846,29 @@ export function resolveDataFormValues(
     text.basementFinished = "0";
   }
 
-  markSelected(checkboxes, "flooring", values["q33-flooring"] as string[] | undefined);
-  markSelected(checkboxes, "interiorFeatures", values["q34-typea34"] as string[] | undefined);
+  markSelected(checkboxes, "flooring", values["q33-flooring"] as string[] | undefined, FLOORING_ALIASES);
+  markSelected(
+    checkboxes,
+    "interiorFeatures",
+    values["q34-typea34"] as string[] | undefined,
+    INTERIOR_FEATURE_ALIASES,
+  );
   markSelected(checkboxes, "accessibility", values["q27-typea27"] as string[] | undefined);
-  markSelected(checkboxes, "windowCoverings", values["q41-window-coverings"] as string[] | undefined);
+  markSelected(
+    checkboxes,
+    "windowCoverings",
+    values["q41-window-coverings"] as string[] | undefined,
+    WINDOW_COVERING_ALIASES,
+  );
   markSelected(checkboxes, "amenities", values["q42-amenities"] as string[] | undefined);
-  markSelected(checkboxes, "airConditioning", values["q31-airconditioning"] as string[] | undefined);
+  markSelected(
+    checkboxes,
+    "airConditioning",
+    values["q31-airconditioning"] as string[] | undefined,
+    AIR_CONDITIONING_ALIASES,
+  );
   markSelected(checkboxes, "heating", values["q96-hvac96"] as string[] | undefined, HEATING_ALIASES);
-  markSelected(checkboxes, "exterior", values["q32-typea32"] as string[] | undefined);
+  markSelected(checkboxes, "exterior", values["q32-typea32"] as string[] | undefined, EXTERIOR_ALIASES);
   markSelected(
     checkboxes,
     "exteriorFeatures",
@@ -546,15 +880,38 @@ export function resolveDataFormValues(
 
   setCheckbox(checkboxes, "poolAvailable_Yes", values["q184-doesthe"] === "Yes");
   setCheckbox(checkboxes, "poolAvailable_No", values["q184-doesthe"] === "No");
-  markSelected(checkboxes, "poolFeatures", values["q63-pooltype"] as string[] | undefined);
-  markSelected(checkboxes, "roof", values["q37-typea37"] as string[] | undefined);
+  if (values["q184-doesthe"] === "Yes") {
+    markSelected(
+      checkboxes,
+      "poolFeatures",
+      values["q63-pooltype"] as string[] | undefined,
+      POOL_FEATURE_ALIASES,
+    );
+  }
+  setCheckbox(checkboxes, "spaAvailable_Yes", values.spaAvailable === "Yes");
+  setCheckbox(checkboxes, "spaAvailable_No", values.spaAvailable === "No");
+  setCheckbox(checkboxes, "communityPool_Yes", values.communityPool === "Yes");
+  setCheckbox(checkboxes, "communityPool_No", values.communityPool === "No");
+  markSelected(checkboxes, "roof", values["q37-typea37"] as string[] | undefined, ROOF_ALIASES);
   markSelected(
     checkboxes,
     "landscaping",
-    values["q36-typea36"] as string[] | undefined,
+    (values["q36-typea36"] as string[] | undefined)?.filter(
+      (v) => !LANDSCAPING_TO_LOT_FACT_ALIASES[v.trim()],
+    ),
     LANDSCAPING_ALIASES,
   );
-  markSelected(checkboxes, "lotFacts", values["q43-lot-facts"] as string[] | undefined, LOT_FACT_ALIASES);
+  markSelected(
+    checkboxes,
+    "lotFacts",
+    [
+      ...((values["q43-lot-facts"] as string[] | undefined) ?? []),
+      ...((values["q36-typea36"] as string[] | undefined)
+        ?.map((v) => LANDSCAPING_TO_LOT_FACT_ALIASES[v.trim()])
+        .filter(Boolean) as string[]),
+    ],
+    LOT_FACT_ALIASES,
+  );
 
   const animalsSelected = values["q47-animals"] as string[] | undefined;
   setCheckbox(checkboxes, "petsAllowed_Yes", values.petsAllowed === "Yes");
@@ -585,10 +942,22 @@ export function resolveDataFormValues(
   markSelected(
     checkboxes,
     "utilities",
-    values["q35-connectedutilities"] as string[] | undefined,
+    (values["q35-connectedutilities"] as string[] | undefined)?.filter(
+      (v) => !UTILITIES_TO_WATER_ALIASES[v.trim()],
+    ),
     UTILITIES_ALIASES,
   );
-  markSelected(checkboxes, "water", values["q44-water"] as string[] | undefined);
+  markSelected(
+    checkboxes,
+    "water",
+    [
+      ...((values["q44-water"] as string[] | undefined) ?? []),
+      ...((values["q35-connectedutilities"] as string[] | undefined)
+        ?.map((v) => UTILITIES_TO_WATER_ALIASES[v.trim()])
+        .filter(Boolean) as string[]),
+    ],
+    WATER_ALIASES,
+  );
   markSelected(
     checkboxes,
     "telecommunications",
@@ -599,6 +968,7 @@ export function resolveDataFormValues(
     checkboxes,
     "environmentalCerts",
     values["q46-environmental-certs"] as string[] | undefined,
+    ENVIRONMENTAL_CERT_ALIASES,
   );
   markSelected(
     checkboxes,
@@ -607,15 +977,24 @@ export function resolveDataFormValues(
     ZONING_ALIASES,
   );
   markSelected(checkboxes, "terms", values["q40-typea40"] as string[] | undefined, TERMS_ALIASES);
-  markSelected(checkboxes, "inclusions", values["q19-typea19"] as string[] | undefined);
+  if ((values["q40-typea40"] as string[] | undefined)?.includes("VA / FHA Loan")) {
+    setCheckbox(checkboxes, "terms_VA", true);
+    setCheckbox(checkboxes, "terms_FHA", true);
+  }
+  emitInclusionsExclusions(values, checkboxes);
 
-  const occupancy = values["q191-propertyoccupancy"];
-  if (occupancy === "Vacant / Immediate Appt Approval") {
-    setCheckbox(checkboxes, "showInstructions_Vacant", true);
-  } else if (occupancy === "Owner Occupied") {
-    setCheckbox(checkboxes, "showInstructions_Call Owner / Appt", true);
-  } else if (occupancy === "Tenant Occupied") {
-    setCheckbox(checkboxes, "showInstructions_Call Tenant / Appt", true);
+  const showInstructions = values.showInstructions as string[] | undefined;
+  if (showInstructions?.length) {
+    markSelected(checkboxes, "showInstructions", showInstructions);
+  } else {
+    const occupancy = values["q191-propertyoccupancy"];
+    if (occupancy === "Vacant / Immediate Appt Approval") {
+      setCheckbox(checkboxes, "showInstructions_Vacant", true);
+    } else if (occupancy === "Owner Occupied") {
+      setCheckbox(checkboxes, "showInstructions_Call Owner / Appt", true);
+    } else if (occupancy === "Tenant Occupied") {
+      setCheckbox(checkboxes, "showInstructions_Call Tenant / Appt", true);
+    }
   }
 
   const signatureUrl = String(values["q20-signature"] ?? "").trim();

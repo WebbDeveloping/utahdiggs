@@ -1,16 +1,27 @@
 label: Heating
 options:
   - None
-  - Furnace / Forced Air
-  - Gas
-  - Heat Pump
-  - Baseboard
-  - Radiant
+  - ">= 95% efficiency"
+  - Active Solar
   - Electric
+  - "Electric: Baseboard"
+  - "Electric: Radiant"
+  - Forced Air
+  - "Gas: Central"
+  - "Gas: Radiant"
+  - "Gas: Stove"
+  - Geothermal
+  - Gravity Heater
+  - Heat Pump
+  - Heat Recovery
+  - Hot Water
+  - Hydronic
+  - Oil
+  - Passive Solar
   - Propane
+  - "Radiant: In Floor"
+  - Space Heater
+  - Steam
+  - Wall Heater
   - Wood Burning
-  - Hot Water / Steam
-  - Solar
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

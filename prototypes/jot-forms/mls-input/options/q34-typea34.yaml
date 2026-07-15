@@ -1,19 +1,43 @@
 label: Interior Special Features
 options:
   - None
-  - Wet Bar
+  - Accessory Apartment
+  - "Alarm: Fire"
+  - "Alarm: Security"
+  - "Bar: Dry"
+  - "Bar: Wet"
   - Basement Apartment
-  - Master Bath
-  - "Bath: Separate Tub/Shower"
+  - "Bath: Primary"
+  - "Bath: Sep. Tub / Shower"
+  - Central Vacuum
+  - "Closet: Walk-in"
+  - Den / Office
+  - Dishwasher, Built-in
+  - Disposal
+  - Floor Drains
+  - French Doors
+  - Gas Log
+  - Granite Countertops
   - Great Room
-  - Instant Hot Water
-  - Second Kitchen
-  - Mother In Law Apartment
-  - Double Ovens
-  - Gas Range
-  - Gas Oven
+  - Instantaneous Hot Water
+  - Intercom
+  - Jetted Tub
+  - "Kitchen: Second"
+  - "Kitchen: Updated"
+  - Laundry Chute
+  - Low VOC Finishes
+  - Marble Countertops
+  - Mother-in-law Apt.
+  - "Oven: Double"
+  - "Oven: Gas"
+  - "Oven: Wall"
+  - Quartz Countertops
+  - Range / Oven, Built-in
+  - "Range / Oven, Free Stdng."
+  - Range, Countertop
+  - Range, Down Vent
+  - Range, Gas
+  - Silestone Countertops
   - Theater Room
   - Vaulted Ceilings
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

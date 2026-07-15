@@ -10,10 +10,10 @@ options:
   - Gated Community
   - Home Warranty
   - Park / Playground
+  - Pickleball Court
   - Sauna / Steam Room
+  - Ski-In/Ski-Out
   - Swimming Pool
   - Tennis Court
   - Workshop
-  - value: other
-    label: Other
-    allowText: true
+  - See Remarks

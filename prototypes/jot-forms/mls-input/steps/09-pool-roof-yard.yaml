@@ -6,7 +6,7 @@ fields:
     jotform:
       id: 184
       name: q184_doesThe
-    label: "Does the property (including HOA) have a pool?"
+    label: Pool Available?
     required: true
     options:
       - "Yes"
@@ -16,10 +16,30 @@ fields:
     jotform:
       id: 63
       name: "q63_poolType[]"
-    label: Pool Type / Features
+    label: "If Yes, please specify (Pool Features)"
     required: true
     status: hidden-in-jotform
     $ref: options/q63-pooltype.yaml
+  - id: spaAvailable
+    type: radio
+    label: Spa Available?
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_spaAvailable
+  - id: communityPool
+    type: radio
+    label: Community Pool?
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_communityPool
   - id: q37-typea37
     type: checkbox
     jotform:
@@ -33,7 +53,7 @@ fields:
     jotform:
       id: 36
       name: "q36_typeA36[]"
-    label: Yard / Landscaping
+    label: Landscaping
     required: true
     $ref: options/q36-typea36.yaml
   - id: q43-lot-facts

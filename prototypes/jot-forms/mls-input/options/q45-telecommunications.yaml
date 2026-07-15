@@ -3,9 +3,7 @@ options:
   - Broadband Cable
   - DSL
   - Ethernet, Wired
-  - Fiber Optics
+  - Fiber
   - Multiple Phone Lines
-  - Wireless Broadband
-  - value: other
-    label: Other
-    allowText: true
+  - T-1 Line
+  - See Remarks

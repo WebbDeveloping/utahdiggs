@@ -1,0 +1,9 @@
+label: Storage
+options:
+  - Basement
+  - Carport
+  - Garage
+  - Other
+  - Patio
+  - Shed
+  - See Remarks
