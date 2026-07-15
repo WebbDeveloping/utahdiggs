@@ -14,12 +14,13 @@ rules:
       - secondaryOwnerEmail
 
   - id: secondary-owner-signature
-    description: Show secondary owner signature when two owners are listed.
+    description: Show secondary owner signature and initials when two owners are listed.
     when:
       field: ownerCount
       equals: Two
     show:
       - q23-signature23
+      - q23-initials
 
   - id: non-standard-address-directions
     description: Show directions when address is non-standard.
@@ -38,15 +39,41 @@ rules:
       - ownerAddress
 
   - id: hoa-fee-and-contact
-    description: Show HOA fee and contact when property is in an HOA.
+    description: Show HOA fee, contact, amenities, and related fields when property is in an HOA.
     when:
       field: hoa
       equals: "Yes"
     show:
       - hoaFeeMonth
+      - hoaFeeFrequency
+      - hoaChangeFeeType
       - hoaContact
       - hoaContactPhone
+      - hoaRentalCap
+      - hoaAmenities
       - hoaRemarks
+
+  - id: hoa-change-fee-amount
+    description: Show change fee amount when a percentage or dollar change fee applies.
+    when:
+      all:
+        - field: hoa
+          equals: "Yes"
+        - field: hoaChangeFeeType
+          equals: Percentage of sales price
+    show:
+      - hoaChangeFeeAmount
+
+  - id: hoa-change-fee-amount-dollar
+    description: Show change fee amount when a dollar change fee applies.
+    when:
+      all:
+        - field: hoa
+          equals: "Yes"
+        - field: hoaChangeFeeType
+          equals: Dollar amount
+    show:
+      - hoaChangeFeeAmount
 
   - id: solar-follow-ups
     description: Show solar details when property has solar.
@@ -89,6 +116,65 @@ rules:
       - solarAgreementTerm
       - solarTransferable
 
+  - id: solar-financed-details
+    description: Show finance company and payment terms when solar is financed.
+    when:
+      all:
+        - field: solar
+          equals: "Yes"
+        - field: solarOwnership
+          equals: Financed
+    show:
+      - solarFinanceCompany
+      - solarMonthlyPayment
+      - solarAgreementTerm
+      - solarTransferable
+
+  - id: pets-animals
+    description: Show animal type options when pets are allowed.
+    when:
+      field: petsAllowed
+      equals: "Yes"
+    show:
+      - q47-animals
+
+  - id: tax-parcel-number
+    description: Show tax parcel number when a parcel number is assigned.
+    when:
+      field: noAssignedParcelNumber
+      equals: "No"
+    show:
+      - taxParcelNumber
+
+  - id: adu-follow-ups
+    description: Show ADU details when the property has an accessory dwelling unit.
+    when:
+      field: adu
+      equals: "Yes"
+    show:
+      - aduType
+      - aduSqft
+      - aduBeds
+      - aduBaths
+      - aduKitchen
+      - aduSeparateEntrance
+      - aduSeparateWaterMeter
+      - aduSeparateGasMeter
+      - aduSeparateElectricMeter
+      - aduCurrentlyRented
+      - aduRemarks
+
+  - id: adu-monthly-rent
+    description: Show current monthly rent when the ADU is currently rented.
+    when:
+      all:
+        - field: adu
+          equals: "Yes"
+        - field: aduCurrentlyRented
+          equals: "Yes"
+    show:
+      - aduMonthlyRent
+
   - id: level-matrix-rows
     description: Level breakdown matrix row count follows the selected number of levels.
     dynamic:
@@ -116,6 +202,15 @@ rules:
       includes: Carport
     show:
       - q209-garagecapacity209
+
+  - id: rv-parking-dimensions
+    description: Show RV parking height and length when Parking includes RV Parking.
+    when:
+      field: q30-typea30
+      includes: RV Parking
+    show:
+      - rvParkingHeight
+      - rvParkingLength
 
   - id: pool-features
     description: Show pool type/features when property has a pool.

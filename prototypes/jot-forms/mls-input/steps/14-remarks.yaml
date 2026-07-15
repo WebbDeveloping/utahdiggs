@@ -8,14 +8,6 @@ fields:
       name: q97_publicRemarks
     label: Public Remarks / House Description
     placeholder: "Please give a description of the home highlighting it's best features.  We may modify it with your approval prior to posting on the MLS."
-  - id: hoaRemarks
-    type: textarea
-    label: HOA Remarks
-    status: hidden-in-jotform
-    placeholder: "Any HOA restrictions, fees, or rules buyers should know."
-    jotform:
-      id: TODO
-      name: q_hoaRemarks
   - id: exclusionsRemarks
     type: textarea
     label: Exclusions Remarks

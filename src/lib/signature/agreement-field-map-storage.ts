@@ -7,13 +7,18 @@ import {
   parseAgreementFieldMap,
   type AgreementFieldMap,
 } from "@/lib/signature/agreement-field-map";
-import { UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG } from "@/lib/signature/agreement-template-definitions";
+import {
+  UAR_DATA_FORM_RESIDENTIAL_SLUG,
+  UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG,
+} from "@/lib/signature/agreement-template-definitions";
 import { getPrivateBlobConfig } from "@/lib/storage/blob";
 
 import uarExclusiveRightToSellFieldMap from "@/lib/signature/field-maps/uar-exclusive-right-to-sell-2024-11-05.json";
+import uarDataFormResidentialFieldMap from "@/lib/signature/field-maps/uar-data-form-residential-2024-11-05.json";
 
 const BUNDLED_FIELD_MAPS: Partial<Record<string, AgreementFieldMap>> = {
   [UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG]: parseAgreementFieldMap(uarExclusiveRightToSellFieldMap),
+  [UAR_DATA_FORM_RESIDENTIAL_SLUG]: parseAgreementFieldMap(uarDataFormResidentialFieldMap),
 };
 
 function defaultBundledFieldMapsDir(): string {

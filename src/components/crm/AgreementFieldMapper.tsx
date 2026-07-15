@@ -54,7 +54,10 @@ import {
   type AgreementFieldMapEntry,
   type AgreementFieldType,
 } from "@/lib/signature/agreement-field-map";
-import { UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG } from "@/lib/signature/agreement-template-definitions";
+import {
+  UAR_DATA_FORM_RESIDENTIAL_SLUG,
+  UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG,
+} from "@/lib/signature/agreement-template-definitions";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -526,7 +529,8 @@ export default function AgreementFieldMapper({
             >
               Preview overlay
             </Button>
-            {slug === UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG ? (
+            {slug === UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG ||
+            slug === UAR_DATA_FORM_RESIDENTIAL_SLUG ? (
               <Button
                 size="small"
                 startIcon={<VisibilityOutlinedIcon />}

@@ -9,6 +9,30 @@ fields:
     jotform:
       id: TODO
       name: q_listingAddress
+  - id: houseNumberDirection
+    label: House Number Direction
+    type: radio
+    description: "Optional N / S / E / W for the house number (Utah grid). Leave blank if unknown — agent/VA can fill later."
+    options:
+      - N
+      - S
+      - E
+      - W
+    jotform:
+      id: TODO
+      name: q_houseNumberDirection
+  - id: streetDirection
+    label: Street Name Direction
+    type: radio
+    description: "Optional N / S / E / W for the street name or number. Leave blank if unknown — agent/VA can fill later."
+    options:
+      - N
+      - S
+      - E
+      - W
+    jotform:
+      id: TODO
+      name: q_streetDirection
   - id: listingCounty
     label: County
     type: text
@@ -31,13 +55,30 @@ fields:
     jotform:
       id: TODO
       name: q_listingQuadrant
-  - id: listingCoordinates
-    label: "Approximate North / South & East / West Coordinates"
-    type: text
-    placeholder: "ex: 2100 S 1300 E"
-    description: Optional if the street address above is complete.
+  - id: coordNorthSouth
+    label: North / South Coordinate
+    type: number
+    placeholder: "e.g., 2100"
+    description: "Utah grid north–south address number (optional). Agent/VA can fill if blank."
     jotform:
       id: TODO
+      name: q_coordNorthSouth
+  - id: coordEastWest
+    label: East / West Coordinate
+    type: number
+    placeholder: "e.g., 1300"
+    description: "Utah grid east–west address number (optional). Agent/VA can fill if blank."
+    jotform:
+      id: TODO
+      name: q_coordEastWest
+  - id: projectSubdivision
+    label: Project / Subdivision
+    type: text
+    placeholder: "e.g., Daybreak, Forest Dale"
+    description: Name of the project or subdivision, if applicable.
+    jotform:
+      id: TODO
+      name: q_projectSubdivision
   - id: nonStandardAddress
     label: "Is this a non-standard address?"
     type: radio
@@ -108,3 +149,11 @@ fields:
         type: text
     jotform:
       id: TODO
+  - id: otherSchool
+    label: Other School
+    type: text
+    placeholder: "If applicable"
+    description: Optional — any other school not listed above.
+    jotform:
+      id: TODO
+      name: q_otherSchool

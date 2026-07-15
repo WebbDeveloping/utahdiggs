@@ -12,8 +12,10 @@ import { getConsumerSession } from "@/lib/auth/consumer-session";
 import { geocodeListingAddress } from "@/lib/geocode";
 import { prisma } from "@/lib/db";
 import type { Prisma } from "@/generated/prisma/client";
-import { findSignedListingAgreementDocument } from "@/lib/documents/listing-document-kinds";
+import { findSignedListingAgreementDocument, DATA_FORM_RESIDENTIAL_NAME } from "@/lib/documents/listing-document-kinds";
 import { sendMlsIntakeSubmittedEmail } from "@/lib/email/templates/mls-intake-submitted";
+import { generateDataFormPdf } from "@/lib/signature/fill-uar-data-form-residential";
+import { uploadDataFormPdf } from "@/lib/signature/signed-document-storage";
 import { mapMlsIntakeToListingInput } from "./map-to-listing";
 import { validateFullMlsInput } from "./validation";
 import type { MlsSubmitState } from "./types";
@@ -207,6 +209,26 @@ export async function submitMlsIntakeAction(
       });
     }
 
+    let dataFormDocumentId: string | null = null;
+    try {
+      const { pdfBytes } = await generateDataFormPdf(validation.data);
+      const dataFormUrl = await uploadDataFormPdf(listingId, pdfBytes);
+      await prisma.document.deleteMany({
+        where: { listingId, name: DATA_FORM_RESIDENTIAL_NAME },
+      });
+      const dataFormDoc = await prisma.document.create({
+        data: {
+          listingId,
+          name: DATA_FORM_RESIDENTIAL_NAME,
+          url: dataFormUrl,
+        },
+        select: { id: true },
+      });
+      dataFormDocumentId = dataFormDoc.id;
+    } catch (dataFormError) {
+      console.error("Data Form PDF generation failed:", dataFormError);
+    }
+
     try {
       const documents = await prisma.document.findMany({
         where: { listingId },
@@ -221,6 +243,7 @@ export async function submitMlsIntakeAction(
         state: input.state,
         sellerName: input.sellerName,
         signedAgreementDocumentId: signedAgreement?.id,
+        dataFormDocumentId,
       });
     } catch (emailError) {
       console.error("MLS intake notification email failed:", emailError);

@@ -16,6 +16,14 @@ fields:
       name: q20_signature
     label: Primary Owner Signature
     required: true
+  - id: q20-initials
+    type: signature
+    jotform:
+      id: TODO
+      name: q20_initials
+    label: Primary Owner Initials
+    description: "Your initials will be placed on each page of the Data Form. Draw or type your initials once."
+    required: true
   - id: q23-signature23
     type: signature
     jotform:
@@ -23,3 +31,12 @@ fields:
       name: q23_signature23
     label: Secondary Owner Signature (If applicable)
     status: hidden-in-jotform
+  - id: q23-initials
+    type: signature
+    jotform:
+      id: TODO
+      name: q23_initials
+    label: Secondary Owner Initials (If applicable)
+    description: "Secondary owner initials for each page of the Data Form."
+    status: hidden-in-jotform
+    required: true

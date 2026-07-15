@@ -44,13 +44,23 @@ fields:
     jotform:
       id: TODO
       name: "q43_lotFacts[]"
-  - id: q47-animals
+  - id: petsAllowed
+    label: "Pets Allowed?"
     type: radio
-    label: Animals / Pets
     required: true
-    description: WFRMLS allows one selection.
     options:
-      - None
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_petsAllowed
+  - id: q47-animals
+    type: checkbox
+    label: Animals
+    required: true
+    status: hidden-in-jotform
+    description: Select all that apply.
+    options:
       - "Pets < 20 Lbs."
       - "Pets 20 - 75 Lbs."
       - "Pets > 75 Lbs."
@@ -60,4 +70,4 @@ fields:
         allowText: true
     jotform:
       id: TODO
-      name: q47_animals
+      name: "q47_animals[]"

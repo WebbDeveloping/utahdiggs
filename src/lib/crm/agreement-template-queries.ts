@@ -10,6 +10,7 @@ import {
 import {
   AGREEMENT_TEMPLATE_DEFINITIONS,
   buildAgreementTemplatePathname,
+  UAR_DATA_FORM_RESIDENTIAL_SLUG,
   UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG,
 } from "@/lib/signature/agreement-template-definitions";
 import manifest from "@/lib/signature/agreement-templates.manifest.json";
@@ -224,4 +225,11 @@ export function isUarExclusiveRightToSellSlug(
   slug: string,
 ): slug is typeof UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG {
   return slug === UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG;
+}
+
+/** Data Form fill from MLS intake uses this slug. */
+export function isUarDataFormResidentialSlug(
+  slug: string,
+): slug is typeof UAR_DATA_FORM_RESIDENTIAL_SLUG {
+  return slug === UAR_DATA_FORM_RESIDENTIAL_SLUG;
 }

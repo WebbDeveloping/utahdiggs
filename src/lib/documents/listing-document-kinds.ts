@@ -3,6 +3,8 @@ export const LISTING_AGREEMENT_SIGNED_NAME =
 
 export const MLS_INPUT_SIGNATURE_NAME = "MLS Input Signature" as const;
 
+export const DATA_FORM_RESIDENTIAL_NAME = "Data Form — Residential" as const;
+
 /** @deprecated Legacy name used before UAR Form 8 rollout */
 export const LEGACY_LISTING_AGREEMENT_SIGNED_NAME = "Listing Agreement (Signed)" as const;
 
@@ -13,8 +15,18 @@ export function isListingAgreementDocument(name: string): boolean {
   );
 }
 
+export function isDataFormResidentialDocument(name: string): boolean {
+  return name === DATA_FORM_RESIDENTIAL_NAME;
+}
+
 export function findSignedListingAgreementDocument<
   T extends { id: string; name: string },
 >(documents: T[]): T | undefined {
   return documents.find((document) => isListingAgreementDocument(document.name));
+}
+
+export function findDataFormResidentialDocument<
+  T extends { id: string; name: string },
+>(documents: T[]): T | undefined {
+  return documents.find((document) => isDataFormResidentialDocument(document.name));
 }

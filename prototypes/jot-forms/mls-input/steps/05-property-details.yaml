@@ -15,7 +15,26 @@ fields:
       - Recreational
       - Townhouse
       - Twin
-      - P.U.D.
+  - id: pud
+    label: "Is this a PUD (Planned Unit Development)?"
+    type: radio
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_pud
+  - id: pid
+    label: "Is this a PID (Public Infrastructure District)?"
+    type: radio
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_pid
   - id: constructionStatus
     label: Construction Status
     type: radio
@@ -50,15 +69,43 @@ fields:
     jotform:
       id: TODO
       name: q_effectiveYearBuilt
+  - id: noAssignedParcelNumber
+    label: "No assigned parcel number?"
+    type: radio
+    required: true
+    options:
+      - "No"
+      - "Yes"
+    description: Choose Yes only if the property has no tax parcel / APN assigned yet (e.g. new construction).
+    jotform:
+      id: TODO
+      name: q_noAssignedParcelNumber
   - id: taxParcelNumber
     label: Tax Parcel Number (APN)
     type: text
-    required: false
-    placeholder: "Leave blank if unknown — we will look it up"
-    description: Enter the parcel number from your property tax statement if known. Leave blank if the seller doesn't have it — we can look it up.
+    required: true
+    status: hidden-in-jotform
+    placeholder: "e.g., 12-34-56-789"
+    description: Enter the parcel number from your property tax statement if known.
     jotform:
       id: TODO
       name: q_taxParcelNumber
+  - id: estimatedTaxes
+    label: Estimated Taxes ($)
+    type: currency
+    placeholder: "e.g., $3,200"
+    description: Annual estimated property taxes, if known.
+    jotform:
+      id: TODO
+      name: q_estimatedTaxes
+  - id: waterShares
+    label: Water Shares
+    type: text
+    placeholder: "e.g., 2 shares — Canal Co."
+    description: Optional. Describe any irrigation or water company shares.
+    jotform:
+      id: TODO
+      name: q_waterShares
   - id: lotSize
     label: Lot Size (Acres)
     type: text
@@ -67,9 +114,186 @@ fields:
     description: "What size is the parcel?"
     jotform:
       id: TODO
+  - id: lotFrontage
+    label: Frontage
+    type: text
+    placeholder: "e.g., 80 ft"
+    description: Lot frontage measurement, if known.
+    jotform:
+      id: TODO
+      name: q_lotFrontage
+  - id: lotSide
+    label: Side
+    type: text
+    placeholder: "e.g., 120 ft"
+    description: Lot side measurement, if known.
+    jotform:
+      id: TODO
+      name: q_lotSide
+  - id: lotBack
+    label: Back
+    type: text
+    placeholder: "e.g., 80 ft"
+    description: Lot back measurement, if known.
+    jotform:
+      id: TODO
+      name: q_lotBack
+  - id: lotIrregularShape
+    label: "Irregular Shape?"
+    type: radio
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_lotIrregularShape
+  - id: frontageFacing
+    label: Frontage Facing
+    type: radio
+    options:
+      - N
+      - S
+      - E
+      - W
+      - NE
+      - SE
+      - NW
+      - SW
+    description: Direction the front of the lot faces.
+    jotform:
+      id: TODO
+      name: q_frontageFacing
   - id: livingSqft
     label: Approximate Total Living Square Footage
     type: number
     required: true
     jotform:
       id: TODO
+  - id: adu
+    label: "Does the property have an Accessory Dwelling Unit (ADU)?"
+    type: radio
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_adu
+  - id: aduType
+    label: ADU Type
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - Attached
+      - Detached
+    jotform:
+      id: TODO
+      name: q_aduType
+  - id: aduSqft
+    label: ADU Approximate Sq. Ft.
+    type: number
+    status: hidden-in-jotform
+    placeholder: "e.g., 650"
+    jotform:
+      id: TODO
+      name: q_aduSqft
+  - id: aduBeds
+    label: ADU Beds
+    type: number
+    status: hidden-in-jotform
+    placeholder: "e.g., 1"
+    jotform:
+      id: TODO
+      name: q_aduBeds
+  - id: aduBaths
+    label: ADU Baths
+    type: text
+    status: hidden-in-jotform
+    placeholder: "e.g., 1 or 1.5"
+    jotform:
+      id: TODO
+      name: q_aduBaths
+  - id: aduKitchen
+    label: "ADU Kitchen?"
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_aduKitchen
+  - id: aduSeparateEntrance
+    label: "ADU Separate Entrance?"
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_aduSeparateEntrance
+  - id: aduSeparateWaterMeter
+    label: "ADU Separate Water Meter?"
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_aduSeparateWaterMeter
+  - id: aduSeparateGasMeter
+    label: "ADU Separate Gas Meter?"
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_aduSeparateGasMeter
+  - id: aduSeparateElectricMeter
+    label: "ADU Separate Electric Meter?"
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_aduSeparateElectricMeter
+  - id: aduCurrentlyRented
+    label: "Is the ADU currently rented?"
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_aduCurrentlyRented
+  - id: aduMonthlyRent
+    label: Current Monthly Rent
+    type: currency
+    required: true
+    status: hidden-in-jotform
+    placeholder: "e.g., $1,200"
+    jotform:
+      id: TODO
+      name: q_aduMonthlyRent
+  - id: aduRemarks
+    label: ADU Remarks
+    type: textarea
+    status: hidden-in-jotform
+    placeholder: "Anything buyers should know about the ADU."
+    jotform:
+      id: TODO
+      name: q_aduRemarks

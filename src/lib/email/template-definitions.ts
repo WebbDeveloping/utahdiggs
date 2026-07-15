@@ -224,6 +224,7 @@ export const EMAIL_TEMPLATE_DEFINITIONS: EmailTemplateDefinition[] = [
       <p><strong>Action required:</strong> Enter this listing in WFRMLS Matrix.</p>
       <p><a href="{{detailUrl}}">CRM listing summary</a></p>
       <p><a href="{{intakeUrl}}">MLS Intake form (copy fields for Matrix)</a></p>
+      {{dataFormLine}}
       {{agreementLine}}
     `.trim(),
     variables: [
@@ -233,6 +234,7 @@ export const EMAIL_TEMPLATE_DEFINITIONS: EmailTemplateDefinition[] = [
       { name: "state", description: "Property state", example: "UT" },
       { name: "detailUrl", description: "CRM listing summary URL", example: "https://glidere.com/crm/listings/abc123" },
       { name: "intakeUrl", description: "CRM MLS intake tab URL", example: "https://glidere.com/crm/listings/abc123?tab=intake" },
+      { name: "dataFormLine", description: "Optional HTML link to filled Data Form PDF", example: "" },
       { name: "agreementLine", description: "Optional HTML link to signed agreement PDF", example: "" },
     ],
     sampleData: {
@@ -242,6 +244,7 @@ export const EMAIL_TEMPLATE_DEFINITIONS: EmailTemplateDefinition[] = [
       state: "UT",
       detailUrl: "https://glidere.com/crm/listings/sample-id",
       intakeUrl: "https://glidere.com/crm/listings/sample-id?tab=intake",
+      dataFormLine: '<p><a href="https://glidere.com/crm/listings/sample-id/documents/doc2">Data Form — Residential (PDF)</a></p>',
       agreementLine: '<p><a href="https://glidere.com/crm/listings/sample-id/documents/doc1">Signed right-to-sell agreement (PDF)</a></p>',
     },
   },

@@ -64,9 +64,13 @@ export type MlsInputFormValues = {
   "secondaryOwnerPhone"?: string;
   "secondaryOwnerEmail"?: string;
   "listingAddress"?: { street: string; city: string; state: string; zip: string };
+  "houseNumberDirection"?: string;
+  "streetDirection"?: string;
   "listingCounty"?: string;
   "listingQuadrant"?: string;
-  "listingCoordinates"?: string;
+  "coordNorthSouth"?: string;
+  "coordEastWest"?: string;
+  "projectSubdivision"?: string;
   "nonStandardAddress"?: string;
   "directionsRemarks"?: string;
   "ownerAddressSameAsListing"?: string;
@@ -74,11 +78,21 @@ export type MlsInputFormValues = {
   "listingPrice"?: string;
   "shortSale"?: string;
   "schools"?: Record<string, Record<string, string | string[]>>;
+  "otherSchool"?: string;
   "hoa"?: string;
   "hoaFeeMonth"?: string;
+  "hoaFeeFrequency"?: string;
+  "hoaChangeFeeType"?: string;
+  "hoaChangeFeeAmount"?: string;
   "hoaContact"?: string;
   "hoaContactPhone"?: string;
+  "hoaRentalCap"?: string;
+  "hoaAmenities"?: string[];
+  "hoaRemarks"?: string;
   "shortTermRentals"?: string;
+  "projectRestriction"?: string;
+  "seniorCommunity"?: string;
+  "maintenanceFree"?: string;
   "solar"?: string;
   "solarOwnership"?: string;
   "solarYearInstalled"?: string;
@@ -87,17 +101,41 @@ export type MlsInputFormValues = {
   "solarLoanOrLien"?: string;
   "solarDocsAvailable"?: string;
   "solarCompanyName"?: string;
+  "solarFinanceCompany"?: string;
   "solarMonthlyPayment"?: string;
   "solarAgreementTerm"?: string;
   "solarTransferable"?: string;
   "q11-propertytype"?: string;
+  "pud"?: string;
+  "pid"?: string;
   "constructionStatus"?: string;
   "q51-styleof51"?: string;
   "yearBuilt"?: string;
   "effectiveYearBuilt"?: string;
+  "noAssignedParcelNumber"?: string;
   "taxParcelNumber"?: string;
+  "estimatedTaxes"?: string;
+  "waterShares"?: string;
   "lotSize"?: string;
+  "lotFrontage"?: string;
+  "lotSide"?: string;
+  "lotBack"?: string;
+  "lotIrregularShape"?: string;
+  "frontageFacing"?: string;
   "livingSqft"?: string;
+  "adu"?: string;
+  "aduType"?: string;
+  "aduSqft"?: string;
+  "aduBeds"?: string;
+  "aduBaths"?: string;
+  "aduKitchen"?: string;
+  "aduSeparateEntrance"?: string;
+  "aduSeparateWaterMeter"?: string;
+  "aduSeparateGasMeter"?: string;
+  "aduSeparateElectricMeter"?: string;
+  "aduCurrentlyRented"?: string;
+  "aduMonthlyRent"?: string;
+  "aduRemarks"?: string;
   "levelCount"?: string;
   "q26-typea26"?: string[];
   "basementFinished"?: string;
@@ -114,13 +152,17 @@ export type MlsInputFormValues = {
   "q30-typea30"?: string[];
   "q208-garagecapacity"?: string;
   "q209-garagecapacity209"?: string;
+  "parkingCapacity"?: string;
+  "rvParkingHeight"?: string;
+  "rvParkingLength"?: string;
   "q28-typea28"?: string[];
   "q184-doesthe"?: string;
   "q63-pooltype"?: string[];
   "q37-typea37"?: string[];
   "q36-typea36"?: string[];
   "q43-lot-facts"?: string[];
-  "q47-animals"?: string;
+  "petsAllowed"?: string;
+  "q47-animals"?: string[];
   "q39-typea39"?: string[];
   "q35-connectedutilities"?: string[];
   "q44-water"?: string[];
@@ -151,12 +193,13 @@ export type MlsInputFormValues = {
   "q213-email213"?: string;
   "q214-phonenumber214"?: string;
   "q97-publicremarks"?: string;
-  "hoaRemarks"?: string;
   "exclusionsRemarks"?: string;
   "q98-commentsto"?: string;
   "field-44"?: Array<{ name: string; url: string }>;
   "q20-signature"?: string;
+  "q20-initials"?: string;
   "q23-signature23"?: string;
+  "q23-initials"?: string;
   inquiryId?: string;
   photos?: Array<{ name: string; url: string }>;
 };
@@ -251,6 +294,32 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "description": "Street address of the property being listed."
       },
       {
+        "id": "houseNumberDirection",
+        "label": "House Number Direction",
+        "type": "radio",
+        "description": "Optional N / S / E / W for the house number (Utah grid). Leave blank if unknown — agent/VA can fill later.",
+        "options": [
+          "N",
+          "S",
+          "E",
+          "W"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "streetDirection",
+        "label": "Street Name Direction",
+        "type": "radio",
+        "description": "Optional N / S / E / W for the street name or number. Leave blank if unknown — agent/VA can fill later.",
+        "options": [
+          "N",
+          "S",
+          "E",
+          "W"
+        ],
+        "otherText": false
+      },
+      {
         "id": "listingCounty",
         "label": "County",
         "type": "text",
@@ -272,11 +341,25 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "otherText": false
       },
       {
-        "id": "listingCoordinates",
-        "label": "Approximate North / South & East / West Coordinates",
+        "id": "coordNorthSouth",
+        "label": "North / South Coordinate",
+        "type": "number",
+        "placeholder": "e.g., 2100",
+        "description": "Utah grid north–south address number (optional). Agent/VA can fill if blank."
+      },
+      {
+        "id": "coordEastWest",
+        "label": "East / West Coordinate",
+        "type": "number",
+        "placeholder": "e.g., 1300",
+        "description": "Utah grid east–west address number (optional). Agent/VA can fill if blank."
+      },
+      {
+        "id": "projectSubdivision",
+        "label": "Project / Subdivision",
         "type": "text",
-        "placeholder": "ex: 2100 S 1300 E",
-        "description": "Optional if the street address above is complete."
+        "placeholder": "e.g., Daybreak, Forest Dale",
+        "description": "Name of the project or subdivision, if applicable."
       },
       {
         "id": "nonStandardAddress",
@@ -354,6 +437,13 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
             "type": "text"
           }
         ]
+      },
+      {
+        "id": "otherSchool",
+        "label": "Other School",
+        "type": "text",
+        "placeholder": "If applicable",
+        "description": "Optional — any other school not listed above."
       }
     ]
   },
@@ -376,11 +466,45 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       },
       {
         "id": "hoaFeeMonth",
-        "label": "HOA Fee / Month",
+        "label": "HOA Fee Amount",
         "type": "currency",
         "required": true,
         "status": "hidden-in-jotform",
         "placeholder": "e.g., $150"
+      },
+      {
+        "id": "hoaFeeFrequency",
+        "label": "HOA Fee Frequency",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Monthly",
+          "Quarterly",
+          "Annually"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "hoaChangeFeeType",
+        "label": "HOA Change / Transfer Fee",
+        "type": "radio",
+        "status": "hidden-in-jotform",
+        "description": "How any HOA change or transfer fee is calculated, if applicable.",
+        "options": [
+          "Percentage of sales price",
+          "Dollar amount",
+          "None / Unknown"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "hoaChangeFeeAmount",
+        "label": "HOA Change Fee Amount",
+        "type": "text",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 0.5% or $500",
+        "description": "Enter the percentage or dollar amount of the change/transfer fee."
       },
       {
         "id": "hoaContact",
@@ -395,8 +519,112 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "status": "hidden-in-jotform"
       },
       {
+        "id": "hoaRentalCap",
+        "label": "Does the HOA have a rental cap?",
+        "type": "radio",
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No",
+          "Unknown"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "hoaAmenities",
+        "label": "HOA Amenities",
+        "type": "checkbox",
+        "status": "hidden-in-jotform",
+        "description": "Community / HOA amenities (not individual property features).",
+        "options": [
+          "None",
+          "Alarm System Paid",
+          "Barbecue",
+          "Biking Trails",
+          "Bocce Ball Court",
+          "Cable TV Paid",
+          "Club House",
+          "Common RV Parking",
+          "Concierge",
+          "Controlled Access",
+          "Earthquake Insurance",
+          "Electricity Paid",
+          "Fire Pit",
+          "Gas Paid",
+          "Gated",
+          "Golf Course",
+          "Gym Room",
+          "Hiking Trails",
+          "Horse Trails",
+          "Insurance Paid",
+          "Internet Paid",
+          "Maintenance Paid",
+          "On Site Security",
+          "On site Property Mgmt",
+          "Pet Rules",
+          "Pets Not Permitted",
+          "Pets Permitted",
+          "Pickleball Court",
+          "Picnic Area",
+          "Playground",
+          "Pool",
+          "Racquet Ball Court",
+          "Sauna",
+          "Security",
+          "Sewer Paid",
+          "Snow Removal",
+          "Spa",
+          "Storage Area",
+          "Tennis Court",
+          "Trash Paid",
+          "Water Paid",
+          "Other"
+        ],
+        "otherText": true
+      },
+      {
+        "id": "hoaRemarks",
+        "type": "textarea",
+        "label": "HOA Remarks",
+        "status": "hidden-in-jotform",
+        "placeholder": "Any HOA restrictions, fees, or rules buyers should know."
+      },
+      {
         "id": "shortTermRentals",
         "label": "Are Short Term Rentals Allowed?",
+        "type": "radio",
+        "options": [
+          "Yes",
+          "No",
+          "Unknown"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "projectRestriction",
+        "label": "Project Restriction?",
+        "type": "radio",
+        "options": [
+          "Yes",
+          "No",
+          "Unknown"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "seniorCommunity",
+        "label": "Senior Community?",
+        "type": "radio",
+        "options": [
+          "Yes",
+          "No",
+          "Unknown"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "maintenanceFree",
+        "label": "Maintenance Free?",
         "type": "radio",
         "options": [
           "Yes",
@@ -425,16 +653,18 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "options": [
           "Owned",
           "Leased",
+          "Financed",
           "Power Purchase Agreement (PPA)"
         ],
         "otherText": false
       },
       {
         "id": "solarYearInstalled",
-        "label": "Year installed",
-        "type": "number",
+        "label": "Install date / year installed",
+        "type": "text",
+        "required": true,
         "status": "hidden-in-jotform",
-        "placeholder": "e.g., 2020"
+        "placeholder": "e.g., 2020 or 06/2020"
       },
       {
         "id": "solarSystemSizeKw",
@@ -480,7 +710,13 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       },
       {
         "id": "solarCompanyName",
-        "label": "Solar company name",
+        "label": "Leasing Company",
+        "type": "text",
+        "status": "hidden-in-jotform"
+      },
+      {
+        "id": "solarFinanceCompany",
+        "label": "Finance Company",
         "type": "text",
         "status": "hidden-in-jotform"
       },
@@ -529,8 +765,29 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
           "Mobile (w/o land)",
           "Recreational",
           "Townhouse",
-          "Twin",
-          "P.U.D."
+          "Twin"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "pud",
+        "label": "Is this a PUD (Planned Unit Development)?",
+        "type": "radio",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "pid",
+        "label": "Is this a PID (Public Infrastructure District)?",
+        "type": "radio",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
         ],
         "otherText": false
       },
@@ -553,16 +810,27 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "Style of property",
         "options": [
           "2-Story",
-          "Bungalow / Cottage",
-          "Rambler / Ranch Style",
-          "Mid-Century Modern",
+          "A-Frame",
+          "Basement",
+          "Bungalow/Cottage",
           "Cabin",
+          "Condo, High Rise",
+          "Condo, Main Level",
+          "Condo, Middle Level",
+          "Condo, Studio",
+          "Condo, Top Level",
           "Manufactured",
+          "Mid-Century Modern",
           "Mobile",
-          "Split Entry / Bi-Level",
-          "Tri / Multi-Level",
-          "Townhouse",
-          "Townhouse, Row End",
+          "Modern",
+          "Modular",
+          "Patio Home",
+          "Rambler/Ranch",
+          "Southwest",
+          "Split-Entry/Bi-Level",
+          "Townhouse, Row-End",
+          "Townhouse, Row-Mid",
+          "Tri/Multi-Level",
           "Tudor",
           "Victorian",
           "Other"
@@ -584,12 +852,39 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "description": "Leave blank if same as year built."
       },
       {
+        "id": "noAssignedParcelNumber",
+        "label": "No assigned parcel number?",
+        "type": "radio",
+        "required": true,
+        "options": [
+          "No",
+          "Yes"
+        ],
+        "description": "Choose Yes only if the property has no tax parcel / APN assigned yet (e.g. new construction).",
+        "otherText": false
+      },
+      {
         "id": "taxParcelNumber",
         "label": "Tax Parcel Number (APN)",
         "type": "text",
-        "required": false,
-        "placeholder": "Leave blank if unknown — we will look it up",
-        "description": "Enter the parcel number from your property tax statement if known. Leave blank if the seller doesn't have it — we can look it up."
+        "required": true,
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 12-34-56-789",
+        "description": "Enter the parcel number from your property tax statement if known."
+      },
+      {
+        "id": "estimatedTaxes",
+        "label": "Estimated Taxes ($)",
+        "type": "currency",
+        "placeholder": "e.g., $3,200",
+        "description": "Annual estimated property taxes, if known."
+      },
+      {
+        "id": "waterShares",
+        "label": "Water Shares",
+        "type": "text",
+        "placeholder": "e.g., 2 shares — Canal Co.",
+        "description": "Optional. Describe any irrigation or water company shares."
       },
       {
         "id": "lotSize",
@@ -600,10 +895,189 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "description": "What size is the parcel?"
       },
       {
+        "id": "lotFrontage",
+        "label": "Frontage",
+        "type": "text",
+        "placeholder": "e.g., 80 ft",
+        "description": "Lot frontage measurement, if known."
+      },
+      {
+        "id": "lotSide",
+        "label": "Side",
+        "type": "text",
+        "placeholder": "e.g., 120 ft",
+        "description": "Lot side measurement, if known."
+      },
+      {
+        "id": "lotBack",
+        "label": "Back",
+        "type": "text",
+        "placeholder": "e.g., 80 ft",
+        "description": "Lot back measurement, if known."
+      },
+      {
+        "id": "lotIrregularShape",
+        "label": "Irregular Shape?",
+        "type": "radio",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "frontageFacing",
+        "label": "Frontage Facing",
+        "type": "radio",
+        "options": [
+          "N",
+          "S",
+          "E",
+          "W",
+          "NE",
+          "SE",
+          "NW",
+          "SW"
+        ],
+        "description": "Direction the front of the lot faces.",
+        "otherText": false
+      },
+      {
         "id": "livingSqft",
         "label": "Approximate Total Living Square Footage",
         "type": "number",
         "required": true
+      },
+      {
+        "id": "adu",
+        "label": "Does the property have an Accessory Dwelling Unit (ADU)?",
+        "type": "radio",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "aduType",
+        "label": "ADU Type",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Attached",
+          "Detached"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "aduSqft",
+        "label": "ADU Approximate Sq. Ft.",
+        "type": "number",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 650"
+      },
+      {
+        "id": "aduBeds",
+        "label": "ADU Beds",
+        "type": "number",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 1"
+      },
+      {
+        "id": "aduBaths",
+        "label": "ADU Baths",
+        "type": "text",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 1 or 1.5"
+      },
+      {
+        "id": "aduKitchen",
+        "label": "ADU Kitchen?",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "aduSeparateEntrance",
+        "label": "ADU Separate Entrance?",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "aduSeparateWaterMeter",
+        "label": "ADU Separate Water Meter?",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "aduSeparateGasMeter",
+        "label": "ADU Separate Gas Meter?",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "aduSeparateElectricMeter",
+        "label": "ADU Separate Electric Meter?",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "aduCurrentlyRented",
+        "label": "Is the ADU currently rented?",
+        "type": "radio",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "aduMonthlyRent",
+        "label": "Current Monthly Rent",
+        "type": "currency",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., $1,200"
+      },
+      {
+        "id": "aduRemarks",
+        "label": "ADU Remarks",
+        "type": "textarea",
+        "status": "hidden-in-jotform",
+        "placeholder": "Anything buyers should know about the ADU."
       }
     ]
   },
@@ -1018,6 +1492,27 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "default": 1
       },
       {
+        "id": "parkingCapacity",
+        "type": "number",
+        "label": "Parking Capacity",
+        "placeholder": "e.g., 2",
+        "description": "Total parking spaces (driveway / open parking), if known."
+      },
+      {
+        "id": "rvParkingHeight",
+        "type": "text",
+        "label": "R.V. Parking Height",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 12 ft"
+      },
+      {
+        "id": "rvParkingLength",
+        "type": "text",
+        "label": "R.V. Parking Length",
+        "status": "hidden-in-jotform",
+        "placeholder": "e.g., 40 ft"
+      },
+      {
         "id": "q28-typea28",
         "type": "checkbox",
         "label": "Driveway",
@@ -1148,13 +1643,24 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "otherText": true
       },
       {
-        "id": "q47-animals",
+        "id": "petsAllowed",
+        "label": "Pets Allowed?",
         "type": "radio",
-        "label": "Animals / Pets",
         "required": true,
-        "description": "WFRMLS allows one selection.",
         "options": [
-          "None",
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
+      {
+        "id": "q47-animals",
+        "type": "checkbox",
+        "label": "Animals",
+        "required": true,
+        "status": "hidden-in-jotform",
+        "description": "Select all that apply.",
+        "options": [
           "Pets < 20 Lbs.",
           "Pets 20 - 75 Lbs.",
           "Pets > 75 Lbs.",
@@ -1522,13 +2028,6 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "placeholder": "Please give a description of the home highlighting it's best features.  We may modify it with your approval prior to posting on the MLS."
       },
       {
-        "id": "hoaRemarks",
-        "type": "textarea",
-        "label": "HOA Remarks",
-        "status": "hidden-in-jotform",
-        "placeholder": "Any HOA restrictions, fees, or rules buyers should know."
-      },
-      {
         "id": "exclusionsRemarks",
         "type": "textarea",
         "label": "Exclusions Remarks",
@@ -1579,10 +2078,25 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "required": true
       },
       {
+        "id": "q20-initials",
+        "type": "signature",
+        "label": "Primary Owner Initials",
+        "description": "Your initials will be placed on each page of the Data Form. Draw or type your initials once.",
+        "required": true
+      },
+      {
         "id": "q23-signature23",
         "type": "signature",
         "label": "Secondary Owner Signature (If applicable)",
         "status": "hidden-in-jotform"
+      },
+      {
+        "id": "q23-initials",
+        "type": "signature",
+        "label": "Secondary Owner Initials (If applicable)",
+        "description": "Secondary owner initials for each page of the Data Form.",
+        "status": "hidden-in-jotform",
+        "required": true
       }
     ]
   }

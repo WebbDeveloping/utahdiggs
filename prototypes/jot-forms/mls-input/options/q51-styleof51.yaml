@@ -1,18 +1,29 @@
 label: Style of property
 options:
   - 2-Story
-  - Bungalow / Cottage
-  - Rambler / Ranch Style
-  - Mid-Century Modern
+  - A-Frame
+  - Basement
+  - Bungalow/Cottage
   - Cabin
+  - "Condo, High Rise"
+  - "Condo, Main Level"
+  - "Condo, Middle Level"
+  - "Condo, Studio"
+  - "Condo, Top Level"
   - Manufactured
+  - Mid-Century Modern
   - Mobile
-  - Split Entry / Bi-Level
-  - Tri / Multi-Level
-  - Townhouse
-  - "Townhouse, Row End"
+  - Modern
+  - Modular
+  - Patio Home
+  - Rambler/Ranch
+  - Southwest
+  - Split-Entry/Bi-Level
+  - "Townhouse, Row-End"
+  - "Townhouse, Row-Mid"
+  - Tri/Multi-Level
   - Tudor
   - Victorian
   - value: other
-    label: Other
+    label: See Remarks
     allowText: true

@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
+  DATA_FORM_RESIDENTIAL_NAME,
+  findDataFormResidentialDocument,
   findSignedListingAgreementDocument,
+  isDataFormResidentialDocument,
   isListingAgreementDocument,
   LISTING_AGREEMENT_SIGNED_NAME,
   LEGACY_LISTING_AGREEMENT_SIGNED_NAME,
@@ -24,6 +27,18 @@ describe("listing document kinds", () => {
     const document = findSignedListingAgreementDocument([
       { id: "1", name: "MLS Input Signature" },
       { id: "2", name: LISTING_AGREEMENT_SIGNED_NAME },
+    ]);
+
+    assert.equal(document?.id, "2");
+  });
+
+  it("recognizes and finds the residential Data Form document", () => {
+    assert.equal(isDataFormResidentialDocument(DATA_FORM_RESIDENTIAL_NAME), true);
+    assert.equal(isDataFormResidentialDocument(LISTING_AGREEMENT_SIGNED_NAME), false);
+
+    const document = findDataFormResidentialDocument([
+      { id: "1", name: LISTING_AGREEMENT_SIGNED_NAME },
+      { id: "2", name: DATA_FORM_RESIDENTIAL_NAME },
     ]);
 
     assert.equal(document?.id, "2");

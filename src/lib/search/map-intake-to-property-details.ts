@@ -58,7 +58,10 @@ function formatHoa(data: Record<string, unknown>): string | null {
   const hoa = formatScalarValue(data.hoa);
   if (!hoa) return null;
   if (hoa === "Yes" && data.hoaFeeMonth) {
-    return `Yes — $${formatScalarValue(data.hoaFeeMonth)}/mo`;
+    const freq = formatScalarValue(data.hoaFeeFrequency) || "Monthly";
+    const freqShort =
+      freq === "Quarterly" ? "/qtr" : freq === "Annually" ? "/yr" : "/mo";
+    return `Yes — $${formatScalarValue(data.hoaFeeMonth)}${freqShort}`;
   }
   return hoa;
 }
@@ -190,6 +193,9 @@ const SECTION_CONFIG: SectionConfig[] = [
       {
         label: "Animals",
         getValue: (data) => {
+          if (data.petsAllowed === "No") return null;
+          const checkbox = formatCheckboxValue(data["q47-animals"]);
+          if (checkbox && checkbox !== "None") return checkbox;
           const value = formatScalarValue(data["q47-animals"]);
           return value === "None" ? null : value;
         },

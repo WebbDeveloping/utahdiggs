@@ -84,3 +84,22 @@ export async function uploadSignedAgreementPdf(
 
   return result.url;
 }
+
+export async function uploadDataFormPdf(
+  listingId: string,
+  pdfBytes: Uint8Array,
+): Promise<string> {
+  const access = getServerDocumentBlobAccess();
+  const blobConfig = getPrivateBlobConfig() ?? getPublicBlobConfig();
+  const pathname = buildDocumentPathname(listingId, "uar-data-form-residential.pdf");
+
+  const result = await put(pathname, Buffer.from(pdfBytes), {
+    access,
+    contentType: "application/pdf",
+    addRandomSuffix: false,
+    token: blobConfig.token,
+    storeId: blobConfig.storeId,
+  });
+
+  return result.url;
+}

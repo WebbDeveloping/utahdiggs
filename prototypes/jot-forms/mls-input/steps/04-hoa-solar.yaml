@@ -11,7 +11,7 @@ fields:
     jotform:
       id: TODO
   - id: hoaFeeMonth
-    label: HOA Fee / Month
+    label: HOA Fee Amount
     type: currency
     required: true
     status: hidden-in-jotform
@@ -19,6 +19,39 @@ fields:
     jotform:
       id: TODO
       name: q_hoaFeeMonth
+  - id: hoaFeeFrequency
+    label: HOA Fee Frequency
+    type: radio
+    required: true
+    status: hidden-in-jotform
+    options:
+      - Monthly
+      - Quarterly
+      - Annually
+    jotform:
+      id: TODO
+      name: q_hoaFeeFrequency
+  - id: hoaChangeFeeType
+    label: HOA Change / Transfer Fee
+    type: radio
+    status: hidden-in-jotform
+    description: How any HOA change or transfer fee is calculated, if applicable.
+    options:
+      - Percentage of sales price
+      - Dollar amount
+      - None / Unknown
+    jotform:
+      id: TODO
+      name: q_hoaChangeFeeType
+  - id: hoaChangeFeeAmount
+    label: HOA Change Fee Amount
+    type: text
+    status: hidden-in-jotform
+    placeholder: "e.g., 0.5% or $500"
+    description: Enter the percentage or dollar amount of the change/transfer fee.
+    jotform:
+      id: TODO
+      name: q_hoaChangeFeeAmount
   - id: hoaContact
     label: HOA Contact Name
     type: text
@@ -33,6 +66,34 @@ fields:
     jotform:
       id: TODO
       name: q_hoaContactPhone
+  - id: hoaRentalCap
+    label: "Does the HOA have a rental cap?"
+    type: radio
+    status: hidden-in-jotform
+    options:
+      - "Yes"
+      - "No"
+      - Unknown
+    jotform:
+      id: TODO
+      name: q_hoaRentalCap
+  - id: hoaAmenities
+    label: HOA Amenities
+    type: checkbox
+    status: hidden-in-jotform
+    description: Community / HOA amenities (not individual property features).
+    $ref: options/hoa-amenities.yaml
+    jotform:
+      id: TODO
+      name: q_hoaAmenities
+  - id: hoaRemarks
+    type: textarea
+    label: HOA Remarks
+    status: hidden-in-jotform
+    placeholder: "Any HOA restrictions, fees, or rules buyers should know."
+    jotform:
+      id: TODO
+      name: q_hoaRemarks
   - id: shortTermRentals
     label: "Are Short Term Rentals Allowed?"
     type: radio
@@ -42,6 +103,36 @@ fields:
       - Unknown
     jotform:
       id: TODO
+  - id: projectRestriction
+    label: "Project Restriction?"
+    type: radio
+    options:
+      - "Yes"
+      - "No"
+      - Unknown
+    jotform:
+      id: TODO
+      name: q_projectRestriction
+  - id: seniorCommunity
+    label: "Senior Community?"
+    type: radio
+    options:
+      - "Yes"
+      - "No"
+      - Unknown
+    jotform:
+      id: TODO
+      name: q_seniorCommunity
+  - id: maintenanceFree
+    label: "Maintenance Free?"
+    type: radio
+    options:
+      - "Yes"
+      - "No"
+      - Unknown
+    jotform:
+      id: TODO
+      name: q_maintenanceFree
   - id: solar
     label: "Does the property have solar?"
     type: radio
@@ -59,15 +150,17 @@ fields:
     options:
       - Owned
       - Leased
+      - Financed
       - Power Purchase Agreement (PPA)
     jotform:
       id: TODO
       name: q_solarOwnership
   - id: solarYearInstalled
-    label: Year installed
-    type: number
+    label: Install date / year installed
+    type: text
+    required: true
     status: hidden-in-jotform
-    placeholder: "e.g., 2020"
+    placeholder: "e.g., 2020 or 06/2020"
     jotform:
       id: TODO
       name: q_solarYearInstalled
@@ -112,12 +205,19 @@ fields:
       id: TODO
       name: q_solarDocsAvailable
   - id: solarCompanyName
-    label: Solar company name
+    label: Leasing Company
     type: text
     status: hidden-in-jotform
     jotform:
       id: TODO
       name: q_solarCompanyName
+  - id: solarFinanceCompany
+    label: Finance Company
+    type: text
+    status: hidden-in-jotform
+    jotform:
+      id: TODO
+      name: q_solarFinanceCompany
   - id: solarMonthlyPayment
     label: Approx. monthly payment
     type: currency

@@ -14,9 +14,13 @@ export async function sendMlsIntakeSubmittedEmail(input: {
   state: string;
   sellerName: string;
   signedAgreementDocumentId?: string | null;
+  dataFormDocumentId?: string | null;
 }): Promise<void> {
   const agreementLine = input.signedAgreementDocumentId
     ? `<p><a href="${crmDocumentUrl(input.listingId, input.signedAgreementDocumentId)}">Signed right-to-sell agreement (PDF)</a></p>`
+    : "";
+  const dataFormLine = input.dataFormDocumentId
+    ? `<p><a href="${crmDocumentUrl(input.listingId, input.dataFormDocumentId)}">Data Form — Residential (PDF)</a></p>`
     : "";
 
   const rendered = await renderEmailTemplate("mls-intake-submitted", {
@@ -27,6 +31,7 @@ export async function sendMlsIntakeSubmittedEmail(input: {
     detailUrl: crmListingUrl(input.listingId),
     intakeUrl: crmListingTabUrl(input.listingId, "intake"),
     agreementLine,
+    dataFormLine,
   });
 
   await sendEmail({

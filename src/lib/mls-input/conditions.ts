@@ -36,13 +36,14 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
   },
   {
     "id": "secondary-owner-signature",
-    "description": "Show secondary owner signature when two owners are listed.",
+    "description": "Show secondary owner signature and initials when two owners are listed.",
     "when": {
       "field": "ownerCount",
       "equals": "Two"
     },
     "show": [
-      "q23-signature23"
+      "q23-signature23",
+      "q23-initials"
     ]
   },
   {
@@ -69,16 +70,58 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
   },
   {
     "id": "hoa-fee-and-contact",
-    "description": "Show HOA fee and contact when property is in an HOA.",
+    "description": "Show HOA fee, contact, amenities, and related fields when property is in an HOA.",
     "when": {
       "field": "hoa",
       "equals": "Yes"
     },
     "show": [
       "hoaFeeMonth",
+      "hoaFeeFrequency",
+      "hoaChangeFeeType",
       "hoaContact",
       "hoaContactPhone",
+      "hoaRentalCap",
+      "hoaAmenities",
       "hoaRemarks"
+    ]
+  },
+  {
+    "id": "hoa-change-fee-amount",
+    "description": "Show change fee amount when a percentage or dollar change fee applies.",
+    "when": {
+      "all": [
+        {
+          "field": "hoa",
+          "equals": "Yes"
+        },
+        {
+          "field": "hoaChangeFeeType",
+          "equals": "Percentage of sales price"
+        }
+      ]
+    },
+    "show": [
+      "hoaChangeFeeAmount"
+    ]
+  },
+  {
+    "id": "hoa-change-fee-amount-dollar",
+    "description": "Show change fee amount when a dollar change fee applies.",
+    "when": {
+      "all": [
+        {
+          "field": "hoa",
+          "equals": "Yes"
+        },
+        {
+          "field": "hoaChangeFeeType",
+          "equals": "Dollar amount"
+        }
+      ]
+    },
+    "show": [
+      "hoaChangeFeeAmount"
     ]
   },
   {
@@ -142,6 +185,90 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
     ]
   },
   {
+    "id": "solar-financed-details",
+    "description": "Show finance company and payment terms when solar is financed.",
+    "when": {
+      "all": [
+        {
+          "field": "solar",
+          "equals": "Yes"
+        },
+        {
+          "field": "solarOwnership",
+          "equals": "Financed"
+        }
+      ]
+    },
+    "show": [
+      "solarFinanceCompany",
+      "solarMonthlyPayment",
+      "solarAgreementTerm",
+      "solarTransferable"
+    ]
+  },
+  {
+    "id": "pets-animals",
+    "description": "Show animal type options when pets are allowed.",
+    "when": {
+      "field": "petsAllowed",
+      "equals": "Yes"
+    },
+    "show": [
+      "q47-animals"
+    ]
+  },
+  {
+    "id": "tax-parcel-number",
+    "description": "Show tax parcel number when a parcel number is assigned.",
+    "when": {
+      "field": "noAssignedParcelNumber",
+      "equals": "No"
+    },
+    "show": [
+      "taxParcelNumber"
+    ]
+  },
+  {
+    "id": "adu-follow-ups",
+    "description": "Show ADU details when the property has an accessory dwelling unit.",
+    "when": {
+      "field": "adu",
+      "equals": "Yes"
+    },
+    "show": [
+      "aduType",
+      "aduSqft",
+      "aduBeds",
+      "aduBaths",
+      "aduKitchen",
+      "aduSeparateEntrance",
+      "aduSeparateWaterMeter",
+      "aduSeparateGasMeter",
+      "aduSeparateElectricMeter",
+      "aduCurrentlyRented",
+      "aduRemarks"
+    ]
+  },
+  {
+    "id": "adu-monthly-rent",
+    "description": "Show current monthly rent when the ADU is currently rented.",
+    "when": {
+      "all": [
+        {
+          "field": "adu",
+          "equals": "Yes"
+        },
+        {
+          "field": "aduCurrentlyRented",
+          "equals": "Yes"
+        }
+      ]
+    },
+    "show": [
+      "aduMonthlyRent"
+    ]
+  },
+  {
     "id": "level-matrix-rows",
     "description": "Level breakdown matrix row count follows the selected number of levels.",
     "dynamic": {
@@ -176,6 +303,18 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
     },
     "show": [
       "q209-garagecapacity209"
+    ]
+  },
+  {
+    "id": "rv-parking-dimensions",
+    "description": "Show RV parking height and length when Parking includes RV Parking.",
+    "when": {
+      "field": "q30-typea30",
+      "includes": "RV Parking"
+    },
+    "show": [
+      "rvParkingHeight",
+      "rvParkingLength"
     ]
   },
   {
@@ -281,7 +420,7 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
   }
 ];
 
-const HIDDEN_BY_DEFAULT = new Set<string>(["secondaryOwnerName","secondaryOwnerPhone","secondaryOwnerEmail","listingQuadrant","directionsRemarks","ownerAddress","hoaFeeMonth","hoaContact","hoaContactPhone","solarOwnership","solarYearInstalled","solarSystemSizeKw","solarBatteryStorage","solarLoanOrLien","solarDocsAvailable","solarCompanyName","solarMonthlyPayment","solarAgreementTerm","solarTransferable","q208-garagecapacity","q209-garagecapacity209","q63-pooltype","q192-howmany","q193-howmany193","q194-ownershowing","q195-phonenumber","q196-email","q197-ownershowing197","q198-ownershowing198","q199-ownershowing199","q200-tenantshowing","q201-ownershowing201","q202-tenantshowing202","q203-tenantshowing203","q204-tenantshowing204","q205-tenantshowing205","q211-name211","q212-typea212","q213-email213","q214-phonenumber214","hoaRemarks","q23-signature23"]);
+const HIDDEN_BY_DEFAULT = new Set<string>(["secondaryOwnerName","secondaryOwnerPhone","secondaryOwnerEmail","listingQuadrant","directionsRemarks","ownerAddress","hoaFeeMonth","hoaFeeFrequency","hoaChangeFeeType","hoaChangeFeeAmount","hoaContact","hoaContactPhone","hoaRentalCap","hoaAmenities","hoaRemarks","solarOwnership","solarYearInstalled","solarSystemSizeKw","solarBatteryStorage","solarLoanOrLien","solarDocsAvailable","solarCompanyName","solarFinanceCompany","solarMonthlyPayment","solarAgreementTerm","solarTransferable","taxParcelNumber","aduType","aduSqft","aduBeds","aduBaths","aduKitchen","aduSeparateEntrance","aduSeparateWaterMeter","aduSeparateGasMeter","aduSeparateElectricMeter","aduCurrentlyRented","aduMonthlyRent","aduRemarks","q208-garagecapacity","q209-garagecapacity209","rvParkingHeight","rvParkingLength","q63-pooltype","q47-animals","q192-howmany","q193-howmany193","q194-ownershowing","q195-phonenumber","q196-email","q197-ownershowing197","q198-ownershowing198","q199-ownershowing199","q200-tenantshowing","q201-ownershowing201","q202-tenantshowing202","q203-tenantshowing203","q204-tenantshowing204","q205-tenantshowing205","q211-name211","q212-typea212","q213-email213","q214-phonenumber214","q23-signature23","q23-initials"]);
 
 function getFieldValue(values: Record<string, unknown>, fieldId: string): unknown {
   return values[fieldId];

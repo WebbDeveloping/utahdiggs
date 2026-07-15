@@ -46,6 +46,30 @@ fields:
     min: 1
     max: 10
     default: 1
+  - id: parkingCapacity
+    type: number
+    label: Parking Capacity
+    placeholder: "e.g., 2"
+    description: Total parking spaces (driveway / open parking), if known.
+    jotform:
+      id: TODO
+      name: q_parkingCapacity
+  - id: rvParkingHeight
+    type: text
+    label: R.V. Parking Height
+    status: hidden-in-jotform
+    placeholder: "e.g., 12 ft"
+    jotform:
+      id: TODO
+      name: q_rvParkingHeight
+  - id: rvParkingLength
+    type: text
+    label: R.V. Parking Length
+    status: hidden-in-jotform
+    placeholder: "e.g., 40 ft"
+    jotform:
+      id: TODO
+      name: q_rvParkingLength
   - id: q28-typea28
     type: checkbox
     jotform:

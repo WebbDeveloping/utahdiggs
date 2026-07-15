@@ -119,6 +119,7 @@ export function mapMlsIntakeToListingInput(
     lotSizeAcres: parseNumber(values.lotSize as string | undefined),
     hasPool: values["q184-doesthe"] === "Yes",
     description: buildDescription(values),
+    subdivision: String(values.projectSubdivision ?? "").trim() || undefined,
     sellerName: primaryName || "Seller",
     sellerEmail: (values.primaryOwnerEmail as string).trim(),
     sellerPhone: (values.primaryOwnerPhone as string).trim(),

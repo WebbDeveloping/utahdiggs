@@ -195,12 +195,22 @@ export default function FieldRenderer({
   }
 
   if (field.type === "signature") {
-    const ownerName = allValues.primaryOwnerName as
-      | { first?: string; last?: string }
-      | undefined;
-    const signerName = ownerName
-      ? [ownerName.first, ownerName.last].filter(Boolean).join(" ").trim() || undefined
-      : undefined;
+    const isSecondary =
+      field.id === "q23-signature23" || field.id === "q23-initials";
+    const isInitials = field.id === "q20-initials" || field.id === "q23-initials";
+    const ownerName = (
+      isSecondary ? allValues.secondaryOwnerName : allValues.primaryOwnerName
+    ) as { first?: string; last?: string } | undefined;
+    const fullName = ownerName
+      ? [ownerName.first, ownerName.last].filter(Boolean).join(" ").trim()
+      : "";
+    const initialsName = ownerName
+      ? [ownerName.first?.charAt(0), ownerName.last?.charAt(0)]
+          .filter(Boolean)
+          .join("")
+          .toUpperCase()
+      : "";
+    const signerName = (isInitials ? initialsName : fullName) || undefined;
 
     return (
       <SignatureField

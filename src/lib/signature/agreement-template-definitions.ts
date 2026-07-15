@@ -3,11 +3,16 @@ export const AGREEMENT_TEMPLATE_PATH_PREFIX = "templates/agreements/" as const;
 /** Slug used by production UAR Form 8 signing pipeline. */
 export const UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG = "uar-exclusive-right-to-sell" as const;
 
+/** Slug for URE/WFRMLS residential Data Form (filled from MLS intake). */
+export const UAR_DATA_FORM_RESIDENTIAL_SLUG = "uar-data-form-residential" as const;
+
 /** Narrow union for templates with hardcoded production signing support. */
 export type ProductionAgreementTemplateSlug = typeof UAR_EXCLUSIVE_RIGHT_TO_SELL_SLUG;
 
 /** @deprecated Use string slugs from AgreementTemplate DB records. Kept for legacy CLI upload. */
-export type AgreementTemplateSlug = ProductionAgreementTemplateSlug | "uar-data-form-residential";
+export type AgreementTemplateSlug =
+  | ProductionAgreementTemplateSlug
+  | typeof UAR_DATA_FORM_RESIDENTIAL_SLUG;
 
 /** @deprecated Legacy static definition used by CLI upload script only. */
 export type AgreementTemplateDefinition = {

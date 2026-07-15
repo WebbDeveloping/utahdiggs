@@ -1,0 +1,46 @@
+label: HOA Amenities
+options:
+  - None
+  - Alarm System Paid
+  - Barbecue
+  - Biking Trails
+  - Bocce Ball Court
+  - Cable TV Paid
+  - Club House
+  - Common RV Parking
+  - Concierge
+  - Controlled Access
+  - Earthquake Insurance
+  - Electricity Paid
+  - Fire Pit
+  - Gas Paid
+  - Gated
+  - Golf Course
+  - Gym Room
+  - Hiking Trails
+  - Horse Trails
+  - Insurance Paid
+  - Internet Paid
+  - Maintenance Paid
+  - On Site Security
+  - On site Property Mgmt
+  - Pet Rules
+  - Pets Not Permitted
+  - Pets Permitted
+  - Pickleball Court
+  - Picnic Area
+  - Playground
+  - Pool
+  - Racquet Ball Court
+  - Sauna
+  - Security
+  - Sewer Paid
+  - Snow Removal
+  - Spa
+  - Storage Area
+  - Tennis Court
+  - Trash Paid
+  - Water Paid
+  - value: other
+    label: Other (See Remarks)
+    allowText: true
