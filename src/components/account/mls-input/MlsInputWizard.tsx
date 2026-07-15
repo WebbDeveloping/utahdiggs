@@ -12,6 +12,10 @@ import NextLink from "next/link";
 import { saveMlsDraftAction } from "@/lib/mls-input/save-draft-action";
 import { submitMlsIntakeAction } from "@/lib/mls-input/submit-action";
 import {
+  buildDataFormPreviewPath,
+  mlsDataFormPreviewStorageKey,
+} from "@/lib/mls-input/data-form-preview-storage";
+import {
   MLS_INPUT_STEP_COUNT,
   MLS_INPUT_STEPS,
 } from "@/lib/mls-input/schema";
@@ -79,6 +83,7 @@ export default function MlsInputWizard({
   const [error, setError] = useState<string | null>(null);
   const [draftPending, startDraftTransition] = useTransition();
   const [submitPending, startSubmitTransition] = useTransition();
+  const [previewPending, setPreviewPending] = useState(false);
   const skipStepScrollRef = useRef(true);
 
   const step = MLS_INPUT_STEPS[currentStep - 1];
@@ -168,6 +173,74 @@ export default function MlsInputWizard({
     runSave(currentStep, () => {
       router.push("/account?draftSaved=1");
     });
+  };
+
+  const ensureDraftSaved = useCallback(async (): Promise<string | null> => {
+    let activeListingId = listingId;
+
+    if (!activeListingId) {
+      const formData = new FormData();
+      formData.set("currentStep", String(currentStep));
+      formData.set("nextStep", String(currentStep));
+      formData.set("values", JSON.stringify(values));
+      const saveResult = await saveMlsDraftAction({}, formData);
+      if (saveResult.error) {
+        setError(saveResult.error);
+        return null;
+      }
+      if (saveResult.fieldErrors) {
+        setFieldErrors(saveResult.fieldErrors);
+        return null;
+      }
+      if (!saveResult.listingId) {
+        setError("Failed to save draft.");
+        return null;
+      }
+      activeListingId = saveResult.listingId;
+      setListingId(activeListingId);
+      return activeListingId;
+    }
+
+    const formData = new FormData();
+    formData.set("listingId", activeListingId);
+    formData.set("currentStep", String(currentStep));
+    formData.set("nextStep", String(currentStep));
+    formData.set("values", JSON.stringify(values));
+    const saveResult = await saveMlsDraftAction({}, formData);
+    if (saveResult.error) {
+      setError(saveResult.error);
+      return null;
+    }
+    if (saveResult.fieldErrors) {
+      setFieldErrors(saveResult.fieldErrors);
+      return null;
+    }
+    if (saveResult.listingId) {
+      activeListingId = saveResult.listingId;
+      setListingId(activeListingId);
+    }
+    return activeListingId;
+  }, [currentStep, listingId, values]);
+
+  const handlePreviewDataForm = () => {
+    setError(null);
+    setFieldErrors({});
+    setPreviewPending(true);
+
+    void (async () => {
+      try {
+        const activeListingId = await ensureDraftSaved();
+        if (!activeListingId) return;
+
+        sessionStorage.setItem(
+          mlsDataFormPreviewStorageKey(activeListingId),
+          JSON.stringify(values),
+        );
+        router.push(buildDataFormPreviewPath(activeListingId));
+      } finally {
+        setPreviewPending(false);
+      }
+    })();
   };
 
   const handleSubmit = async () => {
@@ -278,7 +351,7 @@ export default function MlsInputWizard({
             <Button
               variant="outlined"
               onClick={handleSaveLater}
-              disabled={draftPending || submitPending}
+              disabled={draftPending || submitPending || previewPending}
             >
               {draftPending ? "Saving…" : "Save & continue later"}
             </Button>
@@ -295,23 +368,32 @@ export default function MlsInputWizard({
             <Button
               variant="outlined"
               onClick={handleBack}
-              disabled={currentStep === 1 || draftPending || submitPending}
+              disabled={currentStep === 1 || draftPending || submitPending || previewPending}
             >
               Back
             </Button>
             {isLastStep ? (
-              <Button
-                variant="contained"
-                onClick={() => void handleSubmit()}
-                disabled={draftPending || submitPending}
-              >
-                {submitPending ? "Submitting…" : "Submit listing"}
-              </Button>
+              <>
+                <Button
+                  variant="outlined"
+                  onClick={handlePreviewDataForm}
+                  disabled={draftPending || submitPending || previewPending}
+                >
+                  {previewPending ? "Preparing…" : "View official form"}
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => void handleSubmit()}
+                  disabled={draftPending || submitPending || previewPending}
+                >
+                  {submitPending ? "Submitting…" : "Submit listing"}
+                </Button>
+              </>
             ) : (
               <Button
                 variant="contained"
                 onClick={handleNext}
-                disabled={draftPending || submitPending}
+                disabled={draftPending || submitPending || previewPending}
               >
                 {draftPending ? "Saving…" : "Next"}
               </Button>

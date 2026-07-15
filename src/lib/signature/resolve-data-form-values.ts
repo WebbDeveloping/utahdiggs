@@ -906,9 +906,9 @@ export function resolveDataFormValues(
     "lotFacts",
     [
       ...((values["q43-lot-facts"] as string[] | undefined) ?? []),
-      ...((values["q36-typea36"] as string[] | undefined)
+      ...(((values["q36-typea36"] as string[] | undefined)
         ?.map((v) => LANDSCAPING_TO_LOT_FACT_ALIASES[v.trim()])
-        .filter(Boolean) as string[]),
+        .filter(Boolean) as string[] | undefined) ?? []),
     ],
     LOT_FACT_ALIASES,
   );
@@ -952,9 +952,9 @@ export function resolveDataFormValues(
     "water",
     [
       ...((values["q44-water"] as string[] | undefined) ?? []),
-      ...((values["q35-connectedutilities"] as string[] | undefined)
+      ...(((values["q35-connectedutilities"] as string[] | undefined)
         ?.map((v) => UTILITIES_TO_WATER_ALIASES[v.trim()])
-        .filter(Boolean) as string[]),
+        .filter(Boolean) as string[] | undefined) ?? []),
     ],
     WATER_ALIASES,
   );
