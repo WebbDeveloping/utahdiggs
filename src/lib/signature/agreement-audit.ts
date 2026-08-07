@@ -49,7 +49,7 @@ export function hashListingAgreementContent(plan: ServicePlan): string {
     propertyZip: "",
     buyerAgentPercent: "2.5",
     buyerAgentDollar: "",
-    sellerDeniesBuyerCompAgreement: true,
+    sellerDeniesBuyerCompAgreement: false,
     disputeMediation: "MAY AT THE OPTION OF THE PARTIES",
     sqFtSources: [],
     sqFtOther: "",

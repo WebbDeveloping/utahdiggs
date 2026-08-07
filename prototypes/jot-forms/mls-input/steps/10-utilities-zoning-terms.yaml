@@ -7,7 +7,7 @@ fields:
       id: 39
       name: "q39_typeA39[]"
     label: Storage
-    required: true
+    required: false
     $ref: options/q39-typea39.yaml
   - id: q35-connectedutilities
     type: checkbox
@@ -47,7 +47,7 @@ fields:
       id: 38
       name: "q38_zoning[]"
     label: Zoning
-    required: true
+    required: false
     $ref: options/q38-zoning.yaml
   - id: q40-typea40
     type: checkbox

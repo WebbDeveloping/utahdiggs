@@ -8,10 +8,13 @@ fields:
     content:
       |
         Title Company
-        Would you like us to open your title work with Prime Title Co?
-        (This will expedite the process and they will be notified upon listing)
+        Would you like us to open your title work with Steed Title Company?
+        Opening with Steed helps expedite the listing — they will be notified when you go live.
   - id: q207-typea207
     type: radio
+    label: Open title work with Steed Title Company?
+    description: Steed Title Company is our preferred partner. Choosing Yes helps us open escrow quickly when your listing goes live.
+    required: true
     jotform:
       id: 207
       name: q207_typeA207

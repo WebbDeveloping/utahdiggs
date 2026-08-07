@@ -12,6 +12,8 @@ fields:
   - id: houseNumberDirection
     label: House Number Direction
     type: radio
+    # Staff/VA only — hidden from consumer intake.
+    status: hidden-in-jotform
     description: "Optional N / S / E / W for the house number (Utah grid). Leave blank if unknown — agent/VA can fill later."
     options:
       - N
@@ -24,6 +26,8 @@ fields:
   - id: streetDirection
     label: Street Name Direction
     type: radio
+    # Staff/VA only — hidden from consumer intake.
+    status: hidden-in-jotform
     description: "Optional N / S / E / W for the street name or number. Leave blank if unknown — agent/VA can fill later."
     options:
       - N
@@ -59,7 +63,7 @@ fields:
     label: North / South Coordinate
     type: number
     placeholder: "e.g., 2100"
-    description: "Utah grid north–south address number (optional). Agent/VA can fill if blank."
+    description: "Utah grid north–south address number (optional; approximate is fine). Example: for 2100 S Main, enter 2100. Agent/VA can fill if blank."
     jotform:
       id: TODO
       name: q_coordNorthSouth
@@ -67,7 +71,7 @@ fields:
     label: East / West Coordinate
     type: number
     placeholder: "e.g., 1300"
-    description: "Utah grid east–west address number (optional). Agent/VA can fill if blank."
+    description: "Utah grid east–west address number (optional; approximate is fine). Example: for 1300 E, enter 1300. Agent/VA can fill if blank."
     jotform:
       id: TODO
       name: q_coordEastWest
@@ -125,23 +129,29 @@ fields:
   - id: listingEffectiveDate
     label: Effective Date of Listing Agreement
     type: text
+    # Prefill from onboarding agreementSignedAt; hidden from consumer.
+    status: hidden-in-jotform
     placeholder: "MM/DD/YYYY"
-    description: Optional — VA/agent can fill when the listing agreement is signed.
+    description: Auto-filled from the signed listing agreement.
     jotform:
       id: TODO
       name: q_listingEffectiveDate
   - id: listingExpirationDate
     label: Expiration Date
     type: text
+    # Prefill as signed date + 6 months; hidden from consumer.
+    status: hidden-in-jotform
     placeholder: "MM/DD/YYYY"
-    description: Optional — VA/agent can fill when the listing agreement is signed.
+    description: Auto-filled as agreement signed date + 6 months.
     jotform:
       id: TODO
       name: q_listingExpirationDate
   - id: listingType
     label: Listing Type
     type: radio
-    description: Optional — defaults to Exclusive Right to Sell (ERS) if left blank.
+    # Always ERS after Right to Sell agreement; hidden from consumer.
+    status: hidden-in-jotform
+    description: Defaults to Exclusive Right to Sell (ERS).
     options:
       - Exclusive Right to Sell (ERS)
       - Exclusive Agency (EAL)
@@ -168,17 +178,20 @@ fields:
       id: TODO
       name: "q_specialListingConditions[]"
   - id: possession
-    label: Possession
-    type: text
-    placeholder: "e.g., Upon Closing, Immediate, Negotiable"
-    description: When the buyer may take possession (optional).
+    label: When the buyer may take possession (optional)
+    type: select
+    options:
+      - Recording
+      - Negotiable
     jotform:
       id: TODO
       name: q_possession
   - id: contactType
     label: Contact Type
     type: radio
-    description: Who to contact for appointments and access (optional).
+    # Staff defaults applied in wizard; hidden from consumer.
+    status: hidden-in-jotform
+    description: Who to contact for appointments and access.
     options:
       - Agent
       - Owner
@@ -189,6 +202,7 @@ fields:
   - id: appointmentContact
     label: Contact for Appointments & Access
     type: text
+    status: hidden-in-jotform
     placeholder: "Name of contact person"
     jotform:
       id: TODO
@@ -196,6 +210,7 @@ fields:
   - id: contactPhone1
     label: Contact Phone 1
     type: phone
+    status: hidden-in-jotform
     placeholder: (000) 000-0000
     jotform:
       id: TODO
@@ -203,6 +218,7 @@ fields:
   - id: contactPhone2
     label: Contact Phone 2
     type: phone
+    status: hidden-in-jotform
     placeholder: (000) 000-0000
     jotform:
       id: TODO
@@ -210,24 +226,26 @@ fields:
   - id: listingAgentName
     label: Listing Agent
     type: text
+    status: hidden-in-jotform
     placeholder: "Agent name"
-    description: Optional — VA/agent can fill.
+    description: Staff default — Blair Allen.
     jotform:
       id: TODO
       name: q_listingAgentName
   - id: listingCoAgentName
     label: Co-Agent
     type: text
+    status: hidden-in-jotform
     placeholder: "Co-agent name, if any"
-    description: Optional — VA/agent can fill.
     jotform:
       id: TODO
       name: q_listingCoAgentName
   - id: listingOfficeName
     label: Office Name
     type: text
+    status: hidden-in-jotform
     placeholder: "Listing office / brokerage"
-    description: Optional — VA/agent can fill.
+    description: Staff default — Kelly Wright Real Estate.
     jotform:
       id: TODO
       name: q_listingOfficeName

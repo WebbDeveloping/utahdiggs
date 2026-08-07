@@ -1,16 +1,19 @@
 "use client";
 
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import FormLabel from "@mui/material/FormLabel";
+import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import SignatureField from "@/components/account/mls-input/fields/SignatureField";
 import {
@@ -24,6 +27,25 @@ import {
 } from "@/content/right-to-sell-agreement";
 import type { BlobAccess } from "@/lib/storage/blob";
 import type { UarAgreementFormValues } from "@/types/uar-agreement";
+
+const UNREPRESENTED_BUYER_FEE_TOOLTIP =
+  "If the buyer has no agent of their own, an extra 1.5% is added to Glidere's brokerage fee to cover the additional work and liability in that transaction.";
+
+const BUYER_AGENT_COMPENSATION_TOOLTIP =
+  "This is the amount you authorize Glidere to advertise as compensation to a buyer's brokerage if their client purchases your home. Choose a percentage of the sale price, a fixed dollar amount, or both.";
+
+const SECTION_TOOLTIPS: { prefix: string; title: string; ariaLabel: string }[] = [
+  {
+    prefix: "2.2 Seller's Brokerage Fee with an Unrepresented Buyer",
+    title: UNREPRESENTED_BUYER_FEE_TOOLTIP,
+    ariaLabel: "What is the unrepresented buyer fee?",
+  },
+  {
+    prefix: "2.3 Authorization to Offer Compensation",
+    title: BUYER_AGENT_COMPENSATION_TOOLTIP,
+    ariaLabel: "What is buyer agent compensation?",
+  },
+];
 
 const documentTextSx = {
   fontSize: "12pt",
@@ -296,7 +318,13 @@ export default function RightToSellAgreementDocument({
               name="buyerAgentDollar"
               label="$ BUYER AGENT COMPENSATION OFFERED"
               value={form.buyerAgentDollar}
-              onChange={(event) => onUpdateField("buyerAgentDollar", event.target.value)}
+              onChange={(event) => {
+                const value = event.target.value;
+                onUpdateField("buyerAgentDollar", value);
+                if (value.trim()) {
+                  onUpdateField("buyerAgentPercent", "0");
+                }
+              }}
               placeholder="e.g., $10,000"
               fullWidth
               sx={{ maxWidth: 400 }}
@@ -569,18 +597,52 @@ export default function RightToSellAgreementDocument({
               block.content.startsWith("THIS IS A LEGALLY BINDING") ||
               block.content.startsWith("CANCELLATION:") ||
               block.content.startsWith("17. CANCELLATION");
+            const sectionTooltip = SECTION_TOOLTIPS.find((entry) =>
+              block.content.startsWith(entry.prefix),
+            );
+
+            if (!sectionTooltip) {
+              return (
+                <Typography
+                  key={`text-${index}`}
+                  component="p"
+                  variant="body2"
+                  sx={{
+                    ...documentTextSx,
+                    fontWeight: isBoldHeader ? 700 : 400,
+                  }}
+                >
+                  {block.content}
+                </Typography>
+              );
+            }
+
             return (
-              <Typography
+              <Box
                 key={`text-${index}`}
-                component="p"
-                variant="body2"
-                sx={{
-                  ...documentTextSx,
-                  fontWeight: isBoldHeader ? 700 : 400,
-                }}
+                sx={{ display: "flex", alignItems: "flex-start", gap: 0.5 }}
               >
-                {block.content}
-              </Typography>
+                <Typography
+                  component="p"
+                  variant="body2"
+                  sx={{
+                    ...documentTextSx,
+                    fontWeight: 400,
+                    flex: 1,
+                  }}
+                >
+                  {block.content}
+                </Typography>
+                <Tooltip title={sectionTooltip.title} arrow placement="top">
+                  <IconButton
+                    size="small"
+                    aria-label={sectionTooltip.ariaLabel}
+                    sx={{ mt: -0.25, color: "text.secondary" }}
+                  >
+                    <InfoOutlinedIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
             );
           }
 

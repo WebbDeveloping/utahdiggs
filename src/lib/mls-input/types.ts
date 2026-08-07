@@ -24,6 +24,8 @@ export type MlsInputWizardProps = {
     state?: string;
     zip?: string;
   };
+  /** Signed Right to Sell date — used to prefill listing agreement dates. */
+  agreementSignedAt?: Date | string | null;
   draftListingId?: string;
   initialStep?: number;
   initialData?: Record<string, unknown>;

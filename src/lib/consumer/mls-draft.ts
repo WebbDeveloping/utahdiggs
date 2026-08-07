@@ -20,7 +20,10 @@ export function isMlsIntakePending(
 ): boolean {
   if (listing.intakeStatus === MLS_SUBMITTED_STATUS) return false;
   return (
-    listing.onboardingStatus === "MLS_INTAKE_PENDING" || isMlsDraft(listing)
+    listing.onboardingStatus === "MLS_INTAKE_PENDING" ||
+    // Legacy status — photos are no longer an onboarding gate
+    listing.onboardingStatus === "PHOTOS_PENDING" ||
+    isMlsDraft(listing)
   );
 }
 

@@ -12,7 +12,7 @@ const rawMigrationUrl =
   process.env.DATABASE_URL ||
   process.env.PRISMA_DATABASE_URL ||
   process.env.POSTGRES_URL ||
-  "postgresql://placeholder:placeholder@localhost:5432/utahdigs";
+  "postgresql://placeholder:placeholder@localhost:5432/glidere";
 
 const migrationUrl = normalizePostgresUrl(rawMigrationUrl);
 

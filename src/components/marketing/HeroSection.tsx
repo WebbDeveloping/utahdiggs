@@ -4,13 +4,11 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import HeroAddressTabs from "@/components/marketing/HeroAddressTabs";
+import LinkButton from "@/components/ui/LinkButton";
 import SavingsCalculatorCard from "@/components/marketing/SavingsCalculatorCard";
-import { getConsumerSession } from "@/lib/auth/consumer-session";
+import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
-export default async function HeroSection() {
-  const user = await getConsumerSession();
-
+export default function HeroSection() {
   return (
     <Box
       component="section"
@@ -51,7 +49,22 @@ export default async function HeroSection() {
                 </Box>
                 .
               </Typography>
-              <HeroAddressTabs />
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ maxWidth: 440, fontSize: { xs: "1rem", md: "1.125rem" } }}
+              >
+                List with Glide RE for a fraction of a traditional commission — and keep more of
+                what your home is worth.
+              </Typography>
+              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+                <LinkButton href={LISTING_INTAKE_PATH} variant="contained" size="large">
+                  List your home
+                </LinkButton>
+                <LinkButton href="#calc" variant="outlined" size="large" color="inherit">
+                  See what you&apos;d save
+                </LinkButton>
+              </Stack>
             </Stack>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>

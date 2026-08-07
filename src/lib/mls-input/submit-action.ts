@@ -17,6 +17,7 @@ import { sendMlsIntakeSubmittedEmail } from "@/lib/email/templates/mls-intake-su
 import { generateDataFormPdf } from "@/lib/signature/fill-uar-data-form-residential";
 import { uploadDataFormPdf } from "@/lib/signature/signed-document-storage";
 import { mapMlsIntakeToListingInput } from "./map-to-listing";
+import { mergeMlsStaffDefaults } from "./staff-defaults";
 import { validateFullMlsInput } from "./validation";
 import type { MlsSubmitState } from "./types";
 
@@ -38,7 +39,7 @@ export async function submitMlsIntakeAction(
 
   let values: Record<string, unknown>;
   try {
-    values = JSON.parse(valuesJson) as Record<string, unknown>;
+    values = mergeMlsStaffDefaults(JSON.parse(valuesJson) as Record<string, unknown>);
   } catch {
     return { error: "Invalid form data." };
   }

@@ -4,7 +4,7 @@ export const MIN_LISTING_FEE = 4500;
 export const HOME_VALUE_MIN = 350_000;
 export const HOME_VALUE_MAX = 2_000_000;
 export const HOME_VALUE_STEP = 25_000;
-export const HOME_VALUE_DEFAULT = 525_000;
+export const HOME_VALUE_DEFAULT = 700_000;
 
 export const SAVINGS_PLANS = {
   virtual: { id: "virtual" as const, label: "Virtual", rate: 0.01 },

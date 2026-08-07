@@ -57,13 +57,15 @@ fields:
   - id: yearBuilt
     label: Year Built
     type: number
-    required: true
+    required: false
     placeholder: "e.g., 1998"
     jotform:
       id: TODO
   - id: effectiveYearBuilt
     label: Effective Year Built
     type: number
+    # Staff/VA only — hidden from consumer intake.
+    status: hidden-in-jotform
     placeholder: "e.g., 1998"
     description: Leave blank if same as year built.
     jotform:
@@ -72,7 +74,9 @@ fields:
   - id: noAssignedParcelNumber
     label: "No assigned parcel number?"
     type: radio
-    required: true
+    # Staff/VA only — hidden from consumer intake.
+    status: hidden-in-jotform
+    required: false
     options:
       - "No"
       - "Yes"
@@ -83,7 +87,7 @@ fields:
   - id: taxParcelNumber
     label: Tax Parcel Number (APN)
     type: text
-    required: true
+    required: false
     status: hidden-in-jotform
     placeholder: "e.g., 12-34-56-789"
     description: Enter the parcel number from your property tax statement if known.
@@ -93,6 +97,7 @@ fields:
   - id: estimatedTaxes
     label: Estimated Taxes ($)
     type: currency
+    status: hidden-in-jotform
     placeholder: "e.g., $3,200"
     description: Annual estimated property taxes, if known.
     jotform:
@@ -109,7 +114,9 @@ fields:
   - id: lotSize
     label: Lot Size (Acres)
     type: text
-    required: true
+    required: false
+    # Staff/VA only — hidden from consumer intake (Jul 24).
+    status: hidden-in-jotform
     placeholder: "e.g., .23"
     description: "What size is the parcel?"
     jotform:
@@ -117,6 +124,7 @@ fields:
   - id: lotFrontage
     label: Frontage
     type: text
+    status: hidden-in-jotform
     placeholder: "e.g., 80 ft"
     description: Lot frontage measurement, if known.
     jotform:
@@ -125,6 +133,7 @@ fields:
   - id: lotSide
     label: Side
     type: text
+    status: hidden-in-jotform
     placeholder: "e.g., 120 ft"
     description: Lot side measurement, if known.
     jotform:
@@ -133,6 +142,7 @@ fields:
   - id: lotBack
     label: Back
     type: text
+    status: hidden-in-jotform
     placeholder: "e.g., 80 ft"
     description: Lot back measurement, if known.
     jotform:
@@ -141,6 +151,7 @@ fields:
   - id: lotIrregularShape
     label: "Irregular Shape?"
     type: radio
+    status: hidden-in-jotform
     options:
       - "Yes"
       - "No"

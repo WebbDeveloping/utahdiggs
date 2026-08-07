@@ -132,12 +132,15 @@ fields:
       id: 100
       name: q100_showingInstructions
     label: Showing Instructions (remarks)
+    # Staff defaults applied in wizard; hidden from consumer.
+    status: hidden-in-jotform
     placeholder: "Please share any important access information and how to handle those items. (Pets, Alarms, Tenants, etc.)  Please be as detailed as possible."
   - id: showInstructions
     type: checkbox
     label: Show Instructions
     required: false
-    description: Select all that apply for the Data Form (optional — occupancy still used as a fallback).
+    status: hidden-in-jotform
+    description: Staff defaults — Call Showing Service, Use Aligned Showings, Key Box Electronic.
     $ref: options/show-instructions.yaml
     jotform:
       id: TODO

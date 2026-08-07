@@ -35,17 +35,30 @@ export default function SavingsCalculatorCard() {
       id="calc"
       sx={{
         backgroundColor: "background.paper",
-        borderRadius: { xs: 3, md: 4 },
+        borderRadius: { xs: 1.5, md: 2 },
         border: "1px solid",
         borderColor: "divider",
         boxShadow: "0 1px 2px rgba(19, 33, 28, 0.06), 0 12px 30px rgba(19, 33, 28, 0.07)",
-        p: { xs: 2.5, md: 3.75 },
+        p: { xs: 3, md: 4.5 },
       }}
     >
-      <Typography variant="h3" sx={{ fontSize: { xs: "1.25rem", md: "1.375rem" }, mb: 0.5 }}>
+      <Typography
+        variant="h3"
+        sx={{
+          fontSize: { xs: "1.75rem", md: "2.125rem" },
+          mb: 0.75,
+          textAlign: "center",
+          fontFamily: "var(--font-fraunces), Georgia, serif",
+          fontWeight: 600,
+        }}
+      >
         What could you save?
       </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ mb: 3, textAlign: "center" }}
+      >
         Estimate your savings vs. a traditional 3% listing fee.
       </Typography>
 
@@ -166,7 +179,7 @@ export default function SavingsCalculatorCard() {
                     gap: 0.25,
                     py: 1.75,
                     px: 1.25,
-                    borderRadius: 3,
+                    borderRadius: 1.5,
                     border: "1.5px solid",
                     borderColor: selected ? "primary.main" : "divider",
                     backgroundColor: selected ? "primary.light" : "background.paper",
@@ -201,9 +214,9 @@ export default function SavingsCalculatorCard() {
       <Box
         sx={{
           mt: 0.75,
-          py: 2.25,
-          px: 2,
-          borderRadius: 3,
+          py: 2.5,
+          px: 2.5,
+          borderRadius: 1.5,
           backgroundColor: "primary.light",
           textAlign: "center",
         }}

@@ -219,14 +219,12 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
   },
   {
     "id": "tax-parcel-number",
-    "description": "Show tax parcel number when a parcel number is assigned.",
+    "description": "Tax parcel number is staff/VA-only (hidden from consumer). Kept for reference if noAssignedParcelNumber is ever set to No in CRM/admin tooling.",
     "when": {
       "field": "noAssignedParcelNumber",
       "equals": "No"
     },
-    "show": [
-      "taxParcelNumber"
-    ]
+    "show": []
   },
   {
     "id": "adu-follow-ups",
@@ -339,10 +337,7 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
       "q192-howmany",
       "q194-ownershowing",
       "q195-phonenumber",
-      "q196-email",
-      "q197-ownershowing197",
-      "q198-ownershowing198",
-      "q199-ownershowing199"
+      "q196-email"
     ]
   },
   {
@@ -377,10 +372,7 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
       "q193-howmany193",
       "q200-tenantshowing",
       "q201-ownershowing201",
-      "q202-tenantshowing202",
-      "q203-tenantshowing203",
-      "q204-tenantshowing204",
-      "q205-tenantshowing205"
+      "q202-tenantshowing202"
     ]
   },
   {
@@ -406,7 +398,7 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
   },
   {
     "id": "alternate-title-company",
-    "description": "Alternate title company contact when seller declines Prime Title.",
+    "description": "Alternate title company contact when seller declines Steed Title Company.",
     "when": {
       "field": "q207-typea207",
       "equals": "No, I have someone else"
@@ -420,7 +412,7 @@ export const MLS_CONDITION_RULES: ConditionRule[] = [
   }
 ];
 
-const HIDDEN_BY_DEFAULT = new Set<string>(["secondaryOwnerName","secondaryOwnerPhone","secondaryOwnerEmail","listingQuadrant","directionsRemarks","ownerAddress","hoaFeeMonth","hoaFeeFrequency","hoaChangeFeeType","hoaChangeFeeAmount","hoaContact","hoaContactPhone","hoaRentalCap","hoaAmenities","hoaRemarks","solarOwnership","solarYearInstalled","solarSystemSizeKw","solarBatteryStorage","solarLoanOrLien","solarDocsAvailable","solarCompanyName","solarFinanceCompany","solarMonthlyPayment","solarAgreementTerm","solarTransferable","taxParcelNumber","aduType","aduSqft","aduBeds","aduBaths","aduKitchen","aduSeparateEntrance","aduSeparateWaterMeter","aduSeparateGasMeter","aduSeparateElectricMeter","aduCurrentlyRented","aduMonthlyRent","aduRemarks","q208-garagecapacity","q209-garagecapacity209","rvParkingHeight","rvParkingLength","q63-pooltype","q47-animals","q192-howmany","q193-howmany193","q194-ownershowing","q195-phonenumber","q196-email","q197-ownershowing197","q198-ownershowing198","q199-ownershowing199","q200-tenantshowing","q201-ownershowing201","q202-tenantshowing202","q203-tenantshowing203","q204-tenantshowing204","q205-tenantshowing205","q211-name211","q212-typea212","q213-email213","q214-phonenumber214","q23-signature23","q23-initials"]);
+const HIDDEN_BY_DEFAULT = new Set<string>(["secondaryOwnerName","secondaryOwnerPhone","secondaryOwnerEmail","houseNumberDirection","streetDirection","listingQuadrant","directionsRemarks","ownerAddress","listingEffectiveDate","listingExpirationDate","listingType","contactType","appointmentContact","contactPhone1","contactPhone2","listingAgentName","listingCoAgentName","listingOfficeName","hoaFeeMonth","hoaFeeFrequency","hoaChangeFeeType","hoaChangeFeeAmount","hoaContact","hoaContactPhone","hoaRentalCap","hoaAmenities","hoaRemarks","solarOwnership","solarYearInstalled","solarSystemSizeKw","solarBatteryStorage","solarLoanOrLien","solarDocsAvailable","solarCompanyName","solarFinanceCompany","solarMonthlyPayment","solarAgreementTerm","solarTransferable","effectiveYearBuilt","noAssignedParcelNumber","taxParcelNumber","estimatedTaxes","lotSize","lotFrontage","lotSide","lotBack","lotIrregularShape","aduType","aduSqft","aduBeds","aduBaths","aduKitchen","aduSeparateEntrance","aduSeparateWaterMeter","aduSeparateGasMeter","aduSeparateElectricMeter","aduCurrentlyRented","aduMonthlyRent","aduRemarks","q208-garagecapacity","q209-garagecapacity209","rvParkingHeight","rvParkingLength","q63-pooltype","q47-animals","q192-howmany","q193-howmany193","q194-ownershowing","q195-phonenumber","q196-email","q197-ownershowing197","q198-ownershowing198","q199-ownershowing199","q200-tenantshowing","q201-ownershowing201","q202-tenantshowing202","q203-tenantshowing203","q204-tenantshowing204","q205-tenantshowing205","q100-showinginstructions","showInstructions","q211-name211","q212-typea212","q213-email213","q214-phonenumber214","q23-signature23","q23-initials"]);
 
 function getFieldValue(values: Record<string, unknown>, fieldId: string): unknown {
   return values[fieldId];

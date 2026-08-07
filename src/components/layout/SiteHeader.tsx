@@ -27,10 +27,10 @@ import { consumerSignOutAction } from "@/lib/consumer/actions";
 import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
 
 const navLinks = [
-  { label: "Search homes", href: "/search" },
-  { label: "Pricing", href: "/#pricing" },
   { label: "How it works", href: "/#how" },
+  { label: "Pricing", href: "/#pricing" },
   { label: "FAQ", href: "/#faq" },
+  { label: "Search homes", href: "/search" },
   { label: "Contact", href: "/#contact" },
 ];
 

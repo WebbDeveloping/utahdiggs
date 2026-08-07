@@ -1,0 +1,118 @@
+Summary
+Project discussions streamlined listing intake forms and prioritized front-end development over dashboard implementation for operational launch.
+
+Streamlining Listing Intake Forms
+Developers identified redundant fields and complex logic to simplify the user interface. The primary decision was to default all listing agreement terms to exclusive right to sell.
+
+Optimizing User Experience Workflow
+The team refined the onboarding sequence to guide sellers from account creation through Multiple Listing Service input. Administrative access to documents was improved to facilitate better information management.
+
+Prioritizing Front End Readiness
+Stakeholders focused efforts on onboarding and homepage functionality to initiate site traffic. This strategy delays complex dashboard feature development until initial listing operations are established.
+
+Decisions
+Aligned
+Buyer agent compensation tool tip added Help text (tool tip) is added to the buyer agent compensation section to clarify the offered commission amount.
+Commission flat amount defaults to zero The flat commission amount field is configured to default to zero.
+Branding and tool tip updates All platform branding is updated from 'Utah Digs' to 'Glide Re', and a tool tip is added to section 2.2.
+Section 21 checkbox default unchecked The checkbox for section 21 (compensation agreement) is set to be default unchecked.
+Square footage measurement source question included A new question is included to capture the source of the property's square footage measurements.
+Photo tour selection flow updated The photo tour selection process is moved to occur after the MLS input step, offering a choice between uploading personal photos or consenting to a professional photo tour.
+Professional photo booking calendar excluded A booking calendar for professional photography is excluded from the current build in favor of a manual scheduling process.
+HUD owned property type removed The 'HUD owned' option is removed from the property ownership type list.
+Directional address fields removed The 'House number direction' and 'Street name direction' fields are removed from the listing form.
+Property address mapping configuration established The system is configured to automatically pull and map the verified property address into the HMELS form.
+Effective and expiration dates defaulted and hidden The effective date field defaults to the current date and the expiration date defaults to six months later, with both fields hidden from the user.
+Listing type set to exclusive right The listing type field is set to default to 'Exclusive Right to Sell' and is hidden to avoid user confusion.
+Possession options limited to recording or negotiable Possession options are limited to only two choices: 'Recording' and 'Negotiable'.
+Appointment contact and brokerage information automated Appointment contact information and brokerage details are automated in the admin settings to pre-fill and remain hidden on the user form.
+HOA selection defaulted to no The HOA selection field is set to default to 'No'.
+Year built requirements adjusted The 'Effective Year Built' field is removed, and the 'Year Built' field is made optional.
+Parcel and tax information fields hidden Tax parcel number and 'no assigned parcel number' fields are hidden from the user interface.
+Lot and frontage fields hidden Lot size, frontage, side, and back measurement fields are hidden from the user interface.
+MLS intake form field configurations The MLS intake form will be configured to retain water and wire shares, while hiding lot size, estimated taxes, APN, and irregular shape inputs.
+Basement and property level conditional logic Conditional logic will be implemented for property level inputs to ask if a basement exists, determining whether basement-specific fields are displayed.
+Listing intake form column layout The listing intake form layout will be reformatted to use columns to improve visibility and usability for long questions.
+Pool and HOA field labeling The community pool field will be retained and the prompt updated to specify that it includes HOA-managed pools.
+Form field requirement and default settings Form field requirements will be updated to make utilities required, while making non-essential fields optional and defaulting financial terms to cash or conventional.
+Showing instructions section default settings The showing instructions section will be hidden and defaulted to a standard call showing service option.
+Title company field logic The title company field logic will be updated to allow users to specify an alternative title company if they do not choose the default.
+Remarks section tooltips and labels Tooltips and clarifying labels will be added to the remarks section to distinguish between public remarks, exclusion remarks, and comments to Glide.
+Photo upload interface previews The photo upload interface will be updated to display uploaded image previews rather than icons.
+Admin intake data export format The admin intake view and print export format will be converted from JSON to readable plain text.
+Landing page UI simplification The landing page UI will be simplified to remove the buy-a-home option and feature a prominent sell-your-home call to action.
+Website layout and menu organization The website front-end is updated to prioritize a specific call to action, reorganize menu items, and include the Kelly Wright logo.
+Development prioritization strategy The development of the dashboard is deprioritized in favor of finalizing the front-end and onboarding processes.
+
+We've updated the Decisions section using your feedback.
+Let us know what you think: Helpful or Not Helpful
+
+Next steps
+[Blair Allen] Define Service Offerings: Bullet point the offering features for the seller to differentiate services.
+[Joe W] Update Brand Name: Change all references from Utah Digs to Glide Re on the site.
+[Joe W] Default Checkbox: Set the default value of the compensation agreement checkbox to unchecked.
+[Joe W] Remove HUD Option: Remove the HUD owned option from the special owner type selection.
+[Joe W] Clean Form UI: Hide house number and street name fields from the MLS form.
+[Joe W] Build Admin Page: Create an admin page to manage agent info such as contact details and office name to facilitate auto-population of form fields.
+[Joe W] Automate Form Data: Hide effective date and listing type fields on the MLS form and default them to the signed agreement values.
+[Joe W] Update Possession Options: Update possession options in the form to include only recording and negotiable.
+[Joe W] Fix Form Logic: Unset or clear property information fields if a user toggles selection back to No in the form logic.
+[Joe W] Simplify Form Fields: Remove or hide the effective year built field and set the year built field to non-required.
+[Joe W] Update Listing Form: Hide estimated taxes, tax parcel number APN, frontage, side, back, and irregular shape fields from the intake form.
+[Joe W] Add Basement Question: Add a new basement confirmation question before the property levels question.
+[Joe W] Configure Basement Logic: Configure show and hide logic for basement fields based on the new basement confirmation response.
+[Joe W] Optimize Form Layout: Arrange long form questions into columns to optimize visual space and usability.
+[Joe W] Edit Pool Label: Update the pool availability question to specify if the property or HOA provides a pool.
+[Joe W] Adjust Field Requirements: Set zoning, energy, and storage fields to optional, and set utility fields to required.
+[Joe W] Default Payment Terms: Default the payment terms to cash and conventional.
+[Joe W] Prefill Owner Info: Implement logic to prefill owner information for owner occupied properties.
+[Joe W] Standardize Showing Instructions: Default showing instructions to call agent or showing service and hide the manual instruction section.
+[Joe W] Rename Title Company: Rename the title company field to STED Title Company.
+[Joe W] Add Tooltips: Add tooltips to the remarks section to clarify public listing and exclusion visibility.
+[Joe W] Format Listing Data: Modify the display of listing data to render in plain text instead of JSON format.
+[Joe W] Update Landing Page: Default the estimated home value to 700000 and refine UI spacing and corner rounding on the landing page.
+[Joe W] Simplify Landing CTA: Replace the sell your home interaction box with a clear call to action button for listing a property.
+[Joe W] UI Button Change: Replace the Buy a home element with a button.
+[Joe W] Resize Savings Title: Enlarge and center the What could you save text to emphasize the savings calculator.
+[Joe W] Add CTA Button: Include a call to action button under the Sell your home section.
+[Joe W] Rearrange Menu: Order the menu items as How it works, Pricing, FAQ, Search homes, and Contact.
+[Joe W] Add Logo: Include a Kelly Wright logo on the website for disclosure purposes.
+[Joe W] Update MLS Input: Modify the input fields for the MLS system.
+[Blair Allen] Set Up Email: Create the email sequence for client communication in Lofty.
+
+Details
+Service Differentiation: Blair notes the need to outline specific offerings to differentiate service levels, while Joe confirms that while the listing agreement flow is currently uniform, it can be adjusted based on the chosen service, such as the full-service 1.5% plan.
+Seller Data Population: They discuss how seller information is automatically populated from the account creation stage, with Blair suggesting that seller contact information does not need to be visible to the user as long as it is captured by the system (00:00:57).
+Buyer Agent Commission Tooltips: Blair requests the addition of help text or a tooltip for the "buyer agent compensation" section (2.3) to explain the commission offer. They agree that when a user enters a flat commission amount, the percentage field should default to zero (00:02:25).
+Branding and Interface Updates: Joe adds a tooltip for section 2.2 and commits to updating the site branding from "Utah Digs" to "Glide Re." They also agree that the checkbox in section 2.1 should remain unchecked by default (00:05:12).
+Property Relationships and Measurements: They confirm that property relationships will remain standard and that the system will continue to include fields for square footage measurement sources, which are treated as default platform settings (00:08:20).
+Communication and Call Scheduling: Joe clarifies that signed agreements are emailed to clients automatically. They discuss the call request process, noting that bookings are currently managed individually and lack automated calendar integration for now (00:09:31).
+Photography Selection Workflow: Blair and Joe agree to defer the photo tour selection until after the Multiple Listing Service (MLS) input step. Blair proposes that for the 1.5% plan, users should have the option to opt-in for a professional photo tour, whereas the 1% plan will require users to upload their own photos (00:12:32) (00:16:07).
+Manual Photography Coordination: They decide against implementing a booking calendar for photographer scheduling, agreeing that it should be a manual process where they coordinate directly with photographers and clients to determine availability (00:14:50).
+Multiple Listing Service (MLS) Form Flow: Joe plans to move the photo selection step to occur after the user schedules a call and is redirected to the account page. This will lead the user directly into the Multiple Listing Service (MLS) form (00:17:10).
+Ownership Structure Options: Blair directs the removal of "HUD owned" from the owner type options in the Multiple Listing Service (MLS) form. They decide to retain "Limited Liability Company" (LLC), "Trust," and "Fractional Ownership" as valid options (00:19:50).
+Address Field Simplification: They discuss removing specific "house number" and "street name" direction fields from the form to minimize user confusion, opting to retain only the most essential address fields (00:21:18).
+Owner Address Verification: They confirm the necessity of capturing the owner's address if it differs from the listing address, which will be utilized for backend Client Relationship Management (CRM) tasks such as mailing thank-you cards (00:24:28).
+Listing Agreement Dates and Terms: They decide to hide fields for the "effective date of listing agreement," which should prefill with the signature date, and the "expiration date," which should default to six months from the signature date. The "listing type" field will also be defaulted to "exclusive right to sell" and hidden from the user interface (00:26:54).
+Possession Options: They agree to update the possession options to "recording" and "negotiable," replacing the "upon closing" option (00:32:47).
+Admin and Agent Contact Settings: Blair requests that the system prefill and hide contact fields, including the listing agent name, the office name ("Kelly Wright Real Estate"), and the showing contact information. Joe suggests creating an admin page to manage these settings centrally without requiring code changes (00:33:58).
+Homeowners Association (HOA) and Utility Details: They review the Homeowners Association (HOA) section, confirming that questions regarding fees, transfer fees, and amenities should remain. They also ensure that solar panel options (owned, leased, financed, or power purchase agreement) are included in the property details (00:38:02).
+Form Complexity Reduction: Blair and Joe agree to remove "Effective Year Built," "Parcel Number" (if unknown), and specific frontage, back, and side measurements from the form to reduce user fatigue. They conclude that these details can be handled through other processes if required (00:43:22) (00:57:12).
+Property Listing Data Fields: Joe W and Blair Allen decide to maintain water shares but hide estimated taxes, frontage side/back, and the "irregular shape" option in the listing intake form. They agree to keep the tax parcel number (APN) and add questions regarding accessory dwelling units (ADUs) to trigger subsequent relevant inquiries (00:58:26).
+Basement and Level Logic: To resolve confusion regarding property levels and basement status, Blair Allen and Joe W agree to implement a preliminary question: "Does the property have a basement?". If "Yes," the form will dynamically display basement-related fields and levels; if "No," it will hide those items, ensuring that the level input (e.g., main level, second story) remains accurate and intuitive for the user (01:01:57).
+Form Interface Improvements: Joe W plans to arrange long questions into columns to reduce empty space and make the intake process feel less intimidating. Blair Allen encourages using the existing JotForm for ongoing testing purposes (01:07:14).
+Amenity and Pool Options: Discussion regarding pool and spa availability leads to a decision to clarify labels to specify "the property including the HOA" (01:09:16). While the input is manual, they decide to retain the community pool and spa fields to ensure the information is searchable on the MLS (01:11:41).
+Utilities and Financing Terms: Blair Allen and Joe W agree to make non-essential items such as zoning, energy, and storage fields non-required. They decide to prioritize water utilities as required and will default standard terms like "Cash" and "Conventional" to simplify the submission process (01:14:19).
+Occupancy and Showing Instructions: For property occupancy settings, Blair Allen instructs that owner-occupied fields should pre-fill with owner data, whereas tenant-occupied properties will require manual entry (01:16:27). Showing instructions are to be standardized by hiding the specific input section and defaulting to "Call Showing Service," with options including electronic keyboxes (01:18:36).
+Title Company Selection: The team identifies a need to fix the dynamic logic for title company selection. If a user indicates they do not want to use the recommended "Steve Title Company" by selecting "No, I have someone else," the form must trigger a field to capture the user's preferred provider (01:20:35).
+Remarks and Descriptions: Blair Allen and Joe W discuss adding tooltips to the remarks section to clarify that "Public Remarks" are visible to buyers and sites like Zillow and Redfin (01:23:15). They also plan to add prompts in the exclusion and comments sections to ensure users provide necessary details (01:24:42).
+Listing Submission and Document Access: Joe W commits to improving the CRM dashboard so that documents, such as the exclusive right-to-sell agreement, are easily accessible in a tabbed format (01:28:48). They agree to move away from displaying data in a raw JSON format, opting for plain text to allow administrators to easily copy and paste information for Matrix entry (01:30:50).
+Project Workflow: Joe W outlines the full project lifecycle: sellers create an account, select a plan (1.0 or 1.5), sign an agreement, and complete the MLS intake. The internal team then confirms the listing in Matrix, at which point the seller dashboard—including price reduction coaching and market metrics—activates (01:34:42).
+Buyer Search Functionality: Joe W notes that the "Search Homes" buyer portal is currently set up with basic features (01:37:45). Blair Allen determines that further development of this feature is not a high priority compared to the core onboarding and front-end tasks (01:39:09).
+Price Reduction and Coaching Dashboard: Joe W expresses difficulty in testing automated price reduction triggers without disrupting the process (01:40:48). Blair Allen suggests implementing a coaching banner that appears when a price adjustment is suggested, displaying data such as days on market, total showings, and comparisons to local averages—using "Sandy" as a reference example—to encourage sellers to update their pricing (01:42:36) (01:45:23).
+Dashboard Layout and UI: Joe W plans to refine the dashboard design to include address details and two larger layout boxes for "Recent Showings" and "Buyer Hotspots" based on Blair Allen's recommendations (01:48:07).
+Landing Page Refinement: To improve clarity, the team agrees to remove the "Buy a Home" section from the landing page. They plan to replace it with a focused "List My Home" button and a redesigned "What Could You Save" savings calculator, which will default to a $700,000 home value and feature improved spacing and larger text to prevent visual crowding (01:54:03) (01:56:38).
+Homepage UI and UX Refinements: Blair Allen proposed specific changes to improve the homepage's clarity and functionality, recommending the implementation of a direct call to action to "get their home listed" and the removal of the "how soon do you want to sell" timeline question. Blair Allen suggested reordering the top navigation menu to prioritize "how it works," "pricing," and "FAQ" over "search homes" and "contact," and requested visual cleanup of the boxes alongside the addition of a Kelly Wright logo for disclosure purposes (01:58:45). Joe W agreed to implement these modifications (01:59:58).
+Business Readiness and Onboarding Process: Blair Allen expressed confidence in the platform's readiness, noting that they have a motivated individual prepared to drive marketing traffic to the site. Joe W affirmed that the onboarding process is nearly finished, though they indicated that some adjustments to the Multiple Listing Service (MLS) input are still required. Joe W also acknowledged that once marketing begins, they anticipate needing several iterations of the homepage to optimize performance based on real-world results (01:59:58).
+Development Prioritization and Dashboard Strategy: Blair Allen estimated the progress of the current build, noting that the onboarding process and the homepage are both approximately 90% complete, while the dashboard is at roughly 70% completion. Given this progress, they decided to prioritize finalizing the front end and onboarding to get the service operational, determining that they can delay further development of the dashboard to focus on getting homes listed on the MLS (02:01:19).
+Client Communication and Future Roadmap: Blair Allen and Joe W discussed the workflow for post-onboarding interactions, with Blair Allen suggesting the use of Lofty to manage automated email sequences to streamline client communication (02:02:25). Blair Allen offered to set up these sequences to minimize the development load on Joe W, ensuring that the team can focus on the dashboard only after the front end, onboarding, and communication processes are established (02:01:19). While they acknowledged that fully developing the dashboard will be a time-consuming task, they agreed it would provide significant value and will be addressed in a later phase of development (02:02:25).

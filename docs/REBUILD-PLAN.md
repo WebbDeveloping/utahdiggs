@@ -1,8 +1,8 @@
-# Utah Digs — Functionality Inventory & Rebuild Plan
+# Glidere — Functionality Inventory & Rebuild Plan
 
 > Reference for rebuilding the seller portal and backend on **Vercel Postgres + your own CRM + your own forms** — without Airtable, Zapier, or JotForm.
 >
-> Source material: `prototypes/Design Lab - Glide V2.html`, `prototypes/Utah-Digs-Stack-Flow.html`, `prototypes/info.txt`, `prototypes/Utah-Digs-Portfolio-Workflow.html`
+> Source material: `prototypes/Design Lab - Glide V2.html`, `prototypes/Glidere-Stack-Flow.html`, `prototypes/info.txt`, `prototypes/Glidere-Portfolio-Workflow.html`
 
 ---
 
@@ -11,7 +11,7 @@
 | Layer | Today | Your target |
 |---|---|---|
 | Marketing site | Next.js in `src/` (V1, no backend) | Same repo, keep building |
-| Seller portal | Static HTML at portal.utahdigs.com | Next.js `src/app/portal/` |
+| Seller portal | Static HTML at glidere.com | Next.js `src/app/portal/` |
 | Database | Airtable "Anna" base | Vercel Postgres |
 | CRM source | Lofty CRM → Zapier → Airtable | Your CRM → API → Postgres |
 | Forms | JotForm (offers, co-sellers, uploads, price auth) | Your forms → API → Postgres |
@@ -39,7 +39,7 @@ These are the tables currently used by the live portal prototype. Field names ar
 | MLS Number | text | Display |
 | List Date | date | DOM calculation |
 | Status | enum | Active, Under Contract, Pending, Closed, Cancelled |
-| Portal Slug | text | URL routing (`portal.utahdigs.com/[slug]`) |
+| Portal Slug | text | URL routing (`glidere.com/[slug]`) |
 | Passcode | text | Login PIN (last 4 of phone) |
 | Sellers | link → sellers | Auth email verification |
 | Offer Form URL | url | MLS agent remarks link (auto-generated today) |
@@ -238,8 +238,8 @@ These are the external forms referenced in prototypes. You will replace all of t
 
 ### Authentication & routing
 
-- **Individual portal:** `portal.utahdigs.com/[slug]` — email + passcode login
-- **Portfolio mode:** `portal.utahdigs.com/portfolio?client=X` — multi-listing sellers see all properties; click-through bypasses login (`?from=portfolio`)
+- **Individual portal:** `glidere.com/[slug]` — email + passcode login
+- **Portfolio mode:** `glidere.com/portfolio?client=X` — multi-listing sellers see all properties; click-through bypasses login (`?from=portfolio`)
 - **Routing logic:** If seller has multiple active listings → portfolio page; otherwise individual portal + welcome email
 
 **Rebuild:** Session-based auth in Next.js. Hash passcodes in DB. Portfolio = query listings by seller/contact ID.
@@ -394,7 +394,7 @@ These are the external forms referenced in prototypes. You will replace all of t
 
 ### Phase 6 — Migration & cutover
 - [ ] Export Airtable → import Postgres
-- [ ] Point portal.utahdigs.com at new Next.js app
+- [ ] Point glidere.com at new Next.js app
 - [ ] Retire Airtable, Zapier, JotForm
 
 ---
@@ -458,7 +458,7 @@ email_log         (optional — track sent automations)
 2. **Offer PDFs** — where stored? (Vercel Blob, S3, Cloudflare R2)
 3. **E-sign for price reductions** — typed name OK or need DocuSign/HelloSign?
 4. **Listtrac / Boldtrail / Aligned** — keep email parsing or negotiate API access?
-5. **Multi-tenant** — one brokerage (Utah Digs) or white-label for others later?
+5. **Multi-tenant** — one brokerage (Glidere) or white-label for others later?
 
 ---
 

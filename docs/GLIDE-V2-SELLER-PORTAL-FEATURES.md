@@ -2,7 +2,7 @@
 
 > Source: `prototypes/Design Lab - Glide V2.html`  
 > Audience: Seller who has uploaded / listed a property and is tracking performance  
-> Compared against: current `utahdigs` Next.js app (as of June 2025 rebuild)
+> Compared against: current `glidere` Next.js app (as of June 2025 rebuild)
 
 This document lists every user-facing feature in the Glide V2 prototype, then classifies what can be built **now** (schema + infra already exist, or no external data required) vs what **requires further build-out** (missing UI, data feeds, workflows, or third-party integrations).
 
@@ -25,7 +25,7 @@ The consumer **account area** in the app today (`/account/listings`) only covers
 |---|---------|---------------------|
 | 1.1 | Portal login | Email + 4-digit passcode (last 4 of phone) |
 | 1.2 | Sign out | Return to login |
-| 1.3 | Individual portal URL | `portal.utahdigs.com/[slug]` per listing |
+| 1.3 | Individual portal URL | `glidere.com/[slug]` per listing |
 | 1.4 | Portfolio mode | Multi-listing sellers see all properties at `/portfolio?client=X` |
 | 1.5 | Portfolio click-through | `?from=portfolio` bypasses re-login when switching listings |
 | 1.6 | Welcome email | Portal link + PIN sent when listing goes active |
@@ -293,5 +293,5 @@ If the goal is to give uploaded sellers **something useful quickly**, then expan
 ## Related docs
 
 - `docs/REBUILD-PLAN.md` — Airtable → Postgres mapping and phased rebuild plan
-- `prototypes/Utah-Digs-Portfolio-Workflow.html` — Multi-listing portfolio flow
+- `prototypes/Glidere-Portfolio-Workflow.html` — Multi-listing portfolio flow
 - `prototypes/Design Lab - Glide V2.html` — Full interactive prototype (4,718 lines)

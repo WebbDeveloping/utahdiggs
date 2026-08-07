@@ -7,6 +7,10 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { MlsInputStep, MlsInputField } from "@/lib/mls-input/schema";
 import { isFieldVisible } from "@/lib/mls-input/conditions";
+import {
+  formatFieldValue,
+  isEmptyFormattedValue,
+} from "@/lib/mls-input/format-field-value";
 
 type CrmMlsIntakePrintViewProps = {
   steps: MlsInputStep[];
@@ -20,18 +24,8 @@ type CrmMlsIntakePrintViewProps = {
 };
 
 function formatPrintValue(field: MlsInputField, value: unknown): string {
-  if (value === undefined || value === null || value === "") return "";
-  if (field.type === "fullname" && typeof value === "object") {
-    const v = value as { first?: string; last?: string };
-    return [v.first, v.last].filter(Boolean).join(" ");
-  }
-  if (field.type === "address" && typeof value === "object") {
-    const v = value as { street?: string; city?: string; state?: string; zip?: string };
-    return [v.street, v.city, v.state, v.zip].filter(Boolean).join(", ");
-  }
-  if (Array.isArray(value)) return value.join(", ");
-  if (typeof value === "object") return JSON.stringify(value);
-  return String(value);
+  const formatted = formatFieldValue(field, value);
+  return isEmptyFormattedValue(formatted) ? "" : formatted;
 }
 
 export default function CrmMlsIntakePrintView({
@@ -68,9 +62,11 @@ export default function CrmMlsIntakePrintView({
         </Typography>
 
         {steps.map((step) => {
-          const fields = step.fields.filter(
-            (f) => f.type !== "content" && isFieldVisible(f.id, data),
-          );
+          const fields = step.fields.filter((f) => {
+            if (f.type === "content") return false;
+            if (isFieldVisible(f.id, data)) return true;
+            return !isEmptyFormattedValue(formatFieldValue(f, data[f.id]));
+          });
           if (!fields.length) return null;
 
           return (

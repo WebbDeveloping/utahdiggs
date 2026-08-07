@@ -4,8 +4,10 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import Logo from "@/components/ui/Logo";
 import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
+import { BROKERAGE_LINE } from "@/lib/seo/site";
 
 const footerLinks = {
   Company: [
@@ -16,6 +18,7 @@ const footerLinks = {
   Resources: [
     { label: "How it works", href: "/#how" },
     { label: "FAQ", href: "/#faq" },
+    { label: "Search homes", href: "/search" },
     { label: "List your home", href: LISTING_INTAKE_PATH },
   ],
   "Sign in": [
@@ -83,9 +86,43 @@ export default function SiteFooter() {
           ))}
         </Grid>
 
-        <Typography sx={{ fontSize: 13, color: "#7a8a82", borderTop: "1px solid #2a3832", pt: 2 }}>
-          © {new Date().getFullYear()} Glide RE. All rights reserved.
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: { xs: "flex-start", sm: "center" },
+            justifyContent: "space-between",
+            gap: 2,
+            borderTop: "1px solid #2a3832",
+            pt: 2,
+          }}
+        >
+          <Typography sx={{ fontSize: 13, color: "#7a8a82" }}>
+            © {new Date().getFullYear()} Glide RE. All rights reserved.
+            <Box component="span" sx={{ display: "block", mt: 0.5 }}>
+              {BROKERAGE_LINE}
+            </Box>
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              opacity: 0.9,
+            }}
+          >
+            <Typography sx={{ fontSize: 12, color: "#7a8a82" }}>
+              Brokerage disclosure
+            </Typography>
+            <Image
+              src="/kelly-wright-re.png"
+              alt="Kelly Wright Real Estate"
+              width={80}
+              height={50}
+              style={{ height: 36, width: "auto", objectFit: "contain" }}
+            />
+          </Box>
+        </Box>
       </Container>
     </Box>
   );

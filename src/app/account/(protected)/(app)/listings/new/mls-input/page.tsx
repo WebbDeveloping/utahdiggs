@@ -94,9 +94,10 @@ export default async function MlsInputPage({ searchParams }: MlsInputPageProps) 
     redirect("/account/listings");
   }
 
+  // PHOTOS_PENDING is a legacy status; photos are no longer an onboarding gate.
   const mlsReady =
     onboardingStatusIndex(listing.onboardingStatus) >=
-    onboardingStatusIndex("MLS_INTAKE_PENDING");
+    onboardingStatusIndex("PHOTOS_PENDING");
 
   if (!mlsReady) {
     return (
@@ -105,7 +106,7 @@ export default async function MlsInputPage({ searchParams }: MlsInputPageProps) 
           MLS listing intake
         </Typography>
         <Alert severity="warning">
-          Complete the onboarding steps (plan, agreement, photos, and call scheduling) before
+          Complete the onboarding steps (plan, agreement, and call scheduling) before
           starting the MLS intake form.
         </Alert>
         <LinkButton href={buildOnboardingPathForListing(listing.id)} variant="contained">
@@ -140,6 +141,7 @@ export default async function MlsInputPage({ searchParams }: MlsInputPageProps) 
         draftListingId={listing.id}
         initialStep={intake.currentStep}
         initialData={data}
+        agreementSignedAt={listing.agreementSignedAt}
         initialValues={{
           address: listing.address,
           city: listing.city,

@@ -1,7 +1,3 @@
-const TIMELINE_OPTIONS = ["0-30 Days", "31-120 Days", "120+ Days"] as const;
-
-export type SellInquiryTimeline = (typeof TIMELINE_OPTIONS)[number];
-
 export type SellInquiryInput = {
   firstName: string;
   lastName: string;
@@ -11,6 +7,7 @@ export type SellInquiryInput = {
   city: string;
   state: string;
   zip: string;
+  /** Retained for DB compatibility; UI no longer collects a timeline. */
   timeline: string;
 };
 
@@ -18,7 +15,7 @@ export type SellInquiryFieldErrors = Partial<
   Record<keyof SellInquiryInput | "password" | "confirmPassword", string>
 >;
 
-export { TIMELINE_OPTIONS };
+const TIMELINE_NOT_SPECIFIED = "Not specified";
 
 export function parseSellInquiryFormData(formData: FormData): {
   input: SellInquiryInput;
@@ -34,7 +31,7 @@ export function parseSellInquiryFormData(formData: FormData): {
   const city = asString(formData.get("city"));
   const state = asString(formData.get("state"));
   const zip = asString(formData.get("zip"));
-  const timeline = asString(formData.get("timeline"));
+  const timeline = asString(formData.get("timeline")) || TIMELINE_NOT_SPECIFIED;
 
   if (!firstName) fieldErrors.firstName = "First name is required.";
   if (!lastName) fieldErrors.lastName = "Last name is required.";
@@ -55,12 +52,6 @@ export function parseSellInquiryFormData(formData: FormData): {
     fieldErrors.zip = "Zip code is required.";
   } else if (!/^\d{5}$/.test(zip)) {
     fieldErrors.zip = "Enter a valid 5-digit zip code.";
-  }
-
-  if (!timeline) {
-    fieldErrors.timeline = "Please select a timeline.";
-  } else if (!TIMELINE_OPTIONS.includes(timeline as SellInquiryTimeline)) {
-    fieldErrors.timeline = "Please select a valid timeline.";
   }
 
   return {

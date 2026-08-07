@@ -303,7 +303,6 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "description": "Select any that apply, or leave blank if none.",
         "options": [
           "REO/Bank Owned",
-          "HUD Owned",
           "Agent Owned",
           "Fractional Ownership",
           "LLC",
@@ -330,6 +329,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "houseNumberDirection",
         "label": "House Number Direction",
         "type": "radio",
+        "status": "hidden-in-jotform",
         "description": "Optional N / S / E / W for the house number (Utah grid). Leave blank if unknown — agent/VA can fill later.",
         "options": [
           "N",
@@ -343,6 +343,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "streetDirection",
         "label": "Street Name Direction",
         "type": "radio",
+        "status": "hidden-in-jotform",
         "description": "Optional N / S / E / W for the street name or number. Leave blank if unknown — agent/VA can fill later.",
         "options": [
           "N",
@@ -378,14 +379,14 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "North / South Coordinate",
         "type": "number",
         "placeholder": "e.g., 2100",
-        "description": "Utah grid north–south address number (optional). Agent/VA can fill if blank."
+        "description": "Utah grid north–south address number (optional; approximate is fine). Example: for 2100 S Main, enter 2100. Agent/VA can fill if blank."
       },
       {
         "id": "coordEastWest",
         "label": "East / West Coordinate",
         "type": "number",
         "placeholder": "e.g., 1300",
-        "description": "Utah grid east–west address number (optional). Agent/VA can fill if blank."
+        "description": "Utah grid east–west address number (optional; approximate is fine). Example: for 1300 E, enter 1300. Agent/VA can fill if blank."
       },
       {
         "id": "projectSubdivision",
@@ -443,21 +444,24 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "listingEffectiveDate",
         "label": "Effective Date of Listing Agreement",
         "type": "text",
+        "status": "hidden-in-jotform",
         "placeholder": "MM/DD/YYYY",
-        "description": "Optional — VA/agent can fill when the listing agreement is signed."
+        "description": "Auto-filled from the signed listing agreement."
       },
       {
         "id": "listingExpirationDate",
         "label": "Expiration Date",
         "type": "text",
+        "status": "hidden-in-jotform",
         "placeholder": "MM/DD/YYYY",
-        "description": "Optional — VA/agent can fill when the listing agreement is signed."
+        "description": "Auto-filled as agreement signed date + 6 months."
       },
       {
         "id": "listingType",
         "label": "Listing Type",
         "type": "radio",
-        "description": "Optional — defaults to Exclusive Right to Sell (ERS) if left blank.",
+        "status": "hidden-in-jotform",
+        "description": "Defaults to Exclusive Right to Sell (ERS).",
         "options": [
           "Exclusive Right to Sell (ERS)",
           "Exclusive Agency (EAL)"
@@ -486,16 +490,20 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       },
       {
         "id": "possession",
-        "label": "Possession",
-        "type": "text",
-        "placeholder": "e.g., Upon Closing, Immediate, Negotiable",
-        "description": "When the buyer may take possession (optional)."
+        "label": "When the buyer may take possession (optional)",
+        "type": "select",
+        "options": [
+          "Recording",
+          "Negotiable"
+        ],
+        "otherText": false
       },
       {
         "id": "contactType",
         "label": "Contact Type",
         "type": "radio",
-        "description": "Who to contact for appointments and access (optional).",
+        "status": "hidden-in-jotform",
+        "description": "Who to contact for appointments and access.",
         "options": [
           "Agent",
           "Owner",
@@ -507,40 +515,45 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "appointmentContact",
         "label": "Contact for Appointments & Access",
         "type": "text",
+        "status": "hidden-in-jotform",
         "placeholder": "Name of contact person"
       },
       {
         "id": "contactPhone1",
         "label": "Contact Phone 1",
         "type": "phone",
+        "status": "hidden-in-jotform",
         "placeholder": "(000) 000-0000"
       },
       {
         "id": "contactPhone2",
         "label": "Contact Phone 2",
         "type": "phone",
+        "status": "hidden-in-jotform",
         "placeholder": "(000) 000-0000"
       },
       {
         "id": "listingAgentName",
         "label": "Listing Agent",
         "type": "text",
+        "status": "hidden-in-jotform",
         "placeholder": "Agent name",
-        "description": "Optional — VA/agent can fill."
+        "description": "Staff default — Blair Allen."
       },
       {
         "id": "listingCoAgentName",
         "label": "Co-Agent",
         "type": "text",
-        "placeholder": "Co-agent name, if any",
-        "description": "Optional — VA/agent can fill."
+        "status": "hidden-in-jotform",
+        "placeholder": "Co-agent name, if any"
       },
       {
         "id": "listingOfficeName",
         "label": "Office Name",
         "type": "text",
+        "status": "hidden-in-jotform",
         "placeholder": "Listing office / brokerage",
-        "description": "Optional — VA/agent can fill."
+        "description": "Staff default — Kelly Wright Real Estate."
       },
       {
         "id": "schools",
@@ -964,13 +977,14 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "yearBuilt",
         "label": "Year Built",
         "type": "number",
-        "required": true,
+        "required": false,
         "placeholder": "e.g., 1998"
       },
       {
         "id": "effectiveYearBuilt",
         "label": "Effective Year Built",
         "type": "number",
+        "status": "hidden-in-jotform",
         "placeholder": "e.g., 1998",
         "description": "Leave blank if same as year built."
       },
@@ -978,7 +992,8 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "noAssignedParcelNumber",
         "label": "No assigned parcel number?",
         "type": "radio",
-        "required": true,
+        "status": "hidden-in-jotform",
+        "required": false,
         "options": [
           "No",
           "Yes"
@@ -990,7 +1005,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "taxParcelNumber",
         "label": "Tax Parcel Number (APN)",
         "type": "text",
-        "required": true,
+        "required": false,
         "status": "hidden-in-jotform",
         "placeholder": "e.g., 12-34-56-789",
         "description": "Enter the parcel number from your property tax statement if known."
@@ -999,6 +1014,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "estimatedTaxes",
         "label": "Estimated Taxes ($)",
         "type": "currency",
+        "status": "hidden-in-jotform",
         "placeholder": "e.g., $3,200",
         "description": "Annual estimated property taxes, if known."
       },
@@ -1013,7 +1029,8 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "lotSize",
         "label": "Lot Size (Acres)",
         "type": "text",
-        "required": true,
+        "required": false,
+        "status": "hidden-in-jotform",
         "placeholder": "e.g., .23",
         "description": "What size is the parcel?"
       },
@@ -1021,6 +1038,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "lotFrontage",
         "label": "Frontage",
         "type": "text",
+        "status": "hidden-in-jotform",
         "placeholder": "e.g., 80 ft",
         "description": "Lot frontage measurement, if known."
       },
@@ -1028,6 +1046,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "lotSide",
         "label": "Side",
         "type": "text",
+        "status": "hidden-in-jotform",
         "placeholder": "e.g., 120 ft",
         "description": "Lot side measurement, if known."
       },
@@ -1035,6 +1054,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "lotBack",
         "label": "Back",
         "type": "text",
+        "status": "hidden-in-jotform",
         "placeholder": "e.g., 80 ft",
         "description": "Lot back measurement, if known."
       },
@@ -1042,6 +1062,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "lotIrregularShape",
         "label": "Irregular Shape?",
         "type": "radio",
+        "status": "hidden-in-jotform",
         "options": [
           "Yes",
           "No"
@@ -1788,7 +1809,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "q184-doesthe",
         "type": "radio",
-        "label": "Pool Available?",
+        "label": "Pool Available? (including HOA)",
         "required": true,
         "options": [
           "Yes",
@@ -1972,7 +1993,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "q39-typea39",
         "type": "checkbox",
         "label": "Storage",
-        "required": true,
+        "required": false,
         "options": [
           "Basement",
           "Carport",
@@ -2068,7 +2089,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "q38-zoning",
         "type": "checkbox",
         "label": "Zoning",
-        "required": true,
+        "required": false,
         "options": [
           "Agricultural",
           "Commercial",
@@ -2296,6 +2317,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "q100-showinginstructions",
         "type": "textarea",
         "label": "Showing Instructions (remarks)",
+        "status": "hidden-in-jotform",
         "placeholder": "Please share any important access information and how to handle those items. (Pets, Alarms, Tenants, etc.)  Please be as detailed as possible."
       },
       {
@@ -2303,7 +2325,8 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "type": "checkbox",
         "label": "Show Instructions",
         "required": false,
-        "description": "Select all that apply for the Data Form (optional — occupancy still used as a fallback).",
+        "status": "hidden-in-jotform",
+        "description": "Staff defaults — Call Showing Service, Use Aligned Showings, Key Box Electronic.",
         "options": [
           "Agent Has Key",
           "Appt / Use Lockbox",
@@ -2334,11 +2357,14 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
       {
         "id": "field-210",
         "type": "content",
-        "content": "Title Company\nWould you like us to open your title work with Prime Title Co?\n(This will expedite the process and they will be notified upon listing)\n"
+        "content": "Title Company\nWould you like us to open your title work with Steed Title Company?\nOpening with Steed helps expedite the listing — they will be notified when you go live.\n"
       },
       {
         "id": "q207-typea207",
         "type": "radio",
+        "label": "Open title work with Steed Title Company?",
+        "description": "Steed Title Company is our preferred partner. Choosing Yes helps us open escrow quickly when your listing goes live.",
+        "required": true,
         "options": [
           "Yes",
           "No, I have someone else"
@@ -2381,19 +2407,21 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "id": "q97-publicremarks",
         "type": "textarea",
         "label": "Public Remarks / House Description",
+        "description": "Buyers see this on MLS, Zillow, Redfin, and Realtor.com. Highlight what makes the home stand out (light, layout, updates, location). Example: \"Bright open kitchen with quartz counters, main-level primary suite, and mountain views from the backyard deck.\"",
         "placeholder": "Please give a description of the home highlighting it's best features.  We may modify it with your approval prior to posting on the MLS."
       },
       {
         "id": "exclusionsRemarks",
         "type": "textarea",
         "label": "Exclusions Remarks",
+        "description": "Not public — for your agent and the contract. List items that do NOT convey with the sale. Examples: \"Seller's washer/dryer\", \"dining room chandelier\", \"mounted TV in living room\".",
         "placeholder": "List any items explicitly excluded from the sale."
       },
       {
         "id": "q98-commentsto",
         "type": "textarea",
-        "label": "Comments To Utah Digs",
-        "placeholder": "These comments will only be seen by us.  Any special features, situations, concerns etc."
+        "label": "Comments To Glidere",
+        "placeholder": "These comments will only be seen by us.  Any special features, instructions, concerns etc."
       }
     ]
   },

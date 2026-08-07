@@ -57,7 +57,6 @@ fields:
     description: Select any that apply, or leave blank if none.
     options:
       - REO/Bank Owned
-      - HUD Owned
       - Agent Owned
       - Fractional Ownership
       - LLC

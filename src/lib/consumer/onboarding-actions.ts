@@ -458,7 +458,7 @@ export async function scheduleOnboardingCallAction(
       data: {
         scheduledCallAt,
         callNotes: callNotes || null,
-        onboardingStatus: OnboardingStatus.PHOTOS_PENDING,
+        onboardingStatus: OnboardingStatus.MLS_INTAKE_PENDING,
       },
     });
   } catch (error) {
@@ -504,5 +504,5 @@ export async function scheduleOnboardingCallAction(
   }
 
   revalidateOnboarding(listingId);
-  redirect(`${buildOnboardingPath(listingId)}/photos`);
+  redirect(`/account?mlsPrompt=1&listing=${encodeURIComponent(listingId)}`);
 }

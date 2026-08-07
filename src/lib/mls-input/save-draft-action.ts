@@ -12,6 +12,7 @@ import { generateUniqueListingSlug } from "@/lib/crm/slug";
 import { prisma } from "@/lib/db";
 import type { Prisma } from "@/generated/prisma/client";
 import { validateMlsInputStep } from "./validation";
+import { mergeMlsStaffDefaults } from "./staff-defaults";
 import type { MlsDraftState } from "./types";
 
 function appBaseUrl(): string {
@@ -60,7 +61,7 @@ export async function saveMlsDraftAction(
 
   let values: Record<string, unknown>;
   try {
-    values = JSON.parse(valuesJson) as Record<string, unknown>;
+    values = mergeMlsStaffDefaults(JSON.parse(valuesJson) as Record<string, unknown>);
   } catch {
     return { error: "Invalid form data." };
   }

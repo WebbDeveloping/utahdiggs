@@ -9,6 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
+import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -359,29 +360,46 @@ export default function FieldRenderer({
   }
 
   const isMultiline = field.type === "textarea";
+  const isCurrency = field.type === "currency";
   const inputType =
     field.type === "email"
       ? "email"
       : field.type === "number"
         ? "number"
-        : field.type === "currency"
-          ? "text"
-          : "text";
+        : "text";
+
+  const rawCurrency = ((value as string) ?? "").replace(/^\$\s*/, "");
 
   return (
     <TextField
       label={label}
       required={field.required}
       type={inputType}
-      value={(value as string) ?? ""}
-      onChange={(e) => onChange(field.id, e.target.value)}
+      value={isCurrency ? rawCurrency : ((value as string) ?? "")}
+      onChange={(e) => {
+        if (isCurrency) {
+          const digits = e.target.value.replace(/[^\d.,]/g, "");
+          onChange(field.id, digits);
+          return;
+        }
+        onChange(field.id, e.target.value);
+      }}
       error={!!error}
       helperText={error ?? helper}
-      placeholder={field.placeholder}
+      placeholder={isCurrency ? (field.placeholder ?? "0") : field.placeholder}
       multiline={isMultiline}
       minRows={isMultiline ? 4 : undefined}
       fullWidth
       sx={inputSx}
+      slotProps={
+        isCurrency
+          ? {
+              input: {
+                startAdornment: <InputAdornment position="start">$</InputAdornment>,
+              },
+            }
+          : undefined
+      }
     />
   );
 }

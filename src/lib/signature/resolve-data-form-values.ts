@@ -649,7 +649,7 @@ export function resolveDataFormValues(
   if (listingType === "Exclusive Agency (EAL)") {
     setCheckbox(checkboxes, "listingType_Exclusive Agency (EAL)", true);
   } else {
-    // Default ERS when blank (Utah Digs standard listing agreement)
+    // Default ERS when blank (Glidere standard listing agreement)
     setCheckbox(checkboxes, "listingType_Exclusive Right to Sell (ERS)", true);
   }
 

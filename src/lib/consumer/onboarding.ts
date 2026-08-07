@@ -4,7 +4,6 @@ export type OnboardingStepId =
   | "plan"
   | "agreement"
   | "call"
-  | "photos"
   | "expectations"
   | "mls";
 
@@ -49,17 +48,8 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     required: true,
   },
   {
-    id: "photos",
-    order: 4,
-    title: "Add photos",
-    description: "Upload listing photos or request a professional tour",
-    href: (id) => `/account/onboarding/${id}/photos`,
-    requires: ["call"],
-    required: true,
-  },
-  {
     id: "expectations",
-    order: 5,
+    order: 4,
     title: "What to expect",
     description: "A quick overview of the listing process",
     href: (id) => `/account/onboarding/${id}#expectations`,
@@ -68,11 +58,11 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
   },
   {
     id: "mls",
-    order: 6,
+    order: 5,
     title: "MLS listing intake",
     description: "Complete the full WFRMLS form (~20–25 min)",
     href: (id) => `/account/listings/new/mls-input?draft=${encodeURIComponent(id)}`,
-    requires: ["photos"],
+    requires: ["call"],
     required: true,
   },
 ];
@@ -117,11 +107,6 @@ export function isStepComplete(
       return listing.agreementSignedAt != null;
     case "call":
       return listing.scheduledCallAt != null;
-    case "photos":
-      return (
-        onboardingStatusIndex(listing.onboardingStatus) >=
-        onboardingStatusIndex("MLS_INTAKE_PENDING")
-      );
     case "expectations":
       return true;
     case "mls":
@@ -151,12 +136,6 @@ export function getCurrentStepId(listing: OnboardingListingFields): OnboardingSt
   if (!listing.servicePlan) return "plan";
   if (!listing.agreementSignedAt) return "agreement";
   if (!listing.scheduledCallAt) return "call";
-  if (
-    onboardingStatusIndex(listing.onboardingStatus) <
-    onboardingStatusIndex("MLS_INTAKE_PENDING")
-  ) {
-    return "photos";
-  }
   return "mls";
 }
 
@@ -173,7 +152,8 @@ export function formatOnboardingStatus(status: OnboardingStatus): string {
     case "CALL_PENDING":
       return "Schedule call";
     case "PHOTOS_PENDING":
-      return "Add photos";
+      // Legacy status — photos are no longer an onboarding gate
+      return "MLS intake";
     case "MLS_INTAKE_PENDING":
       return "MLS intake";
     case "ONBOARDING_COMPLETE":

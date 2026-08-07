@@ -1,6 +1,6 @@
 # MLS Input Form Spec
 
-Structured YAML specification for the Utah Digs MLS listing intake form, converted from the original JotForm prototype.
+Structured YAML specification for the Glidere MLS listing intake form, converted from the original JotForm prototype.
 
 **Live JotForm:** [261498349657980](https://form.jotform.com/261498349657980)
 
@@ -76,7 +76,7 @@ See [`conditions.yaml`](conditions.yaml) for:
 - Pool features when pool = Yes
 - Garage/carport capacity when parking types selected
 - Owner vs tenant showing contact flows
-- Alternate title company when Prime Title declined
+- Alternate title company when Steed Title declined
 - Secondary owner signature when two owners
 
 ## Known gaps

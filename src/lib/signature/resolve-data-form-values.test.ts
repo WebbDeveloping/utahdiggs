@@ -437,7 +437,7 @@ describe("resolveDataFormValues", () => {
         contactPhone2: "8015552222",
         listingAgentName: "Alex Agent",
         listingCoAgentName: "Casey Co",
-        listingOfficeName: "Utah Digs Realty",
+        listingOfficeName: "Glidere Realty",
       }),
     );
 
@@ -457,7 +457,7 @@ describe("resolveDataFormValues", () => {
     assert.equal(result.text.contactPhone2, "8015552222");
     assert.equal(result.text.listingAgentName, "Alex Agent");
     assert.equal(result.text.listingCoAgentName, "Casey Co");
-    assert.equal(result.text.listingOfficeName, "Utah Digs Realty");
+    assert.equal(result.text.listingOfficeName, "Glidere Realty");
   });
 
   it("defaults listing type to ERS and maps legacy shortSale radio", () => {

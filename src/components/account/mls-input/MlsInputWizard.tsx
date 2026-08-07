@@ -25,13 +25,19 @@ import MlsInputStepView from "./MlsInputStep";
 import MlsDraftDeleteButton from "@/components/account/MlsDraftDeleteButton";
 import { buildListingDocumentsPath } from "@/lib/consumer/listing-documents-path";
 import { LISTING_INTAKE_PATH } from "@/lib/consumer/listing-prefill";
+import { applyClearDependents } from "@/lib/mls-input/clear-dependents";
+import {
+  listingAgreementDateDefaults,
+  mergeMlsStaffDefaults,
+} from "@/lib/mls-input/staff-defaults";
 
 function buildInitialValues(
   user: MlsInputWizardProps["user"],
   initialValues?: MlsInputWizardProps["initialValues"],
   initialData?: Record<string, unknown>,
+  agreementSignedAt?: Date | string | null,
 ): Record<string, unknown> {
-  const base: Record<string, unknown> = {
+  let base: Record<string, unknown> = {
     ...(initialData ?? {}),
   };
 
@@ -63,12 +69,31 @@ function buildInitialValues(
     };
   }
 
+  base = mergeMlsStaffDefaults(base);
+
+  if (agreementSignedAt) {
+    const signed =
+      agreementSignedAt instanceof Date
+        ? agreementSignedAt
+        : new Date(agreementSignedAt);
+    if (!Number.isNaN(signed.getTime())) {
+      const dates = listingAgreementDateDefaults(signed);
+      if (!base.listingEffectiveDate) {
+        base.listingEffectiveDate = dates.listingEffectiveDate;
+      }
+      if (!base.listingExpirationDate) {
+        base.listingExpirationDate = dates.listingExpirationDate;
+      }
+    }
+  }
+
   return base;
 }
 
 export default function MlsInputWizard({
   user,
   initialValues,
+  agreementSignedAt,
   draftListingId,
   initialStep = 1,
   initialData,
@@ -77,7 +102,7 @@ export default function MlsInputWizard({
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [listingId, setListingId] = useState<string | undefined>(draftListingId);
   const [values, setValues] = useState<Record<string, unknown>>(() =>
-    buildInitialValues(user, initialValues, initialData),
+    buildInitialValues(user, initialValues, initialData, agreementSignedAt),
   );
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
@@ -123,7 +148,7 @@ export default function MlsInputWizard({
   }, [fieldErrors, step]);
 
   const handleChange = useCallback((fieldId: string, value: unknown) => {
-    setValues((prev) => ({ ...prev, [fieldId]: value }));
+    setValues((prev) => applyClearDependents(prev, fieldId, value));
     setFieldErrors((prev) => {
       if (!prev[fieldId]) return prev;
       const next = { ...prev };

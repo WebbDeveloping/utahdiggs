@@ -7,10 +7,17 @@ fields:
       id: 97
       name: q97_publicRemarks
     label: Public Remarks / House Description
+    description: >-
+      Buyers see this on MLS, Zillow, Redfin, and Realtor.com. Highlight what makes the home stand out
+      (light, layout, updates, location). Example: "Bright open kitchen with quartz counters, main-level
+      primary suite, and mountain views from the backyard deck."
     placeholder: "Please give a description of the home highlighting it's best features.  We may modify it with your approval prior to posting on the MLS."
   - id: exclusionsRemarks
     type: textarea
     label: Exclusions Remarks
+    description: >-
+      Not public — for your agent and the contract. List items that do NOT convey with the sale.
+      Examples: "Seller's washer/dryer", "dining room chandelier", "mounted TV in living room".
     placeholder: "List any items explicitly excluded from the sale."
     jotform:
       id: TODO
@@ -20,5 +27,5 @@ fields:
     jotform:
       id: 98
       name: q98_commentsTo
-    label: Comments To Utah Digs
-    placeholder: "These comments will only be seen by us.  Any special features, situations, concerns etc."
+    label: Comments To Glidere
+    placeholder: "These comments will only be seen by us.  Any special features, instructions, concerns etc."

@@ -204,9 +204,12 @@ export default function CrmMlsIntakeView({
       </Paper>
 
       {steps.map((step) => {
-        const visibleFields = step.fields.filter(
-          (f) => f.type !== "content" && isFieldVisible(f.id, data),
-        );
+        const visibleFields = step.fields.filter((f) => {
+          if (f.type === "content") return false;
+          if (isFieldVisible(f.id, data)) return true;
+          // Staff-hidden defaults still appear in CRM when populated.
+          return !isEmptyFormattedValue(formatFieldValue(f, data[f.id]));
+        });
         if (visibleFields.length === 0) return null;
 
         const sectionText = sectionCopyText(visibleFields, data);
@@ -239,6 +242,7 @@ export default function CrmMlsIntakeView({
               {visibleFields.map((field) => {
                 const value = formatFieldValue(field, data[field.id]);
                 const canCopy = !isEmptyFormattedValue(value);
+                const looksLikeRawJson = value.trimStart().startsWith("{");
 
                 return (
                   <Box
@@ -258,7 +262,10 @@ export default function CrmMlsIntakeView({
                         variant="body2"
                         sx={{
                           whiteSpace: "pre-wrap",
-                          fontFamily: field.type === "matrix" ? "monospace" : undefined,
+                          fontFamily:
+                            field.type === "matrix" && looksLikeRawJson
+                              ? "monospace"
+                              : undefined,
                         }}
                       >
                         {value}

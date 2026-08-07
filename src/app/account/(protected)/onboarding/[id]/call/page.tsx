@@ -48,10 +48,10 @@ export default async function OnboardingCallPage({ params }: OnboardingCallPageP
       </LinkButton>
       {listing.scheduledCallAt ? (
         <LinkButton
-          href={`${buildOnboardingPath(listing.id)}/photos`}
+          href={`/account?mlsPrompt=1&listing=${encodeURIComponent(listing.id)}`}
           variant="contained"
         >
-          Continue to photos
+          Continue to MLS intake
         </LinkButton>
       ) : null}
     </Stack>

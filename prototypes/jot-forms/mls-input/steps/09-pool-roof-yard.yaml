@@ -6,7 +6,7 @@ fields:
     jotform:
       id: 184
       name: q184_doesThe
-    label: Pool Available?
+    label: Pool Available? (including HOA)
     required: true
     options:
       - "Yes"

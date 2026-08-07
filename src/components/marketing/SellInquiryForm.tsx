@@ -20,10 +20,7 @@ import {
   completeSellInquiryAction,
   type SellInquiryState,
 } from "@/lib/consumer/sell-inquiry-actions";
-import { TIMELINE_OPTIONS } from "@/lib/consumer/sell-inquiry-validation";
 import PhoneTextField from "@/components/ui/PhoneTextField";
-
-type Timeline = (typeof TIMELINE_OPTIONS)[number];
 
 type FormValues = {
   firstName: string;
@@ -34,7 +31,6 @@ type FormValues = {
   city: string;
   state: string;
   zip: string;
-  timeline: Timeline | "";
 };
 
 type FormErrors = Partial<
@@ -58,12 +54,11 @@ const emptyForm = (
       ? "Utah"
       : initialState || "Utah",
   zip: initialZip,
-  timeline: "",
 });
 
 const inputSx = {
   "& .MuiOutlinedInput-root": {
-    borderRadius: 3,
+    borderRadius: 1.5,
     backgroundColor: "background.default",
   },
 };
@@ -94,8 +89,6 @@ function validateStepOne(values: FormValues): FormErrors {
   } else if (!/^\d{5}$/.test(zip)) {
     errors.zip = "Enter a valid 5-digit zip code";
   }
-
-  if (!values.timeline) errors.timeline = "Please select a timeline";
 
   return errors;
 }
@@ -185,17 +178,17 @@ export default function SellInquiryForm({
       <input type="hidden" name="city" value={values.city.trim()} />
       <input type="hidden" name="state" value={values.state} />
       <input type="hidden" name="zip" value={values.zip.trim()} />
-      <input type="hidden" name="timeline" value={values.timeline} />
+      <input type="hidden" name="timeline" value="Not specified" />
     </>
   );
 
   const formShellSx = {
     backgroundColor: "background.paper",
-    borderRadius: 4,
+    borderRadius: 2,
     boxShadow: "0 4px 24px rgba(19, 33, 28, 0.08)",
     border: "1px solid",
     borderColor: "divider",
-    p: { xs: 2.5, sm: 3.5 },
+    p: { xs: 3, sm: 4 },
   };
 
   if (step === 2 && !isLoggedIn) {
@@ -478,7 +471,7 @@ export default function SellInquiryForm({
               value={values.state}
               onChange={(e) => updateField("state", e.target.value)}
               sx={{
-                borderRadius: 3,
+                borderRadius: 1.5,
                 backgroundColor: "background.default",
               }}
             >
@@ -504,49 +497,6 @@ export default function SellInquiryForm({
             slotProps={{ formHelperText: { sx: { mx: 0, minHeight: 20 } } }}
             sx={inputSx}
           />
-        </Grid>
-        <Grid size={{ xs: 12 }}>
-          <FormControl
-            fullWidth
-            required
-            error={Boolean(mergedErrors.timeline)}
-          >
-            <InputLabel id="sell-inquiry-timeline-label" shrink>
-              How soon do you want to sell?
-            </InputLabel>
-            <Select
-              name="timeline"
-              labelId="sell-inquiry-timeline-label"
-              label="How soon do you want to sell?"
-              value={values.timeline}
-              onChange={(e) =>
-                updateField("timeline", e.target.value as Timeline)
-              }
-              displayEmpty
-              renderValue={(selected) =>
-                selected ? (
-                  selected
-                ) : (
-                  <Typography component="span" color="text.secondary">
-                    Select a timeline
-                  </Typography>
-                )
-              }
-              sx={{
-                borderRadius: 3,
-                backgroundColor: "background.default",
-              }}
-            >
-              {TIMELINE_OPTIONS.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-            <FormHelperText sx={{ mx: 0, minHeight: 20 }}>
-              {mergedErrors.timeline ?? " "}
-            </FormHelperText>
-          </FormControl>
         </Grid>
       </Grid>
 

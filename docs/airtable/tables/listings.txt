@@ -149,15 +149,15 @@ string
 A valid URL (e.g. airtable.com or https://airtable.com/universe).
  
 Example values
-"https://portal.utahdigs.com/8278-s-resaca-dr-l1-sandy-ut-84070-kvmx"
+"https://glidere.com/8278-s-resaca-dr-l1-sandy-ut-84070-kvmx"
 
-"https://portal.utahdigs.com/123-test-lane-salt-lake-city-ut-84101-rjia"
+"https://glidere.com/123-test-lane-salt-lake-city-ut-84101-rjia"
 
-"https://portal.utahdigs.com/330-e-7635-s-sandy-ut-84047-4vqo"
+"https://glidere.com/330-e-7635-s-sandy-ut-84047-4vqo"
 
-"https://portal.utahdigs.com/340-e-7635-s-sandy-ut-84047-5ov1"
+"https://glidere.com/340-e-7635-s-sandy-ut-84047-5ov1"
 
-"https://portal.utahdigs.com/350-e-7635-s-sandy-ut-84047-vl75"
+"https://glidere.com/350-e-7635-s-sandy-ut-84047-vl75"
 
 Passcodefld1GnKtltIN0NOGWText
 string
@@ -865,7 +865,7 @@ base('Listings').create([
       "List Date": "2026-05-01",
       "MLS Number": "2138751",
       "Portal Slug": "8278-s-resaca-dr-l1-sandy-ut-84070-kvmx",
-      "Portal URL": "https://portal.utahdigs.com/8278-s-resaca-dr-l1-sandy-ut-84070-kvmx",
+      "Portal URL": "https://glidere.com/8278-s-resaca-dr-l1-sandy-ut-84070-kvmx",
       "Passcode": "5057",
       "Lofty Transaction ID": "1775045",
       "Sellers": [
@@ -914,7 +914,7 @@ base('Listings').create([
     "fields": {
       "Address": "123 Test Lane, Salt Lake City, UT 84101",
       "Portal Slug": "123-test-lane-salt-lake-city-ut-84101-rjia",
-      "Portal URL": "https://portal.utahdigs.com/123-test-lane-salt-lake-city-ut-84101-rjia",
+      "Portal URL": "https://glidere.com/123-test-lane-salt-lake-city-ut-84101-rjia",
       "Passcode": "5057",
       "Seller Email": "blairjallen@gmail.com",
       "Seller Name": "Blair Allen",
@@ -965,7 +965,7 @@ base('Listings').update([
       "List Date": "2026-05-01",
       "MLS Number": "2138751",
       "Portal Slug": "8278-s-resaca-dr-l1-sandy-ut-84070-kvmx",
-      "Portal URL": "https://portal.utahdigs.com/8278-s-resaca-dr-l1-sandy-ut-84070-kvmx",
+      "Portal URL": "https://glidere.com/8278-s-resaca-dr-l1-sandy-ut-84070-kvmx",
       "Passcode": "5057",
       "Lofty Transaction ID": "1775045",
       "Sellers": [
@@ -1015,7 +1015,7 @@ base('Listings').update([
     "fields": {
       "Address": "123 Test Lane, Salt Lake City, UT 84101",
       "Portal Slug": "123-test-lane-salt-lake-city-ut-84101-rjia",
-      "Portal URL": "https://portal.utahdigs.com/123-test-lane-salt-lake-city-ut-84101-rjia",
+      "Portal URL": "https://glidere.com/123-test-lane-salt-lake-city-ut-84101-rjia",
       "Passcode": "5057",
       "Seller Email": "blairjallen@gmail.com",
       "Seller Name": "Blair Allen",
@@ -1035,7 +1035,7 @@ base('Listings').update([
       "List Date": "2026-02-24",
       "MLS Number": "2139122",
       "Portal Slug": "330-e-7635-s-sandy-ut-84047-4vqo",
-      "Portal URL": "https://portal.utahdigs.com/330-e-7635-s-sandy-ut-84047-4vqo",
+      "Portal URL": "https://glidere.com/330-e-7635-s-sandy-ut-84047-4vqo",
       "Passcode": "0122",
       "Sellers": [
         "recsmpmLVS6BIRHWO",
