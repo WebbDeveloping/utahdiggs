@@ -116,6 +116,7 @@ function buildDataFormPreviewIntake(): FullMlsInputValues {
     "q191-propertyoccupancy": "Owner Occupied",
     showInstructions: [],
     "q97-publicremarks": "Preview fill for Data Form field mapper.",
+    "q207-typea207": "Yes",
     "q20-signature": "https://example.com/signature.png",
     "q20-initials": "https://example.com/initials.png",
     "q23-signature23": "",

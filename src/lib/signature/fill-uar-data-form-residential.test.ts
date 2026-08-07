@@ -123,6 +123,7 @@ function buildFixtureIntake(): FullMlsInputValues {
     "q38-zoning": ["Single-Family"],
     "q40-typea40": ["Cash"],
     "q191-propertyoccupancy": "Owner Occupied",
+    "q207-typea207": "Yes",
     "q20-signature": "https://example.com/signature.png",
     "q20-initials": "https://example.com/initials.png",
     "q23-signature23": "",

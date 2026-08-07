@@ -124,6 +124,7 @@ function buildFixture(overrides: Partial<FullMlsInputValues> = {}): FullMlsInput
     "q191-propertyoccupancy": "Owner Occupied",
     showInstructions: [],
     "q97-publicremarks": "Nice home near parks.",
+    "q207-typea207": "Yes",
     "q20-signature": "https://example.com/signature.png",
     "q20-initials": "https://example.com/initials.png",
     "q23-signature23": "",
