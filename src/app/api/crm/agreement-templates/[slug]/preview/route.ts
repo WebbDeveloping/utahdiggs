@@ -88,6 +88,7 @@ function buildDataFormPreviewIntake(): FullMlsInputValues {
     aduCurrentlyRented: "No",
     aduMonthlyRent: "0",
     levelCount: "2",
+    hasBasement: "Yes",
     "q26-typea26": ["Full"],
     basementFinished: "Partial",
     "q33-flooring": ["Hardwood"],

@@ -245,7 +245,7 @@ fields:
     type: text
     status: hidden-in-jotform
     placeholder: "Listing office / brokerage"
-    description: Staff default — Kelly Wright Real Estate.
+    description: Staff default — Kelly Right Real Estate.
     jotform:
       id: TODO
       name: q_listingOfficeName

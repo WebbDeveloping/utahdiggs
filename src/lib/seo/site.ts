@@ -8,7 +8,7 @@ export const AGENT_EMAIL = "blair@glidere.com";
 
 export const NOTIFICATIONS_FROM = `${SITE_NAME} <notifications@glidere.com>`;
 
-export const BROKERAGE_LINE = `${SITE_NAME} | Kelly Wright RE`;
+export const BROKERAGE_LINE = `${SITE_NAME} | Kelly Right RE`;
 
 export const DEFAULT_TITLE = "Glide RE — Sell smarter. Keep more.";
 

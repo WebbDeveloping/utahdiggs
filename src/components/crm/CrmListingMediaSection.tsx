@@ -7,7 +7,6 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import UploadFileOutlinedIcon from "@mui/icons-material/UploadFileOutlined";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -21,36 +20,22 @@ import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { upload } from "@vercel/blob/client";
 import {
-  createCrmListingDocumentFromUpload,
   createCrmListingPhotoFromUpload,
   deleteCrmListingDocument,
 } from "@/lib/crm/document-actions";
-import { buildCrmDocumentHref } from "@/lib/storage/document-access";
 import { partitionListingDocuments } from "@/lib/storage/document-classify";
 import {
-  ALLOWED_DOCUMENT_TYPES,
   ALLOWED_PHOTO_TYPES,
-  buildDocumentPathname,
   buildPhotoPathname,
-  MAX_DOCUMENT_BYTES,
   MAX_PHOTO_BYTES,
   MAX_PHOTO_COUNT,
 } from "@/lib/storage/blob";
 
 const PHOTO_ACCEPT = ALLOWED_PHOTO_TYPES.join(",");
-const DOCUMENT_ACCEPT = ALLOWED_DOCUMENT_TYPES.join(",");
 const MAX_PHOTO_MB = Math.round(MAX_PHOTO_BYTES / (1024 * 1024));
-const MAX_DOCUMENT_MB = Math.round(MAX_DOCUMENT_BYTES / (1024 * 1024));
 
 type ListingDocument = {
   id: string;
@@ -64,23 +49,9 @@ type CrmListingMediaSectionProps = {
   documents: ListingDocument[];
 };
 
-type DeleteTarget = {
-  id: string;
-  name: string;
-  kind: "photo" | "document";
-};
-
 function nameFromFile(filename: string, fallback: string): string {
   const base = filename.replace(/\.[^.]+$/, "");
   return base.replace(/[-_]+/g, " ").trim() || fallback;
-}
-
-function formatUploadedAt(value: Date | string): string {
-  return new Date(value).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
 }
 
 export default function CrmListingMediaSection({
@@ -89,19 +60,13 @@ export default function CrmListingMediaSection({
 }: CrmListingMediaSectionProps) {
   const router = useRouter();
   const photoInputRef = useRef<HTMLInputElement>(null);
-  const docInputRef = useRef<HTMLInputElement>(null);
   const [isPending, startTransition] = useTransition();
 
-  const { photos, otherDocuments } = partitionListingDocuments(documents);
+  const { photos } = partitionListingDocuments(documents);
 
   const [photoUploading, setPhotoUploading] = useState(false);
-  const [docUploading, setDocUploading] = useState(false);
   const [photoError, setPhotoError] = useState<string | null>(null);
-  const [docError, setDocError] = useState<string | null>(null);
-  const [docSuccess, setDocSuccess] = useState<string | null>(null);
-  const [docName, setDocName] = useState("");
-  const [pendingDocUrl, setPendingDocUrl] = useState<string | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<ListingDocument | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -202,65 +167,6 @@ export default function CrmListingMediaSection({
     }
   }
 
-  async function handleDocumentFileSelect(files: FileList | null) {
-    const file = files?.[0];
-    if (!file) return;
-
-    setDocError(null);
-    setDocSuccess(null);
-    setDocUploading(true);
-    setPendingDocUrl(null);
-
-    try {
-      if (!(ALLOWED_DOCUMENT_TYPES as readonly string[]).includes(file.type)) {
-        setDocError("Only PDF, JPEG, PNG, and WebP files are allowed.");
-        return;
-      }
-      if (file.size > MAX_DOCUMENT_BYTES) {
-        setDocError(`Each file must be under ${MAX_DOCUMENT_MB} MB.`);
-        return;
-      }
-
-      const pathname = buildDocumentPathname(listingId, file.name);
-      const result = await upload(pathname, file, {
-        access: "public",
-        handleUploadUrl: `/api/crm/listings/${listingId}/documents/upload`,
-      });
-
-      setDocName(nameFromFile(file.name, "Document"));
-      setPendingDocUrl(result.url);
-    } catch (error) {
-      console.error(error);
-      setDocError("Upload failed. Please try again.");
-    } finally {
-      setDocUploading(false);
-      if (docInputRef.current) docInputRef.current.value = "";
-    }
-  }
-
-  async function handleSaveDocument() {
-    if (!pendingDocUrl || !docName.trim()) return;
-
-    setDocError(null);
-    setDocSuccess(null);
-
-    const result = await createCrmListingDocumentFromUpload(
-      listingId,
-      docName.trim(),
-      pendingDocUrl,
-    );
-
-    if (result.error) {
-      setDocError(result.error);
-      return;
-    }
-
-    setPendingDocUrl(null);
-    setDocName("");
-    setDocSuccess("Document saved successfully.");
-    refreshAfterMutation();
-  }
-
   async function handleConfirmDelete() {
     if (!deleteTarget) return;
 
@@ -278,252 +184,127 @@ export default function CrmListingMediaSection({
 
   return (
     <Paper elevation={0} sx={{ p: 2.5, border: "1px solid", borderColor: "divider" }}>
-      <Stack spacing={4}>
-        <Box>
-          <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Photos & documents
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Manage listing photos and transaction documents for this property.
-          </Typography>
-        </Box>
+      <Stack spacing={2}>
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={1}
+          sx={{ alignItems: { sm: "center" }, justifyContent: "space-between" }}
+        >
+          <Box>
+            <Typography variant="h6" sx={{ mb: 0.5 }}>
+              Photos
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              JPEG, PNG, or WebP up to {MAX_PHOTO_MB} MB each ({photos.length}/{MAX_PHOTO_COUNT}).
+              Transaction docs are on the Documents tab.
+            </Typography>
+          </Box>
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={
+              photoUploading ? <CircularProgress size={16} /> : <AddPhotoAlternateOutlinedIcon />
+            }
+            disabled={photoUploading || isPending || photos.length >= MAX_PHOTO_COUNT}
+            onClick={() => photoInputRef.current?.click()}
+          >
+            {photoUploading ? "Uploading…" : "Add photos"}
+          </Button>
+          <input
+            ref={photoInputRef}
+            type="file"
+            accept={PHOTO_ACCEPT}
+            multiple
+            hidden
+            onChange={(e) => void handlePhotoUpload(e.target.files)}
+          />
+        </Stack>
 
         {actionError ? <Alert severity="error">{actionError}</Alert> : null}
+        {photoError ? <Alert severity="error">{photoError}</Alert> : null}
 
-        <Stack spacing={2}>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={1}
-            sx={{ alignItems: { sm: "center" }, justifyContent: "space-between" }}
+        {photos.length === 0 ? (
+          <Paper variant="outlined" sx={{ p: 3, borderRadius: 2, textAlign: "center" }}>
+            <Typography color="text.secondary">No photos yet.</Typography>
+          </Paper>
+        ) : (
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(2, 1fr)",
+                sm: "repeat(3, 1fr)",
+                md: "repeat(4, 1fr)",
+              },
+              gap: 1.5,
+            }}
           >
-            <Box>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                Photos
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                JPEG, PNG, or WebP up to {MAX_PHOTO_MB} MB each ({photos.length}/{MAX_PHOTO_COUNT})
-              </Typography>
-            </Box>
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={
-                photoUploading ? <CircularProgress size={16} /> : <AddPhotoAlternateOutlinedIcon />
-              }
-              disabled={photoUploading || isPending || photos.length >= MAX_PHOTO_COUNT}
-              onClick={() => photoInputRef.current?.click()}
-            >
-              {photoUploading ? "Uploading…" : "Add photos"}
-            </Button>
-            <input
-              ref={photoInputRef}
-              type="file"
-              accept={PHOTO_ACCEPT}
-              multiple
-              hidden
-              onChange={(e) => void handlePhotoUpload(e.target.files)}
-            />
-          </Stack>
-
-          {photoError ? <Alert severity="error">{photoError}</Alert> : null}
-
-          {photos.length === 0 ? (
-            <Paper variant="outlined" sx={{ p: 3, borderRadius: 2, textAlign: "center" }}>
-              <Typography color="text.secondary">No photos yet.</Typography>
-            </Paper>
-          ) : (
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "repeat(2, 1fr)",
-                  sm: "repeat(3, 1fr)",
-                  md: "repeat(4, 1fr)",
-                },
-                gap: 1.5,
-              }}
-            >
-              {photos.map((photo, index) => (
+            {photos.map((photo, index) => (
+              <Box
+                key={photo.id}
+                sx={{
+                  position: "relative",
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  border: "1px solid",
+                  borderColor: "divider",
+                  aspectRatio: "4 / 3",
+                  bgcolor: "action.hover",
+                  cursor: "pointer",
+                }}
+                onClick={() => openLightbox(index)}
+              >
                 <Box
-                  key={photo.id}
+                  component="img"
+                  src={photo.url}
+                  alt={photo.name}
+                  sx={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+                <IconButton
+                  size="small"
+                  aria-label={`Delete ${photo.name}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDeleteTarget(photo);
+                  }}
                   sx={{
-                    position: "relative",
-                    borderRadius: 2,
-                    overflow: "hidden",
-                    border: "1px solid",
-                    borderColor: "divider",
-                    aspectRatio: "4 / 3",
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    bgcolor: "rgba(0,0,0,0.45)",
+                    color: "common.white",
+                    "&:hover": { bgcolor: "rgba(0,0,0,0.65)" },
                   }}
                 >
-                  <Box
-                    component="button"
-                    type="button"
-                    onClick={() => openLightbox(index)}
-                    aria-label={`View ${photo.name}`}
-                    sx={{
-                      border: 0,
-                      p: 0,
-                      m: 0,
-                      width: "100%",
-                      height: "100%",
-                      cursor: "pointer",
-                      display: "block",
-                      background: "none",
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={photo.url}
-                      alt={photo.name}
-                      sx={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                    />
-                  </Box>
-                  <IconButton
-                    size="small"
-                    aria-label={`Delete ${photo.name}`}
-                    onClick={() =>
-                      setDeleteTarget({ id: photo.id, name: photo.name, kind: "photo" })
-                    }
-                    sx={{
-                      position: "absolute",
-                      top: 6,
-                      right: 6,
-                      backgroundColor: "rgba(0,0,0,0.55)",
-                      color: "common.white",
-                      "&:hover": { backgroundColor: "rgba(0,0,0,0.75)" },
-                    }}
-                  >
-                    <DeleteOutlinedIcon fontSize="small" />
-                  </IconButton>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      position: "absolute",
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      px: 1,
-                      py: 0.5,
-                      backgroundColor: "rgba(0,0,0,0.55)",
-                      color: "common.white",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {photo.name}
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
-          )}
-        </Stack>
+                  <DeleteOutlinedIcon fontSize="small" />
+                </IconButton>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    px: 1,
+                    py: 0.5,
+                    backgroundColor: "rgba(0,0,0,0.55)",
+                    color: "common.white",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {photo.name}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        )}
 
-        <Stack spacing={2}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-            Documents
-          </Typography>
-
-          {otherDocuments.length === 0 ? (
-            <Paper variant="outlined" sx={{ p: 3, borderRadius: 2, textAlign: "center" }}>
-              <Typography color="text.secondary">No documents yet.</Typography>
-            </Paper>
-          ) : (
-            <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: 2 }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Uploaded</TableCell>
-                    <TableCell align="right">Actions</TableCell>
-                    <TableCell align="right" width={56} />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {otherDocuments.map((doc) => (
-                    <TableRow key={doc.id}>
-                      <TableCell>{doc.name}</TableCell>
-                      <TableCell>{formatUploadedAt(doc.uploadedAt)}</TableCell>
-                      <TableCell align="right">
-                        <Stack direction="row" spacing={2} sx={{ justifyContent: "flex-end" }}>
-                          <Link
-                            href={buildCrmDocumentHref(listingId, doc.id, "view")}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            View
-                          </Link>
-                          <Link
-                            href={buildCrmDocumentHref(listingId, doc.id, "download")}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Download
-                          </Link>
-                        </Stack>
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton
-                          size="small"
-                          aria-label={`Delete ${doc.name}`}
-                          onClick={() =>
-                            setDeleteTarget({ id: doc.id, name: doc.name, kind: "document" })
-                          }
-                        >
-                          <DeleteOutlinedIcon fontSize="small" />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
-
-          <Paper variant="outlined" sx={{ p: 2.5, borderRadius: 2 }}>
-            <Stack spacing={2}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                Upload a document
-              </Typography>
-              <input
-                ref={docInputRef}
-                type="file"
-                accept={DOCUMENT_ACCEPT}
-                hidden
-                onChange={(e) => void handleDocumentFileSelect(e.target.files)}
-              />
-              <Button
-                variant="outlined"
-                startIcon={docUploading ? <CircularProgress size={18} /> : <UploadFileOutlinedIcon />}
-                disabled={docUploading || isPending}
-                onClick={() => docInputRef.current?.click()}
-              >
-                {docUploading ? "Uploading…" : "Choose file"}
-              </Button>
-              {docError ? <Alert severity="error">{docError}</Alert> : null}
-              {docSuccess ? <Alert severity="success">{docSuccess}</Alert> : null}
-              {pendingDocUrl ? (
-                <Stack spacing={2}>
-                  <TextField
-                    label="Document name"
-                    value={docName}
-                    onChange={(e) => setDocName(e.target.value)}
-                    required
-                    fullWidth
-                    size="small"
-                  />
-                  <Button
-                    variant="contained"
-                    disabled={isPending || !docName.trim()}
-                    onClick={() => void handleSaveDocument()}
-                  >
-                    Save document
-                  </Button>
-                </Stack>
-              ) : null}
-            </Stack>
-          </Paper>
-        </Stack>
+        <Typography variant="body2" color="text.secondary">
+          Need the signed agreement?{" "}
+          <Link href={`?tab=documents`}>Open the Documents tab</Link>.
+        </Typography>
       </Stack>
 
       <Dialog open={lightboxOpen} onClose={closeLightbox} fullScreen>
@@ -600,24 +381,23 @@ export default function CrmListingMediaSection({
               color: "common.white",
             }}
           >
-            {activePhotoIndex + 1} / {photos.length}
+            {photos[activePhotoIndex]?.name} ({activePhotoIndex + 1}/{photos.length})
           </Typography>
         </Stack>
       </Dialog>
 
-      <Dialog open={deleteTarget != null} onClose={() => setDeleteTarget(null)}>
-        <DialogTitle>
-          Delete {deleteTarget?.kind === "photo" ? "photo" : "document"}?
-        </DialogTitle>
+      <Dialog open={!!deleteTarget} onClose={() => setDeleteTarget(null)}>
+        <DialogTitle>Delete photo?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            &ldquo;{deleteTarget?.name}&rdquo; will be permanently removed from this
-            listing and from storage. This cannot be undone.
+            {deleteTarget
+              ? `Remove “${deleteTarget.name}” from this listing? This cannot be undone.`
+              : null}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDeleteTarget(null)}>Cancel</Button>
-          <Button color="error" variant="contained" onClick={() => void handleConfirmDelete()}>
+          <Button color="error" onClick={() => void handleConfirmDelete()} disabled={isPending}>
             Delete
           </Button>
         </DialogActions>

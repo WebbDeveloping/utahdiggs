@@ -77,6 +77,51 @@ describe("applyClearDependents", () => {
     );
     assert.equal(result["q197-ownershowing197"], undefined);
   });
+
+  it("clears basement follow-ups and Basement matrix row when hasBasement flips to No", () => {
+    const result = applyClearDependents(
+      {
+        hasBasement: "Yes",
+        levelCount: "3",
+        "q26-typea26": ["Full"],
+        basementFinished: "Partial",
+        "q117-2level117": {
+          Basement: { bedrooms: "1" },
+          "Main Level": { bedrooms: "3" },
+          "Level 2": { bedrooms: "2" },
+        },
+      },
+      "hasBasement",
+      "No",
+    );
+    assert.equal(result.hasBasement, "No");
+    assert.equal(result["q26-typea26"], undefined);
+    assert.equal(result.basementFinished, undefined);
+    assert.deepEqual(result["q117-2level117"], {
+      "Main Level": { bedrooms: "3" },
+      "Level 2": { bedrooms: "2" },
+    });
+  });
+
+  it("prunes excess matrix rows when levelCount shrinks", () => {
+    const result = applyClearDependents(
+      {
+        hasBasement: "No",
+        levelCount: "3",
+        "q117-2level117": {
+          "Main Level": { bedrooms: "3" },
+          "Level 2": { bedrooms: "2" },
+          "Level 3": { bedrooms: "1" },
+        },
+      },
+      "levelCount",
+      "2",
+    );
+    assert.deepEqual(result["q117-2level117"], {
+      "Main Level": { bedrooms: "3" },
+      "Level 2": { bedrooms: "2" },
+    });
+  });
 });
 
 describe("listingAgreementDateDefaults", () => {

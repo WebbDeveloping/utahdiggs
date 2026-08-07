@@ -3,6 +3,12 @@
  * follow-ups, clear those dependent answers so stale data is not submitted.
  */
 
+import {
+  getLevelMatrixRowLabels,
+  LEVEL_MATRIX_FIELD_ID,
+  pruneLevelMatrixRows,
+} from "./level-matrix-rows";
+
 const OWNER_SHOWING_CONTACT_1 = [
   "q194-ownershowing",
   "q195-phonenumber",
@@ -93,6 +99,10 @@ const CLEAR_WHEN_NOT: Record<
   "q184-doesthe": {
     keepEquals: "Yes",
     clear: ["q63-pooltype"],
+  },
+  hasBasement: {
+    keepEquals: "Yes",
+    clear: ["q26-typea26", "basementFinished"],
   },
   ownerAddressSameAsListing: {
     keepEquals: "No",
@@ -222,6 +232,17 @@ export function applyClearDependents(
 
   if (fieldId === "ownerCount" && next["q191-propertyoccupancy"] === "Owner Occupied") {
     next = applyOwnerOccupiedShowingAutofill(next);
+  }
+
+  if (fieldId === "hasBasement" || fieldId === "levelCount") {
+    const matrix = next[LEVEL_MATRIX_FIELD_ID];
+    const visibleLabels = getLevelMatrixRowLabels(next);
+    const pruned = pruneLevelMatrixRows(matrix, visibleLabels);
+    if (pruned === undefined) {
+      delete next[LEVEL_MATRIX_FIELD_ID];
+    } else {
+      next[LEVEL_MATRIX_FIELD_ID] = pruned;
+    }
   }
 
   return next;

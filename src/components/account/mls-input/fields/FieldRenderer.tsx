@@ -290,6 +290,7 @@ export default function FieldRenderer({
   if (field.type === "checkbox") {
     const selected = Array.isArray(value) ? (value as string[]) : [];
     const options = field.options ?? [];
+    const useMultiColumn = options.length >= 8;
 
     const toggle = (opt: string, checked: boolean) => {
       if (checked) {
@@ -304,13 +305,29 @@ export default function FieldRenderer({
     };
 
     return (
-      <FormControl error={!!error} component="fieldset">
+      <FormControl error={!!error} component="fieldset" sx={{ width: "100%" }}>
         <FormLabel component="legend">
           {label}
           {field.required ? " *" : ""}
         </FormLabel>
         {helper ? <FormHelperText sx={{ mx: 0 }}>{helper}</FormHelperText> : null}
-        <FormGroup>
+        <FormGroup
+          sx={
+            useMultiColumn
+              ? {
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "1fr 1fr",
+                    md: options.length >= 24 ? "1fr 1fr 1fr" : "1fr 1fr",
+                  },
+                  columnGap: 2,
+                  rowGap: 0,
+                  alignItems: "start",
+                }
+              : undefined
+          }
+        >
           {options.map((opt) => (
             <FormControlLabel
               key={opt}
@@ -321,10 +338,19 @@ export default function FieldRenderer({
                 />
               }
               label={opt}
+              sx={{ mr: 0, alignItems: "flex-start", py: 0.25 }}
             />
           ))}
           {field.otherText ? (
-            <Stack direction="row" spacing={1} sx={{ pl: 1, alignItems: "center" }}>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                pl: 1,
+                alignItems: "center",
+                gridColumn: useMultiColumn ? "1 / -1" : undefined,
+              }}
+            >
               <Checkbox
                 checked={selected.some((s) => s.startsWith("Other"))}
                 onChange={(e) => {

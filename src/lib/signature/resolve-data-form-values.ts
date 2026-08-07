@@ -350,6 +350,10 @@ const ZONING_ALIASES: Record<string, string> = {
 /** MLS matrix row label → Data Form property-info key prefix. */
 const LEVEL_ROW_PREFIX: Record<string, string> = {
   "Main Level": "propInfo_Level1",
+  "Level 2": "propInfo_Level2",
+  "Level 3": "propInfo_Level3",
+  "Level 4": "propInfo_Level4",
+  // Legacy draft labels
   "Second Story": "propInfo_Level2",
   "Third Story": "propInfo_Level3",
   "Fourth Story": "propInfo_Level4",

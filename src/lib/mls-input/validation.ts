@@ -111,6 +111,7 @@ export const step5Schema = z.object({
 });
 
 export const step6Schema = z.object({
+    "hasBasement": z.enum(["Yes", "No"] as const, { message: "Required" }),
     "levelCount": z.enum(["1", "2", "3", "4", "5"] as const, { message: "Required" }),
     "q26-typea26": z.array(z.string()).min(1, "Select at least one"),
     "basementFinished": z.enum(["Yes", "No", "Partial", "N/A"] as const, { message: "Required" }),
@@ -305,6 +306,7 @@ export const fullMlsInputSchema = z.object({
   "aduCurrentlyRented": z.enum(["Yes", "No"] as const, { message: "Required" }),
   "aduMonthlyRent": z.string().min(1, "Required"),
   "aduRemarks": z.string().optional(),
+  "hasBasement": z.enum(["Yes", "No"] as const, { message: "Required" }),
   "levelCount": z.enum(["1", "2", "3", "4", "5"] as const, { message: "Required" }),
   "q26-typea26": z.array(z.string()).min(1, "Select at least one"),
   "basementFinished": z.enum(["Yes", "No", "Partial", "N/A"] as const, { message: "Required" }),

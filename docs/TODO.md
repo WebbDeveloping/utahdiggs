@@ -23,7 +23,7 @@
 
 ### Branding
 
-- [x] **Utah Digs → Glide RE brand sweep** — No remaining “Utah Digs” / “UtahDigs” in `src/` or `public/`. Brokerage line uses Kelly Wright RE.
+- [x] **Utah Digs → Glide RE brand sweep** — No remaining “Utah Digs” / “UtahDigs” in `src/` or `public/`. Brokerage line uses Kelly Right RE.
 
 ## Marketing home (signed out)
 
@@ -36,7 +36,7 @@ Signed-out landing page (`HeroSection` / `SavingsCalculatorCard` / `SellInquiryF
 - [x] **Right-side calculator tweaks** — Enlarged / centered **What could you save** title; chrome polish.
 - [x] **Remove “How soon do you want to sell?”** — Dropped from `SellInquiryForm`; persists `timeline: "Not specified"`.
 - [x] **Reorder marketing nav** — How it works → Pricing → FAQ → Search homes → Contact.
-- [x] **Kelly Wright logo (disclosure)** — Footer shows `/kelly-wright-re.png` with brokerage line.
+- [x] **Kelly Right logo (disclosure)** — Footer shows `/kelly-right-re.png` with brokerage line.
 
 ## MLS input form (consumer intake)
 
@@ -69,7 +69,7 @@ UX / field fixes for `/account/listings/new/mls-input`. Spec lives under `protot
 - [x] **Possession → dropdown** — Change `possession` from free text to select: **Recording**, **Negotiable** (label: “When the buyer may take possession (optional)”).
 - [x] **Hide appointment / agent contact block; prefill defaults**
   - Hide from user: Contact Type, Contact for Appointments & Access, Contact Phone 1/2, Listing Agent, Co-Agent, Office Name.
-  - Defaults: Contact Type = **Assistant**; Appointment contact = **ALIGNED SHOWINGS**; Phone 1 = Blair’s number; Phone 2 = empty; Listing Agent = **Blair Allen**; Co-Agent = empty; Office Name = **Kelly Wright Real Estate**.
+  - Defaults: Contact Type = **Assistant**; Appointment contact = **ALIGNED SHOWINGS**; Phone 1 = Blair’s number; Phone 2 = empty; Listing Agent = **Blair Allen**; Co-Agent = empty; Office Name = **Kelly Right Real Estate**.
 - [ ] **Admin page: listing agent / office / showing contact defaults** — CRM settings to edit appointment contact, phones, listing agent, co-agent, and office name used to prefill MLS intake (stop hardcoding forever). See Jul 24 next step.
 - [x] **Non-standard address default = No** — Prefill `nonStandardAddress` to **No**.
 - [x] **HOA default = No** — Prefill `hoa` to **No** (follow-ups still show when Yes).
@@ -98,15 +98,11 @@ UX / field fixes for `/account/listings/new/mls-input`. Spec lives under `protot
 
 ### Breakdown by level (step 06)
 
-- [ ] **Basement-first levels flow** — Jul 24 decided: build it (reference JotForm https://form.jotform.com/241361020581040).
-  - Ask “Does the property have a basement?” first.
-  - **Yes** → show basement/lower-level type + basement finished % + basement row in matrix.
-  - **No** → skip basement questions; show main / upper levels only.
-  - Align “how many levels / stories” with MLS matrix rows (Basement, Main, Level 2, Level 3, Level 4).
+- [x] **Basement-first levels flow** — Ask “Does the property have a basement?” first; Yes shows type + finished + Basement matrix row; No skips basement fields; level count is total levels (including basement when Yes); matrix labels Basement / Main / Level 2–4.
 
 ### Checkbox layout & labels
 
-- [ ] **Multi-column checkbox groups** — Render long checkbox lists in columns instead of one vertical stack (match JotForm `form-multiple-column` where it helps).
+- [x] **Multi-column checkbox groups** — Render long checkbox lists in columns instead of one vertical stack (match JotForm `form-multiple-column` where it helps).
 - [x] **Pool label** — Change “Pool Available?” → “Pool Available? (including HOA)”.
 
 ### Utilities, zoning & terms (step 10)
@@ -133,7 +129,7 @@ UX / field fixes for `/account/listings/new/mls-input`. Spec lives under `protot
 ### Remarks, photos, signatures (steps 14–16)
 
 - [x] **Remarks tooltip** — Public MLS remarks: buyers see this on MLS / Zillow / Redfin / Realtor.com; short examples of good remarks. Clarify exclusions are **not** public (with short examples of what belongs in each).
-- [ ] **Photo upload thumbnails** — Show actual image previews instead of a generic photo icon.
+- [x] **Photo upload thumbnails** — Show actual image previews instead of a generic photo icon.
 - [x] **Signature step: 1 vs 2 sellers** — Secondary signature/initials only when `ownerCount` = Two (`secondary-owner-signature` condition).
 
 ### Photo tour (post–MLS submit)
@@ -152,7 +148,7 @@ UX / field fixes for `/account/listings/new/mls-input`. Spec lives under `protot
 - [x] **MLS Queue page** — `/crm/mls-queue` with submitted intakes, Open intake / Approve, admin VA settings (default Agent + fallback email). Intake-submitted emails route to the configured VA.
 - [x] **Easy MLS copy workflow** — Think through a simple way a VA can copy all MLS info and photos from our site into the actual MLS, then get the MLS# back to us.
 
-- [ ] **CRM: signed listing agreement easy access** — Make the exclusive right-to-sell (and related docs) easy to open from the listing CRM view (tabbed documents / one-click open).
+- [x] **CRM: signed listing agreement easy access** — Make the exclusive right-to-sell (and related docs) easy to open from the listing CRM view (tabbed documents / one-click open).
 
 ## Account / seller dashboard
 

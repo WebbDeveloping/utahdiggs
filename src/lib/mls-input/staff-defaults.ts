@@ -10,7 +10,7 @@ export const MLS_STAFF_DEFAULTS = {
   contactPhone2: "",
   listingAgentName: "Blair Allen",
   listingCoAgentName: "",
-  listingOfficeName: "Kelly Wright Real Estate",
+  listingOfficeName: "Kelly Right Real Estate",
   "q100-showinginstructions": "Call showing service",
   showInstructions: [
     "Call Showing Service",

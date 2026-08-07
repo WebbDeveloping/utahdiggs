@@ -12,6 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
+import AirtableSyncButton from "@/components/crm/AirtableSyncButton";
 import CrmPageHeader from "@/components/crm/CrmPageHeader";
 import { auth } from "@/lib/auth/admin-auth";
 import { canManageUsers } from "@/lib/auth/roles";
@@ -44,6 +45,7 @@ export default async function CrmDatabasePage() {
       <CrmPageHeader
         title="Database"
         description={`Read-only browse of ${tables.length} tables · ${totalRows.toLocaleString()} total rows`}
+        action={<AirtableSyncButton />}
       />
       <TableContainer
         component={Paper}

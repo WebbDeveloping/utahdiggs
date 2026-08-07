@@ -97,6 +97,7 @@ function buildFixtureIntake(): FullMlsInputValues {
     aduCurrentlyRented: "No",
     aduMonthlyRent: "0",
     levelCount: "1",
+    hasBasement: "No",
     "q26-typea26": ["Full"],
     basementFinished: "N/A",
     "q33-flooring": ["Hardwood"],

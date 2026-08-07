@@ -11,7 +11,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import { upload } from "@vercel/blob/client";
 import {
   ALLOWED_PHOTO_TYPES,
@@ -104,7 +103,16 @@ export default function FileField({
       </Button>
       {uploadError ? <Alert severity="error">{uploadError}</Alert> : null}
       {value.length > 0 ? (
-        <Stack spacing={1}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(auto-fill, minmax(240px, 1fr))",
+            },
+            gap: 1.5,
+          }}
+        >
           {value.map((photo, index) => (
             <Box
               key={photo.url}
@@ -112,13 +120,26 @@ export default function FileField({
                 display: "flex",
                 alignItems: "center",
                 gap: 1.5,
-                p: 1.5,
+                p: 1,
                 border: "1px solid",
                 borderColor: "divider",
                 borderRadius: 1,
+                minWidth: 0,
               }}
             >
-              <ImageOutlinedIcon color="action" />
+              <Box
+                component="img"
+                src={photo.url}
+                alt={photo.name || "Uploaded photo"}
+                sx={{
+                  width: 72,
+                  height: 72,
+                  flexShrink: 0,
+                  objectFit: "cover",
+                  borderRadius: 1,
+                  bgcolor: "action.hover",
+                }}
+              />
               <TextField
                 size="small"
                 label="Photo name"
@@ -128,7 +149,7 @@ export default function FileField({
                   updated[index] = { ...photo, name: e.target.value };
                   onChange(updated);
                 }}
-                sx={{ flex: 1 }}
+                sx={{ flex: 1, minWidth: 0 }}
               />
               <IconButton
                 aria-label="Remove photo"
@@ -138,7 +159,7 @@ export default function FileField({
               </IconButton>
             </Box>
           ))}
-        </Stack>
+        </Box>
       ) : null}
       {error ? (
         <Typography variant="caption" color="error">

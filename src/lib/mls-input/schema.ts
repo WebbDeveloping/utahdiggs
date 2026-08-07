@@ -148,6 +148,7 @@ export type MlsInputFormValues = {
   "aduCurrentlyRented"?: string;
   "aduMonthlyRent"?: string;
   "aduRemarks"?: string;
+  "hasBasement"?: string;
   "levelCount"?: string;
   "q26-typea26"?: string[];
   "basementFinished"?: string;
@@ -553,7 +554,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "type": "text",
         "status": "hidden-in-jotform",
         "placeholder": "Listing office / brokerage",
-        "description": "Staff default — Kelly Wright Real Estate."
+        "description": "Staff default — Kelly Right Real Estate."
       },
       {
         "id": "schools",
@@ -1229,8 +1230,19 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
     "order": 6,
     "id": "level-breakdown",
     "title": "Breakdown By Level",
-    "intro": "We apologize that this section may be difficult via a mobile device.\n\nHowever, this is how the MLS distributes and formats your information. The more accurate this information, the more buyers you will reach.\n\n(If you don't have the approximate square feet per level, just leave blank and we can look it up for you. We do need the other information filled out accurately)\n\nEx: Basement + Main Level + Second Story = 3 Levels\nEx: Multi Level could be 3 or 4 depending on the basement.\n",
+    "intro": "We apologize that this section may be difficult via a mobile device.\n\nHowever, this is how the MLS distributes and formats your information. The more accurate this information, the more buyers you will reach.\n\nStart by telling us whether the property has a basement, then how many total levels (including the basement when present).\n\n(If you don't have the approximate square feet per level, just leave blank and we can look it up for you. We do need the other information filled out accurately)\n\nEx: Basement + Main Level + Level 2 = 3 Levels\nEx: Multi Level could be 3 or 4 depending on the basement.\n",
     "fields": [
+      {
+        "id": "hasBasement",
+        "label": "Does the property have a basement?",
+        "type": "radio",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "otherText": false
+      },
       {
         "id": "levelCount",
         "label": "How Many Levels In The Property?",
@@ -1250,6 +1262,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "Basement / Lower Level Type",
         "type": "checkbox",
         "required": true,
+        "status": "hidden-in-jotform",
         "options": [
           "Daylight",
           "Entrance",
@@ -1267,6 +1280,7 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "label": "Basement Finished",
         "type": "radio",
         "required": true,
+        "status": "hidden-in-jotform",
         "options": [
           "Yes",
           "No",
@@ -1396,8 +1410,11 @@ export const MLS_INPUT_STEPS: MlsInputStep[] = [
         "dynamic": {
           "rowCountFrom": "levelCount",
           "rowLabels": [
+            "Basement",
             "Main Level",
-            "Basement"
+            "Level 2",
+            "Level 3",
+            "Level 4"
           ]
         }
       }

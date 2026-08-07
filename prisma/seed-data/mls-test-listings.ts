@@ -91,6 +91,7 @@ function buildBaseMlsValues(
     lotSize: "0.18",
     livingSqft: "2400",
     levelCount: "2",
+    hasBasement: "Yes",
     "q26-typea26": ["Full"],
     basementFinished: "Partial",
     "q117-2level117": {
@@ -206,10 +207,11 @@ export const MLS_TEST_LISTING_CONFIGS: MlsTestListingConfig[] = [
       "q11-propertytype": "Single Family",
       "q51-styleof51": "Rambler / Ranch Style",
       levelCount: "3",
+      hasBasement: "Yes",
       "q117-2level117": {
         "Main Level": levelRow("1800", "3", "2", "0"),
         Basement: levelRow("900", "1", "1", "0"),
-        "Second Story": levelRow("400", "1", "1", "0"),
+        "Level 2": levelRow("400", "1", "1", "0"),
       },
       schools: schools({
         district: "Salt Lake City School District",
@@ -268,9 +270,10 @@ export const MLS_TEST_LISTING_CONFIGS: MlsTestListingConfig[] = [
       "q11-propertytype": "Townhouse",
       "q51-styleof51": "Townhouse",
       levelCount: "2",
+      hasBasement: "No",
       "q117-2level117": {
         "Main Level": levelRow("950", "2", "1", "1"),
-        "Second Story": levelRow("900", "2", "1", "0"),
+        "Level 2": levelRow("900", "2", "1", "0"),
       },
       schools: schools({
         district: "Canyons School District",

@@ -115,8 +115,8 @@ export default function SiteFooter() {
               Brokerage disclosure
             </Typography>
             <Image
-              src="/kelly-wright-re.png"
-              alt="Kelly Wright Real Estate"
+              src="/kelly-right-re.png"
+              alt="Kelly Right Real Estate"
               width={80}
               height={50}
               style={{ height: 36, width: "auto", objectFit: "contain" }}

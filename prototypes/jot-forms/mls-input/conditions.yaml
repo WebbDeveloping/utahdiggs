@@ -176,17 +176,26 @@ rules:
     show:
       - aduMonthlyRent
 
+  - id: has-basement
+    description: Show basement type and finished fields when the property has a basement.
+    when:
+      field: hasBasement
+      equals: "Yes"
+    show:
+      - q26-typea26
+      - basementFinished
+
   - id: level-matrix-rows
     description: Level breakdown matrix row count follows the selected number of levels.
     dynamic:
       field: q117-2level117
       rowCountFrom: levelCount
       rowLabels:
-        - Main Level
         - Basement
-        - Second Story
-        - Third Story
-        - Fourth Story
+        - Main Level
+        - Level 2
+        - Level 3
+        - Level 4
 
   - id: garage-capacity
     description: Show garage capacity when Parking includes Garage.

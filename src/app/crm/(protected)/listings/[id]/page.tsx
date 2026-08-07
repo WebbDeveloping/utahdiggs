@@ -1,9 +1,11 @@
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Link from "next/link";
 import CrmApproveListingButton from "@/components/crm/CrmApproveListingButton";
 import CrmAssignAgentSelect from "@/components/crm/CrmAssignAgentSelect";
@@ -22,6 +24,7 @@ import {
   listingStatusColor,
 } from "@/lib/crm/format";
 import { formatOnboardingStatus, formatServicePlan } from "@/lib/consumer/onboarding";
+import { findSignedListingAgreementDocument } from "@/lib/documents/listing-document-kinds";
 import { MLS_INPUT_STEPS } from "@/lib/mls-input/schema";
 import { auth } from "@/lib/auth/admin-auth";
 import { isAdmin } from "@/lib/auth/roles";
@@ -30,6 +33,7 @@ import { getDefaultMlsVaUserId } from "@/lib/crm/mls-ops-settings";
 import { getActiveAgents, getCrmListingById } from "@/lib/crm/listing-queries";
 import { getCrmShowings } from "@/lib/crm/showing-queries";
 import { getCrmWeeklyStats } from "@/lib/crm/weekly-stat-queries";
+import { buildCrmDocumentHref } from "@/lib/storage/document-access";
 import { partitionListingDocuments } from "@/lib/storage/document-classify";
 import { notFound } from "next/navigation";
 
@@ -66,6 +70,7 @@ export default async function CrmListingDetailPage({
 
   const primarySeller = listing.contacts.find((c) => c.role === "PRIMARY")?.contact;
   const { photos: listingPhotos } = partitionListingDocuments(listing.documents);
+  const signedAgreement = findSignedListingAgreementDocument(listing.documents);
   const intakePhotos = listingPhotos.map((photo) => ({
     id: photo.id,
     name: photo.name,
@@ -238,9 +243,28 @@ export default async function CrmListingDetailPage({
         title={listing.address}
         description={`${listing.city}, ${listing.state} · ${formatCurrency(listing.listPrice?.toString())}`}
         action={
-          <Link href="/crm/listings" style={{ textDecoration: "none" }}>
-            <Typography color="primary">← Back to listings</Typography>
-          </Link>
+          <Stack direction="row" spacing={1.5} sx={{ alignItems: "center", flexWrap: "wrap" }}>
+            {signedAgreement ? (
+              <Button
+                component="a"
+                href={buildCrmDocumentHref(listing.id, signedAgreement.id, "view")}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="contained"
+                size="small"
+                endIcon={<OpenInNewIcon />}
+              >
+                Open signed agreement
+              </Button>
+            ) : (
+              <Button component={Link} href="?tab=documents" variant="outlined" size="small">
+                Documents
+              </Button>
+            )}
+            <Link href="/crm/listings" style={{ textDecoration: "none" }}>
+              <Typography color="primary">← Back to listings</Typography>
+            </Link>
+          </Stack>
         }
       />
 
@@ -248,12 +272,14 @@ export default async function CrmListingDetailPage({
         steps={MLS_INPUT_STEPS}
         intakeData={intakeData}
         listing={{
+          id: listing.id,
           address: listing.address,
           city: listing.city,
           state: listing.state,
           zip: listing.zip,
         }}
         photos={intakePhotos}
+        documents={listing.documents}
         summary={summary}
       />
     </>

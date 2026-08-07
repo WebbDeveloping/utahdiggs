@@ -69,6 +69,7 @@ function buildFixture(overrides: Partial<FullMlsInputValues> = {}): FullMlsInput
     aduCurrentlyRented: "No",
     aduMonthlyRent: "0",
     levelCount: "2",
+    hasBasement: "Yes",
     "q26-typea26": ["Full"],
     basementFinished: "Partial",
     "q117-2level117": {
@@ -382,9 +383,46 @@ describe("resolveDataFormValues", () => {
     assert.equal(result.checkboxes["basementType_None / Crawlspace / Slab"], undefined);
   });
 
-  it("maps Second Story matrix row onto Level 2 keys", () => {
-    const result = resolveDataFormValues(
+  it("maps Level 2 and legacy Second Story matrix rows onto Level 2 keys", () => {
+    const withLevel2 = resolveDataFormValues(
       buildFixture({
+        hasBasement: "Yes",
+        levelCount: "3",
+        "q117-2level117": {
+          "Main Level": {
+            "square-footage": "1000",
+            bedrooms: "2",
+            "full-baths": "1",
+            "3-4-baths": "0",
+            "1-2-baths": "0",
+          },
+          Basement: {
+            "square-footage": "800",
+            bedrooms: "1",
+            "full-baths": "1",
+            "3-4-baths": "0",
+            "1-2-baths": "0",
+          },
+          "Level 2": {
+            "square-footage": "600",
+            bedrooms: "2",
+            "master-y-n": ["Yes"],
+            "full-baths": "1",
+            "3-4-baths": "0",
+            "1-2-baths": "1",
+            "formal-living": ["Yes"],
+            breakfast: ["Yes"],
+          },
+        },
+      }),
+    );
+
+    assert.equal(withLevel2.text.propInfo_Level2_sqft, "600");
+    assert.equal(withLevel2.text.propInfo_Level2_beds, "2");
+
+    const withLegacy = resolveDataFormValues(
+      buildFixture({
+        hasBasement: "Yes",
         levelCount: "3",
         "q117-2level117": {
           "Main Level": {
@@ -415,12 +453,12 @@ describe("resolveDataFormValues", () => {
       }),
     );
 
-    assert.equal(result.text.propInfo_Level2_sqft, "600");
-    assert.equal(result.text.propInfo_Level2_beds, "2");
-    assert.equal(result.text.propInfo_Level2_bathsHalf, "1");
-    assert.equal(result.checkboxes.propInfo_Level2_primary, true);
-    assert.equal(result.checkboxes.propInfo_Level2_formalLiving, true);
-    assert.equal(result.checkboxes.propInfo_Level2_breakfast, true);
+    assert.equal(withLegacy.text.propInfo_Level2_sqft, "600");
+    assert.equal(withLegacy.text.propInfo_Level2_beds, "2");
+    assert.equal(withLegacy.text.propInfo_Level2_bathsHalf, "1");
+    assert.equal(withLegacy.checkboxes.propInfo_Level2_primary, true);
+    assert.equal(withLegacy.checkboxes.propInfo_Level2_formalLiving, true);
+    assert.equal(withLegacy.checkboxes.propInfo_Level2_breakfast, true);
   });
 
   it("maps listing information and agent fields", () => {

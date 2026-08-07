@@ -6,11 +6,23 @@ intro:
     
     However, this is how the MLS distributes and formats your information. The more accurate this information, the more buyers you will reach.
     
+    Start by telling us whether the property has a basement, then how many total levels (including the basement when present).
+    
     (If you don't have the approximate square feet per level, just leave blank and we can look it up for you. We do need the other information filled out accurately)
     
-    Ex: Basement + Main Level + Second Story = 3 Levels
+    Ex: Basement + Main Level + Level 2 = 3 Levels
     Ex: Multi Level could be 3 or 4 depending on the basement.
 fields:
+  - id: hasBasement
+    label: Does the property have a basement?
+    type: radio
+    required: true
+    options:
+      - "Yes"
+      - "No"
+    jotform:
+      id: TODO
+      name: q_hasBasement
   - id: levelCount
     label: "How Many Levels In The Property?"
     type: radio
@@ -27,6 +39,7 @@ fields:
     label: Basement / Lower Level Type
     type: checkbox
     required: true
+    status: hidden-in-jotform
     jotform:
       name: "q26_typeA26[]"
       id: 26
@@ -43,6 +56,7 @@ fields:
     label: Basement Finished
     type: radio
     required: true
+    status: hidden-in-jotform
     options:
       - "Yes"
       - "No"
@@ -139,5 +153,8 @@ fields:
     dynamic:
       rowCountFrom: levelCount
       rowLabels:
-        - Main Level
         - Basement
+        - Main Level
+        - Level 2
+        - Level 3
+        - Level 4
