@@ -1,9 +1,12 @@
 import { config as loadEnv } from "dotenv";
+import { refuseLiveDatabaseWrite } from "../src/lib/refuse-live-database-write";
 
 loadEnv({ path: ".env.local", override: true });
 loadEnv();
 
 async function main() {
+  refuseLiveDatabaseWrite("tsx scripts/seed-email-templates.ts");
+
   const { seedEmailTemplates } = await import("../src/lib/email/template-queries");
   const { seedEmailBrandSettings } = await import("../src/lib/email/brand-theme");
 

@@ -1,15 +1,18 @@
 /**
  * One-time Airtable → Postgres import for Phase 6 cutover.
  *
- * Usage:
- *   AIRTABLE_API_KEY=... AIRTABLE_BASE_ID=... DATABASE_URL=... npx tsx scripts/import-airtable.ts
+ * Disabled while this repo points at the live database. See CLAUDE.md.
  *
  * Tables are imported in FK order. airtableRecordId columns on Postgres models
  * map Airtable record IDs for traceability during cutover.
  */
 
-import "dotenv/config";
+import { config as loadEnv } from "dotenv";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { refuseLiveDatabaseWrite } from "../src/lib/refuse-live-database-write";
+
+loadEnv({ path: ".env.local", override: true });
+loadEnv();
 import { normalizePostgresUrl } from "../src/lib/postgres-url";
 import {
   PrismaClient,
@@ -148,6 +151,8 @@ function mapClosingTeamRole(value: unknown): ClosingTeamRole {
 }
 
 async function main() {
+  refuseLiveDatabaseWrite("tsx scripts/import-airtable.ts");
+
   const connectionString = normalizePostgresUrl(
     requireEnv("DATABASE_URL", process.env.DATABASE_URL),
   );

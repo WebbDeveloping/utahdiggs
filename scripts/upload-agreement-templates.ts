@@ -1,4 +1,5 @@
 import { config as loadEnv } from "dotenv";
+import { refuseLiveDatabaseWrite } from "../src/lib/refuse-live-database-write";
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { uploadAllAgreementTemplates } from "../src/lib/signature/agreement-template-storage";
@@ -6,6 +7,8 @@ import { uploadAllBundledFieldMaps } from "../src/lib/signature/agreement-field-
 
 loadEnv({ path: ".env.local", override: true });
 loadEnv();
+
+refuseLiveDatabaseWrite("tsx scripts/upload-agreement-templates.ts");
 
 const MANIFEST_PATH = path.join(
   process.cwd(),

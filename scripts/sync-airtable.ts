@@ -3,8 +3,7 @@
  * Weekly stats match by MLS# (then street address); market data matches by city.
  * Does not create or update Listing rows.
  *
- * Usage:
- *   npm run sync:airtable
+ * Disabled while this repo points at the live database. See CLAUDE.md.
  */
 
 import "dotenv/config";
@@ -14,9 +13,12 @@ loadEnv({ path: ".env.local", override: true });
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { syncAirtableData } from "../src/lib/airtable-sync/sync";
+import { refuseLiveDatabaseWrite } from "../src/lib/refuse-live-database-write";
 import { resolvePostgresUrl } from "../src/lib/postgres-url";
 
 async function main() {
+  refuseLiveDatabaseWrite("tsx scripts/sync-airtable.ts");
+
   const connectionString = resolvePostgresUrl();
   if (!connectionString) {
     throw new Error("DATABASE_URL is required");

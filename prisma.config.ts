@@ -1,10 +1,19 @@
 import { config as loadEnv } from "dotenv";
 import { defineConfig } from "prisma/config";
+import {
+  blockedPrismaInvocation,
+  refuseLiveDatabaseWrite,
+} from "./src/lib/refuse-live-database-write";
 import { normalizePostgresUrl } from "./src/lib/postgres-url";
 
 // Next.js uses .env.local; Prisma CLI only auto-loads .env — load both.
 loadEnv({ path: ".env.local" });
 loadEnv();
+
+const blockedPrismaCommand = blockedPrismaInvocation(process.argv);
+if (blockedPrismaCommand) {
+  refuseLiveDatabaseWrite(blockedPrismaCommand);
+}
 
 // Prisma Postgres (db.prisma.io): use DIRECT_URL if set, else DATABASE_URL / PRISMA_DATABASE_URL / POSTGRES_URL
 const rawMigrationUrl =
@@ -20,7 +29,6 @@ export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
-    seed: "tsx prisma/seed.ts",
   },
   datasource: {
     url: migrationUrl,

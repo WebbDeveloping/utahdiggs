@@ -14,6 +14,7 @@ import {
 } from "../src/generated/prisma/client";
 import { mapMlsIntakeToListingInput } from "../src/lib/mls-input/map-to-listing";
 import type { FullMlsInputValues } from "../src/lib/mls-input/validation";
+import { refuseLiveDatabaseWrite } from "../src/lib/refuse-live-database-write";
 import { resolvePostgresUrl } from "../src/lib/postgres-url";
 import {
   copySeedPhotos,
@@ -178,6 +179,8 @@ async function seedMlsTestListing(
 }
 
 async function main() {
+  refuseLiveDatabaseWrite("tsx prisma/seed.ts");
+
   const closingTeam = [
     {
       airtableRecordId: "rec39Hafyn2Y9Jlla",

@@ -4,7 +4,10 @@ loadEnv();
 
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { refuseLiveDatabaseWrite } from "../src/lib/refuse-live-database-write";
 import { resolvePostgresUrl } from "../src/lib/postgres-url";
+
+refuseLiveDatabaseWrite("tsx scripts/geocode-listings.ts");
 
 const connectionString = resolvePostgresUrl();
 if (!connectionString) {
